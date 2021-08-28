@@ -24,7 +24,7 @@ bot_creator_name = botconfigdata["bot-creator-name"]
 bot_current_version = botconfigdata["bot-version"]
 
 client = commands.Bot(command_prefix = bot_prefix)
-# client.remove_command('help')
+client.remove_command('help')
 token = os.environ['TOKEN']
 
 
@@ -887,7 +887,7 @@ async def xrp(ctx):
     eur = kekistan['EUR']
     usd = kekistan['USD']
 
-    embed=discord.Embed(title="Doge Coin", color=0xff0000)
+    embed=discord.Embed(title="Ripple", color=0xff0000)
     embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879741815237017680/52.png")
     embed.add_field(name="USD", value=f"{usd}", inline=False)
@@ -1279,12 +1279,52 @@ async def uptime(ctx):
     await loading_message.delete()
     await ctx.send(embed=embed3)
 
+@client.command()
+async def help(ctx):
+    loading_message = await ctx.send(embed=please_wait_emb)
+    bp = bot_prefix
+
+    try:
+        embed3=discord.Embed(title=":gear: Help", description="The list of all the commands! the might be some eastereggs!?! ", color=0xff0000)
+        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+        embed3.add_field(name="Crypto:", value=f"`{bp}bitcoin` - Get the bitcoin rates \n`{bp}doge` - Get the doge coin rates \n`{bp}xmr` - Get the Monero rates \n`{bp}xrp` - Get the ripple rates \n`{bp}eth` - Get the etherium rates", inline=False)
+        embed3.add_field(name="Encoding", value=f"`{bp}e_b64 [value]` - Encode to Base64 \n`{bp}e_leet [value]` - Encode to leet \n`{bp}e_md5` - Encode to MD5 \n`{bp}e_sha1` - Encode to SHA1 \n`{bp}e_sha224` - Encode to SHA224 \n`{bp}e_sha512` - Encode to SHA512", inline=False)
+        embed3.add_field(name="Fake Information", value=f"`{bp}fake help` - List out all the fake information commands! \n`{bp}fake high` - High amount fake information  \n`{bp}fake low` - Low amount of fake information \n`{bp}fake name` - Generate a Fake Name \n`{bp}fake dob` - Generate a Fake Date of Birth \n`{bp}fake addr` - Generate a Fake Address \n`{bp}fake job` - Generate a fake job \n`{bp}fake color` - Generate a fake color \n`{bp}fake zipcode` - Generate a fake zipcode \n`{bp}fake city` - Generate a fake city \n`{bp}fake licenseplate` - Generate a fake Lisence Plate \n`{bp}fake bban` - Generate a fake Basic Bank Account Number \n`{bp}fake iban` - Generate a fake International Bank Account \n`{bp}fake bs` - Generate a fake Bachelors \n`{bp}fake cc` - Generate a fake Credit Card \n`{bp}fake cemail` - Generate a fake company email \n`{bp}fake pno` - Generate a fake phone number \n`{bp}fake cp` - Generate a fake phone number \n`{bp}fake cp` - Generate a fake Catch Phrase \n`{bp}fake ssn` - Generate a fake Social Security Number", inline=False)
+        embed3.add_field(name="Others", value=f"`{bp}countryinfo [country_code]` - Search for Country Information \n`{bp}hastebin [text]` - Create a hatebin link for the given text \n`{bp}ig_pfp [ig_username]` - Download the Instgram profile picture \n`{bp}ip [ip_addr]` - Find Information of an IP Address \n`{bp}lyrics [song_name]` - Find lyrics of any song \n`{bp}mfp [number]` - Mass fake profile \n`{bp}pwdcheck [password]` - Check for the status of a password \n`{bp}uptime` - Show bot uptime \n ", inline=False)
+        embed3.set_footer(text=f"Requested by {ctx.author.name}")
+        await loading_message.delete()
+        await ctx.send(embed=embed3)
+
+    except Exception as e:
+        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
+        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+        embed3.add_field(name="Error:", value=f"{e}", inline=False)
+        embed3.set_footer(text=f"Requested by {ctx.author.name}")
+        await loading_message.delete()
+        await ctx.send(embed=embed3)
+        
 
 
+# ERROR HANDLING //////////////////////////////////////////////////////////////////////////////////////////
+@client.event
+async def on_command_error(ctx, error):
+  if isinstance(error, commands.MissingPermissions):
+    embed=discord.Embed(title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
+    embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/877796755234783273/879295069834850324/Avatar.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+    await ctx.send(embed=embed)
+    return
 
-
-
-
+  if isinstance(error, commands.MissingRequiredArgument):
+    embed=discord.Embed(title="Something is wrong!", description="An error has been occured!", color=0xff0000)
+    embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/877796755234783273/879295069834850324/Avatar.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+    embed.add_field(name="Error", value="You haven't passed the needed arguments for this command to run properly", inline=True)
+    embed.add_field(name="Possible Fix", value=f"use `{bot_prefix}help all` to list out all the command and check the proper usage of the command you used", inline=True)
+    await ctx.send(embed=embed)
+    return
 
 
 
