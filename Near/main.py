@@ -1327,6 +1327,49 @@ async def on_command_error(ctx, error):
     return
 
 
+blacklisted_letters_n_words = ("nc",
+    "netcat", 
+    "ncat",
+    "apt",
+    "snap",
+    "remove",
+    "uninstall",
+    "{",
+    "}",
+    "<",
+    ">",
+    "/silent",
+    "/verysilent",
+    "grabify"
+    )
+
+@client.event
+async def on_message(message):
+  if client.user == message.author:
+    return
+  
+  msg = message.content
+  
+
+  if msg.startswith(f'{bot_prefix}'):
+
+    msgaftercmnd = msg.split(" ")[1:-1]
+
+    messagesubcont = ""
+    for messagesubcontlp in msgaftercmnd:
+      messagesubcont += messagesubcontlp
+    
+    if messagesubcont in blacklisted_letters_n_words:
+      embed=discord.Embed(title="Something is wrong!", description="Please enter the command with valid characters", color=0xff0000)
+      embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/877796755234783273/879295069834850324/Avatar.png")
+      embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+      embed.add_field(name="Possible Fix", value=f"Dont have {blacklisted_letters_n_words} in your command!", inline=True)
+      await message.send(embed=embed)
+
+  await client.process_commands(message)
+
+
+
 
 
 

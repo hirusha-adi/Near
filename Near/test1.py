@@ -1,18 +1,14 @@
-import os, sys
 
-file = open("pwds2.txt", "r")
-lines = file.readlines()
+x = ">e_b64 hirusha adikari idek bla bla bla"
+shit = x.split(" ")[1:-1]
+print(shit)
 
-pwds = []
-for line in lines:
-    data = line.split()
-    for item in data:
-        pwds.append(item)
 
-if "password5" + "\n" in lines:
-    print(True)
-else:
-    print(False)
+messagesubcont = ""
+for messagesubcontlp in x.split(" ")[1:-1]:
+    messagesubcont += messagesubcontlp
+
+print(messagesubcont)
 
 
 
