@@ -25,7 +25,8 @@ bot_current_version = botconfigdata["bot-version"]
 
 client = commands.Bot(command_prefix = bot_prefix)
 client.remove_command('help')
-token = os.environ['TOKEN']
+token = botconfigdata["bottoken"]
+
 
 
 start_time = None
@@ -1327,6 +1328,8 @@ async def on_command_error(ctx, error):
     return
 
 
+# This is for user input sanitization
+# Add more stuff here to make it better
 blacklisted_letters_n_words = ("nc",
     "netcat", 
     "ncat",
@@ -1365,6 +1368,7 @@ async def on_message(message):
       embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
       embed.add_field(name="Possible Fix", value=f"Dont have {blacklisted_letters_n_words} in your command!", inline=True)
       await message.send(embed=embed)
+      return
 
   await client.process_commands(message)
 
@@ -1376,21 +1380,4 @@ async def on_message(message):
 keep_alive()
 
 client.run(token)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

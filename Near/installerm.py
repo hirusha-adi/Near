@@ -48,7 +48,6 @@ def INSTALL_ALL():
         "discord", 
         "requests",
         "Faker",
-        "wikipedia",
         "bs4",
         "beautifulsoup4",
         "instaloader",
@@ -56,17 +55,10 @@ def INSTALL_ALL():
         "prsaw",
         "beautifulsoup4",
         "bs4",
-        "certifi",
-        "colorama",
-        "lxml",
-        "PySocks",
-        "requests-futures",
-        "soupsieve",
-        "stem",
-        "torrequest",
-        "password-strength"
+        "password-strength",
+        "urllib"
     )
     for module in module_nl:
         pip_install(module)
 
-
+INSTALL_ALL()
