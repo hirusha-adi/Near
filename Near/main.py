@@ -28,7 +28,6 @@ client.remove_command('help')
 token = botconfigdata["bottoken"]
 
 
-
 start_time = None
 
 @client.event
