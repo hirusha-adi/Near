@@ -56,7 +56,9 @@ def INSTALL_ALL():
         "beautifulsoup4",
         "bs4",
         "password-strength",
-        "urllib"
+        "urllib",
+        "flask",
+        "youtube_dl"
     )
     for module in module_nl:
         pip_install(module)
