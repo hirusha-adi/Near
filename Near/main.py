@@ -1300,7 +1300,7 @@ async def help(ctx):
         embed3.add_field(name="Crypto:", value=f"`{bp}bitcoin` - Get the bitcoin rates \n`{bp}doge` - Get the doge coin rates \n`{bp}xmr` - Get the Monero rates \n`{bp}xrp` - Get the ripple rates \n`{bp}eth` - Get the etherium rates", inline=False)
         embed3.add_field(name="Encoding", value=f"`{bp}e_b64 [value]` - Encode to Base64 \n`{bp}e_leet [value]` - Encode to leet \n`{bp}e_md5` - Encode to MD5 \n`{bp}e_sha1` - Encode to SHA1 \n`{bp}e_sha224` - Encode to SHA224 \n`{bp}e_sha512` - Encode to SHA512", inline=False)
         embed3.add_field(name="Fake Information", value=f"`{bp}fake help` - List out all the fake information commands! \n`{bp}fake high` - High amount fake information  \n`{bp}fake low` - Low amount of fake information \n`{bp}fake name` - Generate a Fake Name \n`{bp}fake dob` - Generate a Fake Date of Birth \n`{bp}fake addr` - Generate a Fake Address \n`{bp}fake job` - Generate a fake job \n`{bp}fake color` - Generate a fake color \n`{bp}fake zipcode` - Generate a fake zipcode \n`{bp}fake city` - Generate a fake city \n`{bp}fake licenseplate` - Generate a fake Lisence Plate \n`{bp}fake bban` - Generate a fake Basic Bank Account Number \n`{bp}fake iban` - Generate a fake International Bank Account \n`{bp}fake bs` - Generate a fake Bachelors \n`{bp}fake cc` - Generate a fake Credit Card \n`{bp}fake cemail` - Generate a fake company email \n`{bp}fake pno` - Generate a fake phone number \n`{bp}fake cp` - Generate a fake phone number \n`{bp}fake cp` - Generate a fake Catch Phrase \n`{bp}fake ssn` - Generate a fake Social Security Number", inline=False)
-        embed3.add_field(name="Music (Not all commands work properly)", value=f"`{bp}play [song-name]` - Join to Voice Channel and play the song\n`{bp}join` - Join Voice Channel \n`{bp}leave` - Leave Voice Channel \n`{bp}pause` - Pause the paused music \n`{bp}resume` - Resume the paused music \n`{bp}stop` - Stop Playing \n`{bp}skip` - Skip the current playing song and go to the next \n`{bp}summon [vc-name]` - Make the bot join to a VC (Case Sensitive) \n`{bp}now` - Displays the current playing song \n`{bp}queue` - Send the music queue waiting to be played! \n`{bp}shuffle` - Shuffle the queue \n`{bp}remove [index-from-queue]` - Remove a song from the queue \n`{bp}loop` - Loop the same song, use again to unloop", inline=False)
+        embed3.add_field(name="Music (Not all commands work properly)", value=f"`{bp}play [song-name]` - Join to Voice Channel and play the song\n`{bp}join` - Join Voice Channel \n`{bp}leave` - Leave Voice Channel \n`{bp}skip` - Skip the current playing song and go to the next \n`{bp}summon [vc-name]` - Make the bot join to a VC (Case Sensitive) \n`{bp}now` - Displays the current playing song \n`{bp}queue` - Send the music queue waiting to be played! \n`{bp}shuffle` - Shuffle the queue \n`{bp}remove [index-from-queue]` - Remove a song from the queue \n`{bp}loop` - Loop the same song, use again to unloop", inline=False)
         embed3.add_field(name="Others", value=f"`{bp}countryinfo [country_code]` - Search for Country Information \n`{bp}hastebin [text]` - Create a hatebin link for the given text \n`{bp}ig_pfp [ig_username]` - Download the Instgram profile picture \n`{bp}ip [ip_addr]` - Find Information of an IP Address \n`{bp}lyrics [song_name]` - Find lyrics of any song \n`{bp}mfp [number]` - Mass fake profile \n`{bp}pwdcheck [password]` - Check for the status of a password \n`{bp}uptime` - Show bot uptime \n ", inline=False)
         embed3.set_footer(text=f"Requested by {ctx.author.name}")
         await loading_message.delete()
@@ -1316,7 +1316,7 @@ async def help(ctx):
         await ctx.send(embed=embed3)
 
 
-# I didnt code the Music command! i literally still have no idea on how they work!
+# I didnt code the Music commands! 
 """
 Copyright (c) 2019 Valentin B.
 A simple music bot written in discord.py using youtube-dl.
@@ -1654,34 +1654,34 @@ class Music(commands.Cog):
 
         await ctx.send(embed=ctx.voice_state.current.create_embed())
 
-    @commands.command(name='pause')
-    @commands.has_permissions(manage_guild=True)
-    async def _pause(self, ctx: commands.Context):
-        """Pauses the currently playing song."""
+    # @commands.command(name='pause')
+    # @commands.has_permissions(manage_guild=True)
+    # async def _pause(self, ctx: commands.Context):
+    #     """Pauses the currently playing song."""
 
-        if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_playing():
-            ctx.voice_state.voice.pause()
-            await ctx.message.add_reaction('⏯')
+    #     if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_playing():
+    #         ctx.voice_state.voice.pause()
+    #         await ctx.message.add_reaction('⏯')
 
-    @commands.command(name='resume')
-    @commands.has_permissions(manage_guild=True)
-    async def _resume(self, ctx: commands.Context):
-        """Resumes a currently paused song."""
+    # @commands.command(name='resume')
+    # @commands.has_permissions(manage_guild=True)
+    # async def _resume(self, ctx: commands.Context):
+    #     """Resumes a currently paused song."""
 
-        if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_paused():
-            ctx.voice_state.voice.resume()
-            await ctx.message.add_reaction('⏯')
+    #     if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_paused():
+    #         ctx.voice_state.voice.resume()
+    #         await ctx.message.add_reaction('⏯')
 
-    @commands.command(name='stop')
-    @commands.has_permissions(manage_guild=True)
-    async def _stop(self, ctx: commands.Context):
-        """Stops playing song and clears the queue."""
+    # @commands.command(name='stop')
+    # @commands.has_permissions(manage_guild=True)
+    # async def _stop(self, ctx: commands.Context):
+    #     """Stops playing song and clears the queue."""
 
-        ctx.voice_state.songs.clear()
+    #     ctx.voice_state.songs.clear()
 
-        if not ctx.voice_state.is_playing:
-            ctx.voice_state.voice.stop()
-            await ctx.message.add_reaction('⏹')
+    #     if not ctx.voice_state.is_playing:
+    #         ctx.voice_state.voice.stop()
+    #         await ctx.message.add_reaction('⏹')
 
     @commands.command(name='skip')
     async def _skip(self, ctx: commands.Context):
@@ -1701,11 +1701,11 @@ class Music(commands.Cog):
             ctx.voice_state.skip_votes.add(voter.id)
             total_votes = len(ctx.voice_state.skip_votes)
 
-            if total_votes >= 3:
+            if total_votes >= 2:
                 await ctx.message.add_reaction('⏭')
                 ctx.voice_state.skip()
             else:
-                await ctx.send('Skip vote added, currently at **{}/3**'.format(total_votes))
+                await ctx.send('Skip vote added, currently at **{}/2**'.format(total_votes))
 
         else:
             await ctx.send('You have already voted to skip this song.')
