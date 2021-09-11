@@ -925,5 +925,4 @@ async def on_message(message):
 
 keep_alive()
 
-# client.run(token)
-client.run("ODU4Mjk4NjgzMjIwMTY0NjE2.YNcG8A.OKxSeIUTI7_YF4I6IrixoGuiS3I")
+client.run(token)
