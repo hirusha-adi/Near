@@ -30,11 +30,11 @@ botconfigdata = json.load(open("config.json", "r"))
 bot_prefix = botconfigdata["msg-prefix"]
 bot_creator_name = botconfigdata["bot-creator-name"]
 bot_current_version = botconfigdata["bot-version"]
+bot_owner_id_or_dev_id = botconfigdata["devoloper-id"]
 
+token = botconfigdata["bottoken"]
 client = commands.Bot(command_prefix = bot_prefix)
 client.remove_command('help')
-token = botconfigdata["bottoken"]
-
 
 start_time = None
 
@@ -120,441 +120,6 @@ async def ping(ctx):
         await loading_message.delete()
         await ctx.send(embed=embed2)
 
-@client.command()
-async def fake(ctx, *, fake_mode="help"):
-    loading_message = await ctx.send(embed=please_wait_emb)
-    
-    # All the information generated is in sync with each other
-    if fake_mode == "high":
-      try:
-        fake = Faker()
-        simple_dict = fake.profile()
-        # fake_info_simple = "Name: " + str(simple_dict['name']) + "\nJob: " + str(simple_dict['job']) + "\nBirthdate: " + str(simple_dict['birthdate']) + "\nCompany: " + str(simple_dict['company']) + "\SSN: " + str(simple_dict['ssn']) + "\nRecidence: " + simple_dict['residence'] + "\nCurrent Location:" + str(simple_dict['current_location']) + "\nBlood Group: " + str(simple_dict['blood_group']) + "\nUsername: " + str(simple_dict['username']) + "\nAddress: " + str(simple_dict['address']) + "\nMail: " + str(simple_dict['mail'])
-        emf = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf.set_footer(text=f"Requested by {ctx.author.name}")
-        emf.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf.add_field(name="Name", value=f"{str(simple_dict['name'])}")
-        emf.add_field(name="Job", value=f"{str(simple_dict['job'])}")
-        emf.add_field(name="Birthdate", value=f"{str(simple_dict['birthdate'])}")
-        emf.add_field(name="Company", value=f"{str(simple_dict['company'])}")
-        emf.add_field(name="SSN", value=f"{str(simple_dict['ssn'])}")
-        emf.add_field(name="Recidence", value=f"{str(simple_dict['residence'])}")
-        emf.add_field(name="Current Location", value=f"{str(simple_dict['current_location'])}")
-        emf.add_field(name="Blood Group", value=f"{str(simple_dict['blood_group'])}")
-        emf.add_field(name="Username", value=f"{str(simple_dict['username'])}")
-        emf.add_field(name="Address", value=f"{str(simple_dict['address'])}")
-        emf.add_field(name="Mail", value=f"{str(simple_dict['mail'])}")
-        await loading_message.delete()
-        await ctx.send(embed=emf)
-      except Exception as e:
-        embed2=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed2.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed2.add_field(name="Error:", value=f"{e}", inline=False)
-        embed2.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed2)
-    
-    # Only a name
-    elif fake_mode == "name":
-      faker = Faker()
-      try:
-        USname = faker.name()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="Name", value=f"{str(USname)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only the Date of Birth
-    elif fake_mode == "dob":
-      faker = Faker()
-      try:
-        USdob = faker.date_of_birth()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="Date Of Birth", value=f"{str(USdob)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only the Address
-    elif fake_mode == "addr":
-      faker = Faker()
-      try:
-        USaddress = faker.address()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="Address", value=f"{str(USaddress)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only the JOB
-    elif fake_mode == "job":
-      faker = Faker()
-      try:
-        USjob = faker.job()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="Job", value=f"{str(USjob)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only the color
-    elif fake_mode == "color":
-      faker = Faker()
-      try:
-        USfavColor = faker.color_name()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="Color", value=f"{str(USfavColor)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only the ZipCode
-    elif fake_mode == "zipcode":
-      faker = Faker()
-      try:
-        USzip = faker.zipcode()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="Zip Code", value=f"{str(USzip)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only the city
-    elif fake_mode == "city":
-      faker = Faker()
-      try:
-        UScity = faker.city()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="City", value=f"{str(UScity)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only a lisence plate number
-    elif fake_mode == "licenseplate":
-      faker = Faker()
-      try:
-        USnumberPlate = faker.license_plate()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="License Plate", value=f"{str(USnumberPlate)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only a Basic Bank Account Number
-    elif fake_mode == "bban":
-      faker = Faker()
-      try:
-        USbasicBankAccountNumber = faker.bban()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="Basic Bank Account", value=f"{str(USbasicBankAccountNumber)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only a International Bank Account Number
-    elif fake_mode == "iban":
-      faker = Faker()
-      try:
-        USinternationalBankAccountNumber = faker.iban()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="International Bank Account", value=f"{str(USinternationalBankAccountNumber)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only a BSc
-    elif fake_mode == "bs":
-      faker = Faker()
-      try:
-        USbs = faker.bs()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="BS", value=f"{str(USbs)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only credit card information, provides everything
-    elif fake_mode == "cc":
-      faker = Faker()
-      try:
-        UScreditcard = faker.credit_card_full()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="Credit Card", value=f"{str(UScreditcard)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # only a Company Email
-    elif fake_mode == "cemail":
-      faker = Faker()
-      try:
-        UScompanyemail = faker.company_email()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="Email", value=f"{str(UScompanyemail)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only a Phone Number
-    elif fake_mode == "pno":
-      faker = Faker()
-      try:
-        USphoneNumber = faker.phone_number()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="Phone Number", value=f"{str(USphoneNumber)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only a Catch Phrase
-    elif fake_mode == "cp":
-      faker = Faker()
-      try:
-        UScatchPhrase = faker.catch_phrase()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="Catch Phrase", value=f"{str(UScatchPhrase)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Only a SSN
-    elif fake_mode == "ssn":
-      faker = Faker()
-      try:
-        USssa = faker.ssn()
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="SSN", value=f"{str(USssa)}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Generate the basic information
-    elif fake_mode == "low":
-      fake_low = Faker()
-      try:
-        shitthing_simple = fake_low.simple_profile()
-        # fake_info_low_info = "Name: " + str(shitthing_simple['name']) + "\nSex: " + str(shitthing_simple['sex']) + "\nAddress: " + str(shitthing_simple['address']) + "\nMail: " + str(shitthing_simple['mail']) + "\nBirthday: " + str(shitthing_simple['birthdate'])
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name="Name", value=f"{str(shitthing_simple['name'])}")
-        emf2.add_field(name="Sex", value=f"{str(shitthing_simple['sex'])}")
-        emf2.add_field(name="Address", value=f"{str(shitthing_simple['address'])}")
-        emf2.add_field(name="Mail", value=f"{str(shitthing_simple['mail'])}")
-        emf2.add_field(name="Birthday", value=f"{str(shitthing_simple['birthdate'])}")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
-    
-    # Show help
-    elif fake_mode == "help":
-      bp = bot_prefix
-      try:
-        emf2 = discord.Embed(title="Fake Information Generator", color=0xF00000)
-        emf2.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        emf2.set_footer(text=f"Requested by {ctx.author.name}")
-        emf2.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        emf2.add_field(name=f"{bp}fake high", value=f"Generate a high amount of information")
-        emf2.add_field(name=f"{bp}fake low", value=f"Generate a low amount of information")
-        emf2.add_field(name=f"{bp}fake help", value=f"Show this / list all commands")
-        emf2.add_field(name=f"{bp}fake name", value=f"Generate a fake name")
-        emf2.add_field(name=f"{bp}fake dob", value=f"Generate a fake Date of Birth")
-        emf2.add_field(name=f"{bp}fake addr", value=f"Generate a fake Address")
-        emf2.add_field(name=f"{bp}fake job", value=f"Generate a fake Job")
-        emf2.add_field(name=f"{bp}fake color", value=f"Generate a random color")
-        emf2.add_field(name=f"{bp}fake zipcode", value=f"Generate a random zipcode")
-        emf2.add_field(name=f"{bp}fake city", value=f"Generate a random City name")
-        emf2.add_field(name=f"{bp}fake licenseplate", value=f"Generate a fake licenseplate number")
-        emf2.add_field(name=f"{bp}fake bban", value=f"Generate a fake Basic Bank Account")
-        emf2.add_field(name=f"{bp}fake bban", value=f"Generate a fake International Bank Account")
-        emf2.add_field(name=f"{bp}fake bs", value=f"Generate a random BS degree")
-        emf2.add_field(name=f"{bp}fake cc", value=f"Generate fake Credit Card Information")
-        emf2.add_field(name=f"{bp}fake cemail", value=f"Generate a fake company email")
-        emf2.add_field(name=f"{bp}fake pno", value=f"Generate a fake Phone Number")
-        emf2.add_field(name=f"{bp}fake cp", value=f"Generate a fake Catch Phrase")
-        emf2.add_field(name=f"{bp}fake ssn", value=f"Generate a fake SSN")
-        await loading_message.delete()
-        await ctx.send(embed=emf2)
-      except Exception as e:
-        embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-        embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-        embed3.add_field(name="Error:", value=f"{e}", inline=False)
-        embed3.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed3)
 
 @client.command(aliases=["ipinfo", "infoip", "ip-info", "info-ip"])
 async def ip(ctx, *, ip_from_user):
@@ -607,61 +172,6 @@ async def countryinfo(ctx, *, countrycodeig):
     embed3.set_footer(text=f"Requested by {ctx.author.name}")
     await loading_message.delete()
     await ctx.send(embed=embed3)
-
-@client.command(aliases=["mass-fake-profile", "massfakeprofile", "mass-fake-profiles", "massfakeprofiles"])
-async def mfp(ctx, *, how_many):
-    loading_message = await ctx.send(embed=please_wait_emb)
-
-    try:
-      fake_how_many = int(how_many)
-      
-      # This is the limit for this command to stop spamming!
-      if fake_how_many <= 3:
-
-        embed=discord.Embed(title="Mass Fake Profiles", color=0xff0000)
-        embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        embed.add_field(name=f"{ctx.author.name} requested {how_many} fake profiles!", value=f"Starting to send {how_many} fake profiles!", inline=True)
-        # embed.set_footer(text=f"Requested by {ctx.author.name}")
-        await loading_message.delete()
-        await ctx.send(embed=embed)
-
-        for i in range(fake_how_many):
-            fake = Faker()
-            simple_dict = fake.profile()
-            emf = discord.Embed(title="Fake Information Generator", color=0xF00000)
-            emf.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-            emf.set_footer(text=f"Requested by {ctx.author.name}")
-            emf.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-            emf.add_field(name="Name", value=f"{str(simple_dict['name'])}")
-            emf.add_field(name="Job", value=f"{str(simple_dict['job'])}")
-            emf.add_field(name="Birthdate", value=f"{str(simple_dict['birthdate'])}")
-            emf.add_field(name="Company", value=f"{str(simple_dict['company'])}")
-            emf.add_field(name="SSN", value=f"{str(simple_dict['ssn'])}")
-            emf.add_field(name="Recidence", value=f"{str(simple_dict['residence'])}")
-            emf.add_field(name="Current Location", value=f"{str(simple_dict['current_location'])}")
-            emf.add_field(name="Blood Group", value=f"{str(simple_dict['blood_group'])}")
-            emf.add_field(name="Username", value=f"{str(simple_dict['username'])}")
-            emf.add_field(name="Address", value=f"{str(simple_dict['address'])}")
-            emf.add_field(name="Mail", value=f"{str(simple_dict['mail'])}")
-            await ctx.send(embed=emf)
-
-      else:
-        embed=discord.Embed(title="Mass Fake Profiles", color=0xff0000)
-        embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-        embed.set_thumbnail(url="https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png")
-        embed.add_field(name="Error", value="Please enter a value below 30; This is done to prevent spam!", inline=True)
-        embed.set_footer(text=f"Requested by {ctx.author.name}")
-        await ctx.send(embed=embed)
-
-    except Exception as e:
-      embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-      embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-      embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-      embed3.add_field(name="Error:", value=f"{e}", inline=False)
-      embed3.set_footer(text=f"Requested by {ctx.author.name}")
-      await loading_message.delete()
-      await ctx.send(embed=embed3)
 
 @client.command(aliases=["covidall"])
 async def covid(ctx):
@@ -751,36 +261,6 @@ async def eth(ctx):
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/271256875205525504/374282740218200064/2000px-Ethereum_logo.png")
     embed.add_field(name="USD", value=f"{usd}$", inline=False)
     embed.add_field(name="EUR", value=f"{eur}€", inline=False)
-    embed.set_footer(text=f"Requested by {ctx.author.name}")
-    await loading_message.delete()
-    await ctx.send(embed=embed)
-
-  except Exception as e:
-    embed3=discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=0xff0000)
-    embed3.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-    embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-    embed3.add_field(name="Error:", value=f"{e}", inline=False)
-    embed3.set_footer(text=f"Requested by {ctx.author.name}")
-    await loading_message.delete()
-    await ctx.send(embed=embed3)
-
-@client.command(aliases=['wouldyourather', 'would-you-rather', 'wyrq'])
-async def wyr(ctx, *, questionhere):
-  loading_message = await ctx.send(embed=please_wait_emb)
-
-  try:
-    r = requests.get('https://www.conversationstarters.com/wyrqlist.php').text
-
-    soup = BeautifulSoup(r, 'html.parser')
-    qa = soup.find(id='qa').text
-    qor = soup.find(id='qor').text
-    qb = soup.find(id='qb').text
-
-    embed=discord.Embed(title="Would You Rather", color=0xff0000)
-    embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879583873527332904/Would-You-Rather_Questions-680x430.jpg")
-    embed.add_field(name="Question", value=f"{questionhere}", inline=False)
-    embed.add_field(name="Answer", value=f"{qa}\n{qor}\n{qb}", inline=False)
     embed.set_footer(text=f"Requested by {ctx.author.name}")
     await loading_message.delete()
     await ctx.send(embed=embed)
@@ -1302,7 +782,8 @@ async def help(ctx):
         embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
         embed3.add_field(name="Crypto:", value=f"`{bp}bitcoin` - Get the bitcoin rates \n`{bp}doge` - Get the doge coin rates \n`{bp}xmr` - Get the Monero rates \n`{bp}xrp` - Get the ripple rates \n`{bp}eth` - Get the etherium rates", inline=False)
         embed3.add_field(name="Encoding", value=f"`{bp}e_b64 [value]` - Encode to Base64 \n`{bp}e_leet [value]` - Encode to leet \n`{bp}e_md5` - Encode to MD5 \n`{bp}e_sha1` - Encode to SHA1 \n`{bp}e_sha224` - Encode to SHA224 \n`{bp}e_sha512` - Encode to SHA512", inline=False)
-        embed3.add_field(name="Fake Information", value=f"`{bp}fake help` - List out all the fake information commands! \n`{bp}fake high` - High amount fake information  \n`{bp}fake low` - Low amount of fake information \n`{bp}fake name` - Generate a Fake Name \n`{bp}fake dob` - Generate a Fake Date of Birth \n`{bp}fake addr` - Generate a Fake Address \n`{bp}fake job` - Generate a fake job \n`{bp}fake color` - Generate a fake color \n`{bp}fake zipcode` - Generate a fake zipcode \n`{bp}fake city` - Generate a fake city \n`{bp}fake licenseplate` - Generate a fake Lisence Plate \n`{bp}fake bban` - Generate a fake Basic Bank Account Number \n`{bp}fake iban` - Generate a fake International Bank Account \n`{bp}fake bs` - Generate a fake Bachelors \n`{bp}fake cc` - Generate a fake Credit Card \n`{bp}fake cemail` - Generate a fake company email \n`{bp}fake pno` - Generate a fake phone number \n`{bp}fake cp` - Generate a fake phone number \n`{bp}fake cp` - Generate a fake Catch Phrase \n`{bp}fake ssn` - Generate a fake Social Security Number", inline=False)
+        embed3.add_field(name="Fun", value=f"`{bp}inspire` - Send you an inspirational quote! \n`{bp}bored` - Get some activity to do \n`{bp}meme` - Get a meme to laught ats \n`{bp}dadjoke` - just a Dad Joke \n`{bp}joke` - Laughing is the best medicing \n`{bp}joke2` - Jokes are awesome! \n`{bp}wyr`- Would you rather? \n`{bp}advice` - Advice makes our lives better \n`{bp}chuckjoke` - Get a chuck norris joke`   ", inline=False)
+        embed3.add_field(name="Fake Information", value=f"`{bp}fake help` - List out all the fake information commands! \n`{bp}face [gender:optional]` - Generate a fake face with a name", inline=False)
         # OLD MUSIC, COG
         # embed3.add_field(name="Music (BETA)", value=f"`{bp}play [song-name]` - Join to Voice Channel and play the song\n`{bp}join` - Join Voice Channel \n`{bp}leave` - Leave Voice Channel \n`{bp}skip` - Skip the current playing song and go to the next \n`{bp}summon [vc-name]` - Make the bot join to a VC (Case Sensitive) \n`{bp}now` - Displays the current playing song \n`{bp}queue` - Send the music queue waiting to be played! \n`{bp}shuffle` - Shuffle the queue \n`{bp}remove [index-from-queue]` - Remove a song from the queue \n`{bp}loop` - Loop the same song, use again to unloop", inline=False)
         
@@ -1329,19 +810,61 @@ async def help(ctx):
 async def on_command_error(ctx, error):
   if isinstance(error, commands.MissingPermissions):
     embed=discord.Embed(title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
-    embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/877796755234783273/879295069834850324/Avatar.png")
+    embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
     await ctx.send(embed=embed)
     return
 
   if isinstance(error, commands.MissingRequiredArgument):
     embed=discord.Embed(title="Something is wrong!", description="An error has been occured!", color=0xff0000)
-    embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/877796755234783273/879295069834850324/Avatar.png")
+    embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
     embed.add_field(name="Error", value="You haven't passed the needed arguments for this command to run properly", inline=True)
     embed.add_field(name="Possible Fix", value=f"use `{bot_prefix}help all` to list out all the command and check the proper usage of the command you used", inline=True)
     await ctx.send(embed=embed)
     return
+
+
+@client.command()
+async def loadex(ctx, extension):
+  if ctx.author.id == bot_owner_id_or_dev_id:
+    client.load_extension(f'cogs.{extension}')
+    embed=discord.Embed(title="SUCCESS", description=f"`ADDED cogs.{extension} from NearBot`", color=0xff0000)
+    embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+    await ctx.send(embed=embed)
+    return
+  else:
+    embed=discord.Embed(title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
+    embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+    await ctx.send(embed=embed)
+    return
+
+
+@client.command()
+async def unloadex(ctx, extension):
+  if ctx.author.id == bot_owner_id_or_dev_id:
+    try:
+      client.unload_extension(f'cogs.{extension}')
+      embed=discord.Embed(title="SUCCESS", description=f"`REMOVED cogs.{extension} from NearBot`", color=0xff0000)
+      embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+      embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+      await ctx.send(embed=embed)
+      return
+    except:
+      embed=discord.Embed(title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
+      embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+      embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+      await ctx.send(embed=embed)
+      return
+
+
+# Loading all the cogs at startup
+for filename in os.listdir('./cogs'):
+  if filename.endswith('.py'):
+    client.load_extension(f'cogs.{filename[:-3]}')
+    print(f"[+] Loaded: cogs.{filename[:-3]}")
 
 
 client.lava_nodes = [
@@ -1391,7 +914,7 @@ async def on_message(message):
     
     if messagesubcont in blacklisted_letters_n_words:
       embed=discord.Embed(title="Something is wrong!", description="Please enter the command with valid characters", color=0xff0000)
-      embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/877796755234783273/879295069834850324/Avatar.png")
+      embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
       embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
       embed.add_field(name="Possible Fix", value=f"Dont have {blacklisted_letters_n_words} in your command!", inline=True)
       await message.send(embed=embed)
@@ -1402,4 +925,5 @@ async def on_message(message):
 
 keep_alive()
 
-client.run(token)
+# client.run(token)
+client.run("ODU4Mjk4NjgzMjIwMTY0NjE2.YNcG8A.OKxSeIUTI7_YF4I6IrixoGuiS3I")
