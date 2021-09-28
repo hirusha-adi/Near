@@ -14,7 +14,7 @@ class NearBotMain(commands.Cog):
         self.please_wait_emb.set_thumbnail(url=get_embeds.PleaseWait.THUMBNAIL)
         self.please_wait_emb.set_footer(text=get_embeds.PleaseWait.DESCRIPTION)
 
-        self.filepwdlist1 = open("near\\assets\\tenmilpwds.txt", "r")
+        self.filepwdlist1 = open("near/assets/tenmilpwds.txt", "r")
         self.lines = self.filepwdlist1.readlines()
 
 
@@ -155,11 +155,3 @@ class NearBotMain(commands.Cog):
 
 def setup(client: commands.Bot):
     client.add_cog(NearBotMain(client))
-
-
-
-
-
-
-
-

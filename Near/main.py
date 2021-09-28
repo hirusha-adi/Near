@@ -67,7 +67,8 @@ client.lava_nodes = [
     'region':'singapore'
   }
 ]
-client.load_extension('dismusic')
+client.load_extension('near.cogs.musicplayer')
+print("[+] Loaded: near.cogs.musicplayer")
 
 
 # This is for user input sanitization
