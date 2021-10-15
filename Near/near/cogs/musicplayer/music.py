@@ -7,13 +7,13 @@ from discord.ext import commands
 from .checks import in_same_channel, player_connected, voice_connected
 from near.database import get_embeds
 
+
 class Music(commands.Cog, name="Music", description="Play any music easily!"):
     """Music commands"""
 
     def __init__(self, bot):
         self.bot = bot
         self.URL_REG = re.compile(r"https?://(?:www\.)?.+")
-
 
         if not hasattr(self.bot, "wavelink"):
             self.bot.wavelink = wavelink.Client(bot=self.bot)
@@ -36,7 +36,8 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
                 )
                 try:
                     await player.connect(guild.me.voice.channel.id)
-                    print(f"Connected to existing voice -> {guild.me.voice.channel.id}")
+                    print(
+                        f"Connected to existing voice -> {guild.me.voice.channel.id}")
                 except Exception as e:
                     print(e)
 
@@ -44,7 +45,8 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
     @voice_connected()
     async def connect_(self, ctx):
         """Connect the player"""
-        player: DisPlayer = self.bot.wavelink.get_player(ctx.guild.id, cls=DisPlayer)
+        player: DisPlayer = self.bot.wavelink.get_player(
+            ctx.guild.id, cls=DisPlayer)
 
         if player.is_connected:
             if not player.bound_channel:
@@ -75,14 +77,16 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
     @in_same_channel()
     async def disconnect_(self, ctx):
         """Destroy the player"""
-        player: DisPlayer = self.bot.wavelink.get_player(ctx.guild.id, cls=DisPlayer)
+        player: DisPlayer = self.bot.wavelink.get_player(
+            ctx.guild.id, cls=DisPlayer)
         await player.destroy()
 
     @commands.command(name="play", aliases=["p"])
     @voice_connected()
     async def play_(self, ctx, *, query):
         """Play or add song to queue"""
-        player: DisPlayer = self.bot.wavelink.get_player(ctx.guild.id, cls=DisPlayer)
+        player: DisPlayer = self.bot.wavelink.get_player(
+            ctx.guild.id, cls=DisPlayer)
 
         if not player.is_connected:
             await ctx.invoke(self.connect_)
@@ -124,7 +128,8 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
     @in_same_channel()
     async def skip(self, ctx):
         """Skip currently playing song"""
-        player: DisPlayer = self.bot.wavelink.get_player(ctx.guild.id, cls=DisPlayer)
+        player: DisPlayer = self.bot.wavelink.get_player(
+            ctx.guild.id, cls=DisPlayer)
 
         if ctx.channel != player.bound_channel:
             return await ctx.send(
@@ -145,7 +150,8 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
     @in_same_channel()
     async def pause(self, ctx):
         """Pause the player"""
-        player: DisPlayer = self.bot.wavelink.get_player(ctx.guild.id, cls=DisPlayer)
+        player: DisPlayer = self.bot.wavelink.get_player(
+            ctx.guild.id, cls=DisPlayer)
 
         if ctx.channel != player.bound_channel:
             return await ctx.send(
@@ -167,7 +173,8 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
     @in_same_channel()
     async def resume(self, ctx):
         """Resume the player"""
-        player: DisPlayer = self.bot.wavelink.get_player(ctx.guild.id, cls=DisPlayer)
+        player: DisPlayer = self.bot.wavelink.get_player(
+            ctx.guild.id, cls=DisPlayer)
 
         if ctx.channel != player.bound_channel:
             return await ctx.send(
@@ -189,7 +196,8 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
     @in_same_channel()
     async def seek(self, ctx, seconds: int, reverse: bool = False):
         """Seek the player backward or forward"""
-        player: DisPlayer = self.bot.wavelink.get_player(ctx.guild.id, cls=DisPlayer)
+        player: DisPlayer = self.bot.wavelink.get_player(
+            ctx.guild.id, cls=DisPlayer)
 
         if ctx.channel != player.bound_channel:
             return await ctx.send(
@@ -222,7 +230,8 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
     @in_same_channel()
     async def volume(self, ctx, vol: int, forced=False):
         """Set volume"""
-        player: DisPlayer = self.bot.wavelink.get_player(ctx.guild.id, cls=DisPlayer)
+        player: DisPlayer = self.bot.wavelink.get_player(
+            ctx.guild.id, cls=DisPlayer)
 
         if ctx.channel != player.bound_channel:
             return await ctx.send(
@@ -243,7 +252,8 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
     @in_same_channel()
     async def loop(self, ctx, type: str = None):
         """Set loop to `NONE`, `CURRENT` or `PLAYLIST`"""
-        player: DisPlayer = self.bot.wavelink.get_player(ctx.guild.id, cls=DisPlayer)
+        player: DisPlayer = self.bot.wavelink.get_player(
+            ctx.guild.id, cls=DisPlayer)
 
         if ctx.channel != player.bound_channel:
             return await ctx.send(
@@ -287,7 +297,8 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
     @in_same_channel()
     async def nowplaying(self, ctx):
         """What's playing now?"""
-        player: DisPlayer = self.bot.wavelink.get_player(ctx.guild.id, cls=DisPlayer)
+        player: DisPlayer = self.bot.wavelink.get_player(
+            ctx.guild.id, cls=DisPlayer)
 
         if ctx.channel != player.bound_channel:
             return await ctx.send(
@@ -305,7 +316,8 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
     @in_same_channel()
     async def queue(self, ctx):
         """Player's current queue"""
-        player: DisPlayer = self.bot.wavelink.get_player(ctx.guild.id, cls=DisPlayer)
+        player: DisPlayer = self.bot.wavelink.get_player(
+            ctx.guild.id, cls=DisPlayer)
 
         if ctx.channel != player.bound_channel:
             return await ctx.send(
@@ -317,7 +329,8 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
             return await ctx.send("Nothing is in the queue.")
 
         embed = discord.Embed(color=get_embeds.Common.COLOR)
-        embed.set_author(name="Queue", icon_url="https://cdn.shahriyar.dev/list.png")
+        embed.set_author(
+            name="Queue", icon_url="https://cdn.shahriyar.dev/list.png")
 
         tracks = ""
         if player.loop == "CURRENT":
@@ -341,7 +354,8 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
     @in_same_channel()
     async def equalizer(self, ctx):
         """Set equalizer"""
-        player: DisPlayer = self.bot.wavelink.get_player(ctx.guild.id, cls=DisPlayer)
+        player: DisPlayer = self.bot.wavelink.get_player(
+            ctx.guild.id, cls=DisPlayer)
 
         if ctx.channel != player.bound_channel:
             return await ctx.send(

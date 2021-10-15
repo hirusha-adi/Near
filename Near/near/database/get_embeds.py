@@ -1,9 +1,10 @@
 import json
 
+
 class PleaseWait:
     with open("near/database/embeds.json", "r", encoding="utf-8") as file:
         embed = json.load(file)
-        
+
     TITLE = embed["PleaseWaitEmbed"]["TITLE"]
     DESCRIPTION = embed["PleaseWaitEmbed"]["DESCRIPTION"]
     THUMBNAIL = embed["PleaseWaitEmbed"]["THUMBNAIL"]
@@ -20,7 +21,7 @@ class PleaseWait:
 class ErrorEmbeds:
     with open("near/database/embeds.json", "r", encoding="utf-8") as file:
         embed = json.load(file)
-        
+
     TITLE = embed["ERROR"]["TITLE"]
     DESCRIPTION = embed["ERROR"]["DESCRIPTION"]
     THUMBNAIL = embed["ERROR"]["THUMBNAIL"]
@@ -37,14 +38,14 @@ class ErrorEmbeds:
 class Common:
     with open("near/database/embeds.json", "r", encoding="utf-8") as file:
         embed = json.load(file)
-        
+
     if embed["COMMON"]["COLOR"] == "red":
         COLOR = 0xff0000
     elif embed["COMMON"]["COLOR"] == "green":
         COLOR = 0x00ff00
     elif embed["COMMON"]["COLOR"] == "blue":
         COLOR = 0x0000ff
-    
+
     AUTHOR_NAME = embed["COMMON"]["AUTHOR_NAME"]
     AUTHOR_URL = embed["COMMON"]["AUTHOR_URL"]
 
@@ -52,10 +53,9 @@ class Common:
 class FakeEmbeds:
     with open("near/database/embeds.json", "r", encoding="utf-8") as file:
         embed = json.load(file)
-        
+
     TITLE = embed["FAKEEMBEDS"]["TITLE"]
     THUMBNAIL = embed["FAKEEMBEDS"]["THUMBNAIL"]
-
 
     if embed["FAKEEMBEDS"]["COLOR"] == "red":
         COLOR = 0xff0000
@@ -63,6 +63,3 @@ class FakeEmbeds:
         COLOR = 0x00ff00
     elif embed["FAKEEMBEDS"]["COLOR"] == "blue":
         COLOR = 0x0000ff
-
-
-
