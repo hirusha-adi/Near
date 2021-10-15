@@ -20,52 +20,6 @@ class NearBotMain(commands.Cog):
         self.filepwdlist1 = open("near/assets/tenmilpwds.txt", "r")
         self.lines = self.filepwdlist1.readlines()
 
-    @commands.command()
-    async def pwdcheck(self, ctx, *, password):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
-
-        try:
-            if password + "\n" in self.lines:
-                embed = discord.Embed(
-                    title="Password Checker!", color=get_embeds.Common.COLOR)
-                embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                 icon_url=get_embeds.Common.AUTHOR_URL)
-                embed.set_thumbnail(
-                    url="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png")
-                embed.add_field(name=f"Your Passoword",
-                                value=f"{password}", inline=False)
-                embed.add_field(
-                    name=f"Safety", value=f"Not Safe. This password is in the list of most common 10 million passwords!", inline=False)
-                embed.set_footer(text=f"Requested by {ctx.author.name}")
-                await loading_message.delete()
-                await ctx.send(embed=embed)
-            else:
-                embed = discord.Embed(
-                    title="Password Checker!", color=get_embeds.Common.COLOR)
-                embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                 icon_url=get_embeds.Common.AUTHOR_URL)
-                embed.set_thumbnail(
-                    url="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png")
-                embed.add_field(name=f"Your Passoword",
-                                value=f"{password}", inline=False)
-                embed.add_field(
-                    name=f"Safety", value=f"Safe. This password is not in the list of most common 10 million passwords!", inline=False)
-                embed.set_footer(text=f"Requested by {ctx.author.name}")
-                await loading_message.delete()
-                await ctx.send(embed=embed)
-
-        except Exception as e:
-            embed2 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
-            embed2.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed2.add_field(
-                name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed2.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed2)
-
     @commands.command(aliases=["ipinfo", "infoip", "ip-info", "info-ip"])
     async def ip(self, ctx, *, ip_from_user):
         loading_message = await ctx.send(embed=self.please_wait_emb)
@@ -189,7 +143,9 @@ class NearBotMain(commands.Cog):
 
     @commands.command(breif="Password Checker",
                       description="This command will send you very useful information about your password",
-                      help="This command will send you very useful information about your password")
+                      help="This command will send you very useful information about your password",
+                      aliases=['pwdcheck']
+                      )
     async def passwordchk(self, ctx, *, password):
         loading_message = await ctx.send(embed=self.please_wait_emb)
 
