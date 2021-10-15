@@ -2,6 +2,7 @@ import discord
 import requests
 from discord.ext import commands
 from near.database import get_embeds
+from zxcvbn import zxcvbn
 
 
 class NearBotMain(commands.Cog):
@@ -182,6 +183,69 @@ class NearBotMain(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
+            embed3.set_footer(text=f"Requested by {ctx.author.name}")
+            await loading_message.delete()
+            await ctx.send(embed=embed3)
+
+    @commands.command(breif="Password Checker",
+                      description="This command will send you very useful information about your password",
+                      help="This command will send you very useful information about your password")
+    async def passwordchk(self, ctx, *, password):
+        loading_message = await ctx.send(embed=self.please_wait_emb)
+
+        try:
+            results = zxcvbn('hirusha')
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
+                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
+                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
+
+            embed3.add_field(
+                name="Password", value=f"{password}", inline=False)
+            embed3.add_field(
+                name="Guesses", value=f"Decimal: {results['guesses']}\nLog 10: {results['guesses_log10']}", inline=False)
+
+            pat = ""
+            for seq in results['sequence']:
+                pat += f"\n-------\nPattern: {seq['pattern']}\ni: {seq['i']}\nj: {seq['j']}\nToken: {seq['token']}\nMatched Word: {seq['matched_word']}\nRank: {seq['rank']}\nDictionary Name: {seq['dictionary_name']}\nReversed: {seq['reversed']}\nl33t: {seq['l33t']}\nBase Guesses: {seq['base_guesses']}\nUppercase Variations: {seq['uppercase_variations']}\nl33t Variations: {seq['l33t_variations']}\nGuesses: {seq['guesses']}\nGuesses Log10: {seq['guesses_log10']}"
+
+            embed3.add_field(name="Pattern: ", value=f"{pat}", inline=False)
+            embed3.add_field(name="Calculate Time: ",
+                             value=f"{results['calc_time']}", inline=False)
+            embed3.add_field(name="Crack Time Seconds: ",
+                             value=f"Online Throttling 100 Per Hour: {results['crack_times_seconds']['online_throttling_100_per_hour']}\nOnline no Throttling 10 Per Second: {results['crack_times_seconds']['online_no_throttling_10_per_second']}\nOffline Slow Hashing 1e4 Per Second: {results['crack_times_seconds']['offline_slow_hashing_1e4_per_second']}\nOffline Fast Hashing 1e10 Per Second: {results['crack_times_seconds']['offline_fast_hashing_1e10_per_second']}", inline=False)
+            embed3.add_field(name="Crack Times Display: ",
+                             value=f"Online Throttling 100 Per Hour: {results['crack_times_display']['online_throttling_100_per_hour']}\nOnline No Throttling 10 Per Second: {results['crack_times_display']['online_no_throttling_10_per_second']}\nOffline Slow Hashing 1e4 Per Second: {results['crack_times_display']['offline_slow_hashing_1e4_per_second']}\nOffline Fast Hashing 1e10 Per Second: {results['crack_times_display']['offline_fast_hashing_1e10_per_second']}", inline=False)
+            embed3.add_field(
+                name="Score: ", value=f"{results['score']}", inline=False)
+
+            fdb = ""
+            for feedbsug in results['feedback']['suggestions']:
+                fdb += f"{feedbsug}\n"
+
+            embed3.add_field(
+                name="Feedback: ", value=f"{results['feedback']['warning']}\n{fdb}", inline=False)
+
+            if password + "\n" in self.lines:
+                embed3.add_field(
+                    name="Password Found!", value=f"This password can be found in the list of most common 10 Million passwords", inline=False
+                )
+            else:
+                embed3.add_field(
+                    name="Password Not Found!", value=f"This password cannot be found in the list of most common 10 Million passwords", inline=False
+                )
+            embed3.set_footer(text=f"Requested by {ctx.author.name}")
+            await loading_message.delete()
+            await ctx.send(embed=embed3)
+
+        except Exception as e:
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
+                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
+                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
+            embed3.add_field(name="Error:", value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {ctx.author.name}")
             await loading_message.delete()
             await ctx.send(embed=embed3)
