@@ -17,6 +17,9 @@ class PleaseWait:
     elif embed["PleaseWaitEmbed"]["COLOR"] == "blue":
         COLOR = 0x0000ff
 
+    AUTHOR_NAME = embed["PleaseWaitEmbed"]["AUTHOR_NAME"]
+    AUTHOR_URL = embed["PleaseWaitEmbed"]["AUTHOR_URL"]
+
 
 class ErrorEmbeds:
     with open("near/database/embeds.json", "r", encoding="utf-8") as file:
