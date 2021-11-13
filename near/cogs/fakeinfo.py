@@ -1,11 +1,11 @@
+from json import load as loadjson
+from os import system as systemruncmnd
+from platform import system as systemtype
+
 import discord
 import requests
 from discord.ext import commands
-from json import load as loadjson
-from platform import system as systemtype
-from os import system as systemruncmnd
-from near.database import get_embeds
-from near.database import get_main
+from near.database import get_embeds, get_main
 
 try:
     from faker import Faker

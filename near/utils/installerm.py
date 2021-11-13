@@ -11,11 +11,6 @@ if platform.system().lower().startswith('win'):
 
 
 def pip_install(mdn):
-    """Passing the module name to this function will install it!
-
-    Args:
-        mdn (String): The module Name
-    """
     try:
         os.system(f"{pip} install {mdn}")
     except Exception as e:
@@ -23,9 +18,6 @@ def pip_install(mdn):
 
 
 def pip_upgrade():
-    """
-    Upgrade pip
-    """
     try:
         try:
             os.system(f"{pip} install --upgrade pip")

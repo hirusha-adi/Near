@@ -1,10 +1,10 @@
-from keep_alive import keep_alive
 import os
-from password_strength import PasswordStats
+
 import discord
 from discord.ext import commands
-import json
+
 from near.database import get_main
+from near.web.keep_alive import keep_alive
 
 bot_prefix = get_main.BotMainDB.MESSAGE_PREFIX
 bot_creator_name = get_main.BotMainDB.BOT_CREATOR_NAME
@@ -22,7 +22,7 @@ async def loadex(ctx, extension):
         embed = discord.Embed(
             title="SUCCESS", description=f"`ADDED cogs.{extension} from NearBot`", color=0xff0000)
         embed.set_author(
-            name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+            name=f"{client.user.name}", icon_url=f"{client.user.avatar_url}")
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
         await ctx.send(embed=embed)
@@ -31,7 +31,7 @@ async def loadex(ctx, extension):
         embed = discord.Embed(
             title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
         embed.set_author(
-            name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+            name=f"{client.user.name}", icon_url=f"{client.user.avatar_url}")
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
         await ctx.send(embed=embed)
@@ -46,7 +46,7 @@ async def unloadex(ctx, extension):
             embed = discord.Embed(
                 title="SUCCESS", description=f"`REMOVED cogs.{extension} from NearBot`", color=0xff0000)
             embed.set_author(
-                name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+                name=f"{client.user.name}", icon_url=f"{client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await ctx.send(embed=embed)
@@ -55,7 +55,7 @@ async def unloadex(ctx, extension):
             embed = discord.Embed(
                 title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
             embed.set_author(
-                name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+                name=f"{client.user.name}", icon_url=f"{client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await ctx.send(embed=embed)
@@ -121,7 +121,7 @@ async def on_message(message):
             embed = discord.Embed(
                 title="Something is wrong!", description="Please enter the command with valid characters", color=0xff0000)
             embed.set_author(
-                name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+                name=f"{client.user.name}", icon_url=f"{client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             embed.add_field(
