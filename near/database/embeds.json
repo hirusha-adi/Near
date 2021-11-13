@@ -1,5 +1,7 @@
 {
     "PleaseWaitEmbed":{
+        "AUTHOR_NAME":"NearBot",
+        "AUTHOR_URL":"https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png",
         "TITLE":"Please Wait",
         "DESCRIPTION":"``` Processing Your Request ```",
         "COLOR":"red",
