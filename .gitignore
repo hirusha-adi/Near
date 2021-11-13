@@ -5,6 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
+/near/database/main.json
 
 # Distribution / packaging
 .Python
