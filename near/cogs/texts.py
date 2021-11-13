@@ -8,14 +8,6 @@ class Texts(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-        # This is the please-wait/Loading embed
-        self.please_wait_emb = discord.Embed(
-            title=get_embeds.PleaseWait.TITLE, description=get_embeds.PleaseWait.DESCRIPTION, color=get_embeds.PleaseWait.COLOR)
-        self.please_wait_emb.set_author(
-            name=get_embeds.Common.AUTHOR_NAME, icon_url=get_embeds.Common.AUTHOR_URL)
-        self.please_wait_emb.set_thumbnail(url=get_embeds.PleaseWait.THUMBNAIL)
-        self.please_wait_emb.set_footer(text=get_embeds.PleaseWait.FOOTER)
-
     @commands.command()
     async def goodnight(ctx):
         await ctx.message.delete()
