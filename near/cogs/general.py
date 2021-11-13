@@ -1,10 +1,10 @@
+from datetime import timedelta as dttimedelta
+from platform import python_version as cur_python_version
+from time import time as nowtime
+
 import discord
 from discord.ext import commands
-from near.database import get_embeds
-from near.database import get_main
-from time import time as nowtime
-from platform import python_version as cur_python_version
-from datetime import timedelta as dttimedelta
+from near.database import get_embeds, get_main
 
 
 class General(commands.Cog):
