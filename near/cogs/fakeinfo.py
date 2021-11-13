@@ -36,8 +36,8 @@ class FakeInformation(commands.Cog):
         # This is the please-wait/Loading embed
         self.please_wait_emb = discord.Embed(
             title=get_embeds.PleaseWait.TITLE, description=get_embeds.PleaseWait.DESCRIPTION, color=get_embeds.PleaseWait.COLOR)
-        self.please_wait_emb.set_author(
-            name=get_embeds.Common.AUTHOR_NAME, icon_url=get_embeds.Common.AUTHOR_URL)
+        self.please_wait_emb.set_author(name=f"{self.client.user.name}",
+                                        icon_url=f"{self.client.user.avatar_url}")
         self.please_wait_emb.set_thumbnail(url=get_embeds.PleaseWait.THUMBNAIL)
         self.please_wait_emb.set_footer(text=get_embeds.PleaseWait.FOOTER)
 
@@ -99,8 +99,8 @@ class FakeInformation(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -119,8 +119,8 @@ class FakeInformation(commands.Cog):
                 emf = discord.Embed(
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf.set_footer(text=f"Requested by {ctx.author.name}")
-                emf.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                               icon_url=get_embeds.Common.AUTHOR_URL)
+                emf.set_author(name=f"{self.client.user.name}",
+                               icon_url=f"{self.client.user.avatar_url}")
                 emf.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf.add_field(name="Name", value=f"{str(simple_dict['name'])}")
                 emf.add_field(name="Job", value=f"{str(simple_dict['job'])}")
@@ -145,8 +145,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed2 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed2.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed2.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed2.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -162,16 +162,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Name", value=f"{str(USname)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -187,16 +187,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Date Of Birth", value=f"{str(USdob)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -212,16 +212,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Address", value=f"{str(USaddress)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -237,16 +237,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Job", value=f"{str(USjob)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -262,16 +262,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Color", value=f"{str(USfavColor)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -287,16 +287,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Zip Code", value=f"{str(USzip)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -312,16 +312,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="City", value=f"{str(UScity)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -337,8 +337,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="License Plate",
                                value=f"{str(USnumberPlate)}")
                 await loading_message.delete()
@@ -346,8 +346,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -363,8 +363,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Basic Bank Account",
                                value=f"{str(USbasicBankAccountNumber)}")
                 await loading_message.delete()
@@ -372,8 +372,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -389,8 +389,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="International Bank Account",
                                value=f"{str(USinternationalBankAccountNumber)}")
                 await loading_message.delete()
@@ -398,8 +398,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -415,16 +415,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="BS", value=f"{str(USbs)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -440,8 +440,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Credit Card",
                                value=f"{str(UScreditcard)}")
                 await loading_message.delete()
@@ -449,8 +449,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -466,16 +466,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Email", value=f"{str(UScompanyemail)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -491,8 +491,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Phone Number",
                                value=f"{str(USphoneNumber)}")
                 await loading_message.delete()
@@ -500,8 +500,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -517,8 +517,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Catch Phrase",
                                value=f"{str(UScatchPhrase)}")
                 await loading_message.delete()
@@ -526,8 +526,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -543,16 +543,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="SSN", value=f"{str(USssa)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -569,8 +569,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(
                     name="Name", value=f"{str(shitthing_simple['name'])}")
                 emf2.add_field(
@@ -586,8 +586,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -603,16 +603,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Country", value=f"{str(USssa)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -628,16 +628,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Postcode", value=f"{str(USssa)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -653,16 +653,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Street Address", value=f"{str(USssa)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -678,16 +678,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Street Name", value=f"{str(USssa)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -703,16 +703,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="ABA", value=f"{str(USssa)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -728,16 +728,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Bank Cuntry", value=f"{str(USssa)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -760,16 +760,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="EAN Barcode", value=f"{str(USssa)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -785,16 +785,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Company Suffix", value=f"{str(USssa)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -810,8 +810,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Credit Card Expire Date",
                                value=f"{str(USssa)}")
                 await loading_message.delete()
@@ -819,8 +819,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -836,8 +836,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Credit Card Number",
                                value=f"{str(USssa)}")
                 await loading_message.delete()
@@ -845,8 +845,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -862,8 +862,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Credit Card Provider",
                                value=f"{str(USssa)}")
                 await loading_message.delete()
@@ -871,8 +871,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -888,16 +888,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Credit Card CVV", value=f"{str(USssa)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -913,8 +913,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(
                     name="Cryptocurrency", value=f"Short Name: {USssa[0]} \nFull Name: {USssa[1]}")
                 await loading_message.delete()
@@ -922,8 +922,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -939,16 +939,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Cryptocurrency Code", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -964,16 +964,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Cryptocurrency Name", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -989,8 +989,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(
                     name="Currency", value=f"Short Name: {USssa[0]} \nFull Name: {USssa[1]}")
                 await loading_message.delete()
@@ -998,8 +998,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1015,16 +1015,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Currency Code", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1040,16 +1040,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Currency Code", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1069,16 +1069,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Currency Code", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1094,16 +1094,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Pricetag", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1119,16 +1119,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Date", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1144,16 +1144,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Century", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1169,16 +1169,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="File Name", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1194,16 +1194,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="File Extension", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1219,16 +1219,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="File Extension", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1250,16 +1250,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="File Extension", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1275,16 +1275,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Unix Device", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1300,16 +1300,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Unix Partition", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1325,16 +1325,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Email Address", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1350,16 +1350,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Email Address", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1375,16 +1375,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Email Address", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1400,16 +1400,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Hostname", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1425,16 +1425,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="HTTP METHOD", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1450,16 +1450,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="IANA Registrar ID", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1475,16 +1475,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Image URL", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1500,16 +1500,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="IPv4", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1525,16 +1525,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="IPv4 Netwrok Class", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1550,16 +1550,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="a Private IPv4 Address", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1575,16 +1575,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="a Public IPv4 Address", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1600,16 +1600,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="IPv6", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1625,16 +1625,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Mac Address", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1650,16 +1650,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="NIC Handle", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1675,16 +1675,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Port Number", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1700,16 +1700,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="RIPE ID", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1725,16 +1725,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Slug", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1750,16 +1750,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="TLD", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1775,16 +1775,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="URI", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1800,16 +1800,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="URI Extension", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1825,16 +1825,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="URL", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1850,16 +1850,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Username", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1875,16 +1875,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="ISBN 10", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1900,16 +1900,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="ISBN 13", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1925,16 +1925,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Paragraph", value=f"{''.join(USssa)}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1950,16 +1950,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Sentence", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -1975,16 +1975,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Text", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2000,16 +2000,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Word", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2025,16 +2025,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="First Name", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2050,16 +2050,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="First Name - Male", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2075,16 +2075,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="First Name - Female", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2100,8 +2100,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="First Name - Non Binary",
                                value=f"{USssa}")
                 await loading_message.delete()
@@ -2109,8 +2109,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2126,16 +2126,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Language Name", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2151,16 +2151,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Last Name", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2176,16 +2176,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Last Name - Male", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2201,16 +2201,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Last Name - Female", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2226,16 +2226,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Last Name - Non Binary", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2251,16 +2251,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Name - Female", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2276,16 +2276,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Name - Male", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2301,16 +2301,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Name - Non Binary", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2326,16 +2326,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Prefix", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2351,16 +2351,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Prefix", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2376,16 +2376,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Calling Code", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2401,16 +2401,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="MSISDN", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2426,16 +2426,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Android Platform Token", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2451,16 +2451,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="User Agent - Chrome", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2476,16 +2476,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="User Agent - FireFox", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2501,8 +2501,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(
                     name="User Agent - Internet Explorer", value=f"{USssa}")
                 await loading_message.delete()
@@ -2510,8 +2510,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2527,16 +2527,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="IOS Platform Token", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2552,16 +2552,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Linux Platform Token", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2577,16 +2577,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Linux Processor", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2602,16 +2602,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="MAC - Platform Token", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2627,16 +2627,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="MAC Processor", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2652,16 +2652,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="User Agent - Opera", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2677,16 +2677,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="User Agent - Safari", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2702,8 +2702,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="Windows - Platform Token",
                                value=f"{USssa}")
                 await loading_message.delete()
@@ -2711,8 +2711,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2728,16 +2728,16 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(name="User Agent", value=f"{USssa}")
                 await loading_message.delete()
                 await ctx.send(embed=emf2)
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2759,8 +2759,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
 
                 try:
                     if fmlast == "ymm":
@@ -2807,7 +2807,7 @@ class FakeInformation(commands.Cog):
                     embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                            description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
                     embed3.set_author(
-                        name=get_embeds.Common.AUTHOR_NAME, icon_url=get_embeds.Common.AUTHOR_URL)
+                        name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
                     embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                     embed3.add_field(
                         name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2822,8 +2822,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2845,8 +2845,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
 
                 try:
                     if fmlast == "ymm":
@@ -2893,7 +2893,7 @@ class FakeInformation(commands.Cog):
                     embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                            description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
                     embed3.set_author(
-                        name=get_embeds.Common.AUTHOR_NAME, icon_url=get_embeds.Common.AUTHOR_URL)
+                        name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
                     embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                     embed3.add_field(
                         name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2908,8 +2908,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2924,8 +2924,8 @@ class FakeInformation(commands.Cog):
                     title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                 emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 emf2.set_footer(text=f"Requested by {ctx.author.name}")
-                emf2.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                icon_url=get_embeds.Common.AUTHOR_URL)
+                emf2.set_author(name=f"{self.client.user.name}",
+                                icon_url=f"{self.client.user.avatar_url}")
                 emf2.add_field(
                     name=f"{bp}fake high", value=f"Generate a high amount of information", inline=False)
                 emf2.add_field(
@@ -2976,8 +2976,8 @@ class FakeInformation(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(
                     name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -2997,8 +2997,8 @@ class FakeInformation(commands.Cog):
 
                 embed = discord.Embed(
                     title="Mass Fake Profiles", color=get_embeds.FakeEmbeds.COLOR)
-                embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                 icon_url=get_embeds.Common.AUTHOR_URL)
+                embed.set_author(name=f"{self.client.user.name}",
+                                 icon_url=f"{self.client.user.avatar_url}")
                 embed.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 embed.add_field(name=f"{ctx.author.name} requested {how_many} fake profiles!",
                                 value=f"Starting to send {how_many} fake profiles!", inline=True)
@@ -3013,8 +3013,8 @@ class FakeInformation(commands.Cog):
                         title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
                     emf.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                     emf.set_footer(text=f"Requested by {ctx.author.name}")
-                    emf.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                   icon_url=get_embeds.Common.AUTHOR_URL)
+                    emf.set_author(name=f"{self.client.user.name}",
+                                   icon_url=f"{self.client.user.avatar_url}")
                     emf.add_field(
                         name="Name", value=f"{str(simple_dict['name'])}")
                     emf.add_field(
@@ -3042,8 +3042,8 @@ class FakeInformation(commands.Cog):
             else:
                 embed = discord.Embed(
                     title="Mass Fake Profiles", color=get_embeds.FakeEmbeds.COLOR)
-                embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                 icon_url=get_embeds.Common.AUTHOR_URL)
+                embed.set_author(name=f"{self.client.user.name}",
+                                 icon_url=f"{self.client.user.avatar_url}")
                 embed.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
                 embed.add_field(
                     name="Error", value="Please enter a value below 4; This is done to prevent spam!", inline=True)
@@ -3054,8 +3054,8 @@ class FakeInformation(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -3072,8 +3072,8 @@ class FakeInformation(commands.Cog):
 
             embed = discord.Embed(title="Discord Bot Token Generator",
                                   description="`{r['token']}`", color=get_embeds.FakeEmbeds.COLOR)
-            embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                             icon_url=get_embeds.Common.AUTHOR_URL)
+            embed.set_author(name=f"{self.client.user.name}",
+                             icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://user-images.githubusercontent.com/36286877/127767330-d3e68d90-67a0-4672-b3e1-6193b323bc21.png")
             embed.set_footer(text=f"Requested by {ctx.author.name}")
@@ -3083,8 +3083,8 @@ class FakeInformation(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(
                 url="https://media.discordapp.net/attachments/877796755234783273/880745781966037032/new-scrabble-words-2018-beatdown-5657-57124c9f228c0258d65053fe7d3891491x.jpg")
             embed3.add_field(
