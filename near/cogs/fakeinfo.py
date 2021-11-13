@@ -36,8 +36,8 @@ class FakeInformation(commands.Cog):
         # This is the please-wait/Loading embed
         self.please_wait_emb = discord.Embed(
             title=get_embeds.PleaseWait.TITLE, description=get_embeds.PleaseWait.DESCRIPTION, color=get_embeds.PleaseWait.COLOR)
-        self.please_wait_emb.set_author(name=f"{self.client.user.name}",
-                                        icon_url=f"{self.client.user.avatar_url}")
+        self.please_wait_emb.set_author(
+            name=f"NearBot", icon_url=f"https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
         self.please_wait_emb.set_thumbnail(url=get_embeds.PleaseWait.THUMBNAIL)
         self.please_wait_emb.set_footer(text=get_embeds.PleaseWait.FOOTER)
 
