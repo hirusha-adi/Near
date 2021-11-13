@@ -18,7 +18,7 @@ class Tools(commands.Cog):
         self.please_wait_emb = discord.Embed(
             title=get_embeds.PleaseWait.TITLE, description=get_embeds.PleaseWait.DESCRIPTION, color=get_embeds.PleaseWait.COLOR)
         self.please_wait_emb.set_author(
-            name=get_embeds.Common.AUTHOR_NAME, icon_url=get_embeds.Common.AUTHOR_URL)
+            name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
         self.please_wait_emb.set_thumbnail(url=get_embeds.PleaseWait.THUMBNAIL)
         self.please_wait_emb.set_footer(text=get_embeds.PleaseWait.FOOTER)
 
@@ -33,8 +33,8 @@ class Tools(commands.Cog):
                     description="You havent entered anything, so i couldnt find lyrics!",
                     color=get_embeds.Common.COLOR
                 )
-                embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                 icon_url=get_embeds.Common.AUTHOR_URL)
+                embed.set_author(name=f"{self.client.user.name}",
+                                 icon_url=f"{self.client.user.avatar_url}")
                 embed.set_footer(text=f"Requested by {ctx.author.name}")
                 try:
                     await loading_message.delete()
@@ -74,8 +74,8 @@ class Tools(commands.Cog):
                     color=get_embeds.Common.COLOR
                     # timestamp = datetime.datetime.utcnow()
                 )
-                embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                 icon_url=get_embeds.Common.AUTHOR_URL)
+                embed.set_author(name=f"{self.client.user.name}",
+                                 icon_url=f"{self.client.user.avatar_url}")
                 embed.set_thumbnail(url=songThumbnail)
                 embed.set_footer(text=f"Requested by {ctx.author.name}")
                 try:
@@ -87,8 +87,8 @@ class Tools(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(name="Error:", value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {ctx.author.name}")
@@ -108,8 +108,8 @@ class Tools(commands.Cog):
             except Exception as e:
                 embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                  icon_url=get_embeds.Common.AUTHOR_URL)
+                embed3.set_author(name=f"{self.client.user.name}",
+                                  icon_url=f"{self.client.user.avatar_url}")
                 embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed3.add_field(name="Error:", value=f"{e}", inline=False)
                 embed3.set_footer(text=f"Requested by {ctx.author.name}")
@@ -124,8 +124,8 @@ class Tools(commands.Cog):
 
                 embed = discord.Embed(
                     title="Password Generator", color=get_embeds.Common.COLOR)
-                embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                 icon_url=get_embeds.Common.AUTHOR_URL)
+                embed.set_author(name=f"{self.client.user.name}",
+                                 icon_url=f"{self.client.user.avatar_url}")
                 embed.set_thumbnail(
                     url="https://cdn.discordapp.com/attachments/877796755234783273/880031728369016832/704187.png")
                 embed.add_field(name="Password Length",
@@ -139,8 +139,8 @@ class Tools(commands.Cog):
             else:
                 embed = discord.Embed(
                     title="Password Generator", description="An Error has occured!", color=get_embeds.Common.COLOR)
-                embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                 icon_url=get_embeds.Common.AUTHOR_URL)
+                embed.set_author(name=f"{self.client.user.name}",
+                                 icon_url=f"{self.client.user.avatar_url}")
                 embed.set_thumbnail(
                     url="https://cdn.discordapp.com/attachments/877796755234783273/880031728369016832/704187.png")
                 embed.add_field(
@@ -154,8 +154,8 @@ class Tools(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -164,7 +164,7 @@ class Tools(commands.Cog):
             await ctx.send(embed=embed3)
 
     @commands.command()
-    async def ig_pfp(self, ctx, *, ig_uname):
+    async def insta(self, ctx, *, ig_uname):
         loading_message = await ctx.send(embed=self.please_wait_emb)
         try:
             igpfp = instaloader.Instaloader()
@@ -187,8 +187,8 @@ class Tools(commands.Cog):
             file = discord.File(f'igtemp.jpg', filename="image.jpg")
             embed = discord.Embed(title="Instagram Profile Picture",
                                   description=f"of {ig_uname}", color=get_embeds.Common.COLOR)
-            embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                             icon_url=get_embeds.Common.AUTHOR_URL)
+            embed.set_author(name=f"{self.client.user.name}",
+                             icon_url=f"{self.client.user.avatar_url}")
             embed.add_field(
                 name="Link", value=f"https://instagram.com/{ig_uname}", inline=False)
             embed.set_image(url="attachment://image.jpg")
