@@ -12,7 +12,7 @@ class Crypto(commands.Cog):
         self.please_wait_emb = discord.Embed(
             title=get_embeds.PleaseWait.TITLE, description=get_embeds.PleaseWait.DESCRIPTION, color=get_embeds.PleaseWait.COLOR)
         self.please_wait_emb.set_author(
-            name=get_embeds.Common.AUTHOR_NAME, icon_url=get_embeds.Common.AUTHOR_URL)
+            name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
         self.please_wait_emb.set_thumbnail(url=get_embeds.PleaseWait.THUMBNAIL)
         self.please_wait_emb.set_footer(text=get_embeds.PleaseWait.FOOTER)
 
@@ -30,8 +30,8 @@ class Crypto(commands.Cog):
 
             embed = discord.Embed(
                 title="Bitcoin", color=get_embeds.Common.COLOR)
-            embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                             icon_url=get_embeds.Common.AUTHOR_URL)
+            embed.set_author(name=f"{self.client.user.name}",
+                             icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.pixabay.com/photo/2013/12/08/12/12/bitcoin-225079_960_720.png")
             embed.add_field(name="USD", value=f"{usd}$", inline=False)
@@ -43,8 +43,8 @@ class Crypto(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -66,8 +66,8 @@ class Crypto(commands.Cog):
 
             embed = discord.Embed(
                 title="Ethereum", color=get_embeds.Common.COLOR)
-            embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                             icon_url=get_embeds.Common.AUTHOR_URL)
+            embed.set_author(name=f"{self.client.user.name}",
+                             icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/271256875205525504/374282740218200064/2000px-Ethereum_logo.png")
             embed.add_field(name="USD", value=f"{usd}$", inline=False)
@@ -79,8 +79,8 @@ class Crypto(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -99,8 +99,8 @@ class Crypto(commands.Cog):
             try:
                 embed = discord.Embed(
                     title="Hastebin", color=get_embeds.Common.COLOR)
-                embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                 icon_url=get_embeds.Common.AUTHOR_URL)
+                embed.set_author(name=f"{self.client.user.name}",
+                                 icon_url=f"{self.client.user.avatar_url}")
                 embed.set_thumbnail(
                     url="https://cdn.discordapp.com/attachments/877796755234783273/879586340520480768/large.png")
                 embed.add_field(
@@ -114,8 +114,8 @@ class Crypto(commands.Cog):
             except:
                 embed = discord.Embed(
                     title="Hastebin", color=get_embeds.Common.COLOR)
-                embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                                 icon_url=get_embeds.Common.AUTHOR_URL)
+                embed.set_author(
+                    name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
                 embed.set_thumbnail(
                     url="https://cdn.discordapp.com/attachments/877796755234783273/879586340520480768/large.png")
                 embed.add_field(
@@ -127,8 +127,8 @@ class Crypto(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(
+                name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -149,8 +149,8 @@ class Crypto(commands.Cog):
             usd = NegroPuket['USD']
 
             embed = discord.Embed(title="XMR", color=get_embeds.Common.COLOR)
-            embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                             icon_url=get_embeds.Common.AUTHOR_URL)
+            embed.set_author(name=f"{self.client.user.name}",
+                             icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879739662837633074/monero-logo-png-transparent.png")
             embed.add_field(name="USD", value=f"{usd}", inline=False)
@@ -162,8 +162,8 @@ class Crypto(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -185,8 +185,8 @@ class Crypto(commands.Cog):
 
             embed = discord.Embed(
                 title="Doge Coin", color=get_embeds.Common.COLOR)
-            embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                             icon_url=get_embeds.Common.AUTHOR_URL)
+            embed.set_author(name=f"{self.client.user.name}",
+                             icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879741979183968286/Dogecoin_Logo.png")
             embed.add_field(name="USD", value=f"{usd}", inline=False)
@@ -198,8 +198,8 @@ class Crypto(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -221,8 +221,8 @@ class Crypto(commands.Cog):
 
             embed = discord.Embed(
                 title="Ripple", color=get_embeds.Common.COLOR)
-            embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                             icon_url=get_embeds.Common.AUTHOR_URL)
+            embed.set_author(name=f"{self.client.user.name}",
+                             icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879741815237017680/52.png")
             embed.add_field(name="USD", value=f"{usd}", inline=False)
@@ -234,8 +234,8 @@ class Crypto(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
