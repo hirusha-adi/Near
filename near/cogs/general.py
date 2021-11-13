@@ -21,7 +21,7 @@ class General(commands.Cog):
         self.please_wait_emb = discord.Embed(
             title=get_embeds.PleaseWait.TITLE, description=get_embeds.PleaseWait.DESCRIPTION, color=get_embeds.PleaseWait.COLOR)
         self.please_wait_emb.set_author(
-            name=get_embeds.Common.AUTHOR_NAME, icon_url=get_embeds.Common.AUTHOR_URL)
+            name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
         self.please_wait_emb.set_thumbnail(url=get_embeds.PleaseWait.THUMBNAIL)
         self.please_wait_emb.set_footer(text=get_embeds.PleaseWait.FOOTER)
 
@@ -35,12 +35,12 @@ class General(commands.Cog):
         print('Bot is ready!')
 
     @commands.Cog.listener()
-    async def on_command_error(ctx, error):
+    async def on_command_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             embed = discord.Embed(
                 title="ERROR", description="`You don't have the permissions required to use this command!`", color=get_embeds.Common.COLOR)
-            embed.set_author(
-                name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+            embed.set_author(name=f"{self.client.user.name}",
+                             icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await ctx.send(embed=embed)
@@ -49,14 +49,15 @@ class General(commands.Cog):
         if isinstance(error, commands.MissingRequiredArgument):
             embed = discord.Embed(
                 title="Something is wrong!", description="An error has been occured!", color=get_embeds.Common.COLOR)
-            embed.set_author(
-                name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+            embed.set_author(name=f"{self.client.user.name}",
+                             icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             embed.add_field(
                 name="Error", value="You haven't passed the needed arguments for this command to run properly", inline=True)
             embed.add_field(
-                name="Possible Fix", value=f"use `{get_main.BotMainDB.MESSAGE_PREFIX}help all` to list out all the command and check the proper usage of the command you used", inline=True)
+                # name="Possible Fix", value=f"use `{get_main.BotMainDB.MESSAGE_PREFIX}help all` to list out all the command and check the proper usage of the command you used", inline=True)
+                name="Possible Fix", value=f"use `{self.client.get_prefix}help all` to list out all the command and check the proper usage of the command you used", inline=True)
             await ctx.send(embed=embed)
             return
 
@@ -66,8 +67,8 @@ class General(commands.Cog):
         try:
             embed = discord.Embed(title="Response Time",
                                   color=get_embeds.Common.COLOR)
-            embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                             icon_url=get_embeds.Common.AUTHOR_URL)
+            embed.set_author(name=f"{self.client.user.name}",
+                             icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png")
             embed.add_field(
@@ -79,8 +80,8 @@ class General(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -106,8 +107,8 @@ class General(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
-                              icon_url=get_embeds.Common.AUTHOR_URL)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -124,7 +125,7 @@ class General(commands.Cog):
             embed3 = discord.Embed(
                 title=":gear: Help", description="The list of all the commands! the might be some eastereggs!?! ", color=get_embeds.Common.COLOR)
             embed3.set_author(
-                name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+                name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
             embed3.add_field(
@@ -134,12 +135,16 @@ class General(commands.Cog):
             embed3.add_field(name="Fun", value=f"`{bp}inspire` - Send you an inspirational quote! \n`{bp}bored` - Get some activity to do \n`{bp}meme` - Get a meme to laught ats \n`{bp}dadjoke` - just a Dad Joke \n`{bp}joke` - Laughing is the best medicing \n`{bp}joke2` - Jokes are awesome! \n`{bp}wyr`- Would you rather? \n`{bp}advice` - Advice makes our lives better \n`{bp}chuckjoke` - Get a chuck norris joke`   ", inline=False)
             embed3.add_field(
                 name="Fake Information", value=f"`{bp}fake help` - List out all the fake information commands! \n`{bp}face [gender:optional]` - Generate a fake face with a name", inline=False)
+
             # OLD MUSIC, COG
             # embed3.add_field(name="Music (BETA)", value=f"`{bp}play [song-name]` - Join to Voice Channel and play the song\n`{bp}join` - Join Voice Channel \n`{bp}leave` - Leave Voice Channel \n`{bp}skip` - Skip the current playing song and go to the next \n`{bp}summon [vc-name]` - Make the bot join to a VC (Case Sensitive) \n`{bp}now` - Displays the current playing song \n`{bp}queue` - Send the music queue waiting to be played! \n`{bp}shuffle` - Shuffle the queue \n`{bp}remove [index-from-queue]` - Remove a song from the queue \n`{bp}loop` - Loop the same song, use again to unloop", inline=False)
 
             # NEW MUSIC, LAVA LINK
             embed3.add_field(
                 name="Music", value=f"`{bp}connect` - Connect to Voice Channel \n`{bp}disconnect` - Disconnect bot from Voice Channel \n`{bp}play [song-name/link]` - Play the song \n`{bp}skip` - Skip the currently playing song \n`{bp}pause` - Pause the music \n`{bp}resume` - Resume the music \n`{bp}seek [seconds]` - Skip the given seconds of the playing song \n`{bp}volume [number]` - Change the volume of the song \n`{bp}loop [type]` - Play music in a loop \n`{bp}nowplaying` - Show the song which is being played right now \n`{bp}queue` - Diplay the songs waiting to be played \n`{bp}equalizer` - Maybe tune the song to your liking?", inline=False)
+
+            if ctx.message.author.server_permissions.administrator:
+                pass
 
             embed3.add_field(name="Others", value=f"`{bp}countryinfo [country_code]` - Search for Country Information \n`{bp}hastebin [text]` - Create a hatebin link for the given text \n`{bp}ig_pfp [ig_username]` - Download the Instgram profile picture \n`{bp}ip [ip_addr]` - Find Information of an IP Address \n`{bp}lyrics [song_name]` - Find lyrics of any song \n`{bp}mfp [number]` - Mass fake profile \n`{bp}pwdcheck [password]` - Check for the status of a password \n`{bp}uptime` - Show bot uptime \n ", inline=False)
             embed3.set_footer(text=f"Requested by {ctx.author.name}")
@@ -150,7 +155,7 @@ class General(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(
-                name="NearBot", icon_url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+                name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             embed3.add_field(name="Error:", value=f"{e}", inline=False)
