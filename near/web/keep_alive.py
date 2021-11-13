@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from threading import Thread
 
 app = Flask('')
@@ -6,7 +6,8 @@ app = Flask('')
 
 @app.route('/')
 def home():
-    return "Hello, I am alive!"
+    # return "Hello, I am alive!"
+    return render_template("index.html")
 
 
 def run():
@@ -16,3 +17,6 @@ def run():
 def keep_alive():
     t = Thread(target=run)
     t.start()
+
+
+keep_alive()
