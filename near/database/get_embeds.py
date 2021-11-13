@@ -46,9 +46,6 @@ class Common:
     elif embed["COMMON"]["COLOR"] == "blue":
         COLOR = 0x0000ff
 
-    AUTHOR_NAME = embed["COMMON"]["AUTHOR_NAME"]
-    AUTHOR_URL = embed["COMMON"]["AUTHOR_URL"]
-
 
 class FakeEmbeds:
     with open("near/database/embeds.json", "r", encoding="utf-8") as file:
