@@ -2,6 +2,6 @@
 
 - Remove commands that conflict with Pencord
 
-- Accdate - Admin only
+- Accdate
 - UserInfo
 - server info

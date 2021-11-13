@@ -8,7 +8,7 @@ from discord.ext import commands
 from near.database import get_embeds
 
 
-class OtherCommandsFun(commands.Cog):
+class Fun(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
@@ -352,4 +352,4 @@ class OtherCommandsFun(commands.Cog):
 
 
 def setup(client: commands.Bot):
-    client.add_cog(OtherCommandsFun(client))
+    client.add_cog(Fun(client))

@@ -5,7 +5,7 @@ from near.database import get_embeds
 from zxcvbn import zxcvbn
 
 
-class NearBotMain(commands.Cog):
+class Information(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
@@ -208,4 +208,4 @@ class NearBotMain(commands.Cog):
 
 
 def setup(client: commands.Bot):
-    client.add_cog(NearBotMain(client))
+    client.add_cog(Information(client))
