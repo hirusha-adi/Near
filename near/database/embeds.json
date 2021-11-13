@@ -16,9 +16,7 @@
     },
 
     "COMMON":{
-        "COLOR":"red",
-        "AUTHOR_NAME":"NearBot",
-        "AUTHOR_URL":"https://media.discordapp.net/attachments/877796755234783273/892269925417226260/unknown.png"
+        "COLOR":"red"
     },
 
     "FAKEEMBEDS":{
