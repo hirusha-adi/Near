@@ -5,9 +5,13 @@ app = Flask('')
 
 
 @app.route('/')
-def home():
-    # return "Hello, I am alive!"
+def index():
     return render_template("index.html")
+
+
+@app.route('/help')
+def help():
+    return render_template("help.html")
 
 
 def run():
