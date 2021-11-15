@@ -10,3 +10,4 @@ class BotMainDB:
     BOT_VERSION = embed["BOT_VERSION"]
     BOT_TOKEN = embed["BOT_TOKEN"]
     DEV_ID = embed["DEV_ID"]
+    DEV_AND_OWNERS = embed["DEV_AND_OWNERS"]

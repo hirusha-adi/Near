@@ -45,8 +45,6 @@ def INSTALL_ALL():
         "instaloader",
         "pyfiglet",
         "prsaw",
-        "beautifulsoup4",
-        "bs4",
         "password-strength",
         "urllib",
         "flask",
@@ -56,4 +54,4 @@ def INSTALL_ALL():
         pip_install(module)
 
 
-INSTALL_ALL()
+pip_upgrade()
