@@ -1,5 +1,5 @@
-from flask import Flask, render_template
 from threading import Thread
+from flask import Flask, render_template
 
 app = Flask('')
 
