@@ -1,4 +1,6 @@
-
+# NearBot v0.4
+1. Better code
+2. Organized code
 
 # NearBot v0.3
 1. Created a easy to develop folder structure
