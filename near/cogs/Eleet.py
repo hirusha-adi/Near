@@ -1,6 +1,4 @@
 import discord
-import base64
-import hashlib
 from discord.ext import commands
 from near.database import get_embeds
 
