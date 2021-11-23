@@ -34,7 +34,7 @@ class Information(commands.Cog):
             embed.set_thumbnail(
                 url="https://user-images.githubusercontent.com/36286877/127773181-c98b63be-b18b-4d8b-a8b6-9426bd031b7c.png")
             embed.set_footer(text=f"Requested by {ctx.author.name}")
-            embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
+            embed.set_author(name=f"{self.client.user.name}",
                              icon_url=f"{self.client.user.avatar_url}")
             embed.add_field(name="IP Info", value="IP Address: " + str(r["ip"]) + "\nCity: " + str(r["city"]) + "\nRegion: " + str(r["region"]) + "\nCountry Name: " + str(r["country_name"]) + "\nLatitude: " + str(r["latitude"]) + "\nLongitude: " + str(r["longitude"]) + "\nTime Zone: " + str(r["timezone"]) + "\nUTC Offset: " + str(r["utc_offset"]) + "\nPostal Code: " + str(r["postal"]) + str("\nISP: " + r["org"]) + "\nASN: " + str(r["asn"]) + "\nCountry Code: " + str(
                 r["country_code"]) + "\nCountry TLD: " + str(r["country_tld"]) + "\nPopulation: " + str(r["country_population"]) + "\nCurrency: " + str(r["currency"]) + "\n Curreny Name: " + str(r["currency_name"]) + "\nCountry Area: " + str(r["country_area"]) + "\nLanguages: " + str(r["languages"]) + "\nCalling Code: " + str(r["country_calling_code"]) + "\nGOOGLE MAPS Link: " + f"https://maps.google.com/?q={r['latitude']},{r['longitude']}", inline=False)
@@ -46,7 +46,7 @@ class Information(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
+            embed3.set_author(name=f"{self.client.user.name}",
                               icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
@@ -70,7 +70,7 @@ class Information(commands.Cog):
             embed.set_thumbnail(
                 url="https://user-images.githubusercontent.com/36286877/129850352-33345963-273b-42bf-b2bc-5523c8158229.png")
             embed.set_footer(text=f"Requested by {ctx.author.name}")
-            embed.set_author(name=get_embeds.Common.AUTHOR_NAME,
+            embed.set_author(name=f"{self.client.user.name}",
                              icon_url=f"{self.client.user.avatar_url}")
             embed.add_field(name="Country Info", value="ID: " + str(rc[1][0]["id"]) + "\niso2Code: " + str(rc[1][0]["iso2Code"]) + "\nName" + str(rc[1][0]["name"]) + "\n\nRegion: " + "\n   ID: " + str(rc[1][0]["region"]["id"]) + "\n   iso2Code: " + str(rc[1][0]["region"]["iso2code"]) + "\n   Value: " + str(rc[1][0]["region"]["value"]) + "\n\nAdmin Region: " + "\n   ID: " + str(rc[1][0]["adminregion"]["id"]) + "\n   iso2Code: " + str(rc[1][0]["adminregion"]["iso2code"]) + "\n   Value: " + str(rc[1][0]["adminregion"]["value"]) + "\n\nIncome Level: " + "\n   ID: " + str(
                 rc[1][0]["incomeLevel"]["id"]) + "\n   iso2Code: " + str(rc[1][0]["incomeLevel"]["iso2code"]) + "\n   Value: " + str(rc[1][0]["incomeLevel"]["value"]) + "\n\nLending Type: " + "\n   ID: " + str(rc[1][0]["lendingType"]["id"]) + "\n   iso2Code: " + str(rc[1][0]["lendingType"]["iso2code"]) + "\n   Value: " + str(rc[1][0]["lendingType"]["value"]) + "\n\nCapital City: " + str(rc[1][0]["capitalCity"]) + "\nLongitude: " + str(rc[1][0]["longitude"]) + "\nLatitude: " + str(rc[1][0]["latitude"]), inline=False)
@@ -80,7 +80,7 @@ class Information(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
+            embed3.set_author(name=f"{self.client.user.name}",
                               icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
@@ -112,7 +112,7 @@ class Information(commands.Cog):
             em = discord.Embed(
                 title="COVID-19 Stats Global - All Info", color=get_embeds.Common.COLOR)
             em.set_footer(text=f"Requested by {ctx.author.name}")
-            em.set_author(name=get_embeds.Common.AUTHOR_NAME,
+            em.set_author(name=f"{self.client.user.name}",
                           icon_url=f"{self.client.user.avatar_url}")
             em.set_thumbnail(
                 url="https://www.apsf.org/wp-content/uploads/newsletters/2020/3502/coronavirus-covid-19.png")
@@ -132,7 +132,7 @@ class Information(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
+            embed3.set_author(name=f"{self.client.user.name}",
                               icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
@@ -151,46 +151,64 @@ class Information(commands.Cog):
 
         try:
             results = zxcvbn('hirusha')
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
+            embed3 = discord.Embed(title="Password Check",
+                                   description="using Low Budget Password Strength Estimation",
+                                   color=get_embeds.Common.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}",
                               icon_url=f"{self.client.user.avatar_url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
+            embed3.set_thumbnail(
+                url="https://iconape.com/wp-content/png_logo_vector/password.png")
 
             embed3.add_field(
-                name="Password", value=f"{password}", inline=False)
-            embed3.add_field(
-                name="Guesses", value=f"Decimal: {results['guesses']}\nLog 10: {results['guesses_log10']}", inline=False)
+                name="Password", value=f"{results['password']}", inline=False)
 
-            pat = ""
-            for seq in results['sequence']:
-                pat += f"\n-------\nPattern: {seq['pattern']}\ni: {seq['i']}\nj: {seq['j']}\nToken: {seq['token']}\nMatched Word: {seq['matched_word']}\nRank: {seq['rank']}\nDictionary Name: {seq['dictionary_name']}\nReversed: {seq['reversed']}\nl33t: {seq['l33t']}\nBase Guesses: {seq['base_guesses']}\nUppercase Variations: {seq['uppercase_variations']}\nl33t Variations: {seq['l33t_variations']}\nGuesses: {seq['guesses']}\nGuesses Log10: {seq['guesses_log10']}"
-
-            embed3.add_field(name="Pattern: ", value=f"{pat}", inline=False)
-            embed3.add_field(name="Calculate Time: ",
-                             value=f"{results['calc_time']}", inline=False)
-            embed3.add_field(name="Crack Time Seconds: ",
-                             value=f"Online Throttling 100 Per Hour: {results['crack_times_seconds']['online_throttling_100_per_hour']}\nOnline no Throttling 10 Per Second: {results['crack_times_seconds']['online_no_throttling_10_per_second']}\nOffline Slow Hashing 1e4 Per Second: {results['crack_times_seconds']['offline_slow_hashing_1e4_per_second']}\nOffline Fast Hashing 1e10 Per Second: {results['crack_times_seconds']['offline_fast_hashing_1e10_per_second']}", inline=False)
-            embed3.add_field(name="Crack Times Display: ",
-                             value=f"Online Throttling 100 Per Hour: {results['crack_times_display']['online_throttling_100_per_hour']}\nOnline No Throttling 10 Per Second: {results['crack_times_display']['online_no_throttling_10_per_second']}\nOffline Slow Hashing 1e4 Per Second: {results['crack_times_display']['offline_slow_hashing_1e4_per_second']}\nOffline Fast Hashing 1e10 Per Second: {results['crack_times_display']['offline_fast_hashing_1e10_per_second']}", inline=False)
-            embed3.add_field(
-                name="Score: ", value=f"{results['score']}", inline=False)
-
-            fdb = ""
-            for feedbsug in results['feedback']['suggestions']:
-                fdb += f"{feedbsug}\n"
+            embed3.add_field(name="Score",
+                             value=f"{results['score']}", inline=False)
 
             embed3.add_field(
-                name="Feedback: ", value=f"{results['feedback']['warning']}\n{fdb}", inline=False)
+                name="Guesses", value=f"Decimal - {results['guesses']}\nLog10 - {results['guesses_log10']}", inline=False)
+            # embed3.add_field(
+            #     name="Password", value=f"{results['password']}", inline=False)
 
-            if password + "\n" in self.lines:
+            sequence_info = ""
+            for dic in results["sequence"]:
+                for k, v in dic.items():
+                    sequence_info += f"{k} - {v}\n"
+                sequence_info += "\n"
+
+            embed3.add_field(name="Sequence Info",
+                             value=f"{sequence_info}", inline=False)
+
+            try:
+                embed3.add_field(name="Calculation Time",
+                                 value=f"{results['calc_time']}")
+            except:
+                pass
+
+            try:
+                embed3.add_field(name="Crack Time",
+                                 value=f"Online throttling 100 per hour - {results['crack_times_display']['online_throttling_100_per_hour']}\nOnline throttling 10 per second - {results['crack_times_display']['online_no_throttling_10_per_second']}\nOffline slow hasing 1e4 per second - {results['crack_times_display']['offline_slow_hashing_1e4_per_second']}\nOffline fast hasing 1e10 per second - {results['crack_times_display']['offline_fast_hashing_1e10_per_second']}", inline=False)
+            except:
+                pass
+
+            try:
                 embed3.add_field(
-                    name="Password Found!", value=f"This password can be found in the list of most common 10 Million passwords", inline=False
-                )
-            else:
-                embed3.add_field(
-                    name="Password Not Found!", value=f"This password cannot be found in the list of most common 10 Million passwords", inline=False
-                )
+                    name="Warning", value=f"{results['feedback']['warning']}", inline=False)
+            except:
+                pass
+
+            try:
+                suggestions_info = ""
+                for item in results["feedback"]["suggestions"]:
+                    suggestions_info += f"{item}\n"
+                try:
+                    embed3.add_field(
+                        name="Suggestions", value=f"{suggestions_info}", inline=False)
+                except Exception as e:
+                    print(e)
+            except:
+                pass
+
             embed3.set_footer(text=f"Requested by {ctx.author.name}")
             await loading_message.delete()
             await ctx.send(embed=embed3)
@@ -198,7 +216,7 @@ class Information(commands.Cog):
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=get_embeds.Common.AUTHOR_NAME,
+            embed3.set_author(name=f"{self.client.user.name}",
                               icon_url=f"{self.client.user.avatar_url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(name="Error:", value=f"{e}", inline=False)

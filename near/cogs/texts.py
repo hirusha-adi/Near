@@ -1,7 +1,5 @@
 import discord
-import requests
 from discord.ext import commands
-from near.database import get_embeds
 
 
 class Texts(commands.Cog):

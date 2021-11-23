@@ -141,7 +141,7 @@ class Fun(commands.Cog):
             embed.set_author(name=f"{self.client.user.name}",
                              icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
-                url="https://user-images.githubusercontent.com/36286877/127767330-d3e68d90-67a0-4672-b3e1-6193b323bc21.png")
+                url="https://cdn.discordapp.com/attachments/881007500588089404/912620134974251018/senior-caucasian-man-wearing-business-260nw-1860664027.png")
             embed.add_field(name="Joke", value=f"{r['joke']}", inline=False)
             embed.set_footer(text=f"Requested by {ctx.author.name}")
             await loading_message.delete()
