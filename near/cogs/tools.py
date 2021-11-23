@@ -5,9 +5,11 @@ import urllib
 import aiohttp
 import discord
 import instaloader
-import requests
+import random
 from discord.ext import commands
 from near.database import get_embeds
+import string
+import secrets
 
 
 class Tools(commands.Cog):
@@ -100,27 +102,10 @@ class Tools(commands.Cog):
         loading_message = await ctx.send(embed=self.please_wait_emb)
 
         try:
-            pwd_lenlis = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-                          21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40)
-            try:
-                numberofcharsinint = int(numberofcharacters)
 
-            except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                       description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}",
-                                  icon_url=f"{self.client.user.avatar_url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name="Error:", value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {ctx.author.name}")
-                await loading_message.delete()
-                await ctx.send(embed=embed3)
-                return
-
-            if numberofcharsinint in pwd_lenlis:
-                url = f"https://passwordinator.herokuapp.com/generate?num=true&char=true&caps=true&len={numberofcharacters}"
-                r = requests.get(url)
-                c = r.json()
+            if int(numberofcharacters) < 101:
+                c = ''.join((secrets.choice(string.ascii_letters +
+                            string.digits + string.punctuation) for i in range(int(numberofcharacters))))
 
                 embed = discord.Embed(
                     title="Password Generator", color=get_embeds.Common.COLOR)
@@ -131,7 +116,7 @@ class Tools(commands.Cog):
                 embed.add_field(name="Password Length",
                                 value=f"{numberofcharacters}", inline=False)
                 embed.add_field(name="Password",
-                                value=f"{c['data']}", inline=False)
+                                value=f"```{c}```", inline=False)
                 embed.set_footer(text=f"Requested by {ctx.author.name}")
                 await loading_message.delete()
                 await ctx.send(embed=embed)

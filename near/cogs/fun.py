@@ -283,43 +283,6 @@ class Fun(commands.Cog):
             await loading_message.delete()
             await ctx.send(embed=embed3)
 
-    @commands.command(aliases=["chuck-norris-joke", "chuck-joke"])
-    async def chuckjoke(self, ctx):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
-
-        try:
-            url = f"https://api.chucknorris.io/jokes/random"
-            r = requests.get(url).json()
-            joke = r['value']
-            created_at = r['created_at']
-            urlfj = r['url']
-
-            embed = discord.Embed(title="Chuck Joke",
-                                  color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/880035248820342824/chuck-norris.png")
-            embed.add_field(name="Joke", value=f"{joke}", inline=False)
-            embed.add_field(name="Created At",
-                            value=f"{created_at}", inline=False)
-            embed.add_field(name="URL", value=f"{urlfj}", inline=True)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
-
-        except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(
-                name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
-
     @commands.command(aliases=["jokenew", "newjoke"])
     async def joke2(self, ctx):
         loading_message = await ctx.send(embed=self.please_wait_emb)
