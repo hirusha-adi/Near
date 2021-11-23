@@ -144,13 +144,13 @@ class Information(commands.Cog):
     @commands.command(breif="Password Checker",
                       description="This command will send you very useful information about your password",
                       help="This command will send you very useful information about your password",
-                      aliases=['pwdcheck']
+                      aliases=['pwdcheck', 'pwdchk']
                       )
-    async def passwordchk(self, ctx, *, password):
+    async def passwordchk(self, ctx, *, password_inp):
         loading_message = await ctx.send(embed=self.please_wait_emb)
 
         try:
-            results = zxcvbn('hirusha')
+            results = zxcvbn(f"{password_inp}")
             embed3 = discord.Embed(title="Password Check",
                                    description="using Low Budget Password Strength Estimation",
                                    color=get_embeds.Common.COLOR)
@@ -192,25 +192,33 @@ class Information(commands.Cog):
                 pass
 
             try:
-                embed3.add_field(
-                    name="Warning", value=f"{results['feedback']['warning']}", inline=False)
+                if results['feedback']['warning'] == '':
+                    pass
+                else:
+                    embed3.add_field(
+                        name="Warning", value=f"{results['feedback']['warning']}", inline=False)
             except:
                 pass
 
             try:
-                suggestions_info = ""
-                for item in results["feedback"]["suggestions"]:
-                    suggestions_info += f"{item}\n"
-                try:
-                    embed3.add_field(
-                        name="Suggestions", value=f"{suggestions_info}", inline=False)
-                except Exception as e:
-                    print(e)
+                if len(results["feedback"]["suggestions"]) == 0:
+                    pass
+                else:
+                    suggestions_info = ""
+                    for item in results["feedback"]["suggestions"]:
+                        suggestions_info += f"{item}\n"
+                    try:
+                        embed3.add_field(
+                            name="Suggestions", value=f"{suggestions_info}", inline=False)
+                    except Exception as e:
+                        print(e)
             except:
                 pass
 
             embed3.set_footer(text=f"Requested by {ctx.author.name}")
+
             await loading_message.delete()
+            # await ctx.send(f"```{results}```")
             await ctx.send(embed=embed3)
 
         except Exception as e:
