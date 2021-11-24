@@ -71,9 +71,9 @@ for filename in os.listdir('./near/cogs'):
 
 client.lava_nodes = [
     {
-        'host': "lava.link",
-        'port': 80,
-        'rest_uri': f'http://lava.link:80',
+        'host': "172.0.0.1",
+        'port': 2333,
+        'rest_uri': f'http://172.0.0.1:2333',
         'identifier': 'MAIN',
         'password': 'anything',
         'region': 'singapore'
