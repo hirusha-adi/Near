@@ -41,14 +41,15 @@ def INSTALL_ALL():
         "requests",
         "Faker",
         "bs4",
-        "beautifulsoup4",
-        "instaloader",
         "pyfiglet",
         "prsaw",
         "password-strength",
+        "youtube_dl",
+        "lavalink",
+        "wavelink",
         "urllib",
-        "flask",
-        "youtube_dl"
+        "faker-vehicle",
+        "zxcvbn"
     )
     for module in module_nl:
         pip_install(module)
