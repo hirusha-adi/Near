@@ -11,7 +11,6 @@ bot_creator_name = get_main.BotMainDB.BOT_CREATOR_NAME
 bot_current_version = get_main.BotMainDB.BOT_VERSION
 bot_owner_id_or_dev_id = get_main.BotMainDB.DEV_ID
 
-token = get_main.BotMainDB.BOT_TOKEN
 client = commands.Bot(command_prefix=bot_prefix)
 
 
@@ -130,6 +129,9 @@ async def on_message(message):
             return
 
     await client.process_commands(message)
+
+with open("token.txt", "r", encoding="utf-8") as tokenfile:
+    token = tokenfile.read()
 
 keep_alive()
 client.run(token)
