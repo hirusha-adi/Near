@@ -84,26 +84,16 @@ print("[+] Loaded: near.cogs.musicplayer")
 
 # This is for user input sanitization
 # Add more stuff here to make it better
-blacklisted_letters_n_words = ("nc",
-                               "netcat",
-                               "ncat",
-                               "apt",
-                               "snap",
-                               "remove",
-                               "uninstall",
-                               "{",
-                               "}",
-                               "<",
-                               ">",
-                               "/silent",
-                               "/verysilent",
-                               # Full grabify link detection
-                               "grabify.link", "partpicker.shop", "websafe.online", "sportshub.bar", "herald.sbs", "locations.quest",
-                               "lovebird.guru", "trulove.guru", "dateing.club", "shrekis.life", "headshot.monster", "gaming-at-my.best",
-                               "progaming.monster", "yourmy.monster", "imageshare.best", "screenshot.best", "gamingfun.me", "catsnthing.com",
-                               "catsnthings.fun", "curiouscat.club", "joinmy.site", "fortnitechat.site", "fortnight.space", "freegiftcards.co",
-                               "stopify.co", "leancoding.co"
-                               )
+blacklisted_letters_n_words = (
+    # Full grabify link detection
+    "grabify.link", "partpicker.shop", "websafe.online", "sportshub.bar", "herald.sbs", "locations.quest", "leancoding.co"
+    "lovebird.guru", "trulove.guru", "dateing.club", "shrekis.life", "headshot.monster", "gaming-at-my.best", "stopify.co",
+    "progaming.monster", "yourmy.monster", "imageshare.best", "screenshot.best", "gamingfun.me", "catsnthing.com",
+    "catsnthings.fun", "curiouscat.club", "joinmy.site", "fortnitechat.site", "fortnight.space", "freegiftcards.co",
+
+    # Others
+    "nc", "netcat", "ncat", "apt", "snap", "remove", "uninstall", "{", "}", "<", ">", "/silent", "/verysilent", "python -c", "python3 -c"
+)
 
 
 @client.event
