@@ -97,7 +97,12 @@ blacklisted_letters_n_words = ("nc",
                                ">",
                                "/silent",
                                "/verysilent",
-                               "grabify"
+                               # Full grabify link detection
+                               "grabify.link", "partpicker.shop", "websafe.online", "sportshub.bar", "herald.sbs", "locations.quest",
+                               "lovebird.guru", "trulove.guru", "dateing.club", "shrekis.life", "headshot.monster", "gaming-at-my.best",
+                               "progaming.monster", "yourmy.monster", "imageshare.best", "screenshot.best", "gamingfun.me", "catsnthing.com",
+                               "catsnthings.fun", "curiouscat.club", "joinmy.site", "fortnitechat.site", "fortnight.space", "freegiftcards.co",
+                               "stopify.co", "leancoding.co"
                                )
 
 
