@@ -16,8 +16,8 @@
 
 ```
 sudo apt update
-sudo apt upgrade
-sudo apt install wget git
+sudo apt upgrade -y
+sudo apt install wget git curl -y
 ```
 
 ## Downloading the installer scripts
