@@ -23,7 +23,7 @@ sudo apt install wget git ffmpeg python3 python3-pip default-jdk nano -y
 ```
 
 ```bash
-curl "https://raw.githubusercontent.com/hirusha-adi/Near/others/start.sh" >> "start.sh"
+curl "https://raw.githubusercontent.com/hirusha-adi/Near/main/others/start.sh" >> start.sh
 ```
 
 - Arch
@@ -34,5 +34,5 @@ sudo pacman -S nano jdk11-openjdk curl python python-pip ffmpeg git --noconfirm
 ```
 
 ```bash
-curl "https://raw.githubusercontent.com/hirusha-adi/Near/others/start.sh" >> "start.sh"
+curl "https://raw.githubusercontent.com/hirusha-adi/Near/main/others/start.sh" >> start.sh
 ```
