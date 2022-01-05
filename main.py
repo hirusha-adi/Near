@@ -11,7 +11,6 @@ bot_creator_name = get_main.BotMainDB.BOT_CREATOR_NAME
 bot_current_version = get_main.BotMainDB.BOT_VERSION
 bot_owner_id_or_dev_id = get_main.BotMainDB.DEV_ID
 
-token = get_main.BotMainDB.BOT_TOKEN
 client = commands.Bot(command_prefix=bot_prefix)
 
 
@@ -85,21 +84,16 @@ print("[+] Loaded: near.cogs.musicplayer")
 
 # This is for user input sanitization
 # Add more stuff here to make it better
-blacklisted_letters_n_words = ("nc",
-                               "netcat",
-                               "ncat",
-                               "apt",
-                               "snap",
-                               "remove",
-                               "uninstall",
-                               "{",
-                               "}",
-                               "<",
-                               ">",
-                               "/silent",
-                               "/verysilent",
-                               "grabify"
-                               )
+blacklisted_letters_n_words = (
+    # Full grabify link detection
+    "grabify.link", "partpicker.shop", "websafe.online", "sportshub.bar", "herald.sbs", "locations.quest", "leancoding.co"
+    "lovebird.guru", "trulove.guru", "dateing.club", "shrekis.life", "headshot.monster", "gaming-at-my.best", "stopify.co",
+    "progaming.monster", "yourmy.monster", "imageshare.best", "screenshot.best", "gamingfun.me", "catsnthing.com",
+    "catsnthings.fun", "curiouscat.club", "joinmy.site", "fortnitechat.site", "fortnight.space", "freegiftcards.co",
+
+    # Others
+    "nc", "netcat", "ncat", "apt", "snap", "remove", "uninstall", "{", "}", "<", ">", "/silent", "/verysilent", "python -c", "python3 -c"
+)
 
 
 @client.event
@@ -130,6 +124,9 @@ async def on_message(message):
             return
 
     await client.process_commands(message)
+
+with open("token.txt", "r", encoding="utf-8") as tokenfile:
+    token = tokenfile.read()
 
 keep_alive()
 client.run(token)
