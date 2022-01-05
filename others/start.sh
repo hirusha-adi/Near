@@ -5,7 +5,6 @@ curl "https://raw.githubusercontent.com/hirusha-adi/Near/main/others/remove.sh" 
 # curl "https://raw.githubusercontent.com/hirusha-adi/Near/main/others/3-install-lavalink.sh" >> "3-install-lavalink.sh"
 # chmod +x "3-install-lavalink.sh"
 
-cd ..
 chmod +x "1-dependencies.sh" "2-install-bot.sh" "remove.sh"
 chdmod +x "./NearBot/near/Lavalink/install.sh"
 echo "Installing to Lavalink to ./NearBot/near/Lavalink/"
