@@ -3,6 +3,8 @@
 1. Seperate file for token (easy testing for developers, added the `token.txt` to `.gitignore`)
 2. Grabify Link Detection
 3. Bug fix in the command `--bottoken`
+4. Has big issue with connecting to the locally hosted Lavalink server
+5. Added steps to run the bot on both ubuntu(or any debian based distro) and arch(or any other arch based distro)
 
 # NearBot v0.4
 
