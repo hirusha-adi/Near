@@ -3071,7 +3071,7 @@ class FakeInformation(commands.Cog):
             r = requests.get("https://some-random-api.ml/bottoken").json()
 
             embed = discord.Embed(title="Discord Bot Token Generator",
-                                  description="`{r['token']}`", color=get_embeds.FakeEmbeds.COLOR)
+                                  description=f"`{r['token']}`", color=get_embeds.FakeEmbeds.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
                              icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
