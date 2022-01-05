@@ -1,3 +1,9 @@
+# NearBot v0.5
+
+1. Seperate file for token (easy testing for developers, added the `token.txt` to `.gitignore`)
+2. Grabify Link Detection
+3. Bug fix in the command `--bottoken`
+
 # NearBot v0.4
 
 1. Better code
