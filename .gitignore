@@ -8,10 +8,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
-*.so
-/near/database/main.json
-
 # Distribution
 dist/
 
