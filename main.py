@@ -74,7 +74,7 @@ client.lava_nodes = [
         'port': 2333,
         'rest_uri': f'http://172.0.0.1:2333',
         'identifier': 'MAIN',
-        'password': 'anything',
+        'password': 'youshallnotpass',
         'region': 'singapore'
     }
 ]
