@@ -4,4 +4,4 @@ curl "https://raw.githubusercontent.com/hirusha-adi/Near/main/others/remove.sh" 
 curl "https://raw.githubusercontent.com/hirusha-adi/Near/main/others/3-install-lavalink.sh" >> "3-install-lavalink.sh"
 pwd
 chmod +x "1-dependencies.sh" "2-install-bot.sh" "remove.sh" "3-install-lavalink.sh"
-chdmod +x "./NearBot/near/Lavalink/install.sh"
+chmod +x "./NearBot/near/Lavalink/install.sh"
