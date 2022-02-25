@@ -184,20 +184,22 @@ class General(commands.Cog):
             embed3.add_field(
                 name="Fake Information", value=f"`{bp}fake help` - List out all the fake information commands! \n`{bp}face [gender:optional]` - Generate a fake face with a name", inline=False)
 
-            # OLD MUSIC, COG
-            # embed3.add_field(name="Music (BETA)", value=f"`{bp}play [song-name]` - Join to Voice Channel and play the song\n`{bp}join` - Join Voice Channel \n`{bp}leave` - Leave Voice Channel \n`{bp}skip` - Skip the current playing song and go to the next \n`{bp}summon [vc-name]` - Make the bot join to a VC (Case Sensitive) \n`{bp}now` - Displays the current playing song \n`{bp}queue` - Send the music queue waiting to be played! \n`{bp}shuffle` - Shuffle the queue \n`{bp}remove [index-from-queue]` - Remove a song from the queue \n`{bp}loop` - Loop the same song, use again to unloop", inline=False)
-
-            # NEW MUSIC, LAVA LINK
             embed3.add_field(
                 name="Music", value=f"`{bp}connect` - Connect to Voice Channel \n`{bp}disconnect` - Disconnect bot from Voice Channel \n`{bp}play [song-name/link]` - Play the song \n`{bp}skip` - Skip the currently playing song \n`{bp}pause` - Pause the music \n`{bp}resume` - Resume the music \n`{bp}seek [seconds]` - Skip the given seconds of the playing song \n`{bp}volume [number]` - Change the volume of the song \n`{bp}loop [type]` - Play music in a loop \n`{bp}nowplaying` - Show the song which is being played right now \n`{bp}queue` - Diplay the songs waiting to be played \n`{bp}equalizer` - Maybe tune the song to your liking?", inline=False)
 
-            if ctx.message.author.guild_permissions.manage_messages:
-                embed3.add_field(
-                    name="Manage", value=f"`{bp}clean [number_of_messages]` - Delete the given number of messages sent by the bot", inline=False)
+            try:
+                if ctx.message.author.guild_permissions.manage_messages:
+                    embed3.add_field(
+                        name="Manage", value=f"`{bp}clean [number_of_messages]` - Delete the given number of messages sent by the bot", inline=False)
+            except:
+                pass
 
-            if ctx.author.id in get_main.BotMainDB.DEV_AND_OWNERS:
-                embed3.add_field(
-                    name="Server Related", value=f"`{bp}av [@user or id]` - Get the profile picture of any user \n`{bp}serverinfo` - Show all publicly available information about the server \n`{bp}userinfo` - Show all the publicly available information about a user", inline=False)
+            try:
+                if ctx.author.id in get_main.BotMainDB.DEV_AND_OWNERS:
+                    embed3.add_field(
+                        name="Server Related", value=f"`{bp}av [@user or id]` - Get the profile picture of any user \n`{bp}serverinfo` - Show all publicly available information about the server \n`{bp}userinfo` - Show all the publicly available information about a user", inline=False)
+            except:
+                pass
 
             embed3.add_field(name="Others", value=f"`{bp}countryinfo [country_code]` - Search for Country Information \n`{bp}hastebin [text]` - Create a hatebin link for the given text \n`{bp}insta [ig_username]` - Download the Instgram profile picture \n`{bp}ip [ip_addr]` - Find Information of an IP Address \n`{bp}lyrics [song_name]` - Find lyrics of any song \n`{bp}mfp [number]` - Mass fake profile \n`{bp}pwdcheck [password]` - Check for the status of a password \n`{bp}uptime` - Show bot uptime \n ", inline=False)
             embed3.set_footer(text=f"Requested by {ctx.author.name}")
