@@ -6,7 +6,6 @@ Faker==9.8.3
 faker-vehicle==0.2.0
 instaloader==4.8.1
 Flask==2.0.2
-# Jinja2==3.0.3
 lavalink==3.1.4
 password-strength==0.0.3.post2
 prsaw==0.4.0
@@ -14,5 +13,4 @@ pyfiglet==0.8.post1
 requests==2.22.0
 urllib3==1.25.8
 wavelink==0.9.10
-# youtube-dl==2021.6.6
 zxcvbn==4.4.28
