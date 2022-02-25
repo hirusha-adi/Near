@@ -70,9 +70,9 @@ for filename in os.listdir('./near/cogs'):
 
 client.lava_nodes = [
     {
-        'host': "172.0.0.1",
+        'host': "0.0.0.0",
         'port': 2333,
-        'rest_uri': f'http://172.0.0.1:2333',
+        'rest_uri': f'http://0.0.0.0:2333',
         'identifier': 'MAIN',
         'password': 'youshallnotpass',
         'region': 'singapore'
