@@ -78,12 +78,12 @@ class General(commands.Cog):
 
         if message.guild.id in self.delete_messages_log_servers:
             channel = self.client.get_channel(self.msg_log_channel)
-            embed = discord.Embed(title=f"Message deleted in <#{message.channel.id}>",
+            embed = discord.Embed(title=f"Message deleted in {message.channel.name}",
                                   color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
                              icon_url=f"{self.client.user.avatar_url}")
             embed.add_field(name=f"Sent by",
-                            value=f"<@{message.author.name}#{message.author.discriminator}> | {message.author.id}", inline=False)
+                            value=f"{message.author.name}#{message.author.discriminator} | {message.author.id}", inline=False)
             embed.add_field(name=f"Content",
                             value=f"{message.content}", inline=False)
             await channel.send(embed=embed)
