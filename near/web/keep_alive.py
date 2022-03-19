@@ -6,11 +6,13 @@ from flask import Flask, render_template
 app = Flask(__name__, template_folder=f"{os.getcwd()}/near/web/templates")
 
 
+@app.route("/")
 @app.route('/near/')
 def index():
     return render_template("index.html")
 
 
+@app.route('/help')
 @app.route('/near/help')
 def help():
     return render_template("help.html")
