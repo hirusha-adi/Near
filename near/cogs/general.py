@@ -67,6 +67,15 @@ class General(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message_delete(self, message):
+        if message.author.id == self.client.user.id:
+            return
+
+        if message.author.bot:
+            return
+
+        if message.channel.id == self.msg_log_channel:
+            return
+
         if message.guild.id in self.delete_messages_log_servers:
             channel = self.client.get_channel(self.msg_log_channel)
             embed = discord.Embed(title=f"Message deleted in <#{message.channel.id}>",
@@ -74,7 +83,7 @@ class General(commands.Cog):
             embed.set_author(name=f"{self.client.user.name}",
                              icon_url=f"{self.client.user.avatar_url}")
             embed.add_field(name=f"Sent by",
-                            value=f"{message.author}", inline=False)
+                            value=f"{message.author.name}#{message.author.discriminator}", inline=False)
             embed.add_field(name=f"Content",
                             value=f"{message}", inline=False)
             await channel.send(embed=embed)
