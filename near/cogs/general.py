@@ -4,11 +4,15 @@ from time import time as nowtime
 
 import discord
 from discord.ext import commands
+from flask import message_flashed
 from near.database import get_embeds, get_main
 
 
 class General(commands.Cog):
     def __init__(self, client: commands.Bot):
+        self.delete_messages_log_servers = [953475156309856256]
+        self.msg_log_channel = 954566295171502120
+
         self.client = client
 
         # For custom help
@@ -60,6 +64,20 @@ class General(commands.Cog):
                 name="Possible Fix", value=f"use `{self.client.get_prefix}help all` to list out all the command and check the proper usage of the command you used", inline=True)
             await ctx.send(embed=embed)
             return
+
+    @commands.Cog.listener()
+    async def on_message_delete(self, message):
+        if message.guild.id in self.delete_messages_log_servers:
+            channel = self.client.get_channel(self.msg_log_channel)
+            embed = discord.Embed(title=f"Message deleted in <#{message.channel.id}>",
+                                  color=get_embeds.Common.COLOR)
+            embed.set_author(name=f"{self.client.user.name}",
+                             icon_url=f"{self.client.user.avatar_url}")
+            embed.add_field(name=f"Sent by",
+                            value=f"{message.author}", inline=False)
+            embed.add_field(name=f"Content",
+                            value=f"{message}", inline=False)
+            await channel.send(embed=embed)
 
     @commands.command()
     async def ping(self, ctx):
