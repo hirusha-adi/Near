@@ -7,7 +7,7 @@ class BotMainDB:
     """
     Main settings of the bot
     loaded from 
-        - near/database/main.json
+        near/database/main.json
 
     `MESSAGE_PREFIX` (str):
         the bot prefix
@@ -28,7 +28,7 @@ class BotMainDB:
     def __init__(self) -> None:
         self._main_json = os.path.join(
             os.getcwd(), 'near', 'database', 'main.json'
-        )  # path to file
+        )
         with open(self._main_json, "r", encoding="utf-8") as file:
             self._embed = json.load(file)
 
