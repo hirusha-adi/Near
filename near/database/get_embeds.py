@@ -1,6 +1,16 @@
 import json
 
 
+def _getColor(_code):
+    if _code == "red":
+        ret = 0xff0000
+    elif _code == "green":
+        ret = 0x00ff00
+    elif _code == "blue":
+        ret = 0x0000ff
+    return ret
+
+
 class PleaseWait:
     with open("near/database/embeds.json", "r", encoding="utf-8") as file:
         embed = json.load(file)
@@ -9,14 +19,7 @@ class PleaseWait:
     DESCRIPTION = embed["PleaseWaitEmbed"]["DESCRIPTION"]
     THUMBNAIL = embed["PleaseWaitEmbed"]["THUMBNAIL"]
     FOOTER = embed["PleaseWaitEmbed"]["FOOTER"]
-
-    if embed["PleaseWaitEmbed"]["COLOR"] == "red":
-        COLOR = 0xff0000
-    elif embed["PleaseWaitEmbed"]["COLOR"] == "green":
-        COLOR = 0x00ff00
-    elif embed["PleaseWaitEmbed"]["COLOR"] == "blue":
-        COLOR = 0x0000ff
-
+    COLOR = _getColor(embed["PleaseWaitEmbed"]["COLOR"])
     AUTHOR_NAME = embed["PleaseWaitEmbed"]["AUTHOR_NAME"]
     AUTHOR_URL = embed["PleaseWaitEmbed"]["AUTHOR_URL"]
 
@@ -29,25 +32,14 @@ class ErrorEmbeds:
     DESCRIPTION = embed["ERROR"]["DESCRIPTION"]
     THUMBNAIL = embed["ERROR"]["THUMBNAIL"]
     FIELD_NAME = embed["ERROR"]["FIELD_NAME"]
-
-    if embed["ERROR"]["COLOR"] == "red":
-        COLOR = 0xff0000
-    elif embed["ERROR"]["COLOR"] == "green":
-        COLOR = 0x00ff00
-    elif embed["ERROR"]["COLOR"] == "blue":
-        COLOR = 0x0000ff
+    COLOR = _getColor(embed["ERROR"]["COLOR"])
 
 
 class Common:
     with open("near/database/embeds.json", "r", encoding="utf-8") as file:
         embed = json.load(file)
 
-    if embed["COMMON"]["COLOR"] == "red":
-        COLOR = 0xff0000
-    elif embed["COMMON"]["COLOR"] == "green":
-        COLOR = 0x00ff00
-    elif embed["COMMON"]["COLOR"] == "blue":
-        COLOR = 0x0000ff
+    COLOR = _getColor(embed["COMMON"]["COLOR"])
 
 
 class FakeEmbeds:
@@ -56,10 +48,4 @@ class FakeEmbeds:
 
     TITLE = embed["FAKEEMBEDS"]["TITLE"]
     THUMBNAIL = embed["FAKEEMBEDS"]["THUMBNAIL"]
-
-    if embed["FAKEEMBEDS"]["COLOR"] == "red":
-        COLOR = 0xff0000
-    elif embed["FAKEEMBEDS"]["COLOR"] == "green":
-        COLOR = 0x00ff00
-    elif embed["FAKEEMBEDS"]["COLOR"] == "blue":
-        COLOR = 0x0000ff
+    COLOR = _getColor(embed["FAKEEMBEDS"]["COLOR"])
