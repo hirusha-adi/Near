@@ -87,9 +87,18 @@ class Common:
 
 
 class FakeEmbeds:
-    with open(__FILENAME, "r", encoding="utf-8") as file:
-        embed = json.load(file)
+    def __init__(self) -> None:
+        with open(__FILENAME, "r", encoding="utf-8") as file:
+            self._embed = json.load(file)
 
-    TITLE = embed["FAKEEMBEDS"]["TITLE"]
-    THUMBNAIL = embed["FAKEEMBEDS"]["THUMBNAIL"]
-    COLOR = _getColor(embed["FAKEEMBEDS"]["COLOR"])
+    @property
+    def TITLE(self):
+        return self._embed["FAKEEMBEDS"]["TITLE"]
+
+    @property
+    def THUMBNAIL(self):
+        return self._embed["FAKEEMBEDS"]["THUMBNAIL"]
+    
+    @property
+    def COLOR(self):
+        return _getColor(self._embed["FAKEEMBEDS"]["COLOR"])
