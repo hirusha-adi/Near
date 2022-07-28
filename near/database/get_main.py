@@ -1,11 +1,34 @@
 import json
+import os
 import typing as t
 
 
 class BotMainDB:
+    """
+    Main settings of the bot
+    loaded from 
+        - near/database/main.json
+
+    `MESSAGE_PREFIX` (str):
+        the bot prefix
+
+    `BOT_CREATOR_NAME` (str):
+        the name of the creator of the discord bot
+
+    `BOT_VERSION` (str):
+        the version of the bot
+
+    `DEV_ID` (int):
+        ID of the main developer
+
+    `DEV_AND_OWNERS` (list):
+        a list of users able to manage the bot
+    """
 
     def __init__(self) -> None:
-        self._main_json = "near/database/main.json"
+        self._main_json = os.path.join(
+            os.getcwd(), 'near', 'database', 'main.json'
+        )  # path to file
         with open(self._main_json, "r", encoding="utf-8") as file:
             self._embed = json.load(file)
 
@@ -15,7 +38,8 @@ class BotMainDB:
 
     @MESSAGE_PREFIX.setter
     def MESSAGE_PREFIX(self, value: t.Any):
-        if not(len(value) > 8):
+        """Bot prefix must be less than 8 characters long or equal to 8"""
+        if not(len(value) >= 8):
             value = str(value)
         else:
             value = "."
