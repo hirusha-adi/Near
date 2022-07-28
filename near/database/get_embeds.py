@@ -202,13 +202,33 @@ class ErrorEmbeds:
 
 
 class Common:
+    """
+    common embed for the bot
+    loaded from 
+        near/database/embeds.json
+
+    `COLOR` (str):
+        color of the embed, must be one of the predefines colors
+    """
+
     def __init__(self) -> None:
         with open(__FILENAME, "r", encoding="utf-8") as file:
             self._embed = json.load(file)
 
+    def __update(self) -> None:
+        with open(__FILENAME, "w", encoding="utf-8") as file:
+            self._embed = json.dump(self._embed, file)
+
     @property
     def COLOR(self):
         return _getColor(self._embed["COMMON"]["COLOR"])
+
+    @COLOR.setter
+    def COLOR(self, value):
+        self._embed["COMMON"]["COLOR"] = _getColor(
+            _code=str(value), _reverse=True
+        )
+        self.__update()
 
 
 class FakeEmbeds:
