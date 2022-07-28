@@ -232,18 +232,55 @@ class Common:
 
 
 class FakeEmbeds:
+    """
+    error embed for the bot
+    loaded from 
+        near/database/embeds.json
+
+    `TITLE` (str):
+        title of the embed
+
+    `THUMBNAIL` (str):
+        thumbnail of the embed. starts from http
+
+    `COLOR` (str):
+        color of the embed, must be one of the predefines colors
+    """
+
     def __init__(self) -> None:
         with open(__FILENAME, "r", encoding="utf-8") as file:
             self._embed = json.load(file)
+
+    def __update(self) -> None:
+        with open(__FILENAME, "w", encoding="utf-8") as file:
+            self._embed = json.dump(self._embed, file)
 
     @property
     def TITLE(self):
         return self._embed["FAKEEMBEDS"]["TITLE"]
 
+    @TITLE.setter
+    def TITLE(self, value):
+        self._embed["FAKEEMBEDS"]["TITLE"] = str(value)
+        self.__update()
+
     @property
     def THUMBNAIL(self):
         return self._embed["FAKEEMBEDS"]["THUMBNAIL"]
 
+    @THUMBNAIL.setter
+    def THUMBNAIL(self, value):
+        if str(value).lower().startswith('http'):
+            self._embed["FAKEEMBEDS"]["THUMBNAIL"] = str(value)
+            self.__update()
+
     @property
     def COLOR(self):
         return _getColor(self._embed["FAKEEMBEDS"]["COLOR"])
+
+    @COLOR.setter
+    def COLOR(self, value):
+        self._embed["FAKEEMBEDS"]["COLOR"] = _getColor(
+            _code=str(value), _reverse=True
+        )
+        self.__update()
