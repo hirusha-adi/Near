@@ -77,10 +77,13 @@ class ErrorEmbeds:
 
 
 class Common:
-    with open(__FILENAME, "r", encoding="utf-8") as file:
-        embed = json.load(file)
+    def __init__(self) -> None:
+        with open(__FILENAME, "r", encoding="utf-8") as file:
+            self._embed = json.load(file)
 
-    COLOR = _getColor(embed["COMMON"]["COLOR"])
+    @property
+    def COLOR(self):
+        return _getColor(self._embed["COMMON"]["COLOR"])
 
 
 class FakeEmbeds:
