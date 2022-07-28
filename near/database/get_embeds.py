@@ -16,16 +16,38 @@ def _getColor(_code):
 
 
 class PleaseWait:
-    with open(__FILENAME, "r", encoding="utf-8") as file:
-        embed = json.load(file)
 
-    TITLE = embed["PleaseWaitEmbed"]["TITLE"]
-    DESCRIPTION = embed["PleaseWaitEmbed"]["DESCRIPTION"]
-    THUMBNAIL = embed["PleaseWaitEmbed"]["THUMBNAIL"]
-    FOOTER = embed["PleaseWaitEmbed"]["FOOTER"]
-    COLOR = _getColor(embed["PleaseWaitEmbed"]["COLOR"])
-    AUTHOR_NAME = embed["PleaseWaitEmbed"]["AUTHOR_NAME"]
-    AUTHOR_URL = embed["PleaseWaitEmbed"]["AUTHOR_URL"]
+    def __init__(self) -> None:
+        with open(__FILENAME, "r", encoding="utf-8") as file:
+            self._embed = json.load(file)
+
+    @property
+    def TITLE(self):
+        return self._embed["PleaseWaitEmbed"]["TITLE"]
+
+    @property
+    def DESCRIPTION(self):
+        return self._embed["PleaseWaitEmbed"]["DESCRIPTION"]
+
+    @property
+    def THUMBNAIL(self):
+        return self.embed["PleaseWaitEmbed"]["THUMBNAIL"]
+
+    @property
+    def FOOTER(self):
+        return self._embed["PleaseWaitEmbed"]["FOOTER"]
+
+    @property
+    def COLOR(self):
+        return _getColor(self._embed["PleaseWaitEmbed"]["COLOR"])
+
+    @property
+    def AUTHOR_NAME(self):
+        return self._embed["PleaseWaitEmbed"]["AUTHOR_NAME"]
+
+    @property
+    def AUTHOR_URL(self):
+        return self._embed["PleaseWaitEmbed"]["AUTHOR_URL"]
 
 
 class ErrorEmbeds:
