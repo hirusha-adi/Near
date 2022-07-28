@@ -51,14 +51,29 @@ class PleaseWait:
 
 
 class ErrorEmbeds:
-    with open(__FILENAME, "r", encoding="utf-8") as file:
-        embed = json.load(file)
+    def __init__(self) -> None:
+        with open(__FILENAME, "r", encoding="utf-8") as file:
+            self._embed = json.load(file)
 
-    TITLE = embed["ERROR"]["TITLE"]
-    DESCRIPTION = embed["ERROR"]["DESCRIPTION"]
-    THUMBNAIL = embed["ERROR"]["THUMBNAIL"]
-    FIELD_NAME = embed["ERROR"]["FIELD_NAME"]
-    COLOR = _getColor(embed["ERROR"]["COLOR"])
+    @property
+    def TITLE(self):
+        return self._embed["ERROR"]["TITLE"]
+
+    @property
+    def DESCRIPTION(self):
+        return self._embed["ERROR"]["DESCRIPTION"]
+
+    @property
+    def THUMBNAIL(self):
+        return self._embed["ERROR"]["THUMBNAIL"]
+
+    @property
+    def FIELD_NAME(self):
+        return self._embed["ERROR"]["FIELD_NAME"]
+
+    @property
+    def COLOR(self):
+        return _getColor(self._embed["ERROR"]["COLOR"])
 
 
 class Common:
