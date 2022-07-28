@@ -123,6 +123,27 @@ class PleaseWait:
 
 
 class ErrorEmbeds:
+    """
+    error embed for the bot
+    loaded from 
+        near/database/embeds.json
+
+    `TITLE` (str):
+        title of the embed
+
+    `DESCRIPTION` (str):
+        description of the embed
+
+    `THUMBNAIL` (str):
+        thumbnail of the embed. starts from http
+
+    `FIELD_NAME` (str):
+        field title of the field of the embed
+
+    `COLOR` (str):
+        color of the embed, must be one of the predefines colors
+    """
+
     def __init__(self) -> None:
         with open(__FILENAME, "r", encoding="utf-8") as file:
             self._embed = json.load(file)
