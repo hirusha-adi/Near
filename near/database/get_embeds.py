@@ -19,6 +19,32 @@ def _getColor(_code: t.Union[str, bytes], _hex: t.Optional[bool] = False):
 
 
 class PleaseWait:
+    """
+    Please Wait embed for the bot
+    loaded from 
+        near/database/embeds.json
+
+    `TITLE` (str):
+        title of the embed
+
+    `DESCRIPTION` (str):
+        description of the embed
+
+    `COLOR` (str):
+        color of the embed, must be one of the predefines colors
+
+    `THUMBNAIL` (str):
+        thumbnail of the embed. must start with http
+
+    `AUTHOR_NAME` (str):
+        author name of the embed
+
+    `AUTHOR_URL` (str):
+        author url of the embed. must start with http
+
+    `FOOTER` (str):
+        footer of the embed
+    """
 
     def __init__(self) -> None:
         with open(__FILENAME, "r", encoding="utf-8") as file:
