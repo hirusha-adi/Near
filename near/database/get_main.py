@@ -32,6 +32,10 @@ class BotMainDB:
         with open(self._main_json, "r", encoding="utf-8") as file:
             self._embed = json.load(file)
 
+    def __update(self):
+        with open(self._main_json, "w", encoding="utf-8") as file:
+            self._embed = json.dump(self._embed, file)
+
     @property
     def MESSAGE_PREFIX(self):
         return self._embed["MESSAGE_PREFIX"]
@@ -44,8 +48,7 @@ class BotMainDB:
         else:
             value = "."
         self._embed["MESSAGE_PREFIX"] = value
-        with open(self._main_json, "w", encoding="utf-8") as file:
-            self._embed = json.dump(self._embed, file)
+        self.__update()
 
     @property
     def BOT_CREATOR_NAME(self):
@@ -54,8 +57,7 @@ class BotMainDB:
     @BOT_CREATOR_NAME.setter
     def BOT_CREATOR_NAME(self, value: t.Any):
         self._embed["BOT_CREATOR_NAME"] = str(value)
-        with open(self._main_json, "w", encoding="utf-8") as file:
-            self._embed = json.dump(self._embed, file)
+        self.__update()
 
     @property
     def BOT_VERSION(self):
@@ -69,8 +71,7 @@ class BotMainDB:
         else:
             final = 'v' + value
         self._embed["BOT_VERSION"] = final
-        with open(self._main_json, "w", encoding="utf-8") as file:
-            self._embed = json.dump(self._embed, file)
+        self.__update()
 
     @property
     def DEV_ID(self):
@@ -80,8 +81,7 @@ class BotMainDB:
     def DEV_ID(self, value: t.Any):
         # will raise ValueError by default if not proper int
         self._embed["DEV_ID"] = int(value)
-        with open(self._main_json, "w", encoding="utf-8") as file:
-            self._embed = json.dump(self._embed, file)
+        self.__update()
 
     @property
     def DEV_AND_OWNERS(self):
@@ -101,5 +101,4 @@ class BotMainDB:
                 self._embed["DEV_AND_OWNERS"].append(int(value))
             except ValueError:
                 pass
-        with open(self._main_json, "w", encoding="utf-8") as file:
-            self._embed = json.dump(self._embed, file)
+        self.__update()
