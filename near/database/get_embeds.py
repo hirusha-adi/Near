@@ -24,7 +24,7 @@ class PleaseWait:
         with open(__FILENAME, "r", encoding="utf-8") as file:
             self._embed = json.load(file)
 
-    def __update(self):
+    def __update(self) -> None:
         with open(__FILENAME, "w", encoding="utf-8") as file:
             self._embed = json.dump(self._embed, file)
 
