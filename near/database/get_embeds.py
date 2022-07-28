@@ -5,8 +5,8 @@ import typing as t
 __FILENAME = os.path.join(os.getcwd(), 'near', 'database', 'embeds.json')
 
 
-def _getColor(_code: t.Union[str, bytes], _hex: t.Optional[bool] = False):
-    if _hex:
+def _getColor(_code: t.Union[str, bytes], _reverse: t.Optional[bool] = False):
+    if _reverse:
         return False
     else:
         if _code == "red":
@@ -98,7 +98,7 @@ class PleaseWait:
     @COLOR.setter
     def COLOR(self, value):
         self._embed["PleaseWaitEmbed"]["COLOR"] = _getColor(
-            _code=str(value), _hex=True
+            _code=str(value), _reverse=True
         )
         self.__update()
 
@@ -127,25 +127,57 @@ class ErrorEmbeds:
         with open(__FILENAME, "r", encoding="utf-8") as file:
             self._embed = json.load(file)
 
+    def __update(self) -> None:
+        with open(__FILENAME, "w", encoding="utf-8") as file:
+            self._embed = json.dump(self._embed, file)
+
     @property
     def TITLE(self):
         return self._embed["ERROR"]["TITLE"]
+
+    @TITLE.setter
+    def TITLE(self, value):
+        self._embed["ERROR"]["TITLE"] = str(value)
+        self.__update()
 
     @property
     def DESCRIPTION(self):
         return self._embed["ERROR"]["DESCRIPTION"]
 
+    @DESCRIPTION.setter
+    def DESCRIPTION(self, value):
+        self._embed["ERROR"]["DESCRIPTION"] = str(value)
+        self.__update()
+
     @property
     def THUMBNAIL(self):
         return self._embed["ERROR"]["THUMBNAIL"]
+
+    @THUMBNAIL.setter
+    def THUMBNAIL(self, value):
+        if str(value).lower().startswith('http'):
+            self._embed["ERROR"]["THUMBNAIL"] = str(value)
+            self.__update()
 
     @property
     def FIELD_NAME(self):
         return self._embed["ERROR"]["FIELD_NAME"]
 
+    @FIELD_NAME.setter
+    def FIELD_NAME(self, value):
+        self._embed["ERROR"]["FIELD_NAME"] = str(value)
+        self.__update()
+
     @property
     def COLOR(self):
         return _getColor(self._embed["ERROR"]["COLOR"])
+
+    @COLOR.setter
+    def COLOR(self, value):
+        self._embed["ERROR"]["COLOR"] = _getColor(
+            _code=str(value), _reverse=True
+        )
+        self.__update()
 
 
 class Common:
