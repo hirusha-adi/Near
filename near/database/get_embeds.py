@@ -1,4 +1,8 @@
 import json
+import os
+import typing as t
+
+__FILENAME = os.path.join(os.getcwd(), 'near', 'database', 'embeds.json')
 
 
 def _getColor(_code):
@@ -12,7 +16,7 @@ def _getColor(_code):
 
 
 class PleaseWait:
-    with open("near/database/embeds.json", "r", encoding="utf-8") as file:
+    with open(__FILENAME, "r", encoding="utf-8") as file:
         embed = json.load(file)
 
     TITLE = embed["PleaseWaitEmbed"]["TITLE"]
@@ -25,7 +29,7 @@ class PleaseWait:
 
 
 class ErrorEmbeds:
-    with open("near/database/embeds.json", "r", encoding="utf-8") as file:
+    with open(__FILENAME, "r", encoding="utf-8") as file:
         embed = json.load(file)
 
     TITLE = embed["ERROR"]["TITLE"]
@@ -36,14 +40,14 @@ class ErrorEmbeds:
 
 
 class Common:
-    with open("near/database/embeds.json", "r", encoding="utf-8") as file:
+    with open(__FILENAME, "r", encoding="utf-8") as file:
         embed = json.load(file)
 
     COLOR = _getColor(embed["COMMON"]["COLOR"])
 
 
 class FakeEmbeds:
-    with open("near/database/embeds.json", "r", encoding="utf-8") as file:
+    with open(__FILENAME, "r", encoding="utf-8") as file:
         embed = json.load(file)
 
     TITLE = embed["FAKEEMBEDS"]["TITLE"]
