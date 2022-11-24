@@ -14,25 +14,22 @@
 
 ## Setting up
 
-- Debian/Ubutu
+### Debian
+
+- Install dependencies for the installer script
 
 ```bash
-sudo apt update
-sudo apt upgrade -y
-sudo apt install wget git ffmpeg python3 python3-pip default-jdk nano -y
+sudo apt update && sudo apt upgrade && sudo apt install python3 wget -y
 ```
 
+- Download the script
+
 ```bash
-curl "https://raw.githubusercontent.com/hirusha-adi/Near/main/others/start.sh" >> start.sh
+wget  "https://raw.githubusercontent.com/hirusha-adi/Near/main/setup.py"
 ```
 
-- Arch
+- Run the script
 
 ```bash
-sudo pacman -Syyu --noconfirm
-sudo pacman -S nano jdk11-openjdk curl python python-pip ffmpeg git --noconfirm
-```
-
-```bash
-curl "https://raw.githubusercontent.com/hirusha-adi/Near/main/others/start.sh" >> start.sh
+python3 setup.py
 ```
