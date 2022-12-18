@@ -15,7 +15,7 @@ services:
         restart: always
         ports:
             - 8090:8090
-        command: python3 nearbot.py
+        command: bash -c "sleep 10; python3 nearbot.py"
         env_file:
             - .env
         environment:
