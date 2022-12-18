@@ -1,0 +1,25 @@
+version: '3'
+services:
+    lavalink:
+        build:
+            context: .
+            dockerfile: Dockerfile-lavalink
+        restart: always
+        ports:
+            - 2333:2333
+        command: java -jar Lavalink.jar
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile-bot
+        restart: always
+        ports:
+            - 8090:8090
+        command: python3 nearbot.py
+        env_file:
+            - .env
+        environment:
+            - BOT_TOKEN=${BOT_TOKEN}
+            - LAVA_HOST=${LAVA_HOST}
+        depends_on:
+            - lavalink
