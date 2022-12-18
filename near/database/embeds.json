@@ -1,26 +1,30 @@
 {
-    "PleaseWaitEmbed": {
-        "AUTHOR_NAME": "NearBot",
-        "AUTHOR_URL": "https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png",
-        "TITLE": "Please Wait",
-        "DESCRIPTION": "``` Processing Your Request ```",
-        "COLOR": "red",
-        "THUMBNAIL": "https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif",
-        "FOOTER": "Bot created by ZeaCeR#5641"
+    "PleaseWaitEmbed":{
+        "AUTHOR_NAME":"NearBot",
+        "AUTHOR_URL":"https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png",
+        "TITLE":"Please Wait",
+        "DESCRIPTION":"``` Processing Your Request ```",
+        "COLOR":"red",
+        "THUMBNAIL":"https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif",
+        "FOOTER":"Bot created by ZeaCeR#5641"
     },
-    "ERROR": {
-        "TITLE": ":red_square: Error!",
-        "DESCRIPTION": "The command was unable to run successfully! ",
-        "THUMBNAIL": "https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png",
-        "FIELD_NAME": "Error:",
-        "COLOR": "red"
+    
+    "ERROR":{
+        "TITLE":":red_square: Error!",
+        "DESCRIPTION":"The command was unable to run successfully! ",
+        "THUMBNAIL":"https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png",
+        "FIELD_NAME":"Error:",
+        "COLOR":"red"
     },
-    "COMMON": {
-        "COLOR": "red"
+
+    "COMMON":{
+        "COLOR":"red"
     },
-    "FAKEEMBEDS": {
-        "THUMBNAIL": "https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png",
-        "COLOR": "red",
-        "TITLE": "Fake Information Generator"
+
+    "FAKEEMBEDS":{
+        "THUMBNAIL":"https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png",
+        "COLOR":"red",
+        "TITLE":"Fake Information Generator"
     }
+    
 }
