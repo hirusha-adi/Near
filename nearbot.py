@@ -67,12 +67,14 @@ for filename in os.listdir('./near/cogs'):
         client.load_extension(f'near.cogs.{filename[:-3]}')
         print(f"[+] Loaded: near.cogs.{filename[:-3]}")
 
+host = os.getenv("LAVA_HOST")
+if not host: host = "0.0.0.0"
 
 client.lava_nodes = [
     {
-        'host': "0.0.0.0",
+        'host': host,
         'port': 2333,
-        'rest_uri': f'http://0.0.0.0:2333',
+        'rest_uri': f'http://{host}:2333',
         'identifier': 'MAIN',
         'password': 'youshallnotpass',
         'region': 'singapore'
@@ -125,8 +127,10 @@ async def on_message(message):
 
     await client.process_commands(message)
 
-with open("token.txt", "r", encoding="utf-8") as tokenfile:
-    token = tokenfile.read()
+token = os.getenv("BOT_TOKEN")
+if not token:
+    with open("token.txt", "r", encoding="utf-8") as tokenfile:
+        token = tokenfile.read()
 
 keep_alive()
 client.run(token)
