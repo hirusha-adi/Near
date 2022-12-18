@@ -1,293 +1,65 @@
-"""
-PleaseWait  --> 
-ErrorEmbeds -->
-Common      -->
-FakeEmbeds  -->
-"""
-
 import json
-import os
-import typing as t
-
-__FILENAME = os.path.join(os.getcwd(), 'near', 'database', 'embeds.json')
-
-
-def _getColor(_code: t.Union[str, bytes], _reverse: t.Optional[bool] = False):
-    if _reverse:
-        return False
-    else:
-        if _code == "red":
-            ret = 0xff0000
-        elif _code == "green":
-            ret = 0x00ff00
-        elif _code == "blue":
-            ret = 0x0000ff
-        return ret
 
 
 class PleaseWait:
-    """
-    Please Wait embed for the bot
-    loaded from 
-        near/database/embeds.json
+    with open("near/database/embeds.json", "r", encoding="utf-8") as file:
+        embed = json.load(file)
 
-    `TITLE` (str):
-        title of the embed
+    TITLE = embed["PleaseWaitEmbed"]["TITLE"]
+    DESCRIPTION = embed["PleaseWaitEmbed"]["DESCRIPTION"]
+    THUMBNAIL = embed["PleaseWaitEmbed"]["THUMBNAIL"]
+    FOOTER = embed["PleaseWaitEmbed"]["FOOTER"]
 
-    `DESCRIPTION` (str):
-        description of the embed
+    if embed["PleaseWaitEmbed"]["COLOR"] == "red":
+        COLOR = 0xff0000
+    elif embed["PleaseWaitEmbed"]["COLOR"] == "green":
+        COLOR = 0x00ff00
+    elif embed["PleaseWaitEmbed"]["COLOR"] == "blue":
+        COLOR = 0x0000ff
 
-    `COLOR` (str):
-        color of the embed, must be one of the predefines colors
-
-    `THUMBNAIL` (str):
-        thumbnail of the embed. must start with http
-
-    `AUTHOR_NAME` (str):
-        author name of the embed
-
-    `AUTHOR_URL` (str):
-        author url of the embed. must start with http
-
-    `FOOTER` (str):
-        footer of the embed
-    """
-
-    def __init__(self) -> None:
-        with open(__FILENAME, "r", encoding="utf-8") as file:
-            self._embed = json.load(file)
-
-    def __update(self) -> None:
-        with open(__FILENAME, "w", encoding="utf-8") as file:
-            self._embed = json.dump(self._embed, file)
-
-    @property
-    def TITLE(self):
-        return self._embed["PleaseWaitEmbed"]["TITLE"]
-
-    @TITLE.setter
-    def TITLE(self, value):
-        self._embed["PleaseWaitEmbed"]["TITLE"] = str(value)
-        self.__update()
-
-    @property
-    def DESCRIPTION(self):
-        return self._embed["PleaseWaitEmbed"]["DESCRIPTION"]
-
-    @DESCRIPTION.setter
-    def DESCRIPTION(self, value):
-        self._embed["PleaseWaitEmbed"]["DESCRIPTION"] = str(value)
-        self.__update()
-
-    @property
-    def THUMBNAIL(self):
-        return self._embed["PleaseWaitEmbed"]["THUMBNAIL"]
-
-    @THUMBNAIL.setter
-    def THUMBNAIL(self, value):
-        if str(value).lower().startswith('http'):
-            self._embed["PleaseWaitEmbed"]["THUMBNAIL"] = str(value)
-            self.__update()
-
-    @property
-    def FOOTER(self):
-        return self._embed["PleaseWaitEmbed"]["FOOTER"]
-
-    @FOOTER.setter
-    def FOOTER(self, value):
-        self._embed["PleaseWaitEmbed"]["FOOTER"] = str(value)
-        self.__update()
-
-    @property
-    def COLOR(self):
-        return _getColor(self._embed["PleaseWaitEmbed"]["COLOR"])
-
-    @COLOR.setter
-    def COLOR(self, value):
-        self._embed["PleaseWaitEmbed"]["COLOR"] = _getColor(
-            _code=str(value), _reverse=True
-        )
-        self.__update()
-
-    @property
-    def AUTHOR_NAME(self):
-        return self._embed["PleaseWaitEmbed"]["AUTHOR_NAME"]
-
-    @AUTHOR_NAME.setter
-    def AUTHOR_NAME(self, value):
-        self._embed["PleaseWaitEmbed"]["AUTHOR_NAME"] = str(value)
-        self.__update()
-
-    @property
-    def AUTHOR_URL(self):
-        return self._embed["PleaseWaitEmbed"]["AUTHOR_URL"]
-
-    @AUTHOR_URL.setter
-    def AUTHOR_URL(self, value):
-        if str(value).lower().startswith('http'):
-            self._embed["PleaseWaitEmbed"]["AUTHOR_URL"] = str(value)
-            self.__update()
+    AUTHOR_NAME = embed["PleaseWaitEmbed"]["AUTHOR_NAME"]
+    AUTHOR_URL = embed["PleaseWaitEmbed"]["AUTHOR_URL"]
 
 
 class ErrorEmbeds:
-    """
-    error embed for the bot
-    loaded from 
-        near/database/embeds.json
+    with open("near/database/embeds.json", "r", encoding="utf-8") as file:
+        embed = json.load(file)
 
-    `TITLE` (str):
-        title of the embed
+    TITLE = embed["ERROR"]["TITLE"]
+    DESCRIPTION = embed["ERROR"]["DESCRIPTION"]
+    THUMBNAIL = embed["ERROR"]["THUMBNAIL"]
+    FIELD_NAME = embed["ERROR"]["FIELD_NAME"]
 
-    `DESCRIPTION` (str):
-        description of the embed
-
-    `THUMBNAIL` (str):
-        thumbnail of the embed. starts from http
-
-    `FIELD_NAME` (str):
-        field title of the field of the embed
-
-    `COLOR` (str):
-        color of the embed, must be one of the predefines colors
-    """
-
-    def __init__(self) -> None:
-        with open(__FILENAME, "r", encoding="utf-8") as file:
-            self._embed = json.load(file)
-
-    def __update(self) -> None:
-        with open(__FILENAME, "w", encoding="utf-8") as file:
-            self._embed = json.dump(self._embed, file)
-
-    @property
-    def TITLE(self):
-        return self._embed["ERROR"]["TITLE"]
-
-    @TITLE.setter
-    def TITLE(self, value):
-        self._embed["ERROR"]["TITLE"] = str(value)
-        self.__update()
-
-    @property
-    def DESCRIPTION(self):
-        return self._embed["ERROR"]["DESCRIPTION"]
-
-    @DESCRIPTION.setter
-    def DESCRIPTION(self, value):
-        self._embed["ERROR"]["DESCRIPTION"] = str(value)
-        self.__update()
-
-    @property
-    def THUMBNAIL(self):
-        return self._embed["ERROR"]["THUMBNAIL"]
-
-    @THUMBNAIL.setter
-    def THUMBNAIL(self, value):
-        if str(value).lower().startswith('http'):
-            self._embed["ERROR"]["THUMBNAIL"] = str(value)
-            self.__update()
-
-    @property
-    def FIELD_NAME(self):
-        return self._embed["ERROR"]["FIELD_NAME"]
-
-    @FIELD_NAME.setter
-    def FIELD_NAME(self, value):
-        self._embed["ERROR"]["FIELD_NAME"] = str(value)
-        self.__update()
-
-    @property
-    def COLOR(self):
-        return _getColor(self._embed["ERROR"]["COLOR"])
-
-    @COLOR.setter
-    def COLOR(self, value):
-        self._embed["ERROR"]["COLOR"] = _getColor(
-            _code=str(value), _reverse=True
-        )
-        self.__update()
+    if embed["ERROR"]["COLOR"] == "red":
+        COLOR = 0xff0000
+    elif embed["ERROR"]["COLOR"] == "green":
+        COLOR = 0x00ff00
+    elif embed["ERROR"]["COLOR"] == "blue":
+        COLOR = 0x0000ff
 
 
 class Common:
-    """
-    common embed for the bot
-    loaded from 
-        near/database/embeds.json
+    with open("near/database/embeds.json", "r", encoding="utf-8") as file:
+        embed = json.load(file)
 
-    `COLOR` (str):
-        color of the embed, must be one of the predefines colors
-    """
-
-    def __init__(self) -> None:
-        with open(__FILENAME, "r", encoding="utf-8") as file:
-            self._embed = json.load(file)
-
-    def __update(self) -> None:
-        with open(__FILENAME, "w", encoding="utf-8") as file:
-            self._embed = json.dump(self._embed, file)
-
-    @property
-    def COLOR(self):
-        return _getColor(self._embed["COMMON"]["COLOR"])
-
-    @COLOR.setter
-    def COLOR(self, value):
-        self._embed["COMMON"]["COLOR"] = _getColor(
-            _code=str(value), _reverse=True
-        )
-        self.__update()
+    if embed["COMMON"]["COLOR"] == "red":
+        COLOR = 0xff0000
+    elif embed["COMMON"]["COLOR"] == "green":
+        COLOR = 0x00ff00
+    elif embed["COMMON"]["COLOR"] == "blue":
+        COLOR = 0x0000ff
 
 
 class FakeEmbeds:
-    """
-    error embed for the bot
-    loaded from 
-        near/database/embeds.json
+    with open("near/database/embeds.json", "r", encoding="utf-8") as file:
+        embed = json.load(file)
 
-    `TITLE` (str):
-        title of the embed
+    TITLE = embed["FAKEEMBEDS"]["TITLE"]
+    THUMBNAIL = embed["FAKEEMBEDS"]["THUMBNAIL"]
 
-    `THUMBNAIL` (str):
-        thumbnail of the embed. starts from http
-
-    `COLOR` (str):
-        color of the embed, must be one of the predefines colors
-    """
-
-    def __init__(self) -> None:
-        with open(__FILENAME, "r", encoding="utf-8") as file:
-            self._embed = json.load(file)
-
-    def __update(self) -> None:
-        with open(__FILENAME, "w", encoding="utf-8") as file:
-            self._embed = json.dump(self._embed, file)
-
-    @property
-    def TITLE(self):
-        return self._embed["FAKEEMBEDS"]["TITLE"]
-
-    @TITLE.setter
-    def TITLE(self, value):
-        self._embed["FAKEEMBEDS"]["TITLE"] = str(value)
-        self.__update()
-
-    @property
-    def THUMBNAIL(self):
-        return self._embed["FAKEEMBEDS"]["THUMBNAIL"]
-
-    @THUMBNAIL.setter
-    def THUMBNAIL(self, value):
-        if str(value).lower().startswith('http'):
-            self._embed["FAKEEMBEDS"]["THUMBNAIL"] = str(value)
-            self.__update()
-
-    @property
-    def COLOR(self):
-        return _getColor(self._embed["FAKEEMBEDS"]["COLOR"])
-
-    @COLOR.setter
-    def COLOR(self, value):
-        self._embed["FAKEEMBEDS"]["COLOR"] = _getColor(
-            _code=str(value), _reverse=True
-        )
-        self.__update()
+    if embed["FAKEEMBEDS"]["COLOR"] == "red":
+        COLOR = 0xff0000
+    elif embed["FAKEEMBEDS"]["COLOR"] == "green":
+        COLOR = 0x00ff00
+    elif embed["FAKEEMBEDS"]["COLOR"] == "blue":
+        COLOR = 0x0000ff
