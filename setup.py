@@ -15,7 +15,7 @@ def setup_lavalink():
         'wget "https://github.com/freyacodes/Lavalink/releases/download/3.4/Lavalink.jar"')
     os.system(
         "curl 'https://raw.githubusercontent.com/hirusha-adi/Near/main/lavalink.yml' >> 'application.yml'")
-    os.system("java -jar ./Javalink.jar &")
+    os.system("java -jar ./Lavalink.jar &")
 
 
 def setup_near():
