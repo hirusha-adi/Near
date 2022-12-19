@@ -1,6 +1,8 @@
 # Project Files
 token.txt
 ./token.txt
+.env*
+!.env.example
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
