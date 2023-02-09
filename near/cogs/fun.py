@@ -14,15 +14,7 @@ class Fun(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-        # This is the please-wait/Loading embed
-        self.please_wait_emb = discord.Embed(
-            title=get_embeds.PleaseWait.TITLE, description=get_embeds.PleaseWait.DESCRIPTION, color=get_embeds.PleaseWait.COLOR)
-        self.please_wait_emb.set_author(
-            name=get_embeds.PleaseWait.AUTHOR_NAME, icon_url=get_embeds.PleaseWait.AUTHOR_URL)
-        self.please_wait_emb.set_thumbnail(url=get_embeds.PleaseWait.THUMBNAIL)
-        self.please_wait_emb.set_footer(text=get_embeds.PleaseWait.FOOTER)
-
-    @commands.command()
+    @app_commands.command(name="inspire", description="Get an inspirational quote")
     async def inspire(self, interaction: discord.Interaction):
         try:
             r = requests.get("https://zenquotes.io/api/random")
@@ -52,7 +44,7 @@ class Fun(commands.Cog):
 
             await interaction.response.send_message(embed=embed3)
 
-    @commands.command()
+    @app_commands.command(name="bored", description="Bored? What to do now?")
     async def bored(self, interaction: discord.Interaction):
 
         try:
@@ -89,7 +81,7 @@ class Fun(commands.Cog):
 
             await interaction.response.send_message(embed=embed3)
 
-    @commands.command(aliases=["lol"])
+    @app_commands.command(name="meme", description="Get a random meme")
     async def meme(self, interaction: discord.Interaction):
 
         try:
@@ -121,7 +113,7 @@ class Fun(commands.Cog):
 
             await interaction.response.send_message(embed=embed3)
 
-    @commands.command()
+    @app_commands.command(name="dadjoke", description="Get a random dad joke")
     async def dadjoke(self, interaction: discord.Interaction):
 
         try:
@@ -156,7 +148,7 @@ class Fun(commands.Cog):
 
             await interaction.response.send_message(embed=embed3)
 
-    @commands.command()
+    @app_commands.command(name="joke", description="Get a random joke")
     async def joke(self, interaction: discord.Interaction):
 
         try:
@@ -210,8 +202,9 @@ class Fun(commands.Cog):
 
             await interaction.response.send_message(embed=embed3)
 
-    @commands.command(aliases=['wouldyourather', 'would-you-rather', 'wyrq'])
-    async def wyr(self, interaction: discord.Interaction, *, questionhere):
+    @app_commands.command(name="wyr", description="Would You Rather...?")
+    @app_commands.describe(question="Question")
+    async def wyr(self, interaction: discord.Interaction, question: str):
 
         try:
             r = requests.get(
@@ -229,7 +222,7 @@ class Fun(commands.Cog):
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879583873527332904/Would-You-Rather_Questions-680x430.jpg")
             embed.add_field(name="Question",
-                            value=f"{questionhere}", inline=False)
+                            value=f"{question}", inline=False)
             embed.add_field(
                 name="Answer", value=f"{qa}\n{qor}\n{qb}", inline=False)
             embed.set_footer(text=f"Requested by {interaction.user.name}")
@@ -248,7 +241,7 @@ class Fun(commands.Cog):
 
             await interaction.response.send_message(embed=embed3)
 
-    @commands.command()
+    @app_commands.command(name="advice", description="Get advice for your life")
     async def advice(self, interaction: discord.Interaction):
 
         try:
@@ -278,7 +271,7 @@ class Fun(commands.Cog):
 
             await interaction.response.send_message(embed=embed3)
 
-    @commands.command(aliases=["jokenew", "newjoke"])
+    @app_commands.command(name="joke2", description="Get a Joke, but from Another API")
     async def joke2(self, interaction: discord.Interaction):
 
         try:
