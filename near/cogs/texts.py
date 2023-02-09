@@ -1,46 +1,35 @@
 import discord
 from discord.ext import commands
+from discord import app_commands
 
 
 class Texts(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-    @commands.command()
-    async def goodnight(self, ctx):
-        await ctx.message.delete()
-        night = '✩⋆｡ ˚ᎶᎾᎾⅅ ℕᏐᎶℍᎢ⋆｡˚✩'
-        await ctx.send(night)
+    @app_commands.command(name="goodnight", description="✩⋆｡ ˚ᎶᎾᎾⅅ ℕᏐᎶℍᎢ⋆｡˚✩")
+    async def goodnight(self, interaction: discord.Interaction):
+        await interaction.response.send_message('✩⋆｡ ˚ᎶᎾᎾⅅ ℕᏐᎶℍᎢ⋆｡˚✩')
 
-    @commands.command()
-    async def smile(self, ctx):
-        await ctx.message.delete()
-        smile = '˙ ͜ʟ˙'
-        await ctx.send(smile)
+    @app_commands.command(name="smile", description='˙ ͜ʟ˙')
+    async def smile(self, interaction: discord.Interaction):
+        await interaction.response.send_message('˙ ͜ʟ˙')
 
-    @commands.command()
-    async def iloveu(self, ctx):
-        await ctx.message.delete()
-        love = '(๑′ᴗ‵๑)Ｉ Lᵒᵛᵉᵧₒᵤ♥'
-        await ctx.send(love)
+    @app_commands.command(name="iloveu", description='(๑′ᴗ‵๑)Ｉ Lᵒᵛᵉᵧₒᵤ♥')
+    async def iloveu(self, interaction: discord.Interaction):
+        await interaction.response.send_message('(๑′ᴗ‵๑)Ｉ Lᵒᵛᵉᵧₒᵤ♥')
 
-    @commands.command()
-    async def sword(self, ctx):
-        await ctx.message.delete()
-        sword = 'ס₪₪₪₪§|(Ξ≥≤≥≤≥≤ΞΞΞΞΞΞΞΞΞΞ>'
-        await ctx.send(sword)
+    @app_commands.command(name="sword", description='ס₪₪₪₪§|(Ξ≥≤≥≤≥≤ΞΞΞΞΞΞΞΞΞΞ>')
+    async def sword(self, interaction: discord.Interaction):
+        await interaction.response.send_message('ס₪₪₪₪§|(Ξ≥≤≥≤≥≤ΞΞΞΞΞΞΞΞΞΞ>')
 
-    @commands.command()
-    async def what(self, ctx):
-        await ctx.message.delete()
-        what = '( ʘ̆ ╭͜ʖ╮ ʘ̆ )'
-        await ctx.send(what)
+    @app_commands.command(name="what", description='( ʘ̆ ╭͜ʖ╮ ʘ̆ )')
+    async def what(self, interaction: discord.Interaction):
+        await interaction.response.send_message('( ʘ̆ ╭͜ʖ╮ ʘ̆ )')
 
-    @commands.command()
-    async def fuckyou(self, ctx):
-        await ctx.message.delete()
-        middlef = '╭∩╮(･◡･)╭∩╮'
-        await ctx.send(middlef)
+    @app_commands.command(name="fuckyou", description='╭∩╮(･◡･)╭∩╮')
+    async def fuckyou(self, interaction: discord.Interaction):
+        await interaction.response.send_message('╭∩╮(･◡･)╭∩╮')
 
 
 async def setup(client: commands.Bot):
