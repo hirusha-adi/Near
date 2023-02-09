@@ -27,8 +27,8 @@ class Texts(commands.Cog):
     async def what(self, interaction: discord.Interaction):
         await interaction.response.send_message('( ʘ̆ ╭͜ʖ╮ ʘ̆ )')
 
-    @app_commands.command(name="fuckyou", description='╭∩╮(･◡･)╭∩╮')
-    async def fuckyou(self, interaction: discord.Interaction):
+    @app_commands.command(name="fukyou", description='╭∩╮(･◡･)╭∩╮')
+    async def fukyou(self, interaction: discord.Interaction):
         await interaction.response.send_message('╭∩╮(･◡･)╭∩╮')
 
 
