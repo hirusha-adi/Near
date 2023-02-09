@@ -4,7 +4,9 @@ import aiohttp
 import discord
 import requests
 from bs4 import BeautifulSoup
+from discord import app_commands
 from discord.ext import commands
+
 from near.database import get_embeds
 
 
@@ -21,9 +23,7 @@ class Fun(commands.Cog):
         self.please_wait_emb.set_footer(text=get_embeds.PleaseWait.FOOTER)
 
     @commands.command()
-    async def inspire(self, ctx):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
-
+    async def inspire(self, interaction: discord.Interaction):
         try:
             r = requests.get("https://zenquotes.io/api/random")
             json_data = loadjsonstring(r.text)
@@ -36,9 +36,9 @@ class Fun(commands.Cog):
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879382016041291828/NicePng_light-streak-png_395357.png")
             embed.add_field(name="Inspirational Quote:",
                             value=f"{quote}", inline=True)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -48,13 +48,12 @@ class Fun(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed3)
 
     @commands.command()
-    async def bored(self, ctx):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+    async def bored(self, interaction: discord.Interaction):
 
         try:
             r = requests.get('http://www.boredapi.com/api/activity/')
@@ -74,9 +73,9 @@ class Fun(commands.Cog):
                             value=f"{data['accessibility']}", inline=False)
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/884694742716268554/unnamed.png")
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -86,13 +85,12 @@ class Fun(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed3)
 
     @commands.command(aliases=["lol"])
-    async def meme(self, ctx):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+    async def meme(self, interaction: discord.Interaction):
 
         try:
             r = requests.get("https://some-random-api.ml/meme").json()
@@ -108,8 +106,8 @@ class Fun(commands.Cog):
                 pass
 
             embed.set_image(url=str(r["image"]))
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -119,13 +117,12 @@ class Fun(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed3)
 
     @commands.command()
-    async def dadjoke(self, ctx):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+    async def dadjoke(self, interaction: discord.Interaction):
 
         try:
             headers = {
@@ -143,9 +140,9 @@ class Fun(commands.Cog):
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/881007500588089404/912620134974251018/senior-caucasian-man-wearing-business-260nw-1860664027.png")
             embed.add_field(name="Joke", value=f"{r['joke']}", inline=False)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -155,13 +152,12 @@ class Fun(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed3)
 
     @commands.command()
-    async def joke(self, ctx):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+    async def joke(self, interaction: discord.Interaction):
 
         try:
             r = requests.get("https://v2.jokeapi.dev/joke/Any")
@@ -183,9 +179,10 @@ class Fun(commands.Cog):
                     embed2.set_thumbnail(
                         url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
                     embed2.add_field(name="Error:", value=f"{e}", inline=False)
-                    embed2.set_footer(text=f"Requested by {ctx.author.name}")
-                    await loading_message.delete()
-                    await ctx.send(embed=embed2)
+                    embed2.set_footer(
+                        text=f"Requested by {interaction.user.name}")
+
+                    await interaction.response.send_message(embed=embed2)
                     return
 
             embed = discord.Embed(title=":grin: a Joke",
@@ -197,9 +194,9 @@ class Fun(commands.Cog):
             embed.add_field(name="Joke", value=f"{jokeit}", inline=False)
             embed.add_field(
                 name="Information", value=f"Category: {c['category']} \nType: {c['type']} \nNSFW: {c['flags']['nsfw']} \nReligious: {c['flags']['religious']} \nPolitical: {c['flags']['political']} \nRacist: {c['flags']['racist']} \nSexist: {c['flags']['sexist']} \nExplicit: {c['flags']['explicit']} \nLanguage: {c['lang']}", inline=True)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -209,13 +206,12 @@ class Fun(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed3)
 
     @commands.command(aliases=['wouldyourather', 'would-you-rather', 'wyrq'])
-    async def wyr(self, ctx, *, questionhere):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+    async def wyr(self, interaction: discord.Interaction, *, questionhere):
 
         try:
             r = requests.get(
@@ -236,9 +232,9 @@ class Fun(commands.Cog):
                             value=f"{questionhere}", inline=False)
             embed.add_field(
                 name="Answer", value=f"{qa}\n{qor}\n{qb}", inline=False)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -248,13 +244,12 @@ class Fun(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed3)
 
     @commands.command()
-    async def advice(self, ctx):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+    async def advice(self, interaction: discord.Interaction):
 
         try:
             r = requests.get("https://api.adviceslip.com/advice").json()
@@ -267,9 +262,9 @@ class Fun(commands.Cog):
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/880034306720956456/download_1.jfif")
             embed.add_field(name="Advice", value=f"{c}", inline=False)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -279,13 +274,12 @@ class Fun(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed3)
 
     @commands.command(aliases=["jokenew", "newjoke"])
-    async def joke2(self, ctx):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+    async def joke2(self, interaction: discord.Interaction):
 
         try:
             r = requests.get("https://some-random-api.ml/joke").json()
@@ -297,9 +291,9 @@ class Fun(commands.Cog):
             embed.set_thumbnail(
                 url="https://media.discordapp.net/attachments/877796755234783273/880742956552822794/mr-bean-avatar-character-cartoon-rowan-atkinson-png-image-33.png?width=454&height=584")
             embed.add_field(name="Joke", value=f"{r['joke']}", inline=False)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -309,9 +303,9 @@ class Fun(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed3)
 
 
 async def setup(client: commands.Bot):
