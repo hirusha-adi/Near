@@ -1,44 +1,37 @@
-import discord
-import aiohttp
 import io
-from discord.ext import commands
-from near.database import get_embeds
 from datetime import datetime as datet
+
+import aiohttp
+import discord
+from discord import app_commands
+from discord.ext import commands
+
+from near.database import get_embeds
 
 
 class Mods(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-        # This is the please-wait/Loading embed
-        self.please_wait_emb = discord.Embed(
-            title=get_embeds.PleaseWait.TITLE, description=get_embeds.PleaseWait.DESCRIPTION, color=get_embeds.PleaseWait.COLOR)
-        self.please_wait_emb.set_author(
-            name=get_embeds.PleaseWait.AUTHOR_NAME, icon_url=get_embeds.PleaseWait.AUTHOR_URL)
-        self.please_wait_emb.set_thumbnail(url=get_embeds.PleaseWait.THUMBNAIL)
-        self.please_wait_emb.set_footer(text=get_embeds.PleaseWait.FOOTER)
-
-    @commands.command(aliases=["avatar", "pfp"])
-    async def av(self, ctx, *, user: discord.User = None):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+    @app_commands.command(name='avatar', description="Get the User Avatar")
+    @app_commands.describe(user="User to get the Profile Picture of. Defaults to the Author")
+    async def avatar(self, interaction: discord.Interaction, user: discord.User = None):
 
         try:
-
             format = "gif"
-            user = user or ctx.author
+            user = user or interaction.user
 
-            if user.is_avatar_animated() != True:
+            if user.display_avatar.is_animated() != True:
                 format = "png"
 
-            avatar = user.avatar_url_as(
-                format=format if format != "gif" else None)
+            avatar = user.display_avatar.with_format(
+                format=format if format != "gif" else None).url
 
             async with aiohttp.ClientSession() as session:
                 async with session.get(str(avatar)) as resp:
                     image = await resp.read()
             with io.BytesIO(image) as file:
-                await loading_message.delete()
-                await ctx.send(file=discord.File(file, f"Avatar.{format}"))
+                await interaction.response.send_message(file=discord.File(file, f"Avatar.{format}"))
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -48,36 +41,32 @@ class Mods(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+            await interaction.response.send_message(embed=embed3)
 
+    @app_commands.command(name='serverinfo', description="Get Information about the Server")
     @commands.command()
-    async def serverinfo(self, ctx):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
-
+    async def serverinfo(self, interaction: discord.Interaction):
         try:
 
             date_format = "%a, %d %b %Y %I:%M %p"
-            embed = discord.Embed(title=f"Server Info of {ctx.guild.name}:",
-                                  description=f"**Members -** {ctx.guild.member_count}\n**Roles -** {len(ctx.guild.roles)}\n**Text-Channels -**{len(ctx.guild.text_channels)}\n**Voice-Channels -**{len(ctx.guild.voice_channels)}\n**Categories -**{len(ctx.guild.categories)}",
+            embed = discord.Embed(title=f"Server Info of {interaction.guild.name}:",
+                                  description=f"**Members -** {interaction.guild.member_count}\n**Roles -** {len(interaction.guild.roles)}\n**Text-Channels -**{len(interaction.guild.text_channels)}\n**Voice-Channels -**{len(interaction.guild.voice_channels)}\n**Categories -**{len(interaction.guild.categories)}",
                                   timestamp=datet.utcnow(), color=get_embeds.Common.COLOR)
             embed.add_field(name="Server created at",
-                            value=f"{ctx.guild.created_at.strftime(date_format)}")
+                            value=f"{interaction.guild.created_at.strftime(date_format)}")
             embed.add_field(name="Server Owner",
-                            value=f"<@{ctx.guild.owner_id}>")
-            embed.add_field(name="Server Region", value=f"{ctx.guild.region}")
-            embed.add_field(name="Server ID", value=f"{ctx.guild.id}")
+                            value=f"<@{interaction.guild.owner_id}>")
+            embed.add_field(name="Server ID", value=f"{interaction.guild.id}")
             embed.add_field(name="Bots", value=len(
-                list(filter(lambda m: m.bot, ctx.guild.members))))
-            embed.add_field(name="Banned members", value=len(await ctx.guild.bans()))
-            embed.add_field(name="Invites", value=len(await ctx.guild.invites()))
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                list(filter(lambda m: m.bot, interaction.guild.members))))
+            embed.add_field(name="Banned members", value=len(await interaction.guild.bans()))
+            embed.add_field(name="Invites", value=len(await interaction.guild.invites()))
+            embed.set_footer(text=f"Requested by {interaction.author.name}")
+            embed.set_thumbnail(url=f"{interaction.guild.icon_url}")
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+                             icon_url=f"{self.client.user.avatar.url}")
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -87,16 +76,15 @@ class Mods(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+            await interaction.response.send_message(embed=embed3)
 
+    @app_commands.command(name='userinfo', description="Get Information about a User")
+    @app_commands.describe(user="User to get the Information of. Defaults to the Author")
     @commands.command()
-    async def userinfo(self, ctx, target: discord.Member = None):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
-
+    async def userinfo(self, interaction: discord.Interaction, user: discord.Member = None):
         try:
-            target = target or ctx.author
+            target = user or interaction.user
 
             embed = discord.Embed(title="User Information",
                                   color=target.color, timestamp=datet.utcnow())
@@ -115,12 +103,12 @@ class Mods(commands.Cog):
 
             for name, value, inline in fields:
                 embed.add_field(name=name, value=value, inline=inline)
-            embed.set_thumbnail(url=f"{target.avatar_url}")
+
+            embed.set_thumbnail(url=f"{target.default_avatar.url}")
             embed.set_author(name=f"{self.client.user.name}",
                              icon_url=f"{self.client.user.avatar_url}")
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -130,9 +118,8 @@ class Mods(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+            await interaction.response.send_message(embed=embed3)
 
 
 async def setup(client: commands.Bot):
