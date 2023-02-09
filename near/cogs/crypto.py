@@ -84,39 +84,6 @@ class Crypto(commands.Cog):
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed3, ephemeral=True)
 
-    @app_commands.command(name="bin", description="Create a PrivateBin from a Text")
-    @app_commands.describe(text="Text to be included in the PrivateBin")
-    async def bin(self, interaction: discord.Interaction, text: str):
-        try:
-            privbin = privatebinapi.send(
-                "https://bin.teamsds.net/", text=text)
-
-            embed = discord.Embed(
-                title="TeamSDS's PrivateBin", color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879586340520480768/large.png")
-            embed.add_field(
-                name="ID", value=f"{privbin['id']}", inline=False)
-            embed.add_field(
-                name="URL", value=f"{privbin['full_url']}", inline=False)
-            embed.add_field(
-                name=f"Text by {interaction.user.name}", value=f"{text}", inline=False)
-            embed.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed)
-
-        except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(
-                name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(
-                name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3, ephemeral=True)
-
     @app_commands.command(name="xmr", description="Get the current XMR Rates")
     async def xmr(self, interaction: discord.Interaction):
         try:
