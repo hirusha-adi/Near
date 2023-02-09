@@ -189,5 +189,5 @@ class Tools(commands.Cog):
             await ctx.send(f"Error: {e}")
 
 
-def setup(client: commands.Bot):
-    client.add_cog(Tools(client))
+async def setup(client: commands.Bot):
+    await client.add_cog(Tools(client))
