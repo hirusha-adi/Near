@@ -37,7 +37,7 @@ class General(commands.Cog):
             embed = discord.Embed(
                 title="ERROR", description="`You don't have the permissions required to use this command!`", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
+                             icon_url=f"{self.client.user.default_avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await ctx.send(embed=embed)
@@ -47,7 +47,7 @@ class General(commands.Cog):
             embed = discord.Embed(
                 title="Something is wrong!", description="An error has been occured!", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
+                             icon_url=f"{self.client.user.default_avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             embed.add_field(
@@ -64,7 +64,7 @@ class General(commands.Cog):
             embed = discord.Embed(title="Response Time",
                                   color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
+                             icon_url=f"{self.client.user.default_avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png")
             embed.add_field(
@@ -76,7 +76,7 @@ class General(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+                              icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -99,7 +99,7 @@ class General(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+                              icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -122,7 +122,7 @@ class General(commands.Cog):
                 embed = discord.Embed(
                     title="Success!", color=get_embeds.Common.COLOR)
                 embed.set_author(name=f"{self.client.user.name}",
-                                 icon_url=f"{self.client.user.avatar_url}")
+                                 icon_url=f"{self.client.user.default_avatar.url}")
                 embed.add_field(
                     name="Action", value=f"Deleted {amount} {msgtxt} sent by {self.client.user.name}!", inline=False)
                 embed.set_footer(
@@ -133,7 +133,7 @@ class General(commands.Cog):
                 embed2 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                        description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
                 embed2.set_author(name=f"{self.client.user.name}",
-                                  icon_url=f"{self.client.user.avatar_url}")
+                                  icon_url=f"{self.client.user.default_avatar.url}")
                 embed2.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
                 embed2.add_field(
                     name="Error:", value=f"Please enter a value below 100!", inline=False)
@@ -145,7 +145,7 @@ class General(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+                              icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -161,7 +161,7 @@ class General(commands.Cog):
             embed3 = discord.Embed(
                 title=":gear: Help", description="The list of all the commands! there might be some eastereggs!?! ", color=get_embeds.Common.COLOR)
             embed3.set_author(
-                name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
+                name=f"{self.client.user.name}", icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
             embed3.add_field(
@@ -197,7 +197,7 @@ class General(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+                              icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
