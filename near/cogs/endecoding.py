@@ -1,6 +1,7 @@
 import discord
 import base64
 import hashlib
+from discord import app_commands
 from discord.ext import commands
 from near.database import get_embeds
 
@@ -9,20 +10,12 @@ class EncodeDecode(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-        # This is the please-wait/Loading embed
-        self.please_wait_emb = discord.Embed(
-            title=get_embeds.PleaseWait.TITLE, description=get_embeds.PleaseWait.DESCRIPTION, color=get_embeds.PleaseWait.COLOR)
-        self.please_wait_emb.set_author(
-            name=get_embeds.PleaseWait.AUTHOR_NAME, icon_url=get_embeds.PleaseWait.AUTHOR_URL)
-        self.please_wait_emb.set_thumbnail(url=get_embeds.PleaseWait.THUMBNAIL)
-        self.please_wait_emb.set_footer(text=get_embeds.PleaseWait.FOOTER)
-
-    @commands.command(aliases=["e_base64"])
-    async def e_b64(self, ctx, *, args):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+    @app_commands.command(name="b64", description="Encode to Base64")
+    @app_commands.describe(text="Text to process")
+    async def b64(self, interaction: discord.Interaction, text: str):
 
         try:
-            msg = base64.b64encode('{}'.format(args).encode('ascii'))
+            msg = base64.b64encode('{}'.format(text).encode('ascii'))
             enc = str(msg)
             enc = enc[2:len(enc)-1]
 
@@ -32,11 +25,11 @@ class EncodeDecode(commands.Cog):
                              icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879955815602200586/base64-logo-352x200.jpg")
-            embed.add_field(name="Query", value=f"{args}", inline=False)
+            embed.add_field(name="Query", value=f"{text}", inline=False)
             embed.add_field(name="Result", value=f"{enc}", inline=True)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -46,16 +39,16 @@ class EncodeDecode(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
 
-    @commands.command()
-    async def e_md5(self, ctx, *, args):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+            await interaction.response.send_message(embed=embed3)
+
+    @app_commands.command(name="md5", description="Get MD5 Hash")
+    @app_commands.describe(text="Text to process")
+    async def md5(self, interaction: discord.Interaction, text: str):
 
         try:
-            msg = hashlib.md5(args.encode())
+            msg = hashlib.md5(text.encode())
             slpake = msg.hexdigest()
 
             embed = discord.Embed(
@@ -64,11 +57,11 @@ class EncodeDecode(commands.Cog):
                              icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879956672771137546/MD5.png")
-            embed.add_field(name="Query", value=f"{args}", inline=False)
+            embed.add_field(name="Query", value=f"{text}", inline=False)
             embed.add_field(name="Result", value=f"{slpake}", inline=True)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -78,16 +71,16 @@ class EncodeDecode(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
 
-    @commands.command()
-    async def e_sha1(self, ctx, *, args):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+            await interaction.response.send_message(embed=embed3)
+
+    @app_commands.command(name="sha1", description="Get SHA1 Hash")
+    @app_commands.describe(text="Text to process")
+    async def e_sha1(self, interaction: discord.Interaction, text: str):
 
         try:
-            msg = hashlib.sha1(args.encode())
+            msg = hashlib.sha1(text.encode())
             slpuka = msg.hexdigest()
 
             embed = discord.Embed(
@@ -96,11 +89,11 @@ class EncodeDecode(commands.Cog):
                              icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879957622546108436/SHA1.png")
-            embed.add_field(name="Query", value=f"{args}", inline=False)
+            embed.add_field(name="Query", value=f"{text}", inline=False)
             embed.add_field(name="Result", value=f"{slpuka}", inline=True)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -110,16 +103,16 @@ class EncodeDecode(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
 
-    @commands.command()
-    async def e_sha224(self, ctx, *, args):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+            await interaction.response.send_message(embed=embed3)
+
+    @app_commands.command(name="sha224", description="Get SHA224 Hash")
+    @app_commands.describe(text="Text to process")
+    async def e_sha224(self, interaction: discord.Interaction, text: str):
 
         try:
-            msg = hashlib.sha3_224(args.encode())
+            msg = hashlib.sha3_224(text.encode())
             crnja = msg.hexdigest()
 
             embed = discord.Embed(
@@ -128,11 +121,11 @@ class EncodeDecode(commands.Cog):
                              icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879958751640191046/download.png")
-            embed.add_field(name="Query", value=f"{args}", inline=False)
+            embed.add_field(name="Query", value=f"{text}", inline=False)
             embed.add_field(name="Result", value=f"{crnja}", inline=True)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -142,16 +135,16 @@ class EncodeDecode(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
 
-    @commands.command()
-    async def e_sha512(self, ctx, *, args):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+            await interaction.response.send_message(embed=embed3)
+
+    @app_commands.command(name="sha512", description="Get SHA512 Hash")
+    @app_commands.describe(text="Text to process")
+    async def e_sha512(self, interaction: discord.Interaction, text: str):
 
         try:
-            msg = hashlib.sha3_512(args.encode())
+            msg = hashlib.sha3_512(text.encode())
             crnja = msg.hexdigest()
 
             embed = discord.Embed(
@@ -160,11 +153,11 @@ class EncodeDecode(commands.Cog):
                              icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879960296863698944/download_1.png")
-            embed.add_field(name="Query", value=f"{args}", inline=False)
+            embed.add_field(name="Query", value=f"{text}", inline=False)
             embed.add_field(name="Result", value=f"{crnja}", inline=True)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -174,16 +167,16 @@ class EncodeDecode(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
 
-    @commands.command(aliases=["leet"])
-    async def e_leet(self, ctx, *, args):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+            await interaction.response.send_message(embed=embed3)
+
+    @app_commands.command(name="leet", description="Convert text to L33T format")
+    @app_commands.describe(text="Text to process")
+    async def e_leet(self, interaction: discord.Interaction, text: str):
 
         try:
-            encoded = args.replace('e', '3').replace('a', '4').replace('i', '!').replace('u', '|_|').replace('U', '|_|').replace('E', '3').replace('I', '!').replace('A', '4').replace('o', '0').replace(
+            encoded = text.replace('e', '3').replace('a', '4').replace('i', '!').replace('u', '|_|').replace('U', '|_|').replace('E', '3').replace('I', '!').replace('A', '4').replace('o', '0').replace(
                 'O', '0').replace('t', '7').replace('T', '7').replace('l', '1').replace('L', '1').replace('k', '|<').replace('K', '|<').replace('CK', 'X').replace('ck', 'x').replace('Ck', 'X').replace('cK', 'x')
 
             embed = discord.Embed(
@@ -192,11 +185,11 @@ class EncodeDecode(commands.Cog):
                              icon_url=f"{self.client.user.avatar_url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879961162895212574/download_2.png")
-            embed.add_field(name="Query", value=f"{args}", inline=False)
+            embed.add_field(name="Query", value=f"{text}", inline=False)
             embed.add_field(name="Result", value=f"{encoded}", inline=True)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
@@ -206,9 +199,9 @@ class EncodeDecode(commands.Cog):
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed3)
 
 
 async def setup(client: commands.Bot):
