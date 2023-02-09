@@ -22,7 +22,7 @@ class EncodeDecode(commands.Cog):
             embed = discord.Embed(
                 title="to Base64", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
+                             icon_url=f"{self.client.user.default_avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879955815602200586/base64-logo-352x200.jpg")
             embed.add_field(name="Query", value=f"{text}", inline=False)
@@ -35,7 +35,7 @@ class EncodeDecode(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+                              icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -54,7 +54,7 @@ class EncodeDecode(commands.Cog):
             embed = discord.Embed(
                 title="to MD5", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
+                             icon_url=f"{self.client.user.default_avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879956672771137546/MD5.png")
             embed.add_field(name="Query", value=f"{text}", inline=False)
@@ -67,7 +67,7 @@ class EncodeDecode(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+                              icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -86,7 +86,7 @@ class EncodeDecode(commands.Cog):
             embed = discord.Embed(
                 title="to SHA1", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
+                             icon_url=f"{self.client.user.default_avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879957622546108436/SHA1.png")
             embed.add_field(name="Query", value=f"{text}", inline=False)
@@ -99,7 +99,7 @@ class EncodeDecode(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+                              icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -118,7 +118,7 @@ class EncodeDecode(commands.Cog):
             embed = discord.Embed(
                 title="to SHA224", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
+                             icon_url=f"{self.client.user.default_avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879958751640191046/download.png")
             embed.add_field(name="Query", value=f"{text}", inline=False)
@@ -131,7 +131,7 @@ class EncodeDecode(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+                              icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -150,7 +150,7 @@ class EncodeDecode(commands.Cog):
             embed = discord.Embed(
                 title="to SHA512", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
+                             icon_url=f"{self.client.user.default_avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879960296863698944/download_1.png")
             embed.add_field(name="Query", value=f"{text}", inline=False)
@@ -163,7 +163,7 @@ class EncodeDecode(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+                              icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -182,7 +182,7 @@ class EncodeDecode(commands.Cog):
             embed = discord.Embed(
                 title="to LEET", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
+                             icon_url=f"{self.client.user.default_avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879961162895212574/download_2.png")
             embed.add_field(name="Query", value=f"{text}", inline=False)
@@ -195,7 +195,7 @@ class EncodeDecode(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+                              icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)

@@ -31,7 +31,7 @@ class Tools(commands.Cog):
                     color=get_embeds.Common.COLOR
                 )
                 embed.set_author(name=f"{self.client.user.name}",
-                                 icon_url=f"{self.client.user.avatar_url}")
+                                 icon_url=f"{self.client.user.default_avatar.url}")
                 embed.set_footer(text=f"Requested by {intercation.user.name}")
                 return await intercation.response.send_message(embed=embed)
 
@@ -60,7 +60,7 @@ class Tools(commands.Cog):
                     # timestamp=datetime.datetime.utcnow()
                 )
                 embed.set_author(name=f"{self.client.user.name}",
-                                 icon_url=f"{self.client.user.avatar_url}")
+                                 icon_url=f"{self.client.user.default_avatar.url}")
                 embed.set_thumbnail(url=songThumbnail)
                 embed.set_footer(text=f"Requested by {intercation.user.name}")
                 await intercation.response.send_message(embed=embed)
@@ -69,7 +69,7 @@ class Tools(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+                              icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(name="Error:", value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {intercation.user.name}")
@@ -87,7 +87,7 @@ class Tools(commands.Cog):
                 embed = discord.Embed(
                     title="Password Generator", color=get_embeds.Common.COLOR)
                 embed.set_author(name=f"{self.client.user.name}",
-                                 icon_url=f"{self.client.user.avatar_url}")
+                                 icon_url=f"{self.client.user.default_avatar.url}")
                 embed.set_thumbnail(
                     url="https://cdn.discordapp.com/attachments/877796755234783273/880031728369016832/704187.png")
                 embed.add_field(name="Password Length",
@@ -101,7 +101,7 @@ class Tools(commands.Cog):
                 embed = discord.Embed(
                     title="Password Generator", description="An Error has occured!", color=get_embeds.Common.COLOR)
                 embed.set_author(name=f"{self.client.user.name}",
-                                 icon_url=f"{self.client.user.avatar_url}")
+                                 icon_url=f"{self.client.user.default_avatar.url}")
                 embed.set_thumbnail(
                     url="https://cdn.discordapp.com/attachments/877796755234783273/880031728369016832/704187.png")
                 embed.add_field(
@@ -116,7 +116,7 @@ class Tools(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+                              icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -148,7 +148,7 @@ class Tools(commands.Cog):
             embed = discord.Embed(title="Instagram Profile Picture",
                                   description=f"of {username}", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
+                             icon_url=f"{self.client.user.default_avatar.url}")
             embed.add_field(
                 name="Link", value=f"https://instagram.com/{username}", inline=False)
             embed.set_image(url="attachment://image.jpg")
@@ -172,7 +172,7 @@ class Tools(commands.Cog):
             embed = discord.Embed(
                 title="TeamSDS's PrivateBin", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
+                             icon_url=f"{self.client.user.default_avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879586340520480768/large.png")
             embed.add_field(
@@ -190,7 +190,7 @@ class Tools(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(
-                name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
+                name=f"{self.client.user.name}", icon_url=f"{self.client.user.default_avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
