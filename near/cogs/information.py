@@ -49,7 +49,7 @@ class Information(commands.Cog):
 
     @app_commands.command(name="countryinfo", description="Country Information Lookup")
     @app_commands.describe(country="Country Code. Eg :- us, au, ca, sg, uk, nz")
-    async def countryinfo(self, interaction: discord.Interaction, country):
+    async def countryinfo(self, interaction: discord.Interaction, country: str):
         try:
             rc = requests.get(
                 f"https://api.worldbank.org/v2/country/{country}?format=json").json()
@@ -125,7 +125,7 @@ class Information(commands.Cog):
 
     @app_commands.command(name="passwordcheck", description="Password Strength Check and Profiler")
     @app_commands.describe(password="Password to analyze")
-    async def passwordchk(self, interaction: discord.Interaction, password):
+    async def passwordchk(self, interaction: discord.Interaction, password: str):
         try:
             results = zxcvbn(f"{password}")
             embed3 = discord.Embed(title="Password Check",

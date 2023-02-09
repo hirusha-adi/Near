@@ -36,7 +36,7 @@ class FakeInformation(commands.Cog):
 
     @app_commands.command(name="face", description="a Fake Face")
     @app_commands.describe(gender="Gender of the Face to be generated male/m or female/f")
-    async def face(self, interaction: discord.Interaction, gender="any"):
+    async def face(self, interaction: discord.Interaction, gender: str = "any"):
         try:
             # any_wl = ("any", "everything", "both", "all", "whole")
             male_wl = ("male", "man", "boy", "m")
@@ -104,7 +104,7 @@ class FakeInformation(commands.Cog):
 
     @app_commands.command(name="fake", description="Generate fake information")
     @app_commands.describe(category="What exactly to generate. Refer to help for additional information")
-    async def fake(self, interaction: discord.Interaction, category="help"):
+    async def fake(self, interaction: discord.Interaction, category: str = "help"):
 
         if category == "high":
             try:
@@ -2981,7 +2981,7 @@ class FakeInformation(commands.Cog):
 
     @app_commands.command(name="fakeprofiles", description="Generate a given number of fake profiles")
     @app_commands.describe(amount="Amount of fake profiles to generate")
-    async def fakeprofiles(self, interaction: discord.Interaction, *, amount):
+    async def fakeprofiles(self, interaction: discord.Interaction, amount: int):
 
         try:
             fake_how_many = int(amount)

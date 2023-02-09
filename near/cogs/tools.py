@@ -21,7 +21,7 @@ class Tools(commands.Cog):
 
     @app_commands.command(name="lyrics", description="Search the Lyrics of any Song")
     @app_commands.describe(query="Name of the Song")
-    async def lyrics(self, intercation: discord.Interaction, query=None):
+    async def lyrics(self, intercation: discord.Interaction, query: str = None):
         # Another Option: https://github.com/elmoiv/azapi
         try:
             if not query:
@@ -75,9 +75,9 @@ class Tools(commands.Cog):
             embed3.set_footer(text=f"Requested by {intercation.user.name}")
             await intercation.response.send_message(embed=embed3)
 
-    @app_commands.command(name='password_gen', description="Generate a very secure and unique password")
-    @app_commands.describe(lenght="Length of the Password to generate.")
-    async def genpwd(self, interaction: discord.Interaction, length: int):
+    @app_commands.command(name='passwordgen', description="Generate a very secure and unique password")
+    @app_commands.describe(length="Length of the Password to generate.")
+    async def passwordgen(self, interaction: discord.Interaction, length: int):
         try:
 
             if int(length) < 101:
@@ -124,7 +124,7 @@ class Tools(commands.Cog):
             await interaction.response.send_message(embed=embed3)
 
     @app_commands.command(name="insta", description="Grab the Instagram Profile Picture of a Profile")
-    @app_commands.describe(text="Instagram Profile's Username")
+    @app_commands.describe(username="Instagram Profile's Username")
     async def insta(self, interaction: discord.Interaction, username: str):
         try:
             igpfp = instaloader.Instaloader()
