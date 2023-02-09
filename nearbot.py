@@ -1,4 +1,5 @@
 import os
+import asyncio
 
 import discord
 from discord.ext import commands
@@ -62,10 +63,11 @@ async def unloadex(ctx, extension):
 
 
 # Loading all the cogs at startup
-for filename in os.listdir('./near/cogs'):
-    if filename.endswith('.py'):
-        client.load_extension(f'near.cogs.{filename[:-3]}')
-        print(f"[+] Loaded: near.cogs.{filename[:-3]}")
+async def load_extensions():
+    for filename in os.listdir('./near/cogs'):
+        if filename.endswith('.py'):
+            await client.load_extension(f'near.cogs.{filename[:-3]}')
+            print(f"[+] Loaded: near.cogs.{filename[:-3]}")
 
 host = os.getenv("LAVA_HOST")
 if not host:
@@ -133,5 +135,12 @@ if not token:
     with open("token.txt", "r", encoding="utf-8") as tokenfile:
         token = tokenfile.read()
 
-keep_alive()
-client.run(token)
+
+async def main():
+    async with client:
+        await load_extensions()
+        await client.start(token=token, reconnect=True)
+
+
+# keep_alive()
+asyncio.run(main())

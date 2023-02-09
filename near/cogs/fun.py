@@ -314,5 +314,5 @@ class Fun(commands.Cog):
             await ctx.send(embed=embed3)
 
 
-def setup(client: commands.Bot):
-    client.add_cog(Fun(client))
+async def setup(client: commands.Bot):
+    await client.add_cog(Fun(client))
