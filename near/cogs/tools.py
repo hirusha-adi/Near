@@ -8,6 +8,7 @@ import urllib
 import aiohttp
 import discord
 import instaloader
+import privatebinapi
 from discord import app_commands
 from discord.ext import commands
 

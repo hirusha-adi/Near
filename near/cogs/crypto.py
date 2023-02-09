@@ -1,6 +1,5 @@
 import discord
 import requests
-import privatebinapi
 from bs4 import BeautifulSoup
 from discord import app_commands
 from discord.ext import commands
