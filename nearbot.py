@@ -11,7 +11,7 @@ bot_creator_name = get_main.BotMainDB.BOT_CREATOR_NAME
 bot_current_version = get_main.BotMainDB.BOT_VERSION
 bot_owner_id_or_dev_id = get_main.BotMainDB.DEV_ID
 
-client = commands.Bot(command_prefix=bot_prefix)
+client = commands.Bot(command_prefix=bot_prefix, intents=discord.Intents.all())
 
 
 @client.command()
@@ -68,7 +68,8 @@ for filename in os.listdir('./near/cogs'):
         print(f"[+] Loaded: near.cogs.{filename[:-3]}")
 
 host = os.getenv("LAVA_HOST")
-if not host: host = "0.0.0.0"
+if not host:
+    host = "0.0.0.0"
 
 client.lava_nodes = [
     {
