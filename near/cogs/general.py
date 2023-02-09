@@ -3,9 +3,10 @@ from platform import python_version as cur_python_version
 from time import time as nowtime
 
 import discord
-from discord.ext import commands
-from near.database import get_embeds, get_main
 from discord import app_commands
+from discord.ext import commands
+
+from near.database import get_embeds, get_main
 
 
 class General(commands.Cog):
