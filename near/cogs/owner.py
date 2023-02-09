@@ -45,7 +45,6 @@ class Mods(commands.Cog):
             await interaction.response.send_message(embed=embed3)
 
     @app_commands.command(name='serverinfo', description="Get Information about the Server")
-    @commands.command()
     async def serverinfo(self, interaction: discord.Interaction):
         try:
 
@@ -81,7 +80,6 @@ class Mods(commands.Cog):
 
     @app_commands.command(name='userinfo', description="Get Information about a User")
     @app_commands.describe(user="User to get the Information of. Defaults to the Author")
-    @commands.command()
     async def userinfo(self, interaction: discord.Interaction, user: discord.Member = None):
         try:
             target = user or interaction.user
