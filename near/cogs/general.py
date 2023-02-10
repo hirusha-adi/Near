@@ -205,7 +205,7 @@ class General(commands.Cog):
     @app_commands.describe(amount="Amount of messages to Delete")
     @app_commands.checks.has_permissions(manage_messages=True)
     async def clean(self, interaction: discord.Interaction, amount: int):
-        # interaction.user.guild_permissions.manage_channels
+        # no input sanitization due to amount forced to being an int
         try:
             if amount <= 100:
 
