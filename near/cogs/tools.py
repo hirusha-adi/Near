@@ -1,5 +1,4 @@
 import os
-import random
 import secrets
 import string
 import textwrap
@@ -26,13 +25,8 @@ class Tools(commands.Cog):
         # Another Option: https://github.com/elmoiv/azapi
         try:
             if not query:
-                embed = discord.Embed(
-                    title="No search argument!",
-                    description="You havent entered anything, so i couldnt find lyrics!",
-                    color=get_embeds.Common.COLOR
-                )
-                embed.set_author(name=f"{self.client.user.name}",
-                                 icon_url=f"{self.client.user.avatar.url}")
+                embed = discord.Embed(title="No search argument!",description="You havent entered anything, so i couldnt find lyrics!",color=get_embeds.Common.COLOR)
+                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
                 embed.set_footer(text=f"Requested by {intercation.user.name}")
                 return await intercation.response.send_message(embed=embed)
 
@@ -60,17 +54,14 @@ class Tools(commands.Cog):
                     color=get_embeds.Common.COLOR
                     # timestamp=datetime.datetime.utcnow()
                 )
-                embed.set_author(name=f"{self.client.user.name}",
-                                 icon_url=f"{self.client.user.avatar.url}")
+                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
                 embed.set_thumbnail(url=songThumbnail)
                 embed.set_footer(text=f"Requested by {intercation.user.name}")
                 await intercation.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar.url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(name="Error:", value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {intercation.user.name}")
@@ -82,45 +73,30 @@ class Tools(commands.Cog):
         try:
 
             if int(length) < 101:
-                c = ''.join((secrets.choice(string.ascii_letters +
-                            string.digits + string.punctuation) for i in range(int(length))))
+                c = ''.join((secrets.choice(string.ascii_letters +string.digits + string.punctuation) for i in range(int(length))))
 
-                embed = discord.Embed(
-                    title="Password Generator", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}",
-                                 icon_url=f"{self.client.user.avatar.url}")
-                embed.set_thumbnail(
-                    url="https://cdn.discordapp.com/attachments/877796755234783273/880031728369016832/704187.png")
-                embed.add_field(name="Password Length",
-                                value=f"{length}", inline=False)
-                embed.add_field(name="Password",
-                                value=f"```{c}```", inline=False)
+                embed = discord.Embed(title="Password Generator", color=get_embeds.Common.COLOR)
+                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+                embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/880031728369016832/704187.png")
+                embed.add_field(name="Password Length",value=f"{length}", inline=False)
+                embed.add_field(name="Password",value=f"```{c}```", inline=False)
                 embed.set_footer(text=f"Requested by {interaction.user.name}")
                 await interaction.response.send_message(embed=embed)
 
             else:
-                embed = discord.Embed(
-                    title="Password Generator", description="An Error has occured!", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}",
-                                 icon_url=f"{self.client.user.avatar.url}")
-                embed.set_thumbnail(
-                    url="https://cdn.discordapp.com/attachments/877796755234783273/880031728369016832/704187.png")
-                embed.add_field(
-                    name="Error", value="The value of the number is high", inline=False)
-                embed.add_field(name="Possible Fix",
-                                value="Enter a value below 40", inline=False)
-                embed.set_footer(
-                    text=f"Requested by {interaction.user.name}")
+                embed = discord.Embed(title="Password Generator", description="An Error has occured!", color=get_embeds.Common.COLOR)
+                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+                embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/880031728369016832/704187.png")
+                embed.add_field(name="Error", value="The value of the number is high", inline=False)
+                embed.add_field(name="Possible Fix",value="Enter a value below 40", inline=False)
+                embed.set_footer(text=f"Requested by {interaction.user.name}")
                 await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar.url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(
-                name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
+            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed3)
 
@@ -146,12 +122,9 @@ class Tools(commands.Cog):
                 os.system(f'DEL {username} /F/Q/S')
 
             file = discord.File(f'igtemp.jpg', filename="image.jpg")
-            embed = discord.Embed(title="Instagram Profile Picture",
-                                  description=f"of {username}", color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar.url}")
-            embed.add_field(
-                name="Link", value=f"https://instagram.com/{username}", inline=False)
+            embed = discord.Embed(title="Instagram Profile Picture",description=f"of {username}", color=get_embeds.Common.COLOR)
+            embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed.add_field(name="Link", value=f"https://instagram.com/{username}", inline=False)
             embed.set_image(url="attachment://image.jpg")
             embed.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(file=file, embed=embed)
@@ -167,34 +140,23 @@ class Tools(commands.Cog):
     @app_commands.describe(text="Text to be included in the PrivateBin")
     async def bin(self, interaction: discord.Interaction, text: str):
         try:
-            privbin = privatebinapi.send(
-                "https://bin.teamsds.net/", text=text)
+            privbin = privatebinapi.send("https://bin.teamsds.net/", text=text)
 
-            embed = discord.Embed(
-                title="TeamSDS's PrivateBin", color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar.url}")
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879586340520480768/large.png")
-            embed.add_field(
-                name="ID", value=f"{privbin['id']}", inline=False)
-            embed.add_field(
-                name="URL", value=f"{privbin['full_url']}", inline=False)
-            embed.add_field(
-                name="Passcode", value=f"{privbin['passcode']}", inline=False)
-            embed.add_field(
-                name=f"Text by {interaction.user.name}", value=f"{text}", inline=False)
+            embed = discord.Embed(title="TeamSDS's PrivateBin", color=get_embeds.Common.COLOR)
+            embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879586340520480768/large.png")
+            embed.add_field(name="ID", value=f"{privbin['id']}", inline=False)
+            embed.add_field(name="URL", value=f"{privbin['full_url']}", inline=False)
+            embed.add_field(name="Passcode", value=f"{privbin['passcode']}", inline=False)
+            embed.add_field(name=f"Text by {interaction.user.name}", value=f"{text}", inline=False)
             embed.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(
-                name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(
-                name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
+            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed3, ephemeral=True)
 
@@ -203,25 +165,17 @@ class Tools(commands.Cog):
     async def passwordchk(self, interaction: discord.Interaction, password: str):
         try:
             results = zxcvbn(f"{password}")
-            embed3 = discord.Embed(title="Password Check",
-                                   description="using Low Budget Password Strength Estimation",
-                                   color=get_embeds.Common.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(
-                url="https://iconape.com/wp-content/png_logo_vector/password.png")
+            embed3 = discord.Embed(title="Password Check",description="using Low Budget Password Strength Estimation",color=get_embeds.Common.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed3.set_thumbnail(url="https://iconape.com/wp-content/png_logo_vector/password.png")
 
-            embed3.add_field(
-                name="Password", value=f"{results['password']}", inline=False)
+            embed3.add_field(name="Password", value=f"{results['password']}", inline=False)
 
-            embed3.add_field(name="Score",
-                             value=f"{results['score']}", inline=False)
+            embed3.add_field(name="Score",value=f"{results['score']}", inline=False)
 
-            embed3.add_field(
-                name="Guesses", value=f"Decimal - {results['guesses']}\nLog10 - {results['guesses_log10']}", inline=False)
+            embed3.add_field(name="Guesses", value=f"Decimal - {results['guesses']}\nLog10 - {results['guesses_log10']}", inline=False)
             try:
-                embed3.add_field(
-                    name="Password", value=f"{results['password']}", inline=False)
+                embed3.add_field(name="Password", value=f"{results['password']}", inline=False)
             except:
                 pass
 
@@ -231,18 +185,15 @@ class Tools(commands.Cog):
                     sequence_info += f"{k} - {v}\n"
                 sequence_info += "\n"
 
-            embed3.add_field(name="Sequence Info",
-                             value=f"{sequence_info}", inline=False)
+            embed3.add_field(name="Sequence Info",value=f"{sequence_info}", inline=False)
 
             try:
-                embed3.add_field(name="Calculation Time",
-                                 value=f"{results['calc_time']}")
+                embed3.add_field(name="Calculation Time",value=f"{results['calc_time']}")
             except:
                 pass
 
             try:
-                embed3.add_field(name="Crack Time",
-                                 value=f"Online throttling 100 per hour - {results['crack_times_display']['online_throttling_100_per_hour']}\nOnline throttling 10 per second - {results['crack_times_display']['online_no_throttling_10_per_second']}\nOffline slow hasing 1e4 per second - {results['crack_times_display']['offline_slow_hashing_1e4_per_second']}\nOffline fast hasing 1e10 per second - {results['crack_times_display']['offline_fast_hashing_1e10_per_second']}", inline=False)
+                embed3.add_field(name="Crack Time",value=f"Online throttling 100 per hour - {results['crack_times_display']['online_throttling_100_per_hour']}\nOnline throttling 10 per second - {results['crack_times_display']['online_no_throttling_10_per_second']}\nOffline slow hasing 1e4 per second - {results['crack_times_display']['offline_slow_hashing_1e4_per_second']}\nOffline fast hasing 1e10 per second - {results['crack_times_display']['offline_fast_hashing_1e10_per_second']}", inline=False)
             except:
                 pass
 
@@ -250,8 +201,7 @@ class Tools(commands.Cog):
                 if results['feedback']['warning'] == '':
                     pass
                 else:
-                    embed3.add_field(
-                        name="Warning", value=f"{results['feedback']['warning']}", inline=False)
+                    embed3.add_field(name="Warning", value=f"{results['feedback']['warning']}", inline=False)
             except:
                 pass
 
@@ -263,8 +213,7 @@ class Tools(commands.Cog):
                     for item in results["feedback"]["suggestions"]:
                         suggestions_info += f"{item}\n"
                     try:
-                        embed3.add_field(
-                            name="Suggestions", value=f"{suggestions_info}", inline=False)
+                        embed3.add_field(name="Suggestions", value=f"{suggestions_info}", inline=False)
                     except Exception as e:
                         print(e)
             except:
@@ -275,10 +224,8 @@ class Tools(commands.Cog):
             await interaction.response.send_message(embed=embed3)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar.url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(name="Error:", value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
