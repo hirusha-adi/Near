@@ -2981,7 +2981,7 @@ class FakeInformation(commands.Cog):
 
     @app_commands.command(name="fakeprofiles", description="Generate a given number of fake profiles")
     @app_commands.describe(amount="Amount of fake profiles to generate")
-    async def fakeprofiles(self, interaction: discord.Interaction, amount: int):
+    async def fakeprofiles(self, interaction: discord.Interaction, amount: int = 3):
 
         try:
             fake_how_many = int(amount)
@@ -3058,13 +3058,13 @@ class FakeInformation(commands.Cog):
 
             await interaction.response.send_message(embed=embed3)
 
-    @app_commands.command(name="discordtoken", description="Generate a fake discord bot token")
+    @app_commands.command(name="discordtoken", description="Generate a fake discord token")
     async def discordtoken(self, interaction: discord.Interaction):
 
         try:
             r = requests.get("https://some-random-api.ml/bottoken").json()
 
-            embed = discord.Embed(title="Discord Bot Token Generator",
+            embed = discord.Embed(title="Fake Discord Token Generator",
                                   description=f"`{r['token']}`", color=get_embeds.FakeEmbeds.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
                              icon_url=f"{self.client.user.default_avatar.url}")
@@ -3083,8 +3083,6 @@ class FakeInformation(commands.Cog):
                 url="https://media.discordapp.net/attachments/877796755234783273/880745781966037032/new-scrabble-words-2018-beatdown-5657-57124c9f228c0258d65053fe7d3891491x.jpg")
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.add_field(
-                name="Possible Fix:", value=f"You must have only one '||' part for the whole message for the bot to divide the string", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
 
             await interaction.response.send_message(embed=embed3)
