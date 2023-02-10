@@ -64,6 +64,9 @@ class Select(discord.ui.Select):
         embed.set_footer(text=f"Requested by {interaction.user.name}")
 
         if option == "Crypto":
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073538553335783454/7047060.png"
+            )
             embed.add_field(
                 name="/btc",
                 value="Get the current Bitcoin Rates",
@@ -96,6 +99,9 @@ class Select(discord.ui.Select):
             )
 
         elif option == "Encoding":
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073538746806444103/2362335.png"
+            )
             embed.add_field(
                 name="/b64",
                 value="Encode to Base64",
@@ -128,6 +134,9 @@ class Select(discord.ui.Select):
             )
 
         elif option == "Fake Information":
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073538885986033704/4410174.png"
+            )
             embed.add_field(
                 name="/fake",
                 value="List out all the fake information commands - Theres a LOT!",
@@ -150,6 +159,9 @@ class Select(discord.ui.Select):
             )
 
         elif option == "Fun":
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073539343597174794/funny-icon-7.png"
+            )
             embed.add_field(
                 name="/inspire",
                 value="List out all the fake information commands - Theres a LOT!",
@@ -192,6 +204,9 @@ class Select(discord.ui.Select):
             )
 
         elif option == "General":
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073539659596058685/stuff-icon-2.png"
+            )
             embed.add_field(
                 name="/ping",
                 value="Check the response time of the Discord Bot",
@@ -209,6 +224,9 @@ class Select(discord.ui.Select):
             )
 
         elif option == "Information Gathering":
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073539896892981279/search-flat.png"
+            )
             embed.add_field(
                 name="/ipinfo",
                 value="IP Address Lookup",
@@ -241,6 +259,9 @@ class Select(discord.ui.Select):
             )
 
         elif option == "Music":
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073540069186600960/3844724.png"
+            )
             embed.add_field(
                 name="/lyrics",
                 value="Search the Lyrics of any Song",
@@ -308,7 +329,9 @@ class Select(discord.ui.Select):
             )
 
         elif option == "Tools":
-
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073540361240186883/768px-Circle-icons-tools.png"
+            )
             embed.add_field(
                 name="/passwordgen",
                 value="Generate a very secure and unique password",
@@ -362,19 +385,20 @@ class Help(commands.Cog):
             embed3.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/940889393974104084/1073537396982952016/868681.png"
             )
-
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
             await interaction.response.send_message(embed=embed3, view=SelectView(), ephemeral=True)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
             await interaction.response.send_message(embed=embed3, ephemeral=True)
 
 
