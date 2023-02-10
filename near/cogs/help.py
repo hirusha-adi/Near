@@ -18,10 +18,10 @@ class Select(discord.ui.Select):
                                  description="Encoding and Hashing Related Commands"),
             discord.SelectOption(label="Fake Information", emoji="👨‍🦰",
                                  description="Fake Information Generating Commands"),
-            discord.SelectOption(label="Texts", emoji="💬",
-                                 description="Fun Text Commands"),
             discord.SelectOption(label="Fun", emoji="😆",
                                  description="Fun Commands"),
+            discord.SelectOption(label="Texts", emoji="💬",
+                                 description="Fun Text Commands"),
             discord.SelectOption(label="Music", emoji="🎵",
                                  description="Music Commands"),
             discord.SelectOption(label="Server Related", emoji="🔎",
@@ -112,7 +112,7 @@ class Select(discord.ui.Select):
 
         elif option == "Fake Information":
             embed.add_field(
-                name="/fake help",
+                name="/fake",
                 value="List out all the fake information commands - Theres a LOT!",
                 inline=False
             )
@@ -129,6 +129,48 @@ class Select(discord.ui.Select):
             embed.add_field(
                 name="/discordtoken",
                 value="Generate a fake discord token",
+                inline=False
+            )
+
+        elif option == "Fun":
+            embed.add_field(
+                name="/inspire",
+                value="List out all the fake information commands - Theres a LOT!",
+                inline=False
+            )
+            embed.add_field(
+                name="/bored",
+                value="Bored? What to do now?",
+                inline=False
+            )
+            embed.add_field(
+                name="/meme",
+                value="Get a random meme",
+                inline=False
+            )
+            embed.add_field(
+                name="/dadjoke",
+                value="Get a random dad joke",
+                inline=False
+            )
+            embed.add_field(
+                name="/joke",
+                value="Get a random joke",
+                inline=False
+            )
+            embed.add_field(
+                name="/joke2",
+                value="Get a Joke, but from Another API",
+                inline=False
+            )
+            embed.add_field(
+                name="/wyr",
+                value="Would You Rather...?",
+                inline=False
+            )
+            embed.add_field(
+                name="/advice",
+                value="Get advice for your life",
                 inline=False
             )
 
