@@ -143,12 +143,12 @@ class Select(discord.ui.Select):
                 inline=False
             )
             embed.add_field(
-                name="/face [gender:optional='any']",
+                name="/face",
                 value="Generate a fake face with a name",
                 inline=False
             )
             embed.add_field(
-                name="/fakeprofiles [amount:optional=3]",
+                name="/fakeprofiles",
                 value="Generate a given number of fake profiles",
                 inline=False
             )
