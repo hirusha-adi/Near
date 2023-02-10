@@ -53,8 +53,8 @@ class Select(discord.ui.Select):
         option = self.values[0]
 
         embed = discord.Embed(
-            title=":gear: Help",
-            description="You can use the dropdown menu to navigate among the different categories of commands.",
+            title=":gear: A Guide to All Available Commands :gear:",
+            description="To access the complete list of commands and their respective descriptions, kindly select a category from the drop-down menu. For additional information and a comprehensive list of commands, please visit our website at https://teamsds.net/nearbot",
             color=get_embeds.Common.COLOR
         )
         embed.set_author(
