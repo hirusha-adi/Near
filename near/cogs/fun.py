@@ -8,6 +8,7 @@ from discord import app_commands
 from discord.ext import commands
 
 from near.database import get_embeds
+from near.utils import input_sanitization, errors
 
 
 class Fun(commands.Cog):
@@ -168,22 +169,25 @@ class Fun(commands.Cog):
     async def wyr(self, interaction: discord.Interaction, question: str):
 
         try:
-            r = requests.get(
-                'https://www.conversationstarters.com/wyrqlist.php').text
+            if input_sanitization.check_input(question):
+                r = requests.get(
+                    'https://www.conversationstarters.com/wyrqlist.php').text
 
-            soup = BeautifulSoup(r, 'html.parser')
-            qa = soup.find(id='qa').text
-            qor = soup.find(id='qor').text
-            qb = soup.find(id='qb').text
+                soup = BeautifulSoup(r, 'html.parser')
+                qa = soup.find(id='qa').text
+                qor = soup.find(id='qor').text
+                qb = soup.find(id='qb').text
 
-            embed = discord.Embed(title="Would You Rather",color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
-            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879583873527332904/Would-You-Rather_Questions-680x430.jpg")
-            embed.add_field(name="Question",value=f"{question}", inline=False)
-            embed.add_field(name="Answer", value=f"{qa}\n{qor}\n{qb}", inline=False)
-            embed.set_footer(text=f"Requested by {interaction.user.name}")
+                embed = discord.Embed(title="Would You Rather",color=get_embeds.Common.COLOR)
+                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+                embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879583873527332904/Would-You-Rather_Questions-680x430.jpg")
+                embed.add_field(name="Question",value=f"{question}", inline=False)
+                embed.add_field(name="Answer", value=f"{qa}\n{qor}\n{qb}", inline=False)
+                embed.set_footer(text=f"Requested by {interaction.user.name}")
 
-            await interaction.response.send_message(embed=embed)
+                await interaction.response.send_message(embed=embed)
+            else:
+                raise errors.IllegalInput
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
