@@ -77,7 +77,7 @@ class EncodeDecode(commands.Cog):
 
     @app_commands.command(name="sha1", description="Get SHA1 Hash")
     @app_commands.describe(text="Text to process")
-    async def e_sha1(self, interaction: discord.Interaction, text: str):
+    async def sha1(self, interaction: discord.Interaction, text: str):
 
         try:
             msg = hashlib.sha1(text.encode())
@@ -109,7 +109,7 @@ class EncodeDecode(commands.Cog):
 
     @app_commands.command(name="sha224", description="Get SHA224 Hash")
     @app_commands.describe(text="Text to process")
-    async def e_sha224(self, interaction: discord.Interaction, text: str):
+    async def sha224(self, interaction: discord.Interaction, text: str):
 
         try:
             msg = hashlib.sha3_224(text.encode())
@@ -141,7 +141,7 @@ class EncodeDecode(commands.Cog):
 
     @app_commands.command(name="sha512", description="Get SHA512 Hash")
     @app_commands.describe(text="Text to process")
-    async def e_sha512(self, interaction: discord.Interaction, text: str):
+    async def sha512(self, interaction: discord.Interaction, text: str):
 
         try:
             msg = hashlib.sha3_512(text.encode())
@@ -173,7 +173,7 @@ class EncodeDecode(commands.Cog):
 
     @app_commands.command(name="leet", description="Convert text to L33T format")
     @app_commands.describe(text="Text to process")
-    async def e_leet(self, interaction: discord.Interaction, text: str):
+    async def leet(self, interaction: discord.Interaction, text: str):
 
         try:
             encoded = text.replace('e', '3').replace('a', '4').replace('i', '!').replace('u', '|_|').replace('U', '|_|').replace('E', '3').replace('I', '!').replace('A', '4').replace('o', '0').replace(
