@@ -1,3 +1,4 @@
+import random
 from json import loads as loadjsonstring
 
 import aiohttp
@@ -71,16 +72,21 @@ class Fun(commands.Cog):
     async def meme(self, interaction: discord.Interaction):
 
         try:
-            r = requests.get("https://some-random-api.ml/meme").json()
+            
+            url = 'https://www.memedroid.com/memes/tag/programming'
+            response = requests.get(url)
+            soup = BeautifulSoup(response.content, 'html.parser')
+            divs = soup.find_all('div', class_='item-aux-container')
+            imgs = []
+            for div in divs:
+                img = div.find('img')['src']
+                if img.startswith('http') and img.endswith('jpeg'):
+                    imgs.append(img)
+            meme = random.choice(imgs)
 
             embed = discord.Embed(color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
-            try:
-                caption = str(r["caption"])
-                embed.add_field(name="Just a random Meme", value=caption)
-            except:
-                pass
-            embed.set_image(url=str(r["image"]))
+            embed.set_image(url=str(meme))
 
             await interaction.response.send_message(embed=embed)
 
@@ -165,30 +171,23 @@ class Fun(commands.Cog):
             await interaction.response.send_message(embed=embed3)
 
     @app_commands.command(name="wyr", description="Would You Rather...?")
-    @app_commands.describe(question="Question")
-    async def wyr(self, interaction: discord.Interaction, question: str):
+    async def wyr(self, interaction: discord.Interaction):
 
         try:
-            if input_sanitization.check_input(question):
-                r = requests.get(
-                    'https://www.conversationstarters.com/wyrqlist.php').text
-
-                soup = BeautifulSoup(r, 'html.parser')
-                qa = soup.find(id='qa').text
-                qor = soup.find(id='qor').text
-                qb = soup.find(id='qb').text
-
-                embed = discord.Embed(title="Would You Rather",color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
-                embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879583873527332904/Would-You-Rather_Questions-680x430.jpg")
-                embed.add_field(name="Question",value=f"{question}", inline=False)
-                embed.add_field(name="Answer", value=f"{qa}\n{qor}\n{qb}", inline=False)
-                embed.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed)
-            else:
-                raise errors.IllegalInput
-
+            r = requests.get('https://www.conversationstarters.com/wyrqlist.php').text
+            
+            soup = BeautifulSoup(r, 'html.parser')
+            qa = soup.find(id='qa').text
+            qor = soup.find(id='qor').text
+            qb = soup.find(id='qb').text
+            embed = discord.Embed(title="Would You Rather",color=get_embeds.Common.COLOR)
+            embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879583873527332904/Would-You-Rather_Questions-680x430.jpg")
+            embed.add_field(name="WYR", value=f"{qa}\n{qor}\n{qb}", inline=False)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+            
+            await interaction.response.send_message(embed=embed)
+            
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
