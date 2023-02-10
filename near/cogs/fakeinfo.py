@@ -32,7 +32,7 @@ class FakeInformation(commands.Cog):
         self.client = client
 
         # Loading config.json and its important content for this file
-        self.bot_prefix = get_main.BotMainDB.MESSAGE_PREFIX
+        self.bot_prefix = "/"
 
     @app_commands.command(name="face", description="a Fake Face")
     @app_commands.describe(gender="Gender of the Face to be generated male/m or female/f")
@@ -2963,7 +2963,7 @@ class FakeInformation(commands.Cog):
                 emf2.add_field(
                     name=f"Others", value=f"`{bp}fake ean`, \n`{bp}fake company suffix`, \n`{bp}fake iana`, \n`{bp}fake lang`, \n`{bp}fake color`, \n`{bp}fake cp`")
                 emf2.add_field(name=f"Mass Fake Profiles",
-                               value=f"`{bp}massfakeprofile [number]` - Same as runnign the `{bp}fake high` [number] of times", inline=False)
+                               value=f"`{bp}fakeprofiles [number]` - Same as runnign the `{bp}fake high` [number] of times", inline=False)
 
                 await interaction.response.send_message(embed=emf2)
 
