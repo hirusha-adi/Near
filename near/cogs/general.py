@@ -6,7 +6,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
-from near.database import get_embeds, get_main
+from near.database import get_embeds
 
 
 class Select(discord.ui.Select):
