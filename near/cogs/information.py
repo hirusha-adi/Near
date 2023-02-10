@@ -48,7 +48,7 @@ class Information(commands.Cog):
     @app_commands.describe(country="Country Code. Eg :- us, au, ca, sg, uk, nz")
     async def countryinfo(self, interaction: discord.Interaction, country: str):
         try:
-            if input_sanitization.is_text_only(country) and input_sanitization.check_input(country):
+            if input_sanitization.check_input(country):
                 rc = requests.get(f"https://api.worldbank.org/v2/country/{country}?format=json").json()
 
                 embed = discord.Embed(title="Country Information", color=get_embeds.Common.COLOR)
@@ -71,8 +71,7 @@ class Information(commands.Cog):
     @app_commands.command(name="covid", description="Global Covid-19 Statistics")
     async def covid(self, interaction: discord.Interaction):
         try:
-            r = requests.get(
-                "https://www.hpb.health.gov.lk/api/get-current-statistical")
+            r = requests.get("https://www.hpb.health.gov.lk/api/get-current-statistical")
             c = r.json()
             data = c['data']
 
@@ -118,15 +117,13 @@ class Information(commands.Cog):
             if user.display_avatar.is_animated() != True:
                 format = "png"
 
-            avatar = user.display_avatar.with_format(
-                format=format if format != "gif" else None).url
-
-            async with aiohttp.ClientSession() as session:
-                async with session.get(str(avatar)) as resp:
-                    image = await resp.read()
-                    
-            with io.BytesIO(image) as file:
-                await interaction.response.send_message(file=discord.File(file, f"Avatar.{format}"))
+            avatar = user.display_avatar.with_format(format if format != "gif" else None).url
+            
+            embed = discord.Embed(title=f"Profile Picture of {user.name}", color=get_embeds.Common.COLOR)
+            embed.set_image(url=avatar)
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+            
+            return await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
