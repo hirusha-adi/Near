@@ -13,6 +13,7 @@ from discord import app_commands
 from discord.ext import commands
 
 from near.database import get_embeds
+from zxcvbn import zxcvbn
 
 
 class Tools(commands.Cog):
