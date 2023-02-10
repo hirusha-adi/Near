@@ -138,7 +138,7 @@ class Crypto(commands.Cog):
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed3)
 
-    @app_commands.command(name="xrp", description="Get the current Doge Coin Rates")
+    @app_commands.command(name="xrp", description="Get the current XRP Rates")
     async def xrp(self, interaction: discord.Interaction):
         try:
             r = requests.get(
