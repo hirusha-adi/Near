@@ -15,5 +15,7 @@ def check_input(input_str):
     return True
 
 
-
-
+def is_base64(input_str):
+    # https://stackoverflow.com/questions/475074/regex-to-parse-or-validate-base64-data
+    pattern = r'^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$'
+    return re.match(pattern, input_str) is not None
