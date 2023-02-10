@@ -353,7 +353,7 @@ class Select(discord.ui.Select):
                 inline=False
             )
 
-        await interaction.response.send_message(embed=embed, ephemeral=True)
+        await interaction.message.edit(embed=embed)
 
 
 class SelectView(discord.ui.View):
@@ -523,7 +523,7 @@ class General(commands.Cog):
             )
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
 
-            await interaction.response.send_message(embed=embed3, view=SelectView(), ephemeral=True)
+            await interaction.response.send_message(embed=embed3, view=SelectView(), ephemeral=False)
 
         except Exception as e:
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
