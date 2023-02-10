@@ -353,7 +353,11 @@ class Select(discord.ui.Select):
                 inline=False
             )
 
+        # works as intended, but gives this error: "This interaction failed"
         await interaction.message.edit(embed=embed)
+
+        # Sends message everytime an option is selected. Bad idea, but no bugged Error
+        # await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
 class SelectView(discord.ui.View):
