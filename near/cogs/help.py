@@ -12,22 +12,38 @@ from near.database import get_embeds, get_main
 class Select(discord.ui.Select):
     def __init__(self):
         options = [
-            discord.SelectOption(label="Crypto", emoji="🪙",
-                                 description="Cryptocurrencies Related Commands"),
-            discord.SelectOption(label="Encoding", emoji="🧾",
-                                 description="Encoding and Hashing Related Commands"),
-            discord.SelectOption(label="Fake Information", emoji="👨‍🦰",
-                                 description="Fake Information Generating Commands"),
-            discord.SelectOption(label="Fun", emoji="😆",
-                                 description="Fun Commands"),
-            discord.SelectOption(label="Texts", emoji="💬",
-                                 description="Fun Text Commands"),
-            discord.SelectOption(label="Music", emoji="🎵",
-                                 description="Music Commands"),
-            discord.SelectOption(label="Server Related", emoji="🔎",
-                                 description="Server & User Information Related Commands"),
-            discord.SelectOption(label="Others", emoji="🚨",
-                                 description="Other Commands")
+            discord.SelectOption(
+                label="Crypto", emoji="🪙",
+                description="Cryptocurrencies Related Commands"
+            ),
+            discord.SelectOption(
+                label="Encoding", emoji="🧾",
+                description="Encoding and Hashing Related Commands"
+            ),
+            discord.SelectOption(
+                label="Fake Information", emoji="👨‍🦰",
+                description="Fake Information Generating Commands"
+            ),
+            discord.SelectOption(
+                label="Fun", emoji="😆",
+                description="Fun Commands"
+            ),
+            discord.SelectOption(
+                label="General", emoji="🧸",
+                description="General commands"
+            ),
+            discord.SelectOption(
+                label="Information Gathering", emoji="🔍",
+                description="Information Gathering Related Commands"
+            ),
+            discord.SelectOption(
+                label="Music", emoji="🎵",
+                description="Music Commands"
+            ),
+            discord.SelectOption(
+                label="Tools", emoji="🛠️",
+                description="Important tools to get stuff done"
+            ),
         ]
         super().__init__(placeholder="Select an option",
                          max_values=1, min_values=1, options=options)
@@ -45,6 +61,7 @@ class Select(discord.ui.Select):
             name=f"NearBot",
             icon_url=f"https://cdn.discordapp.com/attachments/953475157605892099/1073516633798225980/Avatar.png"
         )
+        embed.set_footer(text=f"Requested by {interaction.user.name}")
 
         if option == "Crypto":
             embed.add_field(
@@ -174,6 +191,145 @@ class Select(discord.ui.Select):
                 inline=False
             )
 
+        elif option == "General":
+            embed.add_field(
+                name="/ping",
+                value="Check the response time of the Discord Bot",
+                inline=False
+            )
+            embed.add_field(
+                name="/uptime",
+                value="How long has the bot been up for?",
+                inline=False
+            )
+            embed.add_field(
+                name="/clean",
+                value="Amount of messages to Delete",
+                inline=False
+            )
+
+        elif option == "Information Gathering":
+            embed.add_field(
+                name="/ipinfo",
+                value="IP Address Lookup",
+                inline=False
+            )
+            embed.add_field(
+                name="/countryinfo",
+                value="Country Information Lookup",
+                inline=False
+            )
+            embed.add_field(
+                name="/covid",
+                value="Global Covid-19 Statistics",
+                inline=False
+            )
+            embed.add_field(
+                name="/avatar",
+                value="Get the User Avatar",
+                inline=False
+            )
+            embed.add_field(
+                name="/serverinfo",
+                value="Get Information about the Server",
+                inline=False
+            )
+            embed.add_field(
+                name="/userinfo",
+                value="User to get the Information of. Defaults to the Author",
+                inline=False
+            )
+
+        elif option == "Music":
+            embed.add_field(
+                name="/lyrics",
+                value="Search the Lyrics of any Song",
+                inline=False
+            )
+            embed.add_field(
+                name="/connect",
+                value="Connect to Voice Channel",
+                inline=False
+            )
+            embed.add_field(
+                name="/disconnect",
+                value="Disconnect bot from Voice Channel",
+                inline=False
+            )
+            embed.add_field(
+                name="/play",
+                value="Play the song",
+                inline=False
+            )
+            embed.add_field(
+                name="/skip",
+                value="Skip the currently playing song",
+                inline=False
+            )
+            embed.add_field(
+                name="/pause",
+                value="Pause the music",
+                inline=False
+            )
+            embed.add_field(
+                name="/resume",
+                value="Resume the music",
+                inline=False
+            )
+            embed.add_field(
+                name="/seek",
+                value="Skip the given seconds of the playing song",
+                inline=False
+            )
+            embed.add_field(
+                name="/volume",
+                value="Change the volume of the song",
+                inline=False
+            )
+            embed.add_field(
+                name="/loop",
+                value="Play music in a loop",
+                inline=False
+            )
+            embed.add_field(
+                name="/nowplaying",
+                value="Show the song which is being played right now",
+                inline=False
+            )
+            embed.add_field(
+                name="/queue",
+                value="Diplay the songs waiting to be played",
+                inline=False
+            )
+            embed.add_field(
+                name="/equalizer",
+                value="Maybe tune the song to your liking?",
+                inline=False
+            )
+
+        elif option == "Tools":
+
+            embed.add_field(
+                name="/passwordgen",
+                value="Generate a very secure and unique password",
+                inline=False
+            )
+            embed.add_field(
+                name="/passwordchk",
+                value="Password Strength Check and Profiler",
+                inline=False
+            )
+            embed.add_field(
+                name="/insta",
+                value="Grab the Instagram Profile Picture of a Profile",
+                inline=False
+            )
+            embed.add_field(
+                name="/bin",
+                value="Create a PrivateBin from a Text",
+                inline=False
+            )
+
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
@@ -193,35 +349,20 @@ class Help(commands.Cog):
     @app_commands.command(name="help", description="Command Support")
     async def help(self, interaction: discord.Interaction):
 
-        bp = "/"
-
         try:
             embed3 = discord.Embed(
-                title=":gear: Help", description="The list of all the commands! there might be some eastereggs!?! ", color=get_embeds.Common.COLOR)
+                title=":gear: A Guide to All Available Commands :gear:",
+                description="To access the complete list of commands and their respective descriptions, kindly select a category from the drop-down menu. For additional information and a comprehensive list of commands, please visit our website at https://teamsds.net/nearbot",
+                color=get_embeds.Common.COLOR
+            )
             embed3.set_author(
-                name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
+                name=f"{self.client.user.name}",
+                icon_url=f"{self.client.user.avatar.url}"
+            )
             embed3.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-            embed3.add_field(
-                name="Encoding", value=f"`{bp}e_b64 [value]` - Encode to Base64 \n`{bp}e_leet [value]` - Encode to leet \n`{bp}e_md5` - Encode to MD5 \n`{bp}e_sha1` - Encode to SHA1 \n`{bp}e_sha224` - Encode to SHA224 \n`{bp}e_sha512` - Encode to SHA512", inline=False)
-            embed3.add_field(name="Fun", value=f"`{bp}inspire` - Send you an inspirational quote! \n`{bp}bored` - Get some activity to do \n`{bp}meme` - Get a meme to laught ats \n`{bp}dadjoke` - just a Dad Joke \n`{bp}joke` - Laughing is the best medicing \n`{bp}joke2` - Jokes are awesome! \n`{bp}wyr`- Would you rather? \n`{bp}advice` - Advice makes our lives better", inline=False)
-            embed3.add_field(
-                name="Fake Information", value=f"`{bp}fake help` - List out all the fake information commands! \n`{bp}face [gender:optional]` - Generate a fake face with a name", inline=False)
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073537396982952016/868681.png"
+            )
 
-            embed3.add_field(
-                name="Music", value=f"`{bp}connect` - Connect to Voice Channel \n`{bp}disconnect` - Disconnect bot from Voice Channel \n`{bp}play [song-name/link]` - Play the song \n`{bp}skip` - Skip the currently playing song \n`{bp}pause` - Pause the music \n`{bp}resume` - Resume the music \n`{bp}seek [seconds]` - Skip the given seconds of the playing song \n`{bp}volume [number]` - Change the volume of the song \n`{bp}loop [type]` - Play music in a loop \n`{bp}nowplaying` - Show the song which is being played right now \n`{bp}queue` - Diplay the songs waiting to be played \n`{bp}equalizer` - Maybe tune the song to your liking?", inline=False)
-
-            try:
-                if interaction.user.guild_permissions.manage_messages:
-                    embed3.add_field(
-                        name="Manage", value=f"`{bp}clean [number_of_messages]` - Delete the given number of messages sent by the bot", inline=False)
-            except:
-                pass
-
-            embed3.add_field(
-                name="Server Related", value=f"`{bp}av [@user or id]` - Get the profile picture of any user \n`{bp}serverinfo` - Show all publicly available information about the server \n`{bp}userinfo` - Show all the publicly available information about a user", inline=False)
-
-            embed3.add_field(name="Others", value=f"`{bp}countryinfo [country_code]` - Search for Country Information \n`{bp}hastebin [text]` - Create a hatebin link for the given text \n`{bp}insta [ig_username]` - Download the Instgram profile picture \n`{bp}ip [ip_addr]` - Find Information of an IP Address \n`{bp}lyrics [song_name]` - Find lyrics of any song \n`{bp}mfp [number]` - Mass fake profile \n`{bp}pwdcheck [password]` - Check for the status of a password \n`{bp}uptime` - Show bot uptime \n ", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed3, view=SelectView(), ephemeral=True)
 
