@@ -31,7 +31,7 @@ class Information(commands.Cog):
                 url="https://user-images.githubusercontent.com/36286877/127773181-c98b63be-b18b-4d8b-a8b6-9426bd031b7c.png")
             embed.set_footer(text=f"Requested by {interaction.user.name}")
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.default_avatar.url}")
+                             icon_url=f"{self.client.user.avatar.url}")
             embed.add_field(name="IP Info", value="IP Address: " + str(r["ip"]) + "\nCity: " + str(r["city"]) + "\nRegion: " + str(r["region"]) + "\nCountry Name: " + str(r["country_name"]) + "\nLatitude: " + str(r["latitude"]) + "\nLongitude: " + str(r["longitude"]) + "\nTime Zone: " + str(r["timezone"]) + "\nUTC Offset: " + str(r["utc_offset"]) + "\nPostal Code: " + str(r["postal"]) + str("\nISP: " + r["org"]) + "\nASN: " + str(r["asn"]) + "\nCountry Code: " + str(
                 r["country_code"]) + "\nCountry TLD: " + str(r["country_tld"]) + "\nPopulation: " + str(r["country_population"]) + "\nCurrency: " + str(r["currency"]) + "\n Curreny Name: " + str(r["currency_name"]) + "\nCountry Area: " + str(r["country_area"]) + "\nLanguages: " + str(r["languages"]) + "\nCalling Code: " + str(r["country_calling_code"]) + "\nGOOGLE MAPS Link: " + f"https://maps.google.com/?q={r['latitude']},{r['longitude']}", inline=False)
             embed.add_field(name="Country Info", value="ID: " + str(rc[1][0]["id"]) + "\niso2Code: " + str(rc[1][0]["iso2Code"]) + "\nName" + str(rc[1][0]["name"]) + "\n\nRegion: " + "\n   ID: " + str(rc[1][0]["region"]["id"]) + "\n   iso2Code: " + str(rc[1][0]["region"]["iso2code"]) + "\n   Value: " + str(rc[1][0]["region"]["value"]) + "\n\nAdmin Region: " + "\n   ID: " + str(rc[1][0]["adminregion"]["id"]) + "\n   iso2Code: " + str(rc[1][0]["adminregion"]["iso2code"]) + "\n   Value: " + str(rc[1][0]["adminregion"]["value"]) + "\n\nIncome Level: " + "\n   ID: " + str(
@@ -42,7 +42,7 @@ class Information(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -62,7 +62,7 @@ class Information(commands.Cog):
                 url="https://user-images.githubusercontent.com/36286877/129850352-33345963-273b-42bf-b2bc-5523c8158229.png")
             embed.set_footer(text=f"Requested by {interaction.user.name}")
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.default_avatar.url}")
+                             icon_url=f"{self.client.user.avatar.url}")
             embed.add_field(name="Country Info", value="ID: " + str(rc[1][0]["id"]) + "\niso2Code: " + str(rc[1][0]["iso2Code"]) + "\nName" + str(rc[1][0]["name"]) + "\n\nRegion: " + "\n   ID: " + str(rc[1][0]["region"]["id"]) + "\n   iso2Code: " + str(rc[1][0]["region"]["iso2code"]) + "\n   Value: " + str(rc[1][0]["region"]["value"]) + "\n\nAdmin Region: " + "\n   ID: " + str(rc[1][0]["adminregion"]["id"]) + "\n   iso2Code: " + str(rc[1][0]["adminregion"]["iso2code"]) + "\n   Value: " + str(rc[1][0]["adminregion"]["value"]) + "\n\nIncome Level: " + "\n   ID: " + str(
                 rc[1][0]["incomeLevel"]["id"]) + "\n   iso2Code: " + str(rc[1][0]["incomeLevel"]["iso2code"]) + "\n   Value: " + str(rc[1][0]["incomeLevel"]["value"]) + "\n\nLending Type: " + "\n   ID: " + str(rc[1][0]["lendingType"]["id"]) + "\n   iso2Code: " + str(rc[1][0]["lendingType"]["iso2code"]) + "\n   Value: " + str(rc[1][0]["lendingType"]["value"]) + "\n\nCapital City: " + str(rc[1][0]["capitalCity"]) + "\nLongitude: " + str(rc[1][0]["longitude"]) + "\nLatitude: " + str(rc[1][0]["latitude"]), inline=False)
             await interaction.response.send_message(embed=embed)
@@ -71,7 +71,7 @@ class Information(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -99,7 +99,7 @@ class Information(commands.Cog):
                 title="COVID-19 Stats Global - All Info", color=get_embeds.Common.COLOR)
             em.set_footer(text=f"Requested by {interaction.user.name}")
             em.set_author(name=f"{self.client.user.name}",
-                          icon_url=f"{self.client.user.default_avatar.url}")
+                          icon_url=f"{self.client.user.avatar.url}")
             em.set_thumbnail(
                 url="https://www.apsf.org/wp-content/uploads/newsletters/2020/3502/coronavirus-covid-19.png")
             em.add_field(name="Last Updated", value=update_date_time)
@@ -118,7 +118,7 @@ class Information(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -149,7 +149,7 @@ class Information(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -183,7 +183,7 @@ class Information(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -214,9 +214,9 @@ class Information(commands.Cog):
             for name, value, inline in fields:
                 embed.add_field(name=name, value=value, inline=inline)
 
-            embed.set_thumbnail(url=f"{target.default_avatar.url}")
+            embed.set_thumbnail(url=f"{target.avatar.url}")
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.default_avatar.url}")
+                             icon_url=f"{self.client.user.avatar.url}")
             embed.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed)
 
@@ -224,7 +224,7 @@ class Information(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)

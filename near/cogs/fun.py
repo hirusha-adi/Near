@@ -23,7 +23,7 @@ class Fun(commands.Cog):
             embed = discord.Embed(
                 title="Inspirational isn't it?", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.default_avatar.url}")
+                             icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879382016041291828/NicePng_light-streak-png_395357.png")
             embed.add_field(name="Inspirational Quote:",
@@ -36,7 +36,7 @@ class Fun(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -54,7 +54,7 @@ class Fun(commands.Cog):
             embed = discord.Embed(title="Heres an Activity for you",
                                   description="If you are bored, consider doing this", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.default_avatar.url}")
+                             icon_url=f"{self.client.user.avatar.url}")
             embed.add_field(name="Activity",
                             value=f"{data['activity']}", inline=False)
             embed.add_field(name="Type", value=f"{data['type']}", inline=False)
@@ -73,7 +73,7 @@ class Fun(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -89,7 +89,7 @@ class Fun(commands.Cog):
 
             embed = discord.Embed(color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.default_avatar.url}")
+                             icon_url=f"{self.client.user.avatar.url}")
 
             try:
                 caption = str(r["caption"])
@@ -105,7 +105,7 @@ class Fun(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -128,7 +128,7 @@ class Fun(commands.Cog):
             embed = discord.Embed(title="a Dad Joke",
                                   color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.default_avatar.url}")
+                             icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/881007500588089404/912620134974251018/senior-caucasian-man-wearing-business-260nw-1860664027.png")
             embed.add_field(name="Joke", value=f"{r['joke']}", inline=False)
@@ -140,7 +140,7 @@ class Fun(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -165,7 +165,7 @@ class Fun(commands.Cog):
                     embed2 = discord.Embed(
                         title=":red_square: Error!", description="The command was unable to run successfully! ", color=get_embeds.Common.COLOR)
                     embed2.set_author(
-                        name=f"{self.client.user.name}", icon_url=f"{self.client.user.default_avatar.url}")
+                        name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
                     embed2.set_author(
                         name="NearBot", icon_url="ttps://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
                     embed2.set_thumbnail(
@@ -180,7 +180,7 @@ class Fun(commands.Cog):
             embed = discord.Embed(title=":grin: a Joke",
                                   color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.default_avatar.url}")
+                             icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879303282139463680/480px-Happy_smiley_face.png")
             embed.add_field(name="Joke", value=f"{jokeit}", inline=False)
@@ -194,7 +194,7 @@ class Fun(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -218,7 +218,7 @@ class Fun(commands.Cog):
             embed = discord.Embed(title="Would You Rather",
                                   color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.default_avatar.url}")
+                             icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879583873527332904/Would-You-Rather_Questions-680x430.jpg")
             embed.add_field(name="Question",
@@ -233,7 +233,7 @@ class Fun(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -251,7 +251,7 @@ class Fun(commands.Cog):
             embed = discord.Embed(
                 title="an Adive", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.default_avatar.url}")
+                             icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/attachments/877796755234783273/880034306720956456/download_1.jfif")
             embed.add_field(name="Advice", value=f"{c}", inline=False)
@@ -263,7 +263,7 @@ class Fun(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
@@ -280,7 +280,7 @@ class Fun(commands.Cog):
             embed = discord.Embed(
                 title="a Joke", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.default_avatar.url}")
+                             icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(
                 url="https://media.discordapp.net/attachments/877796755234783273/880742956552822794/mr-bean-avatar-character-cartoon-rowan-atkinson-png-image-33.png?width=454&height=584")
             embed.add_field(name="Joke", value=f"{r['joke']}", inline=False)
@@ -292,7 +292,7 @@ class Fun(commands.Cog):
             embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
                                    description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
             embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.default_avatar.url}")
+                              icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(
                 name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
