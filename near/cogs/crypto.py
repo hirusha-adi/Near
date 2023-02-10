@@ -12,7 +12,7 @@ class Crypto(commands.Cog):
         self.client = client
 
     @app_commands.command(name="btc", description="Get the current Bitcoin Rates")
-    async def bitcoin(self, interaction: discord.Interaction):
+    async def btc(self, interaction: discord.Interaction):
         try:
             r = requests.get(
                 'https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,EUR')
@@ -89,7 +89,7 @@ class Crypto(commands.Cog):
             embed.set_author(name=f"{self.client.user.name}",
                              icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879739662837633074/monero-logo-png-transparent.png")
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073564308979597312/monero-xmr-logo.png")
             embed.add_field(name="USD", value=f"{usd}", inline=False)
             embed.add_field(name="EUR", value=f"{eur}", inline=True)
             embed.set_footer(text=f"Requested by {interaction.user.name}")
@@ -121,7 +121,7 @@ class Crypto(commands.Cog):
             embed.set_author(name=f"{self.client.user.name}",
                              icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879741979183968286/Dogecoin_Logo.png")
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073564685061861388/Dogecoin_Logo.png")
             embed.add_field(name="USD", value=f"{usd}", inline=False)
             embed.add_field(name="EUR", value=f"{eur}", inline=True)
             embed.set_footer(text=f"Requested by {interaction.user.name}")
@@ -153,7 +153,7 @@ class Crypto(commands.Cog):
             embed.set_author(name=f"{self.client.user.name}",
                              icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879741815237017680/52.png")
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073565079410319430/free-ripple-coin-icon-2208-thumb.png")
             embed.add_field(name="USD", value=f"{usd}", inline=False)
             embed.add_field(name="EUR", value=f"{eur}", inline=True)
             embed.set_footer(text=f"Requested by {interaction.user.name}")
@@ -170,40 +170,37 @@ class Crypto(commands.Cog):
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed3)
 
-    # FIX THIS LATER
-    # DOES NOT WORK ANYMORE
     @app_commands.command(name="rvn", description="Get the current Raven Coin Rates")
     async def rvn(self, interaction: discord.Interaction):
         try:
-            c = requests.get(
-                'https://www.coingecko.com/en/coins/ravencoin/usd')
+            c = requests.get('https://www.coindesk.com/price/ravencoin/')
             soup = BeautifulSoup(c.content, "html.parser")
-            raven_coin_value = soup.find_all("span", {
-                "class": "no-wrap", "data-coin-symbol": "rvn", "data-target": "price.price"})[0].text
+            raven_coin_value = soup.find_all(
+                "span", {"class": "currency-pricestyles__Price-sc-1rux8hj-0 jxzQXk"})[0].text
 
-            one_day_trading_vol = soup.find_all(
-                "span", {"class": "no-wrap", "data-target": "price.price", "data-no-decimal": "false"})[0].text
-
-            circulating_supply = str(soup.find_all("span", {
-                "class": "tw-text-gray-900 dark:tw-text-white tw-float-right tw-font-medium tw-mr-1"})[0].text).strip()
-
-            total_supply = str(soup.find_all("span", {
-                "class": "tw-text-gray-900 dark:tw-text-white tw-float-right tw-font-medium tw-mr-1"})[1].text).strip()
+            change_percentage = soup.find_all(
+                "h6", {"class": "typography__StyledTypography-owin6q-0 hZxwDe"})[0].text
 
             embed = discord.Embed(
-                title="Ravencoin", color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar.url}")
+                title="Ravencoin",
+                color=get_embeds.Common.COLOR
+            )
+            embed.set_author(
+                name=f"{self.client.user.name}",
+                icon_url=f"{self.client.user.avatar.url}"
+            )
             embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/881007500588089404/912395666578374686/ravencoin-rvn-logo.png")
+                url="https://cdn.discordapp.com/attachments/940889393974104084/1073566855593197600/ravencoin-rvn-logo.png"
+            )
             embed.add_field(
-                name="USD", value=f"{raven_coin_value}", inline=False)
-            embed.add_field(name="24 Hour Trading Vol",
-                            value=f"{one_day_trading_vol}", inline=False)
+                name="USD",
+                value=f"{raven_coin_value}",
+                inline=False
+            )
             embed.add_field(
-                name="Circulating Supply", value=f"{circulating_supply}", inline=False)
-            embed.add_field(name="Total Supply",
-                            value=f"{total_supply}", inline=False)
+                name="24 Hour Change %",
+                value=f"{change_percentage}", inline=False
+            )
             embed.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed)
 
