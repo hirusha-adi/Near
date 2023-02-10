@@ -9,7 +9,7 @@ from near.database import get_embeds
 class EncodeDecode(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
-
+    
     @app_commands.command(name="b64encode", description="Encode to Base64")
     @app_commands.describe(text="Text to process")
     async def b64encode(self, interaction: discord.Interaction, text: str):
