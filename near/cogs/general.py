@@ -103,8 +103,13 @@ class Select(discord.ui.Select):
                 url="https://cdn.discordapp.com/attachments/940889393974104084/1073538746806444103/2362335.png"
             )
             embed.add_field(
-                name="/b64",
+                name="/b64encode",
                 value="Encode to Base64",
+                inline=False
+            )
+            embed.add_field(
+                name="/b64decode",
+                value="Decode from Base64",
                 inline=False
             )
             embed.add_field(
