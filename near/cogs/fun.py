@@ -23,10 +23,9 @@ class Fun(commands.Cog):
             json_data = loadjsonstring(r.text)
             quote = json_data[0]['q'] + " - " + json_data[0]['a']
             
-            embed = discord.Embed(title="Inspirational isn't it?", color=get_embeds.Common.COLOR)
+            embed = discord.Embed(title="Inspirational isn't it?", description=str(quote), color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879382016041291828/NicePng_light-streak-png_395357.png")
-            embed.add_field(name="Inspirational Quote:",value=f"{quote}", inline=True)
             embed.set_footer(text=f"Requested by {interaction.user.name}")
 
             await interaction.response.send_message(embed=embed)
@@ -46,14 +45,11 @@ class Fun(commands.Cog):
         try:
             r = requests.get('http://www.boredapi.com/api/activity/')
             data = r.json()
-            what_to_do_when_bored = f'[+] Activity: {data["activity"]} \n[+] Type: {data["type"]} \n[+] Participants: {data["participants"]} \n[+] Key: {data["key"]} \n[+] Accessibility: {data["accessibility"]} '
-            embed = discord.Embed(title="Heres an Activity for you",description="If you are bored, consider doing this", color=get_embeds.Common.COLOR)
+            embed = discord.Embed(title="Heres an Activity for you",description=f"**{data['activity']}**", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
-            embed.add_field(name="Activity",value=f"{data['activity']}", inline=False)
-            embed.add_field(name="Type", value=f"{data['type']}", inline=False)
-            embed.add_field(name="Participants",value=f"{data['participants']}", inline=False)
-            embed.add_field(name="Key", value=f"{data['key']}", inline=False)
-            embed.add_field(name="Accessibility",value=f"{data['accessibility']}", inline=False)
+            embed.add_field(name="Type", value=f"{data['type']}", inline=True)
+            embed.add_field(name="Participants",value=f"{data['participants']}", inline=True)
+            embed.add_field(name="Accessibility",value=f"{data['accessibility']}", inline=True)
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/884694742716268554/unnamed.png")
             embed.set_footer(text=f"Requested by {interaction.user.name}")
 
@@ -84,7 +80,7 @@ class Fun(commands.Cog):
                     imgs.append(img)
             meme = random.choice(imgs)
 
-            embed = discord.Embed(color=get_embeds.Common.COLOR)
+            embed = discord.Embed(title="a Meme",color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed.set_image(url=str(meme))
 
@@ -112,10 +108,9 @@ class Fun(commands.Cog):
                 async with session.get("https://icanhazdadjoke.com", headers=headers) as req:
                     r = await req.json()
 
-            embed = discord.Embed(title="a Dad Joke",color=get_embeds.Common.COLOR)
+            embed = discord.Embed(title="a Dad Joke", description=f"{r['joke']}", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/881007500588089404/912620134974251018/senior-caucasian-man-wearing-business-260nw-1860664027.png")
-            embed.add_field(name="Joke", value=f"{r['joke']}", inline=False)
             embed.set_footer(text=f"Requested by {interaction.user.name}")
 
             await interaction.response.send_message(embed=embed)
@@ -139,18 +134,8 @@ class Fun(commands.Cog):
             try:
                 jokeit = c["joke"]
             except:
-                try:
-                    jokeit = c["setup"]
-                except Exception as e:
-                    embed2 = discord.Embed(title=":red_square: Error!", description="The command was unable to run successfully! ", color=get_embeds.Common.COLOR)
-                    embed2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                    embed2.set_author(name="NearBot", icon_url="ttps://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-                    embed2.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-                    embed2.add_field(name="Error:", value=f"{e}", inline=False)
-                    embed2.set_footer(text=f"Requested by {interaction.user.name}")
-
-                    await interaction.response.send_message(embed=embed2)
-                    return
+                jokeit = c["setup"]
+                    
 
             embed = discord.Embed(title=":grin: a Joke",color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
@@ -180,10 +165,9 @@ class Fun(commands.Cog):
             qa = soup.find(id='qa').text
             qor = soup.find(id='qor').text
             qb = soup.find(id='qb').text
-            embed = discord.Embed(title="Would You Rather",color=get_embeds.Common.COLOR)
+            embed = discord.Embed(title="Would You Rather", description=f"{qa}\n{qor}\n{qb}", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879583873527332904/Would-You-Rather_Questions-680x430.jpg")
-            embed.add_field(name="WYR", value=f"{qa}\n{qor}\n{qb}", inline=False)
             embed.set_footer(text=f"Requested by {interaction.user.name}")
             
             await interaction.response.send_message(embed=embed)
@@ -204,10 +188,9 @@ class Fun(commands.Cog):
             r = requests.get("https://api.adviceslip.com/advice").json()
             c = r['slip']['advice']
 
-            embed = discord.Embed(title="an Adive", color=get_embeds.Common.COLOR)
+            embed = discord.Embed(title="an Adive", description=str(c), color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/880034306720956456/download_1.jfif")
-            embed.add_field(name="Advice", value=f"{c}", inline=False)
             embed.set_footer(text=f"Requested by {interaction.user.name}")
 
             await interaction.response.send_message(embed=embed)
@@ -227,10 +210,9 @@ class Fun(commands.Cog):
         try:
             r = requests.get("https://some-random-api.ml/joke").json()
 
-            embed = discord.Embed(title="a Joke", color=get_embeds.Common.COLOR)
+            embed = discord.Embed(title="a Joke", description=f"{r['joke']}", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(url="https://media.discordapp.net/attachments/877796755234783273/880742956552822794/mr-bean-avatar-character-cartoon-rowan-atkinson-png-image-33.png?width=454&height=584")
-            embed.add_field(name="Joke", value=f"{r['joke']}", inline=False)
             embed.set_footer(text=f"Requested by {interaction.user.name}")
 
             await interaction.response.send_message(embed=embed)
