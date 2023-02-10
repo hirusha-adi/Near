@@ -197,6 +197,92 @@ class Tools(commands.Cog):
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed3, ephemeral=True)
 
+    @app_commands.command(name="passwordcheck", description="Password Strength Check and Profiler")
+    @app_commands.describe(password="Password to analyze")
+    async def passwordchk(self, interaction: discord.Interaction, password: str):
+        try:
+            results = zxcvbn(f"{password}")
+            embed3 = discord.Embed(title="Password Check",
+                                   description="using Low Budget Password Strength Estimation",
+                                   color=get_embeds.Common.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.default_avatar.url}")
+            embed3.set_thumbnail(
+                url="https://iconape.com/wp-content/png_logo_vector/password.png")
+
+            embed3.add_field(
+                name="Password", value=f"{results['password']}", inline=False)
+
+            embed3.add_field(name="Score",
+                             value=f"{results['score']}", inline=False)
+
+            embed3.add_field(
+                name="Guesses", value=f"Decimal - {results['guesses']}\nLog10 - {results['guesses_log10']}", inline=False)
+            try:
+                embed3.add_field(
+                    name="Password", value=f"{results['password']}", inline=False)
+            except:
+                pass
+
+            sequence_info = ""
+            for dic in results["sequence"]:
+                for k, v in dic.items():
+                    sequence_info += f"{k} - {v}\n"
+                sequence_info += "\n"
+
+            embed3.add_field(name="Sequence Info",
+                             value=f"{sequence_info}", inline=False)
+
+            try:
+                embed3.add_field(name="Calculation Time",
+                                 value=f"{results['calc_time']}")
+            except:
+                pass
+
+            try:
+                embed3.add_field(name="Crack Time",
+                                 value=f"Online throttling 100 per hour - {results['crack_times_display']['online_throttling_100_per_hour']}\nOnline throttling 10 per second - {results['crack_times_display']['online_no_throttling_10_per_second']}\nOffline slow hasing 1e4 per second - {results['crack_times_display']['offline_slow_hashing_1e4_per_second']}\nOffline fast hasing 1e10 per second - {results['crack_times_display']['offline_fast_hashing_1e10_per_second']}", inline=False)
+            except:
+                pass
+
+            try:
+                if results['feedback']['warning'] == '':
+                    pass
+                else:
+                    embed3.add_field(
+                        name="Warning", value=f"{results['feedback']['warning']}", inline=False)
+            except:
+                pass
+
+            try:
+                if len(results["feedback"]["suggestions"]) == 0:
+                    pass
+                else:
+                    suggestions_info = ""
+                    for item in results["feedback"]["suggestions"]:
+                        suggestions_info += f"{item}\n"
+                    try:
+                        embed3.add_field(
+                            name="Suggestions", value=f"{suggestions_info}", inline=False)
+                    except Exception as e:
+                        print(e)
+            except:
+                pass
+
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed3)
+
+        except Exception as e:
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
+                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}",
+                              icon_url=f"{self.client.user.default_avatar.url}")
+            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
+            embed3.add_field(name="Error:", value=f"{e}", inline=False)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+            await interaction.response.send_message(embed=embed3)
+
 
 async def setup(client: commands.Bot):
     await client.add_cog(Tools(client))
