@@ -234,7 +234,7 @@ class Music(commands.Cog, name="Music", description="Play any music easily!"):
     @voice_connected()
     @player_connected()
     @in_same_channel()
-    async def volume(self, interaction: discord.Interaction, vol: int, forced=False):
+    async def volume(self, interaction: discord.Interaction, vol: int, forced:bool=False):
         """Set volume"""
         player: DisPlayer = self.bot.wavelink.get_player(
             interaction.guild.id, cls=DisPlayer)
