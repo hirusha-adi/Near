@@ -141,9 +141,9 @@ class General(commands.Cog):
         print(f'Python version: {cur_python_version()}')
         self.start_time = nowtime()
         await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"teamsds.net/discord"))
-        # synced = await self.client.tree.sync()
-        # print(synced)
-        # print(f'Synced {len(synced)} Slash Commands')
+        synced = await self.client.tree.sync()
+        print(synced)
+        print(f'Synced {len(synced)} Slash Commands')
         print('Bot is ready!')
 
     @commands.Cog.listener()
