@@ -67,6 +67,12 @@ async def sync(interaction: discord.Interaction):
 
 # Loading all the cogs at startup
 async def load_extensions():
+    try:
+        await client.load_extension('near.cogs.musicplayer')
+        print("[+] Loaded: near.cogs.musicplayer")
+    except Exception as e:
+        print(e)
+
     for filename in os.listdir('./near/cogs'):
         if filename.endswith('.py'):
             await client.load_extension(f'near.cogs.{filename[:-3]}')
@@ -87,9 +93,6 @@ client.lava_nodes = [
         'region': 'singapore'
     }
 ]
-client.load_extension('near.cogs.musicplayer')
-print("[+] Loaded: near.cogs.musicplayer")
-
 
 # This is for user input sanitization
 # Add more stuff here to make it better
