@@ -180,7 +180,9 @@ class Music(commands.Cog):
         if vol > 100 and not forced:
             return await ctx.send("Volume can't greater than 100")
 
-        await player.set_volume(vol)
+        new_vol = (5/100)*vol
+
+        await player.set_volume(new_vol)
         await ctx.send(f"Volume set to {vol} :loud_sound:")
 
     @commands.command(aliases=["disconnect", "dc"])
