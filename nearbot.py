@@ -83,11 +83,11 @@ host = os.getenv("LAVA_HOST")
 if not host:
     host = "0.0.0.0"
 
-client.lava_nodes = [
+client.lavalink_nodes = [
     {
         'host': host,
         'port': 2333,
-        'rest_uri': f'http://{host}:2333',
+        # 'rest_uri': f'http://{host}:2333',
         'identifier': 'MAIN',
         'password': 'youshallnotpass',
         'region': 'singapore'
