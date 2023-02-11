@@ -15,13 +15,13 @@ from wavelink import (
 from wavelink.ext import spotify
 from wavelink.ext.spotify import SpotifyTrack
 
-from ..models import Provider
-from ..checks import voice_channel_player, voice_connected
-from ..errors import MustBeSameChannel
-from ..paginator import Paginator
-from ..player import DisPlayer
-from ..helper import provider_map
-from ..events import MusicEvents
+from .models import Provider
+from .checks import voice_channel_player, voice_connected
+from .errors import MustBeSameChannel
+from .paginator import Paginator
+from .player import DisPlayer
+from .helper import provider_map
+from .events import MusicEvents
 
 from discord.ext import commands
 

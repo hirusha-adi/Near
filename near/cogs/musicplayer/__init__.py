@@ -13,9 +13,9 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 
 from ._version import __version__, version_info
 from .core import init_dismusic
-from discord.ext import commands
 
-from .cogs.prefix import MusicEvents, Music
+from discord.ext import commands
+from .music import MusicEvents, Music
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Music(bot))
