@@ -14,3 +14,4 @@ pyfiglet==0.8.post1
 requests==2.22.0
 urllib3==1.25.8
 zxcvbn==4.4.28
+PrivateBinAPI==1.0.0
