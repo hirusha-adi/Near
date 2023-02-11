@@ -61,7 +61,7 @@ class Crypto(commands.Cog):
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed3, ephemeral=True)
 
-    @app_commands.command(name="xmr", description="Get the current XMR Rates")
+    @app_commands.command(name="xmr", description="Get the current Monero Rates")
     async def xmr(self, interaction: discord.Interaction):
         try:
             r = requests.get("https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=USD,EUR")
@@ -70,7 +70,7 @@ class Crypto(commands.Cog):
             eur = NegroPuket['EUR']
             usd = NegroPuket['USD']
 
-            embed = discord.Embed(title="XMR", color=get_embeds.Common.COLOR)
+            embed = discord.Embed(title="Monero", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073564308979597312/monero-xmr-logo.png")
             embed.add_field(name="USD", value=f"{usd}", inline=False)
