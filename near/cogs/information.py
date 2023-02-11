@@ -1,3 +1,5 @@
+import os
+
 import discord
 import requests
 from discord import app_commands
@@ -13,9 +15,6 @@ from near.utils import input_sanitization, errors
 class Information(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
-
-        self.filepwdlist1 = open("near/assets/tenmilpwds.txt", "r")
-        self.lines = self.filepwdlist1.readlines()
 
     @app_commands.command(name="ipinfo", description="IP Address Lookup")
     @app_commands.describe(ip="IP Address to look for")
@@ -139,6 +138,10 @@ class Information(commands.Cog):
 
             date_format = "%a, %d %b %Y %I:%M %p"
             
+            # Consider weather to keep this or remove this
+            # this will take a huge amount of time if there are 1000s of bans in large servers
+            bans = [entry async for entry in interaction.guild.bans(limit=None)]
+            
             embed = discord.Embed(
                 title=f"Server Info of {interaction.guild.name}:",
                 description=f"**Members -** {interaction.guild.member_count}\n**Roles -** {len(interaction.guild.roles)}\n**Text-Channels -**{len(interaction.guild.text_channels)}\n**Voice-Channels -**{len(interaction.guild.voice_channels)}\n**Categories -**{len(interaction.guild.categories)}",
@@ -148,10 +151,13 @@ class Information(commands.Cog):
             embed.add_field(name="Server Owner",value=f"<@{interaction.guild.owner_id}>")
             embed.add_field(name="Server ID", value=f"{interaction.guild.id}")
             embed.add_field(name="Bots", value=len(list(filter(lambda m: m.bot, interaction.guild.members))))
-            embed.add_field(name="Banned members", value=len(await interaction.guild.bans()))
+            embed.add_field(name="Banned members", value=len(bans))
             embed.add_field(name="Invites", value=len(await interaction.guild.invites()))
-            embed.set_footer(text=f"Requested by {interaction.author.name}")
-            embed.set_thumbnail(url=f"{interaction.guild.icon_url}")
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+            try:
+                embed.set_thumbnail(url=f"{interaction.guild.icon.url}")
+            except:
+                pass
             embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             await interaction.response.send_message(embed=embed)
 
@@ -169,7 +175,7 @@ class Information(commands.Cog):
         # input sanitization not needed here
         try:
             target = user or interaction.user
-            embed = discord.Embed(title="User Information",color=target.color, timestamp=datet.utcnow())
+            embed = discord.Embed(title="User Information",color=target.color, timestamp=datet.utcnow(), colour=get_embeds.Common.COLOR)
             
             fields = [("Name", str(target), True),
                       ("ID", target.id, True),

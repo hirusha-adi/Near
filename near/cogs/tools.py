@@ -19,6 +19,9 @@ from near.utils import input_sanitization, errors
 class Tools(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
+        
+        with open(os.path.join('near', 'assets', 'tenmilpwds.txt'), 'r') as _file:
+            self.lines = _file.readlines()
 
     @app_commands.command(name="lyrics", description="Search the Lyrics of any Song")
     @app_commands.describe(query="Name of the Song")
@@ -54,7 +57,6 @@ class Tools(commands.Cog):
                         title=f'{songTitle} - {songArtist}',
                         description=chunk,
                         color=get_embeds.Common.COLOR
-                        # timestamp=datetime.datetime.utcnow()
                     )
                     embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
                     embed.set_thumbnail(url=songThumbnail)
@@ -231,7 +233,10 @@ class Tools(commands.Cog):
                             print(e)
                 except:
                     pass
-
+                
+                if f'{password}\n' in self.lines:
+                    embed3.add_field(name="Common Password", value="This password is among the worlds top 1 million most common passwords", inline=False)
+                
                 embed3.set_footer(text=f"Requested by {interaction.user.name}")
 
                 await interaction.response.send_message(embed=embed3)
