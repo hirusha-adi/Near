@@ -149,5 +149,5 @@ async def main():
         await client.start(token=token, reconnect=True)
 
 
-# keep_alive()
+keep_alive()
 asyncio.run(main())
