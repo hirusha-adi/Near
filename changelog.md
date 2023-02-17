@@ -1,3 +1,12 @@
+# NearBot v0.6
+
+1. Add slash command support
+2. Added interactive help commands
+3. Using the latest versions of discord.py, wavelink and Lavalink
+4. NOTE: Slash commands work except for music related commands <- This will be fixed in a future update
+5. Made the code stable and better
+6. Dockerized everything. Thank you `Rex#3572`
+
 # NearBot v0.5
 
 1. Seperate file for token (easy testing for developers, added the `token.txt` to `.gitignore`)
