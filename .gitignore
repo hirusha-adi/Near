@@ -12,3 +12,4 @@ __pycache__/
 # Flask stuff
 instance/
 .webassets-cache
+test.py

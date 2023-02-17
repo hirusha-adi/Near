@@ -3,16 +3,128 @@ from platform import python_version as cur_python_version
 from time import time as nowtime
 
 import discord
+from discord import app_commands
 from discord.ext import commands
-from flask import message_flashed
-from near.database import get_embeds, get_main
+
+from near.database import get_embeds
+
+
+class Select(discord.ui.Select):
+    def __init__(self):
+        options = [
+            discord.SelectOption(label="Crypto", emoji="🪙",description="Cryptocurrencies Related Commands"),
+            discord.SelectOption(label="Encoding", emoji="🧾",description="Encoding and Hashing Related Commands"),
+            discord.SelectOption(label="Fake Information", emoji="👨‍🦰",description="Fake Information Generating Commands"),
+            discord.SelectOption(label="Fun", emoji="😆",description="Fun Commands"),
+            discord.SelectOption(label="General", emoji="🧸",description="General commands"),
+            discord.SelectOption(label="Information Gathering", emoji="🔍",description="Information Gathering Related Commands"),
+            discord.SelectOption(label="Music", emoji="🎵",description="Music Commands"),
+            discord.SelectOption(label="Tools", emoji="🛠️",description="Important tools to get stuff done"),
+        ]
+        super().__init__(
+            placeholder="Select an option",
+            max_values=1, 
+            min_values=1, 
+            options=options
+        )
+
+    async def callback(self, interaction: discord.Interaction):
+
+        option = self.values[0]
+
+        embed = discord.Embed(title=":gear: A Guide to All Available Commands :gear:",description="To access the complete list of commands and their respective descriptions, kindly select a category from the drop-down menu. For additional information and a comprehensive list of commands, please visit our website at https://teamsds.net/nearbot",color=get_embeds.Common.COLOR)
+        embed.set_author(name=f"NearBot",icon_url=f"https://cdn.discordapp.com/attachments/953475157605892099/1073516633798225980/Avatar.png")
+        embed.set_footer(text=f"Requested by {interaction.user.name}")
+
+        if option == "Crypto":
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073538553335783454/7047060.png")
+            embed.add_field(name="/btc",value="Get the current Bitcoin Rates",inline=False)
+            embed.add_field(name="/eth",value="Get the current Etherium Rates",inline=False)
+            embed.add_field(name="/xmr",value="Get the current XMR Rates",inline=False)
+            embed.add_field(name="/doge",value="Get the current Doge Coin Rates",inline=False)
+            embed.add_field(name="/xrp",value="Get the current XRP Rates",inline=False)
+            embed.add_field(name="/rvn",value="Get the current Raven Coin Rates",inline=False)
+
+        elif option == "Encoding":
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073538746806444103/2362335.png")
+            embed.add_field(name="/b64encode",value="Encode to Base64",inline=False)
+            embed.add_field(name="/b64decode",value="Decode from Base64",inline=False)
+            embed.add_field(name="/md5",value="Get MD5 Hash",inline=False)
+            embed.add_field(name="/sha1",value="Get SHA1 Hash",inline=False)
+            embed.add_field(name="/sha224",value="Get SHA224 Hash",inline=False)
+            embed.add_field(name="/sha512",value="Get SHA512 Hash",inline=False)
+            embed.add_field(name="/leet",value="Convert text to L33T format",inline=False)
+
+        elif option == "Fake Information":
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073538885986033704/4410174.png")
+            embed.add_field(name="/fake",value="List out all the fake information commands - Theres a LOT!",inline=False)
+            embed.add_field(name="/face",value="Generate a fake face with a name",inline=False)
+            embed.add_field(name="/fakeprofiles",value="Generate a given number of fake profiles",inline=False)
+            embed.add_field(name="/discordtoken",value="Generate a fake discord token",inline=False)
+
+        elif option == "Fun":
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073539343597174794/funny-icon-7.png")
+            embed.add_field(name="/inspire",value="List out all the fake information commands - Theres a LOT!",inline=False)
+            embed.add_field(name="/bored",value="Bored? What to do now?",inline=False)
+            embed.add_field(name="/meme",value="Get a random meme",inline=False)
+            embed.add_field(name="/dadjoke",value="Get a random dad joke",inline=False)
+            embed.add_field(name="/joke",value="Get a random joke",inline=False)
+            embed.add_field(name="/joke2",value="Get a Joke, but from Another API",inline=False)
+            embed.add_field(name="/wyr",value="Would You Rather...?",inline=False)
+            embed.add_field(name="/advice",value="Get advice for your life",inline=False)
+
+        elif option == "General":
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073539659596058685/stuff-icon-2.png")
+            embed.add_field(name="/ping",value="Check the response time of the Discord Bot",inline=False)
+            embed.add_field(name="/uptime",value="How long has the bot been up for?",inline=False)
+            embed.add_field(name="/clean",value="Amount of messages to Delete",inline=False)
+
+        elif option == "Information Gathering":
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073539896892981279/search-flat.png")
+            embed.add_field(name="/ipinfo",value="IP Address Lookup",inline=False)
+            embed.add_field(name="/countryinfo",value="Country Information Lookup",inline=False)
+            embed.add_field(name="/covid",value="Global Covid-19 Statistics",inline=False)
+            embed.add_field(name="/avatar",value="Get the User Avatar",inline=False)
+            embed.add_field(name="/serverinfo",value="Get Information about the Server",inline=False)
+            embed.add_field(name="/userinfo",value="User to get the Information of. Defaults to the Author",inline=False)
+
+        elif option == "Music":
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073540069186600960/3844724.png")
+            embed.add_field(name="--lyrics",value="Search the Lyrics of any Song",inline=False)
+            embed.add_field(name="--connect",value="Connect to Voice Channel",inline=False)
+            embed.add_field(name="--disconnect",value="Disconnect bot from Voice Channel",inline=False)
+            embed.add_field(name="--play",value="Play the song",inline=False)
+            embed.add_field(name="--skip",value="Skip the currently playing song",inline=False)
+            embed.add_field(name="--pause",value="Pause the music",inline=False)
+            embed.add_field(name="--resume",value="Resume the music",inline=False)
+            embed.add_field(name="--seek",value="Skip the given seconds of the playing song",inline=False)
+            embed.add_field(name="--volume",value="Change the volume of the song",inline=False)
+            embed.add_field(name="--loop",value="Play music in a loop",inline=False)
+            embed.add_field(name="--nowplaying",value="Show the song which is being played right now",inline=False)
+            embed.add_field(name="--queue",value="Diplay the songs waiting to be played",inline=False)
+
+        elif option == "Tools":
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073540361240186883/768px-Circle-icons-tools.png")
+            embed.add_field(name="/passwordgen",value="Generate a very secure and unique password",inline=False)
+            embed.add_field(name="/passwordchk",value="Password Strength Check and Profiler",inline=False)
+            embed.add_field(name="/insta",value="Grab the Instagram Profile Picture of a Profile",inline=False)
+            embed.add_field(name="/bin",value="Create a PrivateBin from a Text",inline=False)
+
+        # works as intended, but gives this error: "This interaction failed"
+        await interaction.message.edit(embed=embed)
+
+        # Sends message everytime an option is selected. Bad idea, but no bugged Error
+        # await interaction.response.send_message(embed=embed, ephemeral=True)
+
+
+class SelectView(discord.ui.View):
+    def __init__(self, *, timeout=60):
+        super().__init__(timeout=timeout)
+        self.add_item(Select())
 
 
 class General(commands.Cog):
     def __init__(self, client: commands.Bot):
-        self.delete_messages_log_servers = [953475156309856256]
-        self.msg_log_channel = 954566295171502120
-
         self.client = client
 
         # For custom help
@@ -21,14 +133,6 @@ class General(commands.Cog):
         # Bot uptime
         self.start_time = None
 
-        # This is the please-wait/Loading embed
-        self.please_wait_emb = discord.Embed(
-            title=get_embeds.PleaseWait.TITLE, description=get_embeds.PleaseWait.DESCRIPTION, color=get_embeds.PleaseWait.COLOR)
-        self.please_wait_emb.set_author(
-            name=get_embeds.PleaseWait.AUTHOR_NAME, icon_url=get_embeds.PleaseWait.AUTHOR_URL)
-        self.please_wait_emb.set_thumbnail(url=get_embeds.PleaseWait.THUMBNAIL)
-        self.please_wait_emb.set_footer(text=get_embeds.PleaseWait.FOOTER)
-
     @commands.Cog.listener()
     async def on_ready(self):
         print(f'Logged in as {self.client.user.name}')
@@ -36,214 +140,123 @@ class General(commands.Cog):
         print(f'Python version: {cur_python_version()}')
         self.start_time = nowtime()
         await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"teamsds.net/discord"))
+        # synced = await self.client.tree.sync()
+        # print(synced)
+        # print(f'Synced {len(synced)} Slash Commands')
         print('Bot is ready!')
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                title="ERROR", description="`You don't have the permissions required to use this command!`", color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+            embed = discord.Embed(title="ERROR", description="`You don't have the permissions required to use this command!`", color=get_embeds.Common.COLOR)
+            embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await ctx.send(embed=embed)
             return
 
         if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                title="Something is wrong!", description="An error has been occured!", color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-            embed.add_field(
-                name="Error", value="You haven't passed the needed arguments for this command to run properly", inline=True)
-            embed.add_field(
-                # name="Possible Fix", value=f"use `{get_main.BotMainDB.MESSAGE_PREFIX}help all` to list out all the command and check the proper usage of the command you used", inline=True)
-                name="Possible Fix", value=f"use `{self.client.get_prefix}help all` to list out all the command and check the proper usage of the command you used", inline=True)
+            embed = discord.Embed(title="Something is wrong!", description="An error has been occured!", color=get_embeds.Common.COLOR)
+            embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+            embed.add_field(name="Error", value="You haven't passed the needed arguments for this command to run properly", inline=True)
+            embed.add_field(name="Possible Fix", value=f"use `/help` to list out all the command and check the proper usage of the command you used", inline=True)
             await ctx.send(embed=embed)
             return
 
-    @commands.Cog.listener()
-    async def on_message_delete(self, message):
-        if message.author.id == self.client.user.id:
-            return
-
-        if message.author.bot:
-            return
-
-        if message.channel.id == self.msg_log_channel:
-            return
-
-        if message.guild.id in self.delete_messages_log_servers:
-            channel = self.client.get_channel(self.msg_log_channel)
-            embed = discord.Embed(title=f"Message deleted in {message.channel.name}",
-                                  color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
-            embed.add_field(name=f"Sent by",
-                            value=f"{message.author.name}#{message.author.discriminator} | {message.author.id}", inline=False)
-            embed.add_field(name=f"Content",
-                            value=f"{message.content}", inline=False)
-            await channel.send(embed=embed)
-
-    @commands.command()
-    async def ping(self, ctx):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
+    @app_commands.command(name="ping", description="Check the response time of the Discord Bot")
+    async def ping(self, interaction: discord.Interaction):
         try:
-            embed = discord.Embed(title="Response Time",
-                                  color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}",
-                             icon_url=f"{self.client.user.avatar_url}")
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png")
-            embed.add_field(
-                name=f"Ping :timer:", value=f"{round(self.client.latency * 1000)} ms", inline=False)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed = discord.Embed(title=":timer:  Response Time  :timer:", description=f"**{round(self.client.latency * 1000)} ms**", color=get_embeds.Common.COLOR)
+            embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png")
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(
-                name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+            await interaction.response.send_message(embed=embed3, ephemeral=True)
 
-    @commands.command()
-    async def uptime(self, ctx):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
-
+    @app_commands.command(name="uptime", description="How long has the bot been up for?")
+    async def uptime(self, interaction: discord.Interaction):
         try:
             current_time = nowtime()
             difference = int(round(current_time - self.start_time))
             text = str(dttimedelta(seconds=difference))
-            embed = discord.Embed(color=get_embeds.Common.COLOR)
-            embed.add_field(name="The bot was online for: ",
-                            value=f":alarm_clock: {text}", inline=False)
-            embed.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed)
+            embed = discord.Embed(color=get_embeds.Common.COLOR, title=f":clock: Uptime of {self.client.user.name} :clock:", description=f'**{text}**')
+            embed.set_footer(text=f"Requested by {interaction.user.name}")
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(
-                name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+            await interaction.response.send_message(embed=embed3, ephemeral=True)
 
-    @commands.has_permissions(manage_messages=True)
-    @commands.command()
-    async def clean(self, ctx, amount=5):
-        """
-        Delete messages sent by the bot itself to the message channel
-        You need have the "manage_messages" permission to use this command
-        """
+    @app_commands.command(name="clean", description="Delete messages sent by the Bot")
+    @app_commands.describe(amount="Amount of messages to Delete")
+    @app_commands.checks.has_permissions(manage_messages=True)
+    async def clean(self, interaction: discord.Interaction, amount: int):
+        # input sanitization not needed here
         try:
             if amount <= 100:
+
                 amttdel = amount + 1
-                await ctx.channel.purge(limit=amttdel, check=lambda m: m.author == self.client.user)
+                await interaction.channel.purge(limit=amttdel, check=lambda m: m.author == self.client.user)
 
-                if amount == "1":
-                    msgtxt = "message"
-                else:
-                    msgtxt = "messages"
+                msgtxt = "message" if amount == "1" else "messages"
 
-                embed = discord.Embed(
-                    title="Success!", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}",
-                                 icon_url=f"{self.client.user.avatar_url}")
-                embed.add_field(
-                    name="Action", value=f"Deleted {amount} {msgtxt} sent by {self.client.user.name}!", inline=False)
-                embed.set_footer(text=f"Requested by {ctx.author.name}")
-                await ctx.send(embed=embed, delete_after=4)
+                embed = discord.Embed(title="Success!", color=get_embeds.Common.COLOR)
+                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+                embed.add_field(name="Action", value=f"Deleted {amount} {msgtxt} sent by {self.client.user.name}!", inline=False)
+                embed.set_footer(text=f"Requested by {interaction.user.name}")
+                await interaction.response.send_message(embed=embed, ephemeral=True)
 
             else:
-                embed2 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                       description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed2.set_author(name=f"{self.client.user.name}",
-                                  icon_url=f"{self.client.user.avatar_url}")
+                embed2 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+                embed2.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
                 embed2.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed2.add_field(
-                    name="Error:", value=f"Please enter a value below 100!", inline=False)
-                embed2.set_footer(text=f"Requested by {ctx.author.name}")
-                await ctx.send(embed=embed2)
+                embed2.add_field(name="Error:", value=f"Please enter a value below 100!", inline=False)
+                embed2.set_footer(text=f"Requested by {interaction.user.name}")
+                await interaction.response.send_message(embed=embed2, ephemeral=True)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(
-                name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await ctx.send(embed=embed3)
+            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+            await interaction.response.send_message(embed=embed, ephemeral=True)
 
-    @commands.command()
-    async def help(self, ctx):
-        loading_message = await ctx.send(embed=self.please_wait_emb)
-        bp = get_main.BotMainDB.MESSAGE_PREFIX
+    @app_commands.command(name="help", description="Command Support")
+    async def help(self, interaction: discord.Interaction):
 
         try:
             embed3 = discord.Embed(
-                title=":gear: Help", description="The list of all the commands! the might be some eastereggs!?! ", color=get_embeds.Common.COLOR)
-            embed3.set_author(
-                name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar_url}")
-            embed3.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
-            embed3.add_field(
-                name="Crypto:", value=f"`{bp}bitcoin` - Get the bitcoin rates \n`{bp}doge` - Get the doge coin rates \n`{bp}xmr` - Get the Monero rates \n`{bp}xrp` - Get the ripple rates \n`{bp}eth` - Get the etherium rates \n`{bp}rvn` - Get raven coin rates and additional information", inline=False)
-            embed3.add_field(
-                name="Encoding", value=f"`{bp}e_b64 [value]` - Encode to Base64 \n`{bp}e_leet [value]` - Encode to leet \n`{bp}e_md5` - Encode to MD5 \n`{bp}e_sha1` - Encode to SHA1 \n`{bp}e_sha224` - Encode to SHA224 \n`{bp}e_sha512` - Encode to SHA512", inline=False)
-            embed3.add_field(name="Fun", value=f"`{bp}inspire` - Send you an inspirational quote! \n`{bp}bored` - Get some activity to do \n`{bp}meme` - Get a meme to laught ats \n`{bp}dadjoke` - just a Dad Joke \n`{bp}joke` - Laughing is the best medicing \n`{bp}joke2` - Jokes are awesome! \n`{bp}wyr`- Would you rather? \n`{bp}advice` - Advice makes our lives better", inline=False)
-            embed3.add_field(
-                name="Fake Information", value=f"`{bp}fake help` - List out all the fake information commands! \n`{bp}face [gender:optional]` - Generate a fake face with a name", inline=False)
+                title=":gear: A Guide to All Available Commands :gear:",
+                description="To access the complete list of commands and their respective descriptions, kindly select a category from the drop-down menu. For additional information and a comprehensive list of commands, please visit our website at https://teamsds.net/nearbot",
+                color=get_embeds.Common.COLOR
+            )
+            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073537396982952016/868681.png")
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
 
-            embed3.add_field(
-                name="Music", value=f"`{bp}connect` - Connect to Voice Channel \n`{bp}disconnect` - Disconnect bot from Voice Channel \n`{bp}play [song-name/link]` - Play the song \n`{bp}skip` - Skip the currently playing song \n`{bp}pause` - Pause the music \n`{bp}resume` - Resume the music \n`{bp}seek [seconds]` - Skip the given seconds of the playing song \n`{bp}volume [number]` - Change the volume of the song \n`{bp}loop [type]` - Play music in a loop \n`{bp}nowplaying` - Show the song which is being played right now \n`{bp}queue` - Diplay the songs waiting to be played \n`{bp}equalizer` - Maybe tune the song to your liking?", inline=False)
-
-            try:
-                if ctx.message.author.guild_permissions.manage_messages:
-                    embed3.add_field(
-                        name="Manage", value=f"`{bp}clean [number_of_messages]` - Delete the given number of messages sent by the bot", inline=False)
-            except:
-                pass
-
-            try:
-                if ctx.author.id in get_main.BotMainDB.DEV_AND_OWNERS:
-                    embed3.add_field(
-                        name="Server Related", value=f"`{bp}av [@user or id]` - Get the profile picture of any user \n`{bp}serverinfo` - Show all publicly available information about the server \n`{bp}userinfo` - Show all the publicly available information about a user", inline=False)
-            except:
-                pass
-
-            embed3.add_field(name="Others", value=f"`{bp}countryinfo [country_code]` - Search for Country Information \n`{bp}hastebin [text]` - Create a hatebin link for the given text \n`{bp}insta [ig_username]` - Download the Instgram profile picture \n`{bp}ip [ip_addr]` - Find Information of an IP Address \n`{bp}lyrics [song_name]` - Find lyrics of any song \n`{bp}mfp [number]` - Mass fake profile \n`{bp}pwdcheck [password]` - Check for the status of a password \n`{bp}uptime` - Show bot uptime \n ", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await loading_message.delete()
-            await ctx.send(embed=embed3)
+            await interaction.response.send_message(embed=embed3, view=SelectView(), ephemeral=False)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,
-                                   description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",
-                              icon_url=f"{self.client.user.avatar_url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(
-                name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {ctx.author.name}")
-            await ctx.send(embed=embed3)
+            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
+            embed3.set_footer(text=f"Requested by {interaction.user.name}")
+
+            await interaction.response.send_message(embed=embed3, ephemeral=True)
 
 
-def setup(client: commands.Bot):
-    client.add_cog(General(client))
+async def setup(client: commands.Bot):
+    await client.add_cog(General(client))
