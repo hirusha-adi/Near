@@ -15,15 +15,14 @@ from wavelink import (
 from wavelink.ext import spotify
 from wavelink.ext.spotify import SpotifyTrack
 
-from .models import Provider
-from .checks import voice_channel_player, voice_connected
-from .errors import MustBeSameChannel
-from .paginator import Paginator
-from .player import DisPlayer
-from .helper import provider_map
-from .events import MusicEvents
+from ..models import Provider
+from ..checks import voice_channel_player, voice_connected
+from ..errors import MustBeSameChannel
+from ..paginator import Paginator
+from ..player import DisPlayer
+from ..helper import provider_map
+from ..events import MusicEvents
 
-from discord.ext import commands
 
 class Music(commands.Cog):
     """Music commands"""
@@ -103,7 +102,7 @@ class Music(commands.Cog):
         spotify_credential = getattr(
             self.bot, "spotify_credentials", {"client_id": "", "client_secret": ""}
         )
-        
+
         for config in self.bot.lavalink_nodes:
             try:
                 node: wavelink.Node = await wavelink.NodePool.create_node(
@@ -180,9 +179,7 @@ class Music(commands.Cog):
         if vol > 100 and not forced:
             return await ctx.send("Volume can't greater than 100")
 
-        new_vol = (5/100)*vol
-
-        await player.set_volume(new_vol)
+        await player.set_volume(vol)
         await ctx.send(f"Volume set to {vol} :loud_sound:")
 
     @commands.command(aliases=["disconnect", "dc"])
@@ -290,6 +287,6 @@ class Music(commands.Cog):
         await player.invoke_player(ctx)
 
 
-async def setup(bot: commands.Bot):
-    await bot.add_cog(Music(bot))
-    await bot.add_cog(MusicEvents(bot))
+def setup(bot):
+    bot.add_cog(Music(bot))
+    bot.add_cog(MusicEvents(bot))
