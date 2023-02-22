@@ -131,7 +131,8 @@ class Client:
 
     def _future_callback(self, cog, listener, fut):
         if fut.exception():
-            self.loop.create_task(cog.on_wavelink_error(listener, fut.exception()))
+            self.loop.create_task(
+                cog.on_wavelink_error(listener, fut.exception()))
 
     async def get_tracks(self, query: str, *, retry_on_failure: bool = True) -> Optional[list]:
         """|coro|
@@ -246,7 +247,12 @@ class Client:
             The best available Node matching the given region.
             This could be None if no :class:`wavelink.node.Node` could be found.
         """
-        nodes = [n for n in self.nodes.values() if n.region.lower() == region.lower() and n.is_available]
+        try:
+            nodes = [n for n in self.nodes.values() if n.region.lower()
+                     == region.lower() and n.is_available]
+        except:
+            nodes = None
+
         if not nodes:
             return None
 
@@ -266,7 +272,8 @@ class Client:
             The best available Node matching the given Shard ID.
             This could be None if no :class:`wavelink.node.Node` could be found.
         """
-        nodes = [n for n in self.nodes.values() if n.shard_id == shard_id and n.is_available]
+        nodes = [n for n in self.nodes.values() if n.shard_id ==
+                 shard_id and n.is_available]
         if not nodes:
             return None
 
@@ -315,10 +322,12 @@ class Client:
 
         guild = self.bot.get_guild(guild_id)
         if not guild:
-            raise InvalidIDProvided(f'A guild with the id <{guild_id}> can not be located.')
+            raise InvalidIDProvided(
+                f'A guild with the id <{guild_id}> can not be located.')
 
         if not self.nodes:
-            raise ZeroConnectedNodes('There are not any currently connected nodes.')
+            raise ZeroConnectedNodes(
+                'There are not any currently connected nodes.')
 
         if not cls:
             cls = Player
@@ -327,7 +336,8 @@ class Client:
             node = self.get_node(identifier=node_id)
 
             if not node:
-                raise InvalidIDProvided(f'A Node with the identifier <{node_id}> does not exist.')
+                raise InvalidIDProvided(
+                    f'A Node with the identifier <{node_id}> does not exist.')
 
             player = cls(self.bot, guild_id, node, **kwargs)
             node.players[guild_id] = player
@@ -343,8 +353,11 @@ class Client:
                 continue
             if node.shard_id == guild.shard_id:
                 shard_options.append(node)
-            if node.region.lower() == str(guild.region).lower():
-                region_options.append(node)
+            try:
+                if node.region.lower() == str(guild.region).lower():
+                    region_options.append(node)
+            except:
+                pass
 
         if not shard_options and not region_options:
             # Sort by len of node players
@@ -408,7 +421,8 @@ class Client:
 
         if identifier in self.nodes:
             node = self.nodes[identifier]
-            raise NodeOccupied(f'Node with identifier ({identifier}) already exists >> {node.__repr__()}')
+            raise NodeOccupied(
+                f'Node with identifier ({identifier}) already exists >> {node.__repr__()}')
 
         node = Node(host, port, self.shard_count, self.user_id,
                     rest_uri=rest_uri,
@@ -446,7 +460,8 @@ class Client:
         try:
             node = self.nodes[identifier]
         except KeyError:
-            raise ZeroConnectedNodes(f'A node with identifier:: {identifier}, does not exist.')
+            raise ZeroConnectedNodes(
+                f'A node with identifier:: {identifier}, does not exist.')
 
         await node.destroy()
 

@@ -71,7 +71,8 @@ class Node:
                  shard_id: int = None,
                  secure: bool = False,
                  heartbeat: float = None,
-                 dumps: Callable[[Dict[str, Any]], Union[str, bytes]] = json.dumps
+                 dumps: Callable[[Dict[str, Any]],
+                                 Union[str, bytes]] = json.dumps
                  ):
 
         self.host = host
@@ -80,7 +81,10 @@ class Node:
         self.shards = shards
         self.uid = user_id
         self.password = password
-        self.region = region
+        try:
+            self.region = region
+        except:
+            self.region = None
         self.identifier = identifier
         self.secure = secure
         self.heartbeat = heartbeat
@@ -174,13 +178,15 @@ class Node:
                     continue
 
                 elif not resp.status == 200 and not retry_on_failure:
-                    __log__.info(f'REST | Status code ({resp.status}) while retrieving tracks. Not retrying.')
+                    __log__.info(
+                        f'REST | Status code ({resp.status}) while retrieving tracks. Not retrying.')
                     return
 
                 data = await resp.json()
 
                 if not data['tracks']:
-                    __log__.info(f'REST | No tracks with query <{query}> found.')
+                    __log__.info(
+                        f'REST | No tracks with query <{query}> found.')
                     return None
 
                 if data['playlistInfo']:
@@ -188,9 +194,11 @@ class Node:
 
                 tracks = []
                 for track in data['tracks']:
-                    tracks.append(Track(id_=track['track'], info=track['info']))
+                    tracks.append(
+                        Track(id_=track['track'], info=track['info']))
 
-                __log__.debug(f'REST | Found <{len(tracks)}> tracks with query <{query}> ({self.__repr__()})')
+                __log__.debug(
+                    f'REST | Found <{len(tracks)}> tracks with query <{query}> ({self.__repr__()})')
 
                 return tracks
 
@@ -244,7 +252,8 @@ class Node:
 
     async def on_event(self, event) -> None:
         """Function which dispatches events when triggered on the Node."""
-        __log__.info(f'NODE | Event dispatched:: <{str(event)}> ({self.__repr__()})')
+        __log__.info(
+            f'NODE | Event dispatched:: <{str(event)}> ({self.__repr__()})')
         await event.player.hook(event)
 
         if not self.hook:
