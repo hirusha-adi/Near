@@ -85,12 +85,6 @@ async def sync(interaction: discord.Interaction):
 
 # Loading all the cogs at startup
 async def load_extensions():
-    try:
-        await client.load_extension('near.cogs.musicplayer')
-        print("[+] Loaded: near.cogs.musicplayer")
-    except Exception as e:
-        print(e)
-
     for filename in os.listdir('./near/cogs'):
         if filename.endswith('.py'):
             await client.load_extension(f'near.cogs.{filename[:-3]}')
@@ -100,17 +94,7 @@ async def load_extensions():
 host = os.getenv("LAVA_HOST")
 if not host:
     host = "0.0.0.0"
-
-client.lava_nodes = [
-    {
-        'host': host,
-        'port': 2333,
-        'rest_uri': f'http://{host}:2333',
-        'identifier': 'MAIN',
-        'password': 'youshallnotpass',
-        'region': 'singapore'
-    }
-]
+client.lavalink_host = host
 
 # This is for user input sanitization
 # Add more stuff here to make it better
