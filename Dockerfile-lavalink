@@ -4,6 +4,6 @@ RUN apt update && apt install -y wget
 
 WORKDIR /lavalink
 
-RUN wget 'https://github.com/freyacodes/Lavalink/releases/download/3.7.4/Lavalink.jar'
+RUN wget 'https://github.com/freyacodes/Lavalink/releases/download/3.4/Lavalink.jar'
 
 COPY lavalink.yml application.yml
