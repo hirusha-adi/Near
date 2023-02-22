@@ -457,8 +457,11 @@ class Player:
             self.node.close()
             node = None
 
-            # if self.node.region:
-            # node = client.get_node_by_region(self.node.region)
+            try:
+                if self.node.region:
+                    node = client.get_node_by_region(self.node.region)
+            except:
+                pass
 
             if not node and self.node.shard_id:
                 node = client.get_node_by_shard(self.node.shard_id)
