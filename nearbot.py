@@ -20,19 +20,28 @@ async def loadex(interaction: discord.Interaction, extension: str):
     if interaction.user.id == bot_owner_id_or_dev_id:
         try:
             await client.load_extension(f'cogs.{extension}')
-            embed = discord.Embed(title="SUCCESS", description=f"`ADDED cogs.{extension} from NearBot`", color=0xff0000)
-            embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
-            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+            embed = discord.Embed(
+                title="SUCCESS", description=f"`ADDED cogs.{extension} from NearBot`", color=0xff0000)
+            embed.set_author(name=f"{client.user.name}",
+                             icon_url=f"{client.user.avatar.url}")
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await interaction.response.send_message(embed=embed)
         except Exception as e:
-            embed = discord.Embed(title="ERROR", description=f"```{e}```", color=0xff0000)
-            embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
-            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+            embed = discord.Embed(
+                title="ERROR", description=f"```{e}```", color=0xff0000)
+            embed.set_author(name=f"{client.user.name}",
+                             icon_url=f"{client.user.avatar.url}")
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await interaction.response.send_message(embed=embed, ephemeral=True)
     else:
-        embed = discord.Embed(title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
-        embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+        embed = discord.Embed(
+            title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
+        embed.set_author(name=f"{client.user.name}",
+                         icon_url=f"{client.user.avatar.url}")
+        embed.set_thumbnail(
+            url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
@@ -41,19 +50,28 @@ async def unloadex(interaction: discord.Interaction, extension: str):
     if interaction.user.id == bot_owner_id_or_dev_id:
         try:
             await client.unload_extension(f'cogs.{extension}')
-            embed = discord.Embed(title="SUCCESS", description=f"`REMOVED cogs.{extension} from NearBot`", color=0xff0000)
-            embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
-            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+            embed = discord.Embed(
+                title="SUCCESS", description=f"`REMOVED cogs.{extension} from NearBot`", color=0xff0000)
+            embed.set_author(name=f"{client.user.name}",
+                             icon_url=f"{client.user.avatar.url}")
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await interaction.response.send_message(embed=embed)
         except Exception as e:
-            embed = discord.Embed(title="ERROR", description=f"```{e}```", color=0xff0000)
-            embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
-            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+            embed = discord.Embed(
+                title="ERROR", description=f"```{e}```", color=0xff0000)
+            embed.set_author(name=f"{client.user.name}",
+                             icon_url=f"{client.user.avatar.url}")
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await interaction.response.send_message(embed=embed, ephemeral=True)
     else:
-        embed = discord.Embed(title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
-        embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+        embed = discord.Embed(
+            title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
+        embed.set_author(name=f"{client.user.name}",
+                         icon_url=f"{client.user.avatar.url}")
+        embed.set_thumbnail(
+            url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
@@ -83,11 +101,11 @@ host = os.getenv("LAVA_HOST")
 if not host:
     host = "0.0.0.0"
 
-client.lavalink_nodes = [
+client.lava_nodes = [
     {
         'host': host,
         'port': 2333,
-        # 'rest_uri': f'http://{host}:2333',
+        'rest_uri': f'http://{host}:2333',
         'identifier': 'MAIN',
         'password': 'youshallnotpass',
         'region': 'singapore'
