@@ -1,13 +1,8 @@
 import asyncio
-import os
-
-import async_timeout
 import discord
-from discord.ext import commands
+import async_timeout
 from wavelink import Player
-
-from .models import Loop
-from .errors import InvalidLoopMode, NotEnoughSong, NothingIsPlaying
+from near.database import get_embeds
 
 
 class DisPlayer(Player):
@@ -15,82 +10,65 @@ class DisPlayer(Player):
         super().__init__(*args, **kwargs)
 
         self.queue = asyncio.Queue()
-        self.loop = Loop.NONE  # CURRENT, PLAYLIST
+        self.loop = "NONE"  # CURRENT, PLAYLIST
+        self.currently_playing = None
         self.bound_channel = None
-        self.track_provider = "yt"
+        self.controller_message = None
+        self.player_is_invoking = False
 
-    async def destroy(self) -> None:
-        self.queue = None
+    async def destroy(self, *, force: bool = False) -> None:
+        player_message = self.controller_message
 
-        await super().stop()
-        await super().disconnect()
+        if player_message:
+            try:
+                await player_message.delete()
+            except:
+                pass
+
+        return await super().destroy(force=force)
 
     async def do_next(self) -> None:
-        if self.is_playing():
+        if self.is_playing:
             return
 
-        timeout = int(os.getenv("DISMUSIC_TIMEOUT", 300))
-
         try:
-            with async_timeout.timeout(timeout):
+            self.waiting = True
+            with async_timeout.timeout(300):
                 track = await self.queue.get()
         except asyncio.TimeoutError:
-            return
+            # No music has been played for 5 minutes, cleanup and disconnect...
+            return await self.destroy()
 
-        self._source = track
+        self.currently_playing = track
         await self.play(track)
-
-        self.client.dispatch("dismusic_track_start", self, track)
         await self.invoke_player()
 
-    async def set_loop(self, loop_type: str) -> None:
-        if not self.is_playing():
-            raise NothingIsPlaying("Player is not playing any track. Can't loop")
+    async def invoke_player(self) -> None:
+        if self.player_is_invoking:
+            return
 
-        if not loop_type:
-            if Loop.TYPES.index(self.loop) >= 2:
-                loop_type = "NONE"
-            else:
-                loop_type = Loop.TYPES[Loop.TYPES.index(self.loop) + 1]
+        self.player_is_invoking = True
 
-            if loop_type == "PLAYLIST" and len(self.queue._queue) < 1:
-                loop_type = "NONE"
+        player_message = self.controller_message
 
-        if loop_type.upper() == "PLAYLIST" and len(self.queue._queue) < 1:
-            raise NotEnoughSong(
-                "There must be 2 songs in the queue in order to use the PLAYLIST loop"
-            )
+        if player_message:
+            try:
+                await player_message.delete()
+            except:
+                pass
 
-        if loop_type.upper() not in Loop.TYPES:
-            raise InvalidLoopMode("Loop type must be `NONE`, `CURRENT` or `PLAYLIST`.")
-
-        self.loop = loop_type.upper()
-
-        return self.loop
-
-    async def invoke_player(self, ctx: commands.Context = None) -> None:
-        track = self.source
-
-        if not track:
-            raise NothingIsPlaying("Player is not playing anything.")
+        track = self.current
 
         embed = discord.Embed(
-            title=track.title, url=track.uri, color=discord.Color(0x2F3136)
+            title=track.title, url=track.uri, color=get_embeds.Common.COLOR
         )
         embed.set_author(
-            name=track.author,
-            url=track.uri,
-            icon_url=self.client.user.display_avatar.url,
+            name=track.author, url=track.uri, icon_url=self.bot.user.avatar_url
         )
-        try:
-            embed.set_thumbnail(url=track.thumb)
-        except AttributeError:
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/776345413132877854/940540758442795028/unknown.png"
-            )
+        embed.set_thumbnail(url=track.thumb)
         embed.add_field(
             name="Length",
-            value=f"{int(track.length // 60)}:{int(track.length % 60)}",
+            value=f"{int((self.position / 1000) // 60)}:{int((self.position / 1000) % 60)}/{int((track.length / 1000) // 60)}:{int((track.length / 1000) % 60)}",
         )
         embed.add_field(name="Looping", value=self.loop)
         embed.add_field(name="Volume", value=self.volume)
@@ -98,7 +76,7 @@ class DisPlayer(Player):
         next_song = ""
 
         if self.loop == "CURRENT":
-            next_song = self.source.title
+            next_song = self.current.title
         else:
             if len(self.queue._queue) > 0:
                 next_song = self.queue._queue[0].title
@@ -106,7 +84,6 @@ class DisPlayer(Player):
         if next_song:
             embed.add_field(name="Next Song", value=next_song, inline=False)
 
-        if not ctx:
-            return await self.bound_channel.send(embed=embed)
-
-        await ctx.send(embed=embed)
+        self.controller_message = await self.bound_channel.send(embed=embed)
+        self.bot.after_controller = 0
+        self.player_is_invoking = False
