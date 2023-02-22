@@ -1,62 +1,71 @@
 import wavelink
+from .player import DisPlayer
 from discord.ext import commands
 
-from .models import Loop
-from .errors import (
-    InvalidLoopMode,
-    MustBeSameChannel,
-    NotConnectedToVoice,
-    NotEnoughSong,
-    NothingIsPlaying,
-    PlayerNotConnected,
-)
-from .player import DisPlayer
 
-
-class MusicEvents(commands.Cog):
+class MusicEvents(commands.Cog, wavelink.WavelinkMixin):
     def __init__(self, bot) -> None:
         self.bot = bot
-
-    async def handle_end_stuck_exception(
-        self, player: DisPlayer, track: wavelink.abc.Playable
-    ):
-        if player.loop == Loop.CURRENT:
-            return await player.play(track)
-
-        if player.loop == Loop.PLAYLIST:
-            await player.queue.put(track)
-
-        player._source = None
-        await player.do_next()
+        self.bot.players = {}
+        self.bot.voice_users = {}
+        self.bot.after_controller = 0
 
     @commands.Cog.listener()
-    async def on_wavelink_track_end(self, player, track, *args, **kwargs):
-        self.bot.dispatch("dismusic_track_end", player, track, *args, **kwargs)
-        await self.handle_end_stuck_exception(player, track)
+    async def on_message(self, message):
+        if message.author == self.bot.user:
+            return
 
-    @commands.Cog.listener()
-    async def on_wavelink_track_exception(self, player, track, *args, **kwargs):
-        print(args, kwargs, player, track)
-        self.bot.dispatch("dismusic_track_exception", player, track, *args, **kwargs)
-        await self.handle_end_stuck_exception(player, track)
-
-    @commands.Cog.listener()
-    async def on_wavelink_track_stuck(self, player, track, *args, **kwargs):
-        self.bot.dispatch("dismusic_track_stuck", player, track, *args, **kwargs)
-        await self.handle_end_stuck_exception(player, track)
-
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
-        errors = (
-            InvalidLoopMode,
-            MustBeSameChannel,
-            NotConnectedToVoice,
-            PlayerNotConnected,
-            NothingIsPlaying,
-            NotEnoughSong,
+        player: DisPlayer = self.bot.wavelink.get_player(
+            message.guild.id, cls=DisPlayer
         )
 
-        if isinstance(error, errors):
-            await ctx.send(error)
+        if not player.is_playing:
+            return
+
+        if player.bound_channel != message.channel:
+            return
+
+        self.bot.after_controller += 1
+
+        if self.bot.after_controller > 5:
+            if player.is_connected and player.is_playing:
+                player_message = player.controller_message
+                if not player_message:
+                    return
+
+                await player.invoke_player()
+
+    @commands.Cog.listener()
+    async def on_voice_state_update(self, member, before, after):
+        player: DisPlayer = self.bot.wavelink.get_player(
+            member.guild.id, cls=DisPlayer)
+
+        if member.id == self.bot.user.id:
+            if before.channel and after.channel:
+                if before.channel != after.channel:
+                    await player.destroy()
+                    await player.connect(after.channel.id)
+
+        if after.channel:
+            for voice_member in after.channel.members:
+                self.bot.voice_users[voice_member.id] = {
+                    "channel": after.channel.id,
+                    "player": player,
+                }
         else:
-            pass
+            try:
+                self.bot.voice_users.pop(member.id)
+            except:
+                pass
+
+    @wavelink.WavelinkMixin.listener("on_track_stuck")
+    @wavelink.WavelinkMixin.listener("on_track_end")
+    @wavelink.WavelinkMixin.listener("on_track_exception")
+    async def on_player_stop(self, node: wavelink.Node, payload):
+        if payload.player.loop == "CURRENT":
+            return await payload.player.play(payload.player.currently_playing)
+
+        if payload.player.loop == "PLAYLIST":
+            await payload.player.queue.put(payload.player.currently_playing)
+
+        await payload.player.do_next()
