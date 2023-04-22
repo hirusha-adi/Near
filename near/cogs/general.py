@@ -97,7 +97,8 @@ class Select(discord.ui.Select):
             embed.add_field(name="--skip", value="Skip the currently playing song", inline=False)
             embed.add_field(name="--pause", value="Pause the music", inline=False)
             embed.add_field(name="--resume", value="Resume the music", inline=False)
-            embed.add_field(name="--volume", value="Change the volume of the song", inline=False)
+            embed.add_field(name="--shuffle", value="Shuffle the pending music list", inline=False)
+            embed.add_field(name="--volume <vol>", value="Change the volume of the song", inline=False)
 
         elif option == "Tools":
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073540361240186883/768px-Circle-icons-tools.png")
