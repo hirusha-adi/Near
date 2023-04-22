@@ -111,11 +111,16 @@ blacklisted_letters_n_words = (
 
 
 @client.event
-async def on_message(message):
+async def on_message(message: discord.message.Message):
     if client.user == message.author:
         return
 
     msg = message.content
+
+    if message.mentions:
+        for mentn in message.mentions:
+            if mentn == client.user:
+                await message.reply("Hey there! The bot now supports slash commands. Enter `/help` to get started")
 
     if msg.startswith(f'{bot_prefix}'):
 
@@ -134,7 +139,7 @@ async def on_message(message):
                 url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             embed.add_field(
                 name="Possible Fix", value=f"Dont have {blacklisted_letters_n_words} in your command!", inline=True)
-            await message.send(embed=embed)
+            await message.reply(embed=embed)
             return
 
     await client.process_commands(message)
