@@ -3,6 +3,7 @@ token.txt
 ./token.txt
 .env*
 !.env.example
+.DO_NOT_DELETE.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
