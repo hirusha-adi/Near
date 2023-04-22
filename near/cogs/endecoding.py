@@ -12,7 +12,7 @@ from near.utils import input_sanitization, errors
 class EncodeDecode(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
-    
+
     @app_commands.command(name="b64encode", description="Encode to Base64")
     @app_commands.describe(text="Text to process")
     async def b64encode(self, interaction: discord.Interaction, text: str):
@@ -21,9 +21,9 @@ class EncodeDecode(commands.Cog):
                 msg = base64.b64encode('{}'.format(text).encode('ascii'))
                 result = str(msg)
                 result = result[2:len(result)-1]
-                
+
                 embed = discord.Embed(title="Encode to Base64", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
                 embed.set_thumbnail(
                     url="https://cdn.discordapp.com/attachments/877796755234783273/879955815602200586/base64-logo-352x200.jpg")
                 embed.add_field(name="Query", value=f"{text}", inline=False)
@@ -34,8 +34,8 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
@@ -52,7 +52,7 @@ class EncodeDecode(commands.Cog):
                 result = str(msg)
                 result = result[2:len(result)-1]
                 embed = discord.Embed(title="Decode from Base64", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
                 embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879955815602200586/base64-logo-352x200.jpg")
                 embed.add_field(name="Query", value=f"{text}", inline=False)
                 embed.add_field(name="Result", value=f"{result}", inline=True)
@@ -61,10 +61,10 @@ class EncodeDecode(commands.Cog):
                 await interaction.response.send_message(embed=embed)
             else:
                 raise errors.IllegalInput
-                
+
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
@@ -81,7 +81,7 @@ class EncodeDecode(commands.Cog):
                 slpake = msg.hexdigest()
 
                 embed = discord.Embed(title="to MD5", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
                 embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879956672771137546/MD5.png")
                 embed.add_field(name="Query", value=f"{text}", inline=False)
                 embed.add_field(name="Result", value=f"{slpake}", inline=True)
@@ -92,8 +92,8 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
@@ -110,7 +110,7 @@ class EncodeDecode(commands.Cog):
                 slpuka = msg.hexdigest()
 
                 embed = discord.Embed(title="to SHA1", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
                 embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879957622546108436/SHA1.png")
                 embed.add_field(name="Query", value=f"{text}", inline=False)
                 embed.add_field(name="Result", value=f"{slpuka}", inline=True)
@@ -121,8 +121,8 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
@@ -139,7 +139,7 @@ class EncodeDecode(commands.Cog):
                 crnja = msg.hexdigest()
 
                 embed = discord.Embed(title="to SHA224", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
                 embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879958751640191046/download.png")
                 embed.add_field(name="Query", value=f"{text}", inline=False)
                 embed.add_field(name="Result", value=f"{crnja}", inline=True)
@@ -150,8 +150,8 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
@@ -168,7 +168,7 @@ class EncodeDecode(commands.Cog):
                 crnja = msg.hexdigest()
 
                 embed = discord.Embed(title="to SHA512", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
                 embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879960296863698944/download_1.png")
                 embed.add_field(name="Query", value=f"{text}", inline=False)
                 embed.add_field(name="Result", value=f"{crnja}", inline=True)
@@ -179,8 +179,8 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
@@ -197,7 +197,7 @@ class EncodeDecode(commands.Cog):
                     'O', '0').replace('t', '7').replace('T', '7').replace('l', '1').replace('L', '1').replace('k', '|<').replace('K', '|<').replace('CK', 'X').replace('ck', 'x').replace('Ck', 'X').replace('cK', 'x')
 
                 embed = discord.Embed(title="to LEET", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
                 embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879961162895212574/download_2.png")
                 embed.add_field(name="Query", value=f"{text}", inline=False)
                 embed.add_field(name="Result", value=f"{encoded}", inline=True)
@@ -208,8 +208,8 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE,description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}",icon_url=f"{self.client.user.avatar.url}")
+            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
+            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
             embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
             embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
             embed3.set_footer(text=f"Requested by {interaction.user.name}")
