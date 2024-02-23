@@ -5,7 +5,7 @@ from discord import app_commands
 from discord.ext import commands
 
 from near.database import get_embeds
-
+from near.utils import errors
 
 class Crypto(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -13,7 +13,6 @@ class Crypto(commands.Cog):
 
     @app_commands.command(name="btc", description="Get the current Bitcoin Rates")
     async def btc(self, interaction: discord.Interaction):
-        try:
             r = requests.get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,EUR')
             r = r.json()
 
@@ -28,42 +27,23 @@ class Crypto(commands.Cog):
             embed.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed)
 
-        except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3, ephemeral=True)
-
     @app_commands.command(name="eth", description="Get the current Etherium Rates")
     async def eth(self, interaction: discord.Interaction):
-        try:
-            r = requests.get('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,EUR')
-            r = r.json()
-
-            usd = r['USD']
-            eur = r['EUR']
-
-            embed = discord.Embed(title="Ethereum", color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/271256875205525504/374282740218200064/2000px-Ethereum_logo.png")
-            embed.add_field(name="USD", value=f"{usd}$", inline=False)
-            embed.add_field(name="EUR", value=f"{eur}€", inline=False)
-            embed.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed)
-
-        except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3, ephemeral=True)
+        r = requests.get('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,EUR')
+        r = r.json()
+        usd = r['USD']
+        eur = r['EUR']
+        
+        embed = discord.Embed(title="Ethereum", color=get_embeds.Common.COLOR)
+        embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/271256875205525504/374282740218200064/2000px-Ethereum_logo.png")
+        embed.add_field(name="USD", value=f"{usd}$", inline=False)
+        embed.add_field(name="EUR", value=f"{eur}€", inline=False)
+        embed.set_footer(text=f"Requested by {interaction.user.name}")
+        await interaction.response.send_message(embed=embed)
 
     @app_commands.command(name="xmr", description="Get the current Monero Rates")
     async def xmr(self, interaction: discord.Interaction):
-        try:
             r = requests.get("https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=USD,EUR")
             NegroPuket = r.json()
 
@@ -78,17 +58,8 @@ class Crypto(commands.Cog):
             embed.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed)
 
-        except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3, ephemeral=True)
-
     @app_commands.command(name="doge", description="Get the current Doge Coin Rates")
     async def doge(self, interaction: discord.Interaction):
-        try:
             r = requests.get("https://min-api.cryptocompare.com/data/price?fsym=DOGE&tsyms=USD,EUR")
             NegroPuketDOGE = r.json()
 
@@ -103,17 +74,8 @@ class Crypto(commands.Cog):
             embed.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed)
 
-        except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3)
-
     @app_commands.command(name="xrp", description="Get the current XRP Rates")
     async def xrp(self, interaction: discord.Interaction):
-        try:
             r = requests.get("https://min-api.cryptocompare.com/data/price?fsym=XRP&tsyms=USD,EUR")
             kekistan = r.json()
 
@@ -128,17 +90,10 @@ class Crypto(commands.Cog):
             embed.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed)
 
-        except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3)
+        
 
     @app_commands.command(name="rvn", description="Get the current Raven Coin Rates")
     async def rvn(self, interaction: discord.Interaction):
-        try:
             c = requests.get('https://www.coindesk.com/price/ravencoin/')
             soup = BeautifulSoup(c.content, "html.parser")
             raven_coin_value = soup.find_all("span", {"class": "currency-pricestyles__Price-sc-1rux8hj-0 jxzQXk"})[0].text
@@ -153,13 +108,7 @@ class Crypto(commands.Cog):
             embed.set_footer(text=f"Requested by {interaction.user.name}")
             await interaction.response.send_message(embed=embed)
 
-        except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3)
+        
 
 
 async def setup(client: commands.Bot):
