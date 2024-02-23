@@ -150,21 +150,20 @@ class General(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
+        embed = discord.Embed(title="Something is wrong!", description="An error has been occured!", color=get_embeds.Common.COLOR)
+        embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+        
         if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(title="ERROR", description="`You don't have the permissions required to use this command!`", color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-            await ctx.send(embed=embed)
-            return
-
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(title="Something is wrong!", description="An error has been occured!", color=get_embeds.Common.COLOR)
-            embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+            embed.add_field(name="Error", value="You do not have permission to run this command", inline=True)
+        elif isinstance(error, commands.MissingRequiredArgument):
             embed.add_field(name="Error", value="You haven't passed the needed arguments for this command to run properly", inline=True)
             embed.add_field(name="Possible Fix", value=f"use `/help` to list out all the command and check the proper usage of the command you used", inline=True)
-            await ctx.send(embed=embed)
-            return
+        elif isinstance(error, ValueError):
+            embed.add_field(name="Error", value="Value Error!", inline=True)
+        embed.add_field(name="Possible Fix", value=f"Open a new issue in the [bot's repository](https://github.com/hirusha-adi/Near)", inline=True)
+            
+        await ctx.send(embed=embed)
 
     @app_commands.command(name="ping", description="Check the response time of the Discord Bot")
     async def ping(self, interaction: discord.Interaction):
