@@ -43,7 +43,7 @@ class Cmnds_Crypto:
         eur = da['EUR']
         usd = da['USD']
         embed = discord.Embed(title="Monero", color=get_embeds.Common.COLOR)
-        embed.set_author(name=f"Near", icon_url=f"{self.client.user.avatar.url}")
+        embed.set_author(name=f"Near", icon_url=f"https://user-images.githubusercontent.com/36286877/208341567-6706e40f-03b5-4e29-836c-760708f2e619.png")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073564308979597312/monero-xmr-logo.png")
         embed.add_field(name="USD", value=f"{usd}", inline=False)
         embed.add_field(name="EUR", value=f"{eur}", inline=True)
@@ -57,7 +57,7 @@ class Cmnds_Crypto:
         eur = dat['EUR']
         usd = dat['USD']
         embed = discord.Embed(title="Doge Coin", color=get_embeds.Common.COLOR)
-        embed.set_author(name=f"Near", icon_url=f"{self.client.user.avatar.url}")
+        embed.set_author(name=f"Near", icon_url=f"https://user-images.githubusercontent.com/36286877/208341567-6706e40f-03b5-4e29-836c-760708f2e619.png")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073564685061861388/Dogecoin_Logo.png")
         embed.add_field(name="USD", value=f"{usd}", inline=False)
         embed.add_field(name="EUR", value=f"{eur}", inline=True)
@@ -71,7 +71,7 @@ class Cmnds_Crypto:
         eur = dat['EUR']
         usd = dat['USD']
         embed = discord.Embed(title="Ripple", color=get_embeds.Common.COLOR)
-        embed.set_author(name=f"Near", icon_url=f"{self.client.user.avatar.url}")
+        embed.set_author(name=f"Near", icon_url=f"https://user-images.githubusercontent.com/36286877/208341567-6706e40f-03b5-4e29-836c-760708f2e619.png")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073565079410319430/free-ripple-coin-icon-2208-thumb.png")
         embed.add_field(name="USD", value=f"{usd}", inline=False)
         embed.add_field(name="EUR", value=f"{eur}", inline=True)
@@ -85,7 +85,7 @@ class Cmnds_Crypto:
         raven_coin_value = soup.find_all("span", {"class": "currency-pricestyles__Price-sc-1rux8hj-0 jxzQXk"})[0].text
         change_percentage = soup.find_all("h6", {"class": "typography__StyledTypography-owin6q-0 hZxwDe"})[0].text
         embed = discord.Embed(title="Ravencoin", color=get_embeds.Common.COLOR)
-        embed.set_author(name=f"Near", icon_url=f"{self.client.user.avatar.url}")
+        embed.set_author(name=f"Near", icon_url=f"https://user-images.githubusercontent.com/36286877/208341567-6706e40f-03b5-4e29-836c-760708f2e619.png")
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073566855593197600/ravencoin-rvn-logo.png")
         embed.add_field(name="USD", value=f"{raven_coin_value}", inline=False)
         embed.add_field(name="24 Hour Change %", value=f"{change_percentage}", inline=False)

@@ -2,7 +2,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
-from near.cogs.cmnds.crypto import Cmnds_Crypto
+from .cmnds.crypto import Cmnds_Crypto
 
 class Crypto(commands.Cog):
     def __init__(self, client: commands.Bot):
