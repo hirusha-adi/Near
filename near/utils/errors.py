@@ -1,6 +1,7 @@
 import functools
 import discord
 from near.database import get_embeds
+from near.database.get_embeds import ErrorEmbeds
 
 def handle_error(func):
     @functools.wraps(func)
@@ -15,10 +16,12 @@ def handle_error(func):
             elif len(args) > 0 and hasattr(args[0], 'interaction'):
                 interaction = args[0].interaction
             if interaction:
-                embed = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed.set_author(name=f"Near", icon_url=f"https://user-images.githubusercontent.com/36286877/208341567-6706e40f-03b5-4e29-836c-760708f2e619.png")
-                embed.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
+                embd = ErrorEmbeds()
+                # FIX IT
+                embed = discord.Embed(title=embd['error_title'], description=embd['error_description'], color=0x0000ff)
+                embed.set_author(name=embd['common_author_name'], icon_url=embd['common_author_url'])
+                embed.set_thumbnail(url=embd['error_thumbnail'])
+                embed.add_field(name=embd['error_feild_name'], value=f"{e}", inline=False)
                 embed.set_footer(text=f"Requested by {interaction.user.name}")
                 await interaction.response.send_message(embed=embed)
             else:
