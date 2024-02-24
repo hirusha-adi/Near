@@ -38,7 +38,6 @@ class Embeds:
     | fakeinfo_color         | ..... |
     | fakeinfo_thumbnail     | ..... |
     | fakeinfo_title         | ..... |
-    | pleasewait_author_ame  | ..... |
     | pleasewait_author_name | ..... |
     | Pleasewait_author_url  | ..... |
     | pleasewait_color       | ..... |
@@ -55,7 +54,7 @@ class Embeds:
         cursor = connection.cursor()
         sql_query = "INSERT IGNORE INTO embeds (`key`, `value`) VALUES (%s, %s)"
         cursor.execute(sql_query, (key, value))
-        if cursor.rowcount == 1:
+        if cursor.rowcount == 1: # dont re-insert if it already exists
             connection.commit()
             print("Key-value pair created successfully!")
         else:
@@ -109,7 +108,6 @@ def setup():
         
         # pleasewait table
         Embeds.add("pleasewait_author_name", "NeaBot")
-        Embeds.add("pleasewait_author_ame", "NeaBot")
         Embeds.add("Pleasewait_author_url", "https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
         Embeds.add("Pleasewait_title", "Please Wait")
         Embeds.add("Pleasewait_description", "``` Processing Your Request ```")
@@ -151,4 +149,3 @@ def setup():
             connection.close()
             print("MySQL connection is closed.")
         
-setup()
