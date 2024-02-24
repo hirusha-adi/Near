@@ -30,6 +30,7 @@ class Embeds:
     +------------------------+-------+
     | key                    | value |
     +------------------------+-------+
+    | common_color           | ..... |
     | error_color            | ..... |
     | error_description      | ..... |
     | error_feild_name       | ..... |

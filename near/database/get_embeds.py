@@ -1,65 +1,33 @@
-import json
+from .db import Embeds
 
+def PleaseWait():
+    data = {}
+    data["pleasewait_author_name"] = Embeds.get("pleasewait_author_name")
+    data["Pleasewait_author_url"] = Embeds.get("Pleasewait_author_url")
+    data["pleasewait_color"] = Embeds.get("pleasewait_color")
+    data["Pleasewait_description"] = Embeds.get("Pleasewait_description")
+    data["pleasewait_footer"] = Embeds.get("pleasewait_footer")
+    data["pleasewait_thumbnail"] = Embeds.get("pleasewait_thumbnail")
+    data["Pleasewait_title"] = Embeds.get("Pleasewait_title")
+    return data
 
-class PleaseWait:
-    with open("near/database/embeds.json", "r", encoding="utf-8") as file:
-        embed = json.load(file)
+def ErrorEmbeds():
+    data = {}
+    data["error_color"] = Embeds.get("error_color")
+    data["error_description"] = Embeds.get("error_description")
+    data["error_feild_name"] = Embeds.get("error_feild_name")
+    data["error_thumbnail"] = Embeds.get("error_thumbnail")
+    data["error_title"] = Embeds.get("error_title")
+    return data
 
-    TITLE = embed["PleaseWaitEmbed"]["TITLE"]
-    DESCRIPTION = embed["PleaseWaitEmbed"]["DESCRIPTION"]
-    THUMBNAIL = embed["PleaseWaitEmbed"]["THUMBNAIL"]
-    FOOTER = embed["PleaseWaitEmbed"]["FOOTER"]
+def ErrorEmbeds():
+    data = {}
+    data["common_color"] = Embeds.get("common_color")
+    return data
 
-    if embed["PleaseWaitEmbed"]["COLOR"] == "red":
-        COLOR = 0xff0000
-    elif embed["PleaseWaitEmbed"]["COLOR"] == "green":
-        COLOR = 0x00ff00
-    elif embed["PleaseWaitEmbed"]["COLOR"] == "blue":
-        COLOR = 0x0000ff
-
-    AUTHOR_NAME = embed["PleaseWaitEmbed"]["AUTHOR_NAME"]
-    AUTHOR_URL = embed["PleaseWaitEmbed"]["AUTHOR_URL"]
-
-
-class ErrorEmbeds:
-    with open("near/database/embeds.json", "r", encoding="utf-8") as file:
-        embed = json.load(file)
-
-    TITLE = embed["ERROR"]["TITLE"]
-    DESCRIPTION = embed["ERROR"]["DESCRIPTION"]
-    THUMBNAIL = embed["ERROR"]["THUMBNAIL"]
-    FIELD_NAME = embed["ERROR"]["FIELD_NAME"]
-
-    if embed["ERROR"]["COLOR"] == "red":
-        COLOR = 0xff0000
-    elif embed["ERROR"]["COLOR"] == "green":
-        COLOR = 0x00ff00
-    elif embed["ERROR"]["COLOR"] == "blue":
-        COLOR = 0x0000ff
-
-
-class Common:
-    with open("near/database/embeds.json", "r", encoding="utf-8") as file:
-        embed = json.load(file)
-
-    if embed["COMMON"]["COLOR"] == "red":
-        COLOR = 0xff0000
-    elif embed["COMMON"]["COLOR"] == "green":
-        COLOR = 0x00ff00
-    elif embed["COMMON"]["COLOR"] == "blue":
-        COLOR = 0x0000ff
-
-
-class FakeEmbeds:
-    with open("near/database/embeds.json", "r", encoding="utf-8") as file:
-        embed = json.load(file)
-
-    TITLE = embed["FAKEEMBEDS"]["TITLE"]
-    THUMBNAIL = embed["FAKEEMBEDS"]["THUMBNAIL"]
-
-    if embed["FAKEEMBEDS"]["COLOR"] == "red":
-        COLOR = 0xff0000
-    elif embed["FAKEEMBEDS"]["COLOR"] == "green":
-        COLOR = 0x00ff00
-    elif embed["FAKEEMBEDS"]["COLOR"] == "blue":
-        COLOR = 0x0000ff
+def FakeEmbeds():
+    data = {}
+    data["fakeinfo_color"] = Embeds.get("fakeinfo_color")
+    data["fakeinfo_thumbnail"] = Embeds.get("fakeinfo_thumbnail")
+    data["fakeinfo_title"] = Embeds.get("fakeinfo_title")
+    return data
