@@ -81,6 +81,18 @@ class Embeds:
         cursor.execute(sql_query, (new_value, key))
         connection.commit()
         print("Value updated successfully!")
+    
+    @staticmethod
+    @mysql_connection
+    def delete(connection, key):
+        try:
+            cursor = connection.cursor()
+            sql_query = "DELETE FROM embeds WHERE `key` = %s"
+            cursor.execute(sql_query, (key,))
+            connection.commit()
+            print("Key-value pair deleted successfully!")
+        except mysql.connector.Error as error:
+            print("Failed to delete record from MySQL table:", error)
 
 def setup():
     
