@@ -7,7 +7,7 @@ from discord.ext import commands
 
 from near.database import get_embeds
 from near.utils import input_sanitization, errors
-
+from .cmnds.endecoding import Cmnds_EncodeDecode
 
 class EncodeDecode(commands.Cog):
     def __init__(self, client: commands.Bot):
@@ -16,89 +16,17 @@ class EncodeDecode(commands.Cog):
     @app_commands.command(name="b64encode", description="Encode to Base64")
     @app_commands.describe(text="Text to process")
     async def b64encode(self, interaction: discord.Interaction, text: str):
-        try:
-            if input_sanitization.check_input(text):
-                msg = base64.b64encode('{}'.format(text).encode('ascii'))
-                result = str(msg)
-                result = result[2:len(result)-1]
-
-                embed = discord.Embed(title="Encode to Base64", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed.set_thumbnail(
-                    url="https://cdn.discordapp.com/attachments/877796755234783273/879955815602200586/base64-logo-352x200.jpg")
-                embed.add_field(name="Query", value=f"{text}", inline=False)
-                embed.add_field(name="Result", value=f"{result}", inline=True)
-                embed.set_footer(text=f"Requested by {interaction.user.name}")
-                await interaction.response.send_message(embed=embed)
-            else:
-                raise errors.IllegalInput
-
-        except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-            await interaction.response.send_message(embed=embed3, ephemeral=True)
-
+        await Cmnds_EncodeDecode.b64encode(interaction=interaction, text=text)
+        
     @app_commands.command(name="b64decode", description="Decode from Base64")
     @app_commands.describe(text="Text to process")
     async def b64decode(self, interaction: discord.Interaction, text: str):
-
-        try:
-            if input_sanitization.is_base64(text):
-                msg = base64.b64decode('{}'.format(text).encode('ascii'))
-                result = str(msg)
-                result = result[2:len(result)-1]
-                embed = discord.Embed(title="Decode from Base64", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879955815602200586/base64-logo-352x200.jpg")
-                embed.add_field(name="Query", value=f"{text}", inline=False)
-                embed.add_field(name="Result", value=f"{result}", inline=True)
-                embed.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed)
-            else:
-                raise errors.IllegalInput
-
-        except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-            await interaction.response.send_message(embed=embed3)
+        await Cmnds_EncodeDecode.b64decode(interaction=interaction, text=text)
 
     @app_commands.command(name="md5", description="Get MD5 Hash")
     @app_commands.describe(text="Text to process")
     async def md5(self, interaction: discord.Interaction, text: str):
-
-        try:
-            if input_sanitization.check_input(text):
-                msg = hashlib.md5(text.encode())
-                slpake = msg.hexdigest()
-
-                embed = discord.Embed(title="to MD5", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879956672771137546/MD5.png")
-                embed.add_field(name="Query", value=f"{text}", inline=False)
-                embed.add_field(name="Result", value=f"{slpake}", inline=True)
-                embed.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed)
-            else:
-                raise errors.IllegalInput
-
-        except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-            await interaction.response.send_message(embed=embed3)
+        await Cmnds_EncodeDecode.md5(interaction=interaction, text=text)
 
     @app_commands.command(name="sha1", description="Get SHA1 Hash")
     @app_commands.describe(text="Text to process")
