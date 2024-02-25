@@ -42,10 +42,10 @@ class Embeds:
     | pleasewait_author_name | ..... |
     | Pleasewait_author_url  | ..... |
     | pleasewait_color       | ..... |
-    | Pleasewait_description | ..... |
+    | pleasewait_description | ..... |
     | pleasewait_footer      | ..... |
     | pleasewait_thumbnail   | ..... |
-    | Pleasewait_title       | ..... |
+    | pleasewait_title       | ..... |
     +------------------------+-------+
     16 rows in set (0.00 sec)
     """
@@ -109,9 +109,9 @@ def setup():
         
         # pleasewait table
         Embeds.add("pleasewait_author_name", "NeaBot")
-        Embeds.add("Pleasewait_author_url", "https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
+        Embeds.add("pleasewait_author_url", "https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png")
         Embeds.add("Pleasewait_title", "Please Wait")
-        Embeds.add("Pleasewait_description", "``` Processing Your Request ```")
+        Embeds.add("pleasewait_description", "``` Processing Your Request ```")
         Embeds.add("pleasewait_color", "red")
         Embeds.add("pleasewait_thumbnail", "https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif")
         Embeds.add("pleasewait_footer", "Bot created by @hirushaadi")
