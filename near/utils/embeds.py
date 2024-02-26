@@ -27,24 +27,30 @@ def Error(interaction: discord.Interaction, error_message: str) -> discord.Embed
 def Common(
     interaction: discord.Interaction,
     title: str,
-    description: str | list,
-    thumnail: t.Optional[str] = "",
+    description: t.Optional[str | list | bool] = False,
+    thumbnail: t.Optional[str] = "",
 ) -> discord.Embed:
 
     db_common = Embeds.CommonEmbed()
 
-    embed = discord.Embed(
-        title=title,
-        description=(
-            "".join(description) if isinstance(description, list) else description
-        ),
-        color=color(db_common["common_color"]),
-    )
+    if description == False:  # dont add description
+        embed = discord.Embed(
+            title=title,
+            color=color(db_common["common_color"]),
+        )
+    else:  # add description
+        embed = discord.Embed(
+            title=title,
+            description=(
+                "".join(description) if isinstance(description, list) else description
+            ),
+            color=color(db_common["common_color"]),
+        )
     embed.set_author(
         name=db_common["common_author_name"], icon_url=db_common["common_author_url"]
     )
-    if thumnail:
-        embed.set_thumbnail(url=thumnail)
+    if thumbnail:
+        embed.set_thumbnail(url=thumbnail)
     embed.set_footer(text=f"Requested by {interaction.user.name}")
     return embed
 
