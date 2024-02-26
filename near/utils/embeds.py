@@ -18,3 +18,4 @@ def Error(interaction: discord.Interaction, error_message: str) -> discord.Embed
         name=db_error["error_feild_name"], value=f"{error_message}", inline=False
     )
     embed.set_footer(text=f"Requested by {interaction.user.name}")
+    return embed
