@@ -74,22 +74,17 @@ class Embeds:
     def __setup_table_embed():
         """Load `embeds` table with defaults"""
 
-        # pleasewait table
-        Embeds.add("pleasewait_author_name", "NeaBot")
-        Embeds.add(
-            "pleasewait_author_url",
-            "https://cdn.discordapp.com/attachments/881007500588089404/881046764206039070/unknown.png",
-        )
-        Embeds.add("Pleasewait_title", "Please Wait")
+        # pleasewait embed
+        Embeds.add("pleasewait_title", "Please Wait")
         Embeds.add("pleasewait_description", "``` Processing Your Request ```")
-        Embeds.add("pleasewait_color", "red")
+        Embeds.add("pleasewait_color", "ff0000")
         Embeds.add(
             "pleasewait_thumbnail",
             "https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif",
         )
         Embeds.add("pleasewait_footer", "Bot created by @hirushaadi")
 
-        # error
+        # error embed
         Embeds.add("error_title", "NeaBot")
         Embeds.add("error_description", "The command was unable to run successfully!")
         Embeds.add(
@@ -97,7 +92,7 @@ class Embeds:
             "https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png",
         )
         Embeds.add("error_feild_name", "Error:")
-        Embeds.add("error_color", "red")
+        Embeds.add("error_color", "ff0000")
 
         # fake embeds for `near.cogs.fakeinfo`
         Embeds.add("fakeinfo_title", "Fake Information Generator")
@@ -105,10 +100,10 @@ class Embeds:
             "fakeinfo_thumbnail",
             "https://www.nicepng.com/png/detail/214-2146883_4-fake-stamp-vector-fake-news-logo-png.png",
         )
-        Embeds.add("fakeinfo_color", "red")
+        Embeds.add("fakeinfo_color", "ff0000")
 
-        # common
-        Embeds.add("common_color", "red")
+        # common embed
+        Embeds.add("common_color", "ff0000")
 
     @staticmethod
     @postgres_connection
