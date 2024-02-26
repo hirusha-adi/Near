@@ -157,7 +157,7 @@ class Embeds:
 
     @staticmethod
     @postgres_connection
-    def PleaseWait(connection):
+    def PleaseWaitEmbed(connection):
         cursor = connection.cursor()
         sql_query = "SELECT key, value FROM embeds WHERE key LIKE 'pleasewait_%'"
         cursor.execute(sql_query)
@@ -170,7 +170,7 @@ class Embeds:
 
     @staticmethod
     @postgres_connection
-    def ErrorEmbeds(connection):
+    def ErrorEmbed(connection):
         cursor = connection.cursor()
         sql_query = "SELECT key, value FROM embeds WHERE key LIKE 'error_%'"
         cursor.execute(sql_query)
@@ -183,7 +183,7 @@ class Embeds:
 
     @staticmethod
     @postgres_connection
-    def Common(connection):
+    def CommonEmbed(connection):
         cursor = connection.cursor()
         sql_query = "SELECT key, value FROM embeds WHERE key LIKE 'common_%'"
         cursor.execute(sql_query)
@@ -196,7 +196,7 @@ class Embeds:
 
     @staticmethod
     @postgres_connection
-    def FakeEmbeds(connection):
+    def FakeEmbed(connection):
         cursor = connection.cursor()
         sql_query = "SELECT key, value FROM embeds WHERE key LIKE 'fakeinfo_%'"
         cursor.execute(sql_query)
