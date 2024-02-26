@@ -61,12 +61,10 @@ class Embeds:
     @postgres_connection
     def add(connection, key, value):
         cursor = connection.cursor()
-        sql_query = (
-            "INSERT INTO embeds (key, value) VALUES (%s, %s) ON CONFLICT DO NOTHING"
-        )
+        sql_query = "INSERT INTO embeds (key, value) VALUES (%s, %s) ON CONFLICT (key) DO NOTHING"
         cursor.execute(sql_query, (key, value))
-        if cursor.rowcount == 1:  # dont re-insert if it already exists
-            connection.commit()
+        connection.commit()
+        if cursor.rowcount == 1:  # row added
             print("Key-value pair created successfully!")
         else:
             print("Key already exists. No insertion performed.")
@@ -110,14 +108,14 @@ def setup():
     def create_table_embed(cursor):
         """Create table if it does not exist"""
         cursor.execute(
-            "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'embeds')"
+            "SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'embeds')"
         )
         table_exists = cursor.fetchone()[0]
         if not table_exists:
             cursor.execute(
                 "CREATE TABLE embeds (key VARCHAR(255) PRIMARY KEY, value TEXT);"
             )
-            print("Table 'Embeds' created successfully.")
+            print("Table 'embeds' created successfully.")
 
     def setup_table_embed():
         """Load `embeds` table with defaults"""
@@ -178,5 +176,4 @@ def setup():
             print("PostgreSQL connection is closed.")
 
 
-if __name__ == "__main__":
-    print(connect_to_postgres())
+setup()
