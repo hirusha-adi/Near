@@ -140,16 +140,25 @@ class Cmnds_Fun:
 
     @errors.handle_error
     async def advice(interaction: discord.Interaction):
-        r = requests.get("https://www.conversationstarters.com/wyrqlist.php").text
-        soup = BeautifulSoup(r, "html.parser")
-        qa = soup.find(id="qa").text
-        qor = soup.find(id="qor").text
-        qb = soup.find(id="qb").text
+        r = requests.get("https://api.adviceslip.com/advice").json()
+        c = r["slip"]["advice"]
 
         embed = embeds.Common(
             interaction=interaction,
-            title="Would You Rather",
-            description=f"{qa}\n{qor}\n{qb}",
+            title="an Advice",
+            description=f"{c}",
+            thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/880034306720956456/download_1.jfif",
+        )
+        return await interaction.response.send_message(embed=embed)
+    
+    @errors.handle_error
+    async def joke2(interaction: discord.Interaction):
+        r = requests.get("https://some-random-api.ml/joke").json()
+        embed = embeds.Common(
+            interaction=interaction,
+            title="a Joke",
+            description=f"{r['joke']}",
             thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879583873527332904/Would-You-Rather_Questions-680x430.jpg",
         )
         return await interaction.response.send_message(embed=embed)
+    
