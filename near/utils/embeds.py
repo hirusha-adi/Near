@@ -1,3 +1,4 @@
+from datetime import datetime
 import typing as t
 
 import discord
@@ -37,6 +38,7 @@ def Common(
         embed = discord.Embed(
             title=title,
             color=color(db_common["common_color"]),
+            timestamp=datetime.utcnow()
         )
     else:  # add description
         embed = discord.Embed(
@@ -45,6 +47,7 @@ def Common(
                 "".join(description) if isinstance(description, list) else description
             ),
             color=color(db_common["common_color"]),
+            timestamp=datetime.utcnow()
         )
     embed.set_author(
         name=db_common["common_author_name"], icon_url=db_common["common_author_url"]
