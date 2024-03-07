@@ -1,9 +1,5 @@
 import discord
 import requests
-from json import loads as loadjsonstring
-import discord
-import requests
-import aiohttp
 
 from near.utils import embeds
 from near.utils import errors

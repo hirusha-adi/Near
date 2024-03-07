@@ -1,14 +1,7 @@
-import os
-
 import discord
-import requests
 from discord import app_commands
 from discord.ext import commands
-import io
-import aiohttp
-from datetime import datetime as datet
 
-from near.utils import input_sanitization, errors
 from .cmnds.information import Cmnds_Information
 
 

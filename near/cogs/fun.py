@@ -1,10 +1,4 @@
-import random
-from json import loads as loadjsonstring
-
-import aiohttp
 import discord
-import requests
-from bs4 import BeautifulSoup
 from discord import app_commands
 from discord.ext import commands
 
