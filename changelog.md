@@ -1,3 +1,8 @@
+# NearBot v0.7
+
+1. Reduced repeating code (try-except's large error embed)
+2. Introduced a new way to handle embeds, reducing boilerplate code
+
 # NearBot v0.6
 
 1. Add slash command support
