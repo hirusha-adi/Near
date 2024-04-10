@@ -3,6 +3,7 @@ token.txt
 ./token.txt
 .env*
 env/
+env*/
 !.env.example
 .DO_NOT_DELETE.txt
 
