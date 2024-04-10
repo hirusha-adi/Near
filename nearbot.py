@@ -10,16 +10,15 @@ import asyncio
 
 import discord
 from discord.ext import commands
+from near.database import get_main
 
-from database.settings import dbget_mainSettings
 
 # main config
 # ---
-main_config = dbget_mainSettings()
-bot_prefix = main_config['bot_prefix']
-bot_creator_name = main_config['bot_creator_name']
-bot_current_version = main_config['bot_current_version']
-bot_owner_id_or_dev_id = main_config['bot_owner_id_or_dev_id']
+bot_prefix = get_main.BotMainDB.MESSAGE_PREFIX
+bot_creator_name = get_main.BotMainDB.BOT_CREATOR_NAME
+bot_current_version = get_main.BotMainDB.BOT_VERSION
+bot_owner_id_or_dev_id = get_main.BotMainDB.DEV_ID
 
 client = commands.Bot(command_prefix=bot_prefix, intents=discord.Intents.all())
 
