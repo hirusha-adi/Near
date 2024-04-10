@@ -5,7 +5,6 @@ import discord
 from discord.ext import commands
 
 from near.database import get_main
-from near.web.keep_alive import keep_alive
 
 bot_prefix = get_main.BotMainDB.MESSAGE_PREFIX
 bot_creator_name = get_main.BotMainDB.BOT_CREATOR_NAME
@@ -156,5 +155,4 @@ async def main():
         await client.start(token=token, reconnect=True)
 
 
-keep_alive()
 asyncio.run(main())
