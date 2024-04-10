@@ -36,3 +36,10 @@ def is_instagram_username(input_str):
 def password_check(input_str):
     # change this later
     return check_input(input_str)
+
+
+def color(hex: str):
+    try:
+        return int(hex, 16)
+    except ValueError:
+        return 0xFF0000  # return default color red
