@@ -15,7 +15,6 @@ class Crypto(commands.Cog):
     @app_commands.command(name="btc", description="Get the current Bitcoin Rates")
     async def btc(self, interaction: discord.Interaction):
         try:
-            raise ValueError("balls balls 123")
             r = requests.get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,EUR')
             r = r.json()
 
@@ -51,12 +50,7 @@ class Crypto(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3, ephemeral=True)
+            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="xmr", description="Get the current Monero Rates")
     async def xmr(self, interaction: discord.Interaction):
@@ -76,12 +70,7 @@ class Crypto(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3, ephemeral=True)
+            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="doge", description="Get the current Doge Coin Rates")
     async def doge(self, interaction: discord.Interaction):
@@ -101,12 +90,7 @@ class Crypto(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3)
+            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="xrp", description="Get the current XRP Rates")
     async def xrp(self, interaction: discord.Interaction):
@@ -126,12 +110,7 @@ class Crypto(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3)
+            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="rvn", description="Get the current Raven Coin Rates")
     async def rvn(self, interaction: discord.Interaction):
@@ -151,12 +130,7 @@ class Crypto(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3)
+            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
 async def setup(client: commands.Bot):
