@@ -2,6 +2,7 @@
 
 1. Reduced repeating code (try-except's large error embed)
 2. Introduced a new way to handle embeds, reducing boilerplate code
+3. Send requests asynchronously instead of `requests.get` like a skidder master
 
 # NearBot v0.6
 
