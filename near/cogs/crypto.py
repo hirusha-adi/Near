@@ -5,6 +5,7 @@ from discord import app_commands
 from discord.ext import commands
 
 from near.database import get_embeds
+from near.utils import embeds
 
 
 class Crypto(commands.Cog):
@@ -14,12 +15,13 @@ class Crypto(commands.Cog):
     @app_commands.command(name="btc", description="Get the current Bitcoin Rates")
     async def btc(self, interaction: discord.Interaction):
         try:
+            raise ValueError("balls balls 123")
             r = requests.get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,EUR')
             r = r.json()
 
             usd = r['USD']
             eur = r['EUR']
-
+            
             embed = discord.Embed(title="Bitcoin", color=get_embeds.Common.COLOR)
             embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
             embed.set_thumbnail(url="https://cdn.pixabay.com/photo/2013/12/08/12/12/bitcoin-225079_960_720.png")
@@ -29,13 +31,8 @@ class Crypto(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3, ephemeral=True)
-
+            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            
     @app_commands.command(name="eth", description="Get the current Etherium Rates")
     async def eth(self, interaction: discord.Interaction):
         try:
