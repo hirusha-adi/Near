@@ -1,21 +1,27 @@
+# load .env before everything
+# ---
+from dotenv import load_dotenv
+load_dotenv()
+
+# imports
+# ---
 import os
 import asyncio
 
 import discord
 from discord.ext import commands
 
-from near.database import get_main
-from database.general import dbget_mainSettings
+from database.settings import dbget_mainSettings
 
+# main config
+# ---
 main_config = dbget_mainSettings()
-print(main_config)
-bot_prefix = get_main.BotMainDB.MESSAGE_PREFIX
-bot_creator_name = get_main.BotMainDB.BOT_CREATOR_NAME
-bot_current_version = get_main.BotMainDB.BOT_VERSION
-bot_owner_id_or_dev_id = get_main.BotMainDB.DEV_ID
+bot_prefix = main_config['bot_prefix']
+bot_creator_name = main_config['bot_creator_name']
+bot_current_version = main_config['bot_current_version']
+bot_owner_id_or_dev_id = main_config['bot_owner_id_or_dev_id']
 
 client = commands.Bot(command_prefix=bot_prefix, intents=discord.Intents.all())
-
 
 @client.tree.command(name="loadex", description="Load a Cog by its Extension")
 async def loadex(interaction: discord.Interaction, extension: str):
