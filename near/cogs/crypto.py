@@ -11,7 +11,7 @@ from near.utils import embeds
 class Crypto(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
-
+        
     @app_commands.command(name="btc", description="Get the current Bitcoin Rates")
     async def btc(self, interaction: discord.Interaction):
         try:
@@ -118,7 +118,6 @@ class Crypto(commands.Cog):
             c = requests.get('https://www.coindesk.com/price/ravencoin/')
             soup = BeautifulSoup(c.content, "html.parser")
             raven_coin_value = soup.find_all("span", {"class": "currency-pricestyles__Price-sc-1rux8hj-0 jxzQXk"})[0].text
-
             change_percentage = soup.find_all("h6", {"class": "typography__StyledTypography-owin6q-0 hZxwDe"})[0].text
 
             embed = discord.Embed(title="Ravencoin", color=get_embeds.Common.COLOR)
