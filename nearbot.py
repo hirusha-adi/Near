@@ -5,7 +5,10 @@ import discord
 from discord.ext import commands
 
 from near.database import get_main
+from database.general import dbget_mainSettings
 
+main_config = dbget_mainSettings()
+print(main_config)
 bot_prefix = get_main.BotMainDB.MESSAGE_PREFIX
 bot_creator_name = get_main.BotMainDB.BOT_CREATOR_NAME
 bot_current_version = get_main.BotMainDB.BOT_VERSION
