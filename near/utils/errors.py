@@ -1,3 +1,7 @@
+def handle_command_errors(func):
+    # TO BE COMPLETED LATER
+    ...
+
 class IllegalInput(Exception):
     def __init__(self, message: str = None):
         self.message = message
