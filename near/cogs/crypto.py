@@ -1,10 +1,9 @@
+import aiohttp
 import discord
-import requests, aiohttp
 from bs4 import BeautifulSoup
 from discord import app_commands
 from discord.ext import commands
 
-from near.database import get_embeds
 from near.utils import embeds
 
 
@@ -117,8 +116,7 @@ class Crypto(commands.Cog):
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://www.coindesk.com/price/ravencoin/') as response:
-                    c = requests.get()
-                    soup = BeautifulSoup(c.content, "html.parser")
+                    soup = BeautifulSoup(response.content, "html.parser")
                     raven_coin_value = soup.find_all("span", {"class": "currency-pricestyles__Price-sc-1rux8hj-0 jxzQXk"})[0].text
                     change_percentage = soup.find_all("h6", {"class": "typography__StyledTypography-owin6q-0 hZxwDe"})[0].text
             
