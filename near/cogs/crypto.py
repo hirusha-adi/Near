@@ -1,6 +1,7 @@
 import aiohttp
-import discord
 from bs4 import BeautifulSoup
+
+import discord
 from discord import app_commands
 from discord.ext import commands
 
