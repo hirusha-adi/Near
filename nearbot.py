@@ -152,6 +152,7 @@ async def on_message(message: discord.message.Message):
     await client.process_commands(message)
 
 token = os.getenv("BOT_TOKEN")
+token = None
 if not token:
     with open("token.txt", "r", encoding="utf-8") as tokenfile:
         token = tokenfile.read()
