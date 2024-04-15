@@ -14,46 +14,45 @@ from near.utils import embeds
 class Fun(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
+        self.headers_json = {"Accept": "application/json"}
 
     @app_commands.command(name="inspire", description="Get an inspirational quote")
     async def inspire(self, interaction: discord.Interaction):
         try:
-            r = requests.get("https://zenquotes.io/api/random")
-            json_data = loadjsonstring(r.text)
-            quote = json_data[0]["q"] + " - " + json_data[0]["a"]
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://zenquotes.io/api/random") as response:
+                    json_data = await response.json()
+                    quote = json_data[0]["q"] + " - " + json_data[0]["a"]
 
-            embed = embeds.Common(
-                client=self.client,
-                interaction=interaction,
-                title="Inspirational isn't it?",
-                description=str(quote),
-                thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879382016041291828/NicePng_light-streak-png_395357.png",
-            )
-            return await interaction.response.send_message(embed=embed)
+                    embed = embeds.Common(
+                        client=self.client,
+                        interaction=interaction,
+                        title="Inspirational isn't it?",
+                        description=str(quote),
+                        thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879382016041291828/NicePng_light-streak-png_395357.png",
+                    )
+                    await interaction.response.send_message(embed=embed)
         except Exception as e:
             await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="bored", description="Bored? What to do now?")
     async def bored(self, interaction: discord.Interaction):
         try:
-            r = requests.get("http://www.boredapi.com/api/activity/")
-            data = r.json()
+            async with aiohttp.ClientSession() as session:
+                async with session.get("http://www.boredapi.com/api/activity/") as response:
+                    data = await response.json()
 
-            embed = embeds.Common(
-                client=self.client,
-                interaction=interaction,
-                title="Heres an Activity for you",
-                description=f"**{data['activity']}**",
-                thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879382016041291828/NicePng_light-streak-png_395357.png",
-            )
-            embed.add_field(name="Type", value=f"{data['type']}", inline=True)
-            embed.add_field(
-                name="Participants", value=f"{data['participants']}", inline=True
-            )
-            embed.add_field(
-                name="Accessibility", value=f"{data['accessibility']}", inline=True
-            )
-            return await interaction.response.send_message(embed=embed)
+                    embed = embeds.Common(
+                        client=self.client,
+                        interaction=interaction,
+                        title="Here's an Activity for you",
+                        description=f"**{data['activity']}**",
+                        thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879382016041291828/NicePng_light-streak-png_395357.png",
+                    )
+                    embed.add_field(name="Type", value=f"{data['type']}", inline=True)
+                    embed.add_field(name="Participants", value=f"{data['participants']}", inline=True)
+                    embed.add_field(name="Accessibility", value=f"{data['accessibility']}", inline=True)
+                    await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
@@ -61,24 +60,23 @@ class Fun(commands.Cog):
     @app_commands.command(name="meme", description="Get a random meme")
     async def meme(self, interaction: discord.Interaction):
         try:
-            url = "https://www.memedroid.com/memes/tag/programming"
-            response = requests.get(url)
-            soup = BeautifulSoup(response.content, "html.parser")
-            divs = soup.find_all("div", class_="item-aux-container")
-            imgs = []
-            for div in divs:
-                img = div.find("img")["src"]
-                if img.startswith("http") and img.endswith("jpeg"):
-                    imgs.append(img)
-            meme = random.choice(imgs)
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://www.memedroid.com/memes/tag/programming") as response:
+                    html_content = await response.text()
 
-            embed = embeds.Common(
-                client=self.client,
-                interaction=interaction,
-                title="a Meme",
-            )
-            embed.set_image(url=str(meme))
-            return await interaction.response.send_message(embed=embed)
+                    soup = BeautifulSoup(html_content, "html.parser")
+                    divs = soup.find_all("div", class_="item-aux-container")
+                    imgs = [div.find("img")["src"] for div in divs if div.find("img")["src"].startswith("http") and div.find("img")["src"].endswith("jpeg")]
+                    
+                    meme_url = random.choice(imgs)
+
+                    embed = embeds.Common(
+                        client=self.client,
+                        interaction=interaction,
+                        title="A Programming Meme",
+                    )
+                    embed.set_image(url=str(meme_url))
+                    await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
@@ -86,12 +84,9 @@ class Fun(commands.Cog):
     @app_commands.command(name="dadjoke", description="Get a random dad joke")
     async def dadjoke(self, interaction: discord.Interaction):
         try:
-            headers = {"Accept": "application/json"}
             async with aiohttp.ClientSession() as session:
-                async with session.get(
-                    "https://icanhazdadjoke.com", headers=headers
-                ) as req:
-                    r = await req.json()
+                async with session.get("https://icanhazdadjoke.com", headers=self.headers_json) as response:
+                    r = await response.json()
 
             embed = embeds.Common(
                 client=self.client,
@@ -108,8 +103,9 @@ class Fun(commands.Cog):
     @app_commands.command(name="joke", description="Get a random joke")
     async def joke(self, interaction: discord.Interaction):
         try:
-            r = requests.get("https://v2.jokeapi.dev/joke/Any")
-            c = r.json()
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://v2.jokeapi.dev/joke/Any") as r:
+                    c = await r.json()
 
             try:
                 jokeit = c["joke"]
@@ -136,8 +132,11 @@ class Fun(commands.Cog):
     @app_commands.command(name="wyr", description="Would You Rather...?")
     async def wyr(self, interaction: discord.Interaction):
         try:
-            r = requests.get("https://www.conversationstarters.com/wyrqlist.php").text
-            soup = BeautifulSoup(r, "html.parser")
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://www.conversationstarters.com/wyrqlist.php", headers=self.headers_json) as response:
+                    html_content = await response.text()
+
+            soup = BeautifulSoup(html_content, "html.parser")
             qa = soup.find(id="qa").text
             qor = soup.find(id="qor").text
             qb = soup.find(id="qb").text
@@ -149,7 +148,7 @@ class Fun(commands.Cog):
                 description=f"{qa}\n{qor}\n{qb}",
                 thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879583873527332904/Would-You-Rather_Questions-680x430.jpg",
             )
-            return await interaction.response.send_message(embed=embed)
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
@@ -157,17 +156,20 @@ class Fun(commands.Cog):
     @app_commands.command(name="advice", description="Get advice for your life")
     async def advice(self, interaction: discord.Interaction):
         try:
-            r = requests.get("https://api.adviceslip.com/advice").json()
-            c = r["slip"]["advice"]
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://api.adviceslip.com/advice", headers=self.headers_json) as response:
+                    data = await response.json()
+
+            advice_text = data["slip"]["advice"]
 
             embed = embeds.Common(
                 client=self.client,
                 interaction=interaction,
-                title="an Advice",
-                description=f"{c}",
+                title="An Advice",
+                description=f"{advice_text}",
                 thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/880034306720956456/download_1.jfif",
             )
-            return await interaction.response.send_message(embed=embed)
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
@@ -175,15 +177,20 @@ class Fun(commands.Cog):
     @app_commands.command(name="joke2", description="Get a Joke, but from Another API")
     async def joke2(self, interaction: discord.Interaction):
         try:
-            r = requests.get("https://some-random-api.ml/joke").json()
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://some-random-api.ml/joke") as response:
+                    data = await response.json()
+
+            joke_text = data["joke"]
+
             embed = embeds.Common(
                 client=self.client,
                 interaction=interaction,
-                title="a Joke",
-                description=f"{r['joke']}",
+                title="A Joke",
+                description=f"{joke_text}",
                 thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879583873527332904/Would-You-Rather_Questions-680x430.jpg",
             )
-            return await interaction.response.send_message(embed=embed)
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
