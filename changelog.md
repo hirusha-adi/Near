@@ -4,6 +4,8 @@
 2. Introduced a new way to handle embeds, reducing boilerplate code
 3. Send requests asynchronously instead of `requests.get` like a skidder master
 4. Give a uniform look to the error embed
+5. Removed `bored` command due to [API](http://www.boredapi.com/api/activity) being down.
+6. Removed `joke2`. Has only one `joke` command now. it depends on [this api](https://some-random-api.ml/joke)
 
 # NearBot v0.6
 
