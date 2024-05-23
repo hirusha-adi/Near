@@ -8,10 +8,9 @@ from near.database import get_embeds
 
 
 def Error(client: commands.Bot, interaction: discord.Interaction, error_message: str) -> discord.Embed:
-    embed = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR, timestamp=datetime.utcnow())
+    embed = discord.Embed(title=f"🔴 ERROR 🔴", description=f"```\n{error_message}```", color=get_embeds.ErrorEmbeds.COLOR, timestamp=datetime.utcnow())
     embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
     embed.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-    embed.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{error_message}", inline=False)
     embed.set_footer(text=f"Requested by {interaction.user.name}")
     return embed
 
