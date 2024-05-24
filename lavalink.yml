@@ -9,7 +9,7 @@ lavalink:
   server:
     password: "youshallnotpass"
     sources:
-      youtube: true
+      youtube: false  # do not enable this. 
       bandcamp: true
       soundcloud: true
       twitch: true
@@ -25,6 +25,9 @@ lavalink:
     youtubeConfig: # Required for avoiding all age restrictions by YouTube, some restricted videos still can be played without.
       email: "" # Email of Google account
       password: "" # Password of Google account
+  plugins:
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.3.0" # make sure always update this to the latest version
+      snapshot: false
 
 metrics:
   prometheus:
