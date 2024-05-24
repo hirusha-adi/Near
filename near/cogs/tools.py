@@ -12,7 +12,6 @@ from discord.ext import commands
 from zxcvbn import zxcvbn
 
 from near.utils import embeds
-from near.database import get_embeds
 from near.utils import input_sanitization, errors
 
 
