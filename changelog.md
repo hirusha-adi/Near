@@ -3,6 +3,18 @@
 1. Reduced repeating code (try-except's large error embed)
 2. Introduced a new way to handle embeds, reducing boilerplate code
 3. Send requests asynchronously instead of `requests.get` like a skidder master
+4. Give a uniform look to the error embed
+5. Removed `bored` command due to [API](http://www.boredapi.com/api/activity) being down.
+6. Removed `joke2`. Has only one `joke` command now. it depends on [this api](https://some-random-api.ml/joke)
+7. Improved the code of the `/help` function. Made it easily customizable and extendable
+8. Remove the country info command (`/countryinfo`). It's API is a joke.
+9. Remove covid info command (`/covid`). Feels outdated in  2024. lol.
+10. Fixed broken embeds in `/passwordchk` command and made the code much better.
+11. Fixed the broken `/lyrics` command
+12. Update dependencies:
+    - discord.py: `v2.3.2`
+    - pomice: `v2.9.0`
+    - lavalink: `v4.0.5` 
 
 # NearBot v0.6
 
@@ -12,6 +24,7 @@
 4. NOTE: Slash commands work except for music related commands <- This will be fixed in a future update
 5. Made the code stable and better
 6. Dockerized everything. Thank you `Rex#3572`
+
 
 # NearBot v0.5
 
