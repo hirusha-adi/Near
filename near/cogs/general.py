@@ -74,11 +74,9 @@ class Select(discord.ui.Select):
             ],
             "Fun": [
                 ("/inspire", "List out all the fake information commands - Theres a LOT!"),
-                ("/bored", "Bored? What to do now?"),
                 ("/meme", "Get a random meme"),
                 ("/dadjoke", "Get a random dad joke"),
                 ("/joke", "Get a random joke"),
-                ("/joke2", "Get a Joke, but from Another API"),
                 ("/wyr", "Would You Rather...?"),
                 ("/advice", "Get advice for your life")
             ],
@@ -89,8 +87,6 @@ class Select(discord.ui.Select):
             ],
             "Information Gathering": [
                 ("/ipinfo", "IP Address Lookup"),
-                ("/countryinfo", "Country Information Lookup"),
-                ("/covid", "Global Covid-19 Statistics"),
                 ("/avatar", "Get the User Avatar"),
                 ("/serverinfo", "Get Information about the Server"),
                 ("/userinfo", "User to get the Information of. Defaults to the Author")
