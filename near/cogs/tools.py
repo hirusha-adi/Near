@@ -3,6 +3,9 @@ import secrets
 import string
 import shutil
 import glob
+import textwrap
+import urllib
+import aiohttp
 
 import discord
 import instaloader
@@ -168,6 +171,50 @@ class Tools(commands.Cog):
         except Exception as e:
             await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
+    @app_commands.command(name="lyrics", description="Search the Lyrics of any Song")
+    @app_commands.describe(query="Name of the Song")
+    async def lyrics(self, interaction: discord.Interaction, query: str = None):
+        # Another Option: https://github.com/elmoiv/azapi
+        try:
+            if input_sanitization.check_input(query):
+                if not query:
+                    embed = discord.Embed(title="No search argument!", description="You havent entered anything, so i couldnt find lyrics!", color=get_embeds.Common.COLOR)
+                    embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
+                    embed.set_footer(text=f"Requested by {interaction.user.name}")
+                    return await interaction.response.send_message(embed=embed)
+
+                song = urllib.parse.quote(query)
+
+                async with aiohttp.ClientSession() as lyricsSession:
+                    async with lyricsSession.get(f'https://some-random-api.ml/lyrics?title={song}') as jsondata:
+                        if not 300 > jsondata.status >= 200:
+                            return await interaction.response.send_message(f'Recieved poor status code of {jsondata.status}')
+                        lyricsData = await jsondata.json()
+
+                error = lyricsData.get('error')
+                if error:
+                    return await interaction.response.send_message(f'Recieved unexpected error: {error}')
+
+                songLyrics = lyricsData['lyrics']
+                songArtist = lyricsData['author']
+                songTitle = lyricsData['title']
+                songThumbnail = lyricsData['thumbnail']['genius']
+
+                for chunk in textwrap.wrap(songLyrics, 4096, replace_whitespace=False):
+                    embed = discord.Embed(
+                        title=f'{songTitle} - {songArtist}',
+                        description=chunk,
+                        color=get_embeds.Common.COLOR
+                    )
+                    embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
+                    embed.set_thumbnail(url=songThumbnail)
+                    embed.set_footer(text=f"Requested by {interaction.user.name}")
+                    await interaction.response.send_message(embed=embed)
+            else:
+                raise errors.IllegalInput
+
+        except Exception as e:
+            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 async def setup(client: commands.Bot):
     await client.add_cog(Tools(client))

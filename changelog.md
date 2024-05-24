@@ -9,6 +9,8 @@
 7. Improved the code of the `/help` function. Made it easily customizable and extendable
 8. Remove the country info command (`/countryinfo`). It's API is a joke.
 9. Remove covid info command (`/covid`). Feels outdated in  2024. lol.
+10. Fixed broken embeds in `/passwordchk` command and made the code much better.
+11. Fixed the broken `/lyrics` command
 
 # NearBot v0.6
 
@@ -18,8 +20,7 @@
 4. NOTE: Slash commands work except for music related commands <- This will be fixed in a future update
 5. Made the code stable and better
 6. Dockerized everything. Thank you `Rex#3572`
-7. Fixed broken embeds in `/passwordchk` command and made the code much better.
-8. Removed the `/lyrics` command due to unmaintained API. Will come.
+
 
 # NearBot v0.5
 

@@ -93,7 +93,7 @@ class Select(discord.ui.Select):
                 ("/userinfo", "User to get the Information of. Defaults to the Author")
             ],
             "Music": [
-                ("--lyrics", "Search the Lyrics of any Song"),
+                ("/lyrics", "Search the Lyrics of any Song"),
                 ("--join", "Join a Voice Channel"),
                 ("--leave", "Leave the Voice Channel"),
                 ("--play", "Play the song"),
