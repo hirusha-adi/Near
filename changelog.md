@@ -6,6 +6,7 @@
 4. Give a uniform look to the error embed
 5. Removed `bored` command due to [API](http://www.boredapi.com/api/activity) being down.
 6. Removed `joke2`. Has only one `joke` command now. it depends on [this api](https://some-random-api.ml/joke)
+7. Improved the code of the `/help` function. Made it easily customizable and extendable
 
 # NearBot v0.6
 
