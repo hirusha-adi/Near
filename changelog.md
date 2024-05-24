@@ -11,6 +11,10 @@
 9. Remove covid info command (`/covid`). Feels outdated in  2024. lol.
 10. Fixed broken embeds in `/passwordchk` command and made the code much better.
 11. Fixed the broken `/lyrics` command
+12. Update dependencies:
+    - discord.py: `v2.3.2`
+    - pomice: `v2.9.0`
+    - lavalink: `v4.0.5` 
 
 # NearBot v0.6
 
