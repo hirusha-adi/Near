@@ -15,7 +15,8 @@ from discord.ext import commands
 from zxcvbn import zxcvbn
 
 from near.utils import embeds
-from near.utils import input_sanitization, errors
+from near.utils import errors
+from near.utils import input_sanitization
 
 
 class Tools(commands.Cog):
