@@ -772,7 +772,7 @@ class Music(commands.Cog):
         # If you do not pass in valid Spotify credentials, Spotify querying will not work
         await self.pomice.create_node(
             bot=self.bot,
-            host=self.bot.lavalink_host,
+            host="127.0.0.1",
             port=2333,
             password="youshallnotpass",
             identifier="MAIN",
