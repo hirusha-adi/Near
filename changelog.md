@@ -7,6 +7,8 @@
 5. Removed `bored` command due to [API](http://www.boredapi.com/api/activity) being down.
 6. Removed `joke2`. Has only one `joke` command now. it depends on [this api](https://some-random-api.ml/joke)
 7. Improved the code of the `/help` function. Made it easily customizable and extendable
+8. Remove the country info command (`/countryinfo`). It's API is a joke.
+9. Remove covid info command (`/covid`). Feels outdated in  2024. lol.
 
 # NearBot v0.6
 
