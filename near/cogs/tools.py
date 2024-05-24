@@ -173,20 +173,14 @@ class Tools(commands.Cog):
 
     @app_commands.command(name="lyrics", description="Search the Lyrics of any Song")
     @app_commands.describe(query="Name of the Song")
-    async def lyrics(self, interaction: discord.Interaction, query: str = None):
-        # Another Option: https://github.com/elmoiv/azapi
+    async def lyrics(self, interaction: discord.Interaction, query: str):
         try:
             if input_sanitization.check_input(query):
-                if not query:
-                    embed = discord.Embed(title="No search argument!", description="You havent entered anything, so i couldnt find lyrics!", color=get_embeds.Common.COLOR)
-                    embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                    embed.set_footer(text=f"Requested by {interaction.user.name}")
-                    return await interaction.response.send_message(embed=embed)
 
                 song = urllib.parse.quote(query)
 
                 async with aiohttp.ClientSession() as lyricsSession:
-                    async with lyricsSession.get(f'https://some-random-api.ml/lyrics?title={song}') as jsondata:
+                    async with lyricsSession.get(f'https://some-random-api.com/others/lyrics?title={song}') as jsondata:
                         if not 300 > jsondata.status >= 200:
                             return await interaction.response.send_message(f'Recieved poor status code of {jsondata.status}')
                         lyricsData = await jsondata.json()
@@ -201,14 +195,14 @@ class Tools(commands.Cog):
                 songThumbnail = lyricsData['thumbnail']['genius']
 
                 for chunk in textwrap.wrap(songLyrics, 4096, replace_whitespace=False):
-                    embed = discord.Embed(
+                    embed = embeds.Common(
+                        client=self.client,
+                        interaction=interaction,
                         title=f'{songTitle} - {songArtist}',
                         description=chunk,
-                        color=get_embeds.Common.COLOR
+                        thumbnail="https://iconape.com/wp-content/png_logo_vector/password.png"
                     )
-                    embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
                     embed.set_thumbnail(url=songThumbnail)
-                    embed.set_footer(text=f"Requested by {interaction.user.name}")
                     await interaction.response.send_message(embed=embed)
             else:
                 raise errors.IllegalInput
