@@ -12,7 +12,7 @@ def setup_base():
 def setup_lavalink():
     os.chdir("/nearbot/lavalink")
     os.system(
-        'wget "https://github.com/freyacodes/Lavalink/releases/download/3.7.4/Lavalink.jar"')
+        'wget "https://github.com/lavalink-devs/Lavalink/releases/download/4.0.5/Lavalink.jar"')
     os.system(
         "curl 'https://raw.githubusercontent.com/hirusha-adi/Near/main/lavalink.yml' >> 'application.yml'")
     os.system("java -jar ./Lavalink.jar &")
