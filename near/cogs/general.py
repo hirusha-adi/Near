@@ -1,7 +1,8 @@
+import os
 from datetime import timedelta as dttimedelta
 from platform import python_version as cur_python_version
 from time import time as nowtime
-import os
+
 import discord
 from discord import app_commands
 from discord.ext import commands
