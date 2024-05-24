@@ -163,8 +163,7 @@ class General(commands.Cog):
             embed = embeds.Common(
                 client=self.client,
                 interaction=interaction,
-                title=":timer:  Response Time  :timer:",
-                description=f"**{round(self.client.latency * 1000)} ms**",
+                title=f":timer:  Response Time: {round(self.client.latency * 1000)} ms",
                 thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png"
             )
             await interaction.response.send_message(embed=embed)
@@ -178,8 +177,13 @@ class General(commands.Cog):
             current_time = nowtime()
             difference = int(round(current_time - self.start_time))
             text = str(dttimedelta(seconds=difference))
-            embed = discord.Embed(color=get_embeds.Common.COLOR, title=f":clock: Uptime of {self.client.user.name} :clock:", description=f'**{text}**')
-            embed.set_footer(text=f"Requested by {interaction.user.name}")
+            
+            embed = embeds.Common(
+                client=self.client,
+                interaction=interaction,
+                title=f":clock: Uptime: {text}",
+                thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png"
+            )
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
@@ -198,10 +202,13 @@ class General(commands.Cog):
 
                 msgtxt = "message" if amount == "1" else "messages"
 
-                embed = discord.Embed(title="Success!", color=get_embeds.Common.COLOR)
-                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
+                embed = embeds.Common(
+                    client=self.client,
+                    interaction=interaction,
+                    title=f"Success!",
+                    thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png"
+                )
                 embed.add_field(name="Action", value=f"Deleted {amount} {msgtxt} sent by {self.client.user.name}!", inline=False)
-                embed.set_footer(text=f"Requested by {interaction.user.name}")
                 await interaction.response.send_message(embed=embed, ephemeral=True)
 
             else:
