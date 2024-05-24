@@ -12,6 +12,7 @@ from discord import app_commands
 from discord.ext import commands
 from zxcvbn import zxcvbn
 
+from near.utils import embeds
 from near.database import get_embeds
 from near.utils import input_sanitization, errors
 
@@ -25,27 +26,27 @@ class Tools(commands.Cog):
 
     @app_commands.command(name="lyrics", description="Search the Lyrics of any Song")
     @app_commands.describe(query="Name of the Song")
-    async def lyrics(self, intercation: discord.Interaction, query: str = None):
+    async def lyrics(self, interaction: discord.Interaction, query: str = None):
         # Another Option: https://github.com/elmoiv/azapi
         try:
             if input_sanitization.check_input(query):
                 if not query:
                     embed = discord.Embed(title="No search argument!", description="You havent entered anything, so i couldnt find lyrics!", color=get_embeds.Common.COLOR)
                     embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                    embed.set_footer(text=f"Requested by {intercation.user.name}")
-                    return await intercation.response.send_message(embed=embed)
+                    embed.set_footer(text=f"Requested by {interaction.user.name}")
+                    return await interaction.response.send_message(embed=embed)
 
                 song = urllib.parse.quote(query)
 
                 async with aiohttp.ClientSession() as lyricsSession:
                     async with lyricsSession.get(f'https://some-random-api.ml/lyrics?title={song}') as jsondata:
                         if not 300 > jsondata.status >= 200:
-                            return await intercation.response.send_message(f'Recieved poor status code of {jsondata.status}')
+                            return await interaction.response.send_message(f'Recieved poor status code of {jsondata.status}')
                         lyricsData = await jsondata.json()
 
                 error = lyricsData.get('error')
                 if error:
-                    return await intercation.response.send_message(f'Recieved unexpected error: {error}')
+                    return await interaction.response.send_message(f'Recieved unexpected error: {error}')
 
                 songLyrics = lyricsData['lyrics']
                 songArtist = lyricsData['author']
@@ -60,18 +61,13 @@ class Tools(commands.Cog):
                     )
                     embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
                     embed.set_thumbnail(url=songThumbnail)
-                    embed.set_footer(text=f"Requested by {intercation.user.name}")
-                    await intercation.response.send_message(embed=embed)
+                    embed.set_footer(text=f"Requested by {interaction.user.name}")
+                    await interaction.response.send_message(embed=embed)
             else:
                 raise errors.IllegalInput
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name="Error:", value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {intercation.user.name}")
-            await intercation.response.send_message(embed=embed3)
+            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name='passwordgen', description="Generate a very secure and unique password")
     @app_commands.describe(length="Length of the Password to generate.")
@@ -100,20 +96,16 @@ class Tools(commands.Cog):
                 await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3)
+            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="insta", description="Grab the Instagram Profile Picture of a Profile")
     @app_commands.describe(username="Instagram Profile's Username")
     async def insta(self, interaction: discord.Interaction, username: str):
         try:
-            if input_sanitization.is_instagram_username(username):
+            # if input_sanitization.is_instagram_username(username):
                 igpfp = instaloader.Instaloader()
                 igpfp.download_profile(username, profile_pic_only=True)
+                
                 os.chdir(f'{username}')
                 try:
                     os.system("mv *.jpg ..")
@@ -141,11 +133,11 @@ class Tools(commands.Cog):
                     os.system(f"rm igtemp.jpg")
                 except:
                     os.remove(f'{username}')
-            else:
-                raise errors.IllegalInput
+            # else:
+                # raise errors.IllegalInput
 
         except Exception as e:
-            await interaction.response.send_message(f"Error: {e}")
+            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="bin", description="Create a PrivateBin from a Text")
     @app_commands.describe(text="Text to be included in the PrivateBin")
@@ -167,12 +159,7 @@ class Tools(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3, ephemeral=True)
+            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="passwordcheck", description="Password Strength Check and Profiler")
     @app_commands.describe(password="Password to analyze")
@@ -244,12 +231,7 @@ class Tools(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name="Error:", value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-            await interaction.response.send_message(embed=embed3)
+            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
 async def setup(client: commands.Bot):
