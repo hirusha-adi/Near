@@ -1,4 +1,4 @@
-# Near - A Perfect Discord Bot
+# Near - Discord bot of TeamSDS
 
 <p align="center">
     <img src="https://user-images.githubusercontent.com/36286877/208341567-6706e40f-03b5-4e29-836c-760708f2e619.png" alt="Lisence">
@@ -11,6 +11,7 @@
 # Docker
 
 ```bash
+docker-compose build # build the image 
 docker-compose up -d # start application
 docker-compose down  # shut down application
 docker-compose logs  # view application logs
@@ -19,13 +20,43 @@ docker-compose logs  # view application logs
 # Debian
 
 ```bash
+# Update repositories and update all pakcges
+# ---
+sudo apt update && sudo apt upgrade 
+
 # Install dependencies
-sudo apt update && sudo apt upgrade && sudo apt install python3 wget -y
+# ---
+sudo apt install python3 python3-pip wget htop curl git ffmpeg default-jdk nano -y
 
-# Download the script
-wget  "https://raw.githubusercontent.com/hirusha-adi/Near/main/setup.py"
+# Create required directories
+# ---
+mkdir ~/nearbot
+mkdir ~/nearbot/lavalink
 
-# Run the script
-python3 setup.py 
+# Setup Lavalink
+# ---
+cd ~/nearbot/lavalink
+wget "https://github.com/lavalink-devs/Lavalink/releases/download/4.0.5/Lavalink.jar"
+curl 'https://raw.githubusercontent.com/hirusha-adi/Near/main/lavalink.yml' >> 'application.yml'
+java -jar ./Lavalink.jar    # run normally
+java -jar ./Lavalink.jar &  # run in background
 
+# Setup Nearbot
+# ---
+cd ~/nearbot
+git clone https://github.com/hirusha-adi/Near
+cd Near
+mv .env.example .env
+nano .env       # fill the environment file
+# optionally, create a venv and source it before doing the below step
+python3 -m pip install -r requirements.txt
+python3 nearbot.py      # run normaly
+python3 nearbot.py &    # run in background
+
+
+# Optionally, you can also keep running it in the background
+# ---
+bg
+disown -h
 ```
+
