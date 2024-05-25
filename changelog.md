@@ -8,10 +8,12 @@
 6. Removed `joke2`. Has only one `joke` command now. it depends on [this api](https://some-random-api.ml/joke)
 7. Improved the code of the `/help` function. Made it easily customizable and extendable
 8. Remove the country info command (`/countryinfo`). It's API is a joke.
-9. Remove covid info command (`/covid`). Feels outdated in  2024. lol.
+9. Remove covid info command (`/covid`). Feels outdated in  2024.
 10. Fixed broken embeds in `/passwordchk` command and made the code much better.
 11. Fixed the broken `/lyrics` command
-12. Update dependencies:
+12. Fix the bug where the the `.env` file won't load
+13. Other minor bug fixes
+14. Update dependencies:
     - discord.py: `v2.3.2`
     - pomice: `v2.9.0`
     - lavalink: `v4.0.5` 
