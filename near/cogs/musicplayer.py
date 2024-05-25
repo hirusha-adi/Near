@@ -92,13 +92,15 @@ class Music(commands.Cog):
     async def start_nodes(self):
         # Waiting for the bot to get ready before connecting to nodes.
         await self.bot.wait_until_ready()
+        
+        print(self.bot.lavalink_host)
 
         # You can pass in Spotify credentials to enable Spotify querying.
         # If you do not pass in valid Spotify credentials, Spotify querying will not work
         try:
           await self.pomice.create_node(
               bot=self.bot,
-              host="127.0.0.1",
+              host=self.bot.lavalink_host or 'lavalink', # default to lavalink
               port=2333,
               password="youshallnotpass",
               identifier="MAIN",
@@ -106,7 +108,7 @@ class Music(commands.Cog):
           print(f"Node is ready!")
           
         except NodeConnectionFailure as e:
-          print(f"Node connection failed: {e}")
+          print(f"Node connection failed: {e}. Host: {self.bot.lavalink_host}.")
           await asyncio.sleep(3)
           await self.start_nodes()
           
