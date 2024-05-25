@@ -98,11 +98,6 @@ async def load_extensions():
             print(f"[+] Loaded: near.cogs.{filename[:-3]}")
 
 
-host = os.getenv("LAVA_HOST")
-if not host:
-    host = "0.0.0.0"
-client.lavalink_host = host
-
 # This is for user input sanitization
 # Add more stuff here to make it better
 blacklisted_letters_n_words = (
@@ -127,7 +122,7 @@ async def on_message(message: discord.message.Message):
     if message.mentions:
         for mentn in message.mentions:
             if mentn == client.user:
-                await message.reply("Hey there! The bot now supports slash commands. Enter `/help` to get started")
+                await message.reply("Hey there! Use `/help` to get see a list of available commands.")
 
     if msg.startswith(f'{bot_prefix}'):
 
@@ -151,13 +146,21 @@ async def on_message(message: discord.message.Message):
 
     await client.process_commands(message)
 
-token = os.getenv("BOT_TOKEN")
-token = None
-if not token:
+# Load stuff from the .env file
+# ---
+host = os.getenv("LAVA_HOST")
+if not host:
+    host = "lavalink" # or 127.0.0.1. Default to 'lavalink'
+client.lavalink_host = host
+
+token = os.getenv("BOT_TOKEN") or "token.txt"
+if token == "token.txt":
     with open("token.txt", "r", encoding="utf-8") as tokenfile:
         token = tokenfile.read()
 
 
+# Start the bot
+# ---
 async def main():
     async with client:
         await load_extensions()
