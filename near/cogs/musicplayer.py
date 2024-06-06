@@ -10,6 +10,7 @@ import discord
 from discord.ext import commands
 import pomice
 from pomice.exceptions import NodeConnectionFailure
+from loguru import logger
 
 class Player(pomice.Player):
     """Custom pomice Player class."""
@@ -93,7 +94,7 @@ class Music(commands.Cog):
         # Waiting for the bot to get ready before connecting to nodes.
         await self.bot.wait_until_ready()
         
-        print(self.bot.lavalink_host)
+        logger.debug(f"Lavalink Node -> Host: {self.bot.lavalink_host}, port: 2333")
 
         # You can pass in Spotify credentials to enable Spotify querying.
         # If you do not pass in valid Spotify credentials, Spotify querying will not work
@@ -105,10 +106,10 @@ class Music(commands.Cog):
               password="youshallnotpass",
               identifier="MAIN",
           )
-          print(f"Node is ready!")
+          logger.success(f"Node is ready!")
           
         except NodeConnectionFailure as e:
-          print(f"Node connection failed: {e}. Host: {self.bot.lavalink_host}.")
+          logger.error(f"Node connection failed: {e}. Host: {self.bot.lavalink_host}.")
           await asyncio.sleep(3)
           await self.start_nodes()
           
