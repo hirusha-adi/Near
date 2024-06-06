@@ -10,6 +10,7 @@ import asyncio
 
 import discord
 from discord.ext import commands
+from loguru import logger
 from near.database import get_main
 
 
@@ -85,9 +86,9 @@ async def unloadex(interaction: discord.Interaction, extension: str):
 @client.tree.command(name="sync", description="Sync Commands Globally")
 async def sync(interaction: discord.Interaction):
     synced = await client.tree.sync()
-    print(synced)
-    print(f'Synced {len(synced)} Slash Commands')
-    print('Command tree synced.')
+    logger.debug(f"Synced: {synced}")
+    logger.success(f'Synced {len(synced)} Slash Commands')
+    logger.debug('Command tree synced.')
 
 
 # Loading all the cogs at startup
@@ -95,7 +96,7 @@ async def load_extensions():
     for filename in os.listdir('./near/cogs'):
         if filename.endswith('.py'):
             await client.load_extension(f'near.cogs.{filename[:-3]}')
-            print(f"[+] Loaded: near.cogs.{filename[:-3]}")
+            logger.info(f"Loaded: near.cogs.{filename[:-3]}")
 
 
 # This is for user input sanitization

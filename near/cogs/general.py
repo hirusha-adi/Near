@@ -6,6 +6,7 @@ from time import time as nowtime
 import discord
 from discord import app_commands
 from discord.ext import commands
+from loguru import logger
 
 from near.database import get_embeds
 from near.utils import embeds
@@ -141,21 +142,21 @@ class General(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(f'Logged in as {self.client.user.name}')
-        print(f'Discord.py API version: {discord.__version__}')
-        print(f'Python version: {cur_python_version()}')
+        logger.info(f'Logged in as {self.client.user.name}')
+        logger.info(f'Discord.py API version: {discord.__version__}')
+        logger.info(f'Python version: {cur_python_version()}')
         self.start_time = nowtime()
         await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"teamsds.net/discord"))
 
         _tmp_filecheck = ".DO_NOT_DELETE.txt"
         if not os.path.isfile(_tmp_filecheck):
             synced = await self.client.tree.sync()
-            print(synced)
-            print(f'Synced {len(synced)} Slash Commands')
+            logger.debug(f"Synced: {[(str(item.name)+"-"+str(item.id)) for item in synced]}")
+            logger.success(f'Synced {len(synced)} Slash Commands')
             with open(_tmp_filecheck, 'w') as _file:
                 _file.write("Deleting this file and restarting the bot \nwill make the bot register its command tree\nonce again")
 
-        print('Bot is ready!')
+        logger.success('Bot is ready!')
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
