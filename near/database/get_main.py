@@ -1,4 +1,5 @@
 import json
+from loguru import logger
 
 
 class BotMainDB:
@@ -10,3 +11,5 @@ class BotMainDB:
     BOT_VERSION = embed["BOT_VERSION"]
     DEV_ID = embed["DEV_ID"]
     DEV_AND_OWNERS = embed["DEV_AND_OWNERS"]
+    
+    logger.debug("Loaded all primary settings from near/database/main.json")

@@ -1,4 +1,5 @@
 import json
+from loguru import logger
 
 
 class PleaseWait:
@@ -20,6 +21,8 @@ class PleaseWait:
     AUTHOR_NAME = embed["PleaseWaitEmbed"]["AUTHOR_NAME"]
     AUTHOR_URL = embed["PleaseWaitEmbed"]["AUTHOR_URL"]
 
+    logger.debug("Loaded all Please-Wait embed information from near/database/embeds.json")
+
 
 class ErrorEmbeds:
     with open("near/database/embeds.json", "r", encoding="utf-8") as file:
@@ -37,6 +40,8 @@ class ErrorEmbeds:
     elif embed["ERROR"]["COLOR"] == "blue":
         COLOR = 0x0000ff
 
+    logger.debug("Loaded all Error embed information from near/database/embeds.json")
+
 
 class Common:
     with open("near/database/embeds.json", "r", encoding="utf-8") as file:
@@ -48,6 +53,8 @@ class Common:
         COLOR = 0x00ff00
     elif embed["COMMON"]["COLOR"] == "blue":
         COLOR = 0x0000ff
+
+    logger.debug("Loaded all Common embed information from near/database/embeds.json")
 
 
 class FakeEmbeds:
@@ -63,3 +70,5 @@ class FakeEmbeds:
         COLOR = 0x00ff00
     elif embed["FAKEEMBEDS"]["COLOR"] == "blue":
         COLOR = 0x0000ff
+
+    logger.debug("Loaded all Fake embed information from near/database/embeds.json")
