@@ -1,3 +1,9 @@
+# NearBot v0.7.1
+
+1. Added logging using [`loguru`](https://github.com/Delgan/loguru) module
+    - log to console
+    - log to file (inside `./logs/`)
+
 # NearBot v0.7
 
 1. Reduced repeating code (try-except's large error embed)
