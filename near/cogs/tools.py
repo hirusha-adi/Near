@@ -26,6 +26,7 @@ class Tools(commands.Cog):
 
         with open(os.path.join('near', 'assets', 'tenmilpwds.txt'), 'r') as _file:
             self.lines = _file.readlines()
+            logger.info(f"Loaded passwords from `tenmilpwds.txt` for `/passwordcheck` command")
 
     @app_commands.command(name='passwordgen', description="Generate a very secure and unique password")
     @app_commands.describe(length="Length of the Password to generate.")
