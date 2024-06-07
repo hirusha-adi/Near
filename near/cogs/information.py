@@ -3,6 +3,7 @@ import aiohttp
 import discord
 from discord import app_commands
 from discord.ext import commands
+from loguru import logger
 
 from near.utils import errors
 from near.utils import embeds
@@ -16,6 +17,7 @@ class Information(commands.Cog):
     @app_commands.command(name="ipinfo", description="IP Address Lookup")
     @app_commands.describe(ip="IP Address to look for")
     async def ipinfo(self, interaction: discord.Interaction, ip: str):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             if input_sanitization.is_ipaddr(ip):
                 async with aiohttp.ClientSession() as session:
@@ -44,6 +46,7 @@ class Information(commands.Cog):
     @app_commands.command(name='avatar', description="Get the User Avatar")
     @app_commands.describe(user="User to get the Profile Picture of. Defaults to the Author")
     async def avatar(self, interaction: discord.Interaction, user: discord.User = None):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             format = "gif"
             user = user or interaction.user
@@ -65,6 +68,7 @@ class Information(commands.Cog):
 
     @app_commands.command(name='serverinfo', description="Get Information about the Server")
     async def serverinfo(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             date_format = "%a, %d %b %Y %I:%M %p"
 
@@ -96,6 +100,7 @@ class Information(commands.Cog):
     @app_commands.command(name='userinfo', description="Get Information about a User")
     @app_commands.describe(user="User to get the Information of. Defaults to the Author")
     async def userinfo(self, interaction: discord.Interaction, user: discord.Member = None):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             target = user or interaction.user
             

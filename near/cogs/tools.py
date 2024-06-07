@@ -12,6 +12,7 @@ import instaloader
 import privatebinapi
 from discord import app_commands
 from discord.ext import commands
+from loguru import logger
 from zxcvbn import zxcvbn
 
 from near.utils import embeds
@@ -25,10 +26,12 @@ class Tools(commands.Cog):
 
         with open(os.path.join('near', 'assets', 'tenmilpwds.txt'), 'r') as _file:
             self.lines = _file.readlines()
+            logger.info(f"Loaded passwords from `tenmilpwds.txt` for `/passwordcheck` command")
 
     @app_commands.command(name='passwordgen', description="Generate a very secure and unique password")
     @app_commands.describe(length="Length of the Password to generate.")
     async def passwordgen(self, interaction: discord.Interaction, length: int):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
 
             if int(length) < 101:
@@ -53,6 +56,7 @@ class Tools(commands.Cog):
     @app_commands.command(name="insta", description="Grab the Instagram Profile Picture of a Profile")
     @app_commands.describe(username="Instagram Profile's Username")
     async def insta(self, interaction: discord.Interaction, username: str):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             igpfp = instaloader.Instaloader()
             igpfp.download_profile(username, profile_pic_only=True)
@@ -101,6 +105,7 @@ class Tools(commands.Cog):
     @app_commands.command(name="bin", description="Create a PrivateBin from a Text")
     @app_commands.describe(text="Text to be included in the PrivateBin")
     async def bin(self, interaction: discord.Interaction, text: str):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             if input_sanitization.check_input(text):
                 privbin = privatebinapi.send("https://bin.teamsds.net/", text=text)
@@ -125,6 +130,7 @@ class Tools(commands.Cog):
     @app_commands.command(name="passwordcheck", description="Password Strength Check and Profiler")
     @app_commands.describe(password="Password to analyze")
     async def passwordchk(self, interaction: discord.Interaction, password: str):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             if input_sanitization.password_check(password):
                 results = zxcvbn(f"{password}")
@@ -175,6 +181,7 @@ class Tools(commands.Cog):
     @app_commands.command(name="lyrics", description="Search the Lyrics of any Song")
     @app_commands.describe(query="Name of the Song")
     async def lyrics(self, interaction: discord.Interaction, query: str):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             if input_sanitization.check_input(query):
 

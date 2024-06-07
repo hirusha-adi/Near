@@ -6,6 +6,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from bs4 import BeautifulSoup
+from loguru import logger
 
 from near.utils import embeds
 
@@ -16,6 +17,7 @@ class Fun(commands.Cog):
 
     @app_commands.command(name="inspire", description="Get an inspirational quote")
     async def inspire(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get("https://zenquotes.io/api/random") as response:
@@ -37,6 +39,7 @@ class Fun(commands.Cog):
 
     @app_commands.command(name="meme", description="Get a random meme")
     async def meme(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://www.memedroid.com/memes/tag/programming') as response:
@@ -63,6 +66,7 @@ class Fun(commands.Cog):
 
     @app_commands.command(name="dadjoke", description="Get a random dad joke")
     async def dadjoke(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get("https://icanhazdadjoke.com", headers={"Accept": "application/json"}) as req:
@@ -83,6 +87,7 @@ class Fun(commands.Cog):
 
     @app_commands.command(name="wyr", description="Would You Rather...?")
     async def wyr(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://www.conversationstarters.com/wyrqlist.php') as response:
@@ -106,6 +111,7 @@ class Fun(commands.Cog):
 
     @app_commands.command(name="advice", description="Get advice for your life")
     async def advice(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get("https://api.adviceslip.com/advice") as response:
@@ -127,6 +133,7 @@ class Fun(commands.Cog):
 
     @app_commands.command(name="joke", description="Get a Joke, but from Another API")
     async def joke(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             url = "https://some-random-api.ml/joke"
             async with aiohttp.ClientSession() as session:

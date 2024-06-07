@@ -7,9 +7,28 @@ load_dotenv()
 # ---
 import os
 import asyncio
+from datetime import datetime
 
 import discord
 from discord.ext import commands
+from loguru import logger
+
+# Setup Logging
+# ---
+log_dir = './logs'
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
+
+log_filename = datetime.now().strftime('%Y-%m-%d-%H-%M-%S.log')
+log_path = os.path.join(log_dir, log_filename)
+logger.add(log_path, level="DEBUG", format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {name}:{function}:{line} - {message}", rotation="2 MB")
+
+
+# Project Files Imports
+# ---
+from near.utils import texts
+texts.welcome_message()
+
 from near.database import get_main
 
 
@@ -24,9 +43,11 @@ client = commands.Bot(command_prefix=bot_prefix, intents=discord.Intents.all())
 
 @client.tree.command(name="loadex", description="Load a Cog by its Extension")
 async def loadex(interaction: discord.Interaction, extension: str):
+    logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
     if interaction.user.id == bot_owner_id_or_dev_id:
         try:
             await client.load_extension(f'cogs.{extension}')
+            logger.info(f"Loaded near.cogs.{extension}")
             embed = discord.Embed(
                 title="SUCCESS", description=f"`ADDED cogs.{extension} from NearBot`", color=0xff0000)
             embed.set_author(name=f"{client.user.name}",
@@ -54,9 +75,11 @@ async def loadex(interaction: discord.Interaction, extension: str):
 
 @client.tree.command(name="unloadex", description="Unload a Cog by its Extension")
 async def unloadex(interaction: discord.Interaction, extension: str):
+    logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
     if interaction.user.id == bot_owner_id_or_dev_id:
         try:
             await client.unload_extension(f'cogs.{extension}')
+            logger.info(f"Unloaded near.cogs.{extension}")
             embed = discord.Embed(
                 title="SUCCESS", description=f"`REMOVED cogs.{extension} from NearBot`", color=0xff0000)
             embed.set_author(name=f"{client.user.name}",
@@ -85,9 +108,9 @@ async def unloadex(interaction: discord.Interaction, extension: str):
 @client.tree.command(name="sync", description="Sync Commands Globally")
 async def sync(interaction: discord.Interaction):
     synced = await client.tree.sync()
-    print(synced)
-    print(f'Synced {len(synced)} Slash Commands')
-    print('Command tree synced.')
+    logger.debug(f"Synced: {synced}")
+    logger.success(f'Synced {len(synced)} Slash Commands')
+    logger.debug('Command tree synced.')
 
 
 # Loading all the cogs at startup
@@ -95,7 +118,7 @@ async def load_extensions():
     for filename in os.listdir('./near/cogs'):
         if filename.endswith('.py'):
             await client.load_extension(f'near.cogs.{filename[:-3]}')
-            print(f"[+] Loaded: near.cogs.{filename[:-3]}")
+            logger.info(f"Loaded: near.cogs.{filename[:-3]}")
 
 
 # This is for user input sanitization
@@ -145,6 +168,7 @@ async def on_message(message: discord.message.Message):
             return
 
     await client.process_commands(message)
+
 
 # Load stuff from the .env file
 # ---

@@ -6,6 +6,8 @@ env/
 env*/
 !.env.example
 .DO_NOT_DELETE.txt
+logs/
+*.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

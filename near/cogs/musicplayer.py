@@ -10,6 +10,7 @@ import discord
 from discord.ext import commands
 import pomice
 from pomice.exceptions import NodeConnectionFailure
+from loguru import logger
 
 class Player(pomice.Player):
     """Custom pomice Player class."""
@@ -88,29 +89,28 @@ class Music(commands.Cog):
 
         # Start the node
         bot.loop.create_task(self.start_nodes())
-
+        logger.debug(f"Lavalink Node -> Host: {self.bot.lavalink_host or 'lavalink'}, port: 2333, identifier: MAIN, password: youshallnotpass")
+    
     async def start_nodes(self):
         # Waiting for the bot to get ready before connecting to nodes.
         await self.bot.wait_until_ready()
         
-        print(self.bot.lavalink_host)
-
         # You can pass in Spotify credentials to enable Spotify querying.
         # If you do not pass in valid Spotify credentials, Spotify querying will not work
         try:
-          await self.pomice.create_node(
-              bot=self.bot,
-              host=self.bot.lavalink_host or 'lavalink', # default to lavalink
-              port=2333,
-              password="youshallnotpass",
-              identifier="MAIN",
-          )
-          print(f"Node is ready!")
+            await self.pomice.create_node(
+                bot=self.bot,
+                host=self.bot.lavalink_host or 'lavalink', # default to lavalink
+                port=2333,
+                password="youshallnotpass",
+                identifier="MAIN",
+            )
+            logger.success(f"Node is ready!")
           
         except NodeConnectionFailure as e:
-          print(f"Node connection failed: {e}. Host: {self.bot.lavalink_host}.")
-          await asyncio.sleep(3)
-          await self.start_nodes()
+            logger.error(f"Node connection failed: {e}. Host: {self.bot.lavalink_host}. Retrying in 3 seconds.")
+            await asyncio.sleep(3)
+            await self.start_nodes()
           
         
 
@@ -152,7 +152,8 @@ class Music(commands.Cog):
 
     @commands.command(aliases=["joi", "j", "summon", "su", "con", "connect"])
     async def join(self, ctx: commands.Context, *, channel: discord.VoiceChannel = None) -> None:
-        if not channel:
+        logger.info(f"Command invoked by {ctx.author.name} ({ctx.author.id}) in {ctx.guild.name} ({ctx.guild.id})")
+        if not channel:        
             channel = getattr(ctx.author.voice, "channel", None)
             if not channel:
                 return await ctx.send(
@@ -171,6 +172,7 @@ class Music(commands.Cog):
 
     @commands.command(aliases=["disconnect", "dc", "disc", "lv", "fuckoff"])
     async def leave(self, ctx: commands.Context):
+        logger.info(f"Command invoked by {ctx.author.name} ({ctx.author.id}) in {ctx.guild.name} ({ctx.guild.id})")
         if not (player := ctx.voice_client):
             return await ctx.send(
                 "You must have the bot in a channel in order to use this command",
@@ -182,6 +184,7 @@ class Music(commands.Cog):
 
     @commands.command(aliases=["pla", "p"])
     async def play(self, ctx: commands.Context, *, search: str) -> None:
+        logger.info(f"Command invoked by {ctx.author.name} ({ctx.author.id}) in {ctx.guild.name} ({ctx.guild.id})")
         # Checks if the player is in the channel before we play anything
         if not (player := ctx.voice_client):
             await ctx.author.voice.channel.connect(cls=Player)
@@ -212,6 +215,7 @@ class Music(commands.Cog):
     @commands.command(aliases=["pau", "pa"])
     async def pause(self, ctx: commands.Context):
         """Pause the currently playing song."""
+        logger.info(f"Command invoked by {ctx.author.name} ({ctx.author.id}) in {ctx.guild.name} ({ctx.guild.id})")
         if not (player := ctx.voice_client):
             return await ctx.send(
                 "You must have the bot in a channel in order to use this command",
@@ -243,6 +247,7 @@ class Music(commands.Cog):
     @commands.command(aliases=["res", "r"])
     async def resume(self, ctx: commands.Context):
         """Resume a currently paused player."""
+        logger.info(f"Command invoked by {ctx.author.name} ({ctx.author.id}) in {ctx.guild.name} ({ctx.guild.id})")
         if not (player := ctx.voice_client):
             return await ctx.send(
                 "You must have the bot in a channel in order to use this command",
@@ -274,6 +279,7 @@ class Music(commands.Cog):
     @commands.command(aliases=["n", "nex", "next", "sk"])
     async def skip(self, ctx: commands.Context):
         """Skip the currently playing song."""
+        logger.info(f"Command invoked by {ctx.author.name} ({ctx.author.id}) in {ctx.guild.name} ({ctx.guild.id})")
         if not (player := ctx.voice_client):
             return await ctx.send(
                 "You must have the bot in a channel in order to use this command",
@@ -311,6 +317,7 @@ class Music(commands.Cog):
     @commands.command()
     async def stop(self, ctx: commands.Context):
         """Stop the player and clear all internal states."""
+        logger.info(f"Command invoked by {ctx.author.name} ({ctx.author.id}) in {ctx.guild.name} ({ctx.guild.id})")
         if not (player := ctx.voice_client):
             return await ctx.send(
                 "You must have the bot in a channel in order to use this command",
@@ -339,6 +346,7 @@ class Music(commands.Cog):
     @commands.command(aliases=["mix", "shuf"])
     async def shuffle(self, ctx: commands.Context):
         """Shuffle the players queue."""
+        logger.info(f"Command invoked by {ctx.author.name} ({ctx.author.id}) in {ctx.guild.name} ({ctx.guild.id})")
         if not (player := ctx.voice_client):
             return await ctx.send(
                 "You must have the bot in a channel in order to use this command",
@@ -375,6 +383,7 @@ class Music(commands.Cog):
     @commands.command(aliases=["v", "vol"])
     async def volume(self, ctx: commands.Context, *, vol: int):
         """Change the players volume, between 1 and 100."""
+        logger.info(f"Command invoked by {ctx.author.name} ({ctx.author.id}) in {ctx.guild.name} ({ctx.guild.id})")
         if not (player := ctx.voice_client):
             return await ctx.send(
                 "You must have the bot in a channel in order to use this command",

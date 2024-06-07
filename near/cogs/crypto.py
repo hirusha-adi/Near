@@ -4,6 +4,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from bs4 import BeautifulSoup
+from loguru import logger
 
 from near.utils import embeds
 
@@ -14,6 +15,7 @@ class Crypto(commands.Cog):
         
     @app_commands.command(name="btc", description="Get the current Bitcoin Rates")
     async def btc(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,EUR') as response:
@@ -34,6 +36,7 @@ class Crypto(commands.Cog):
             
     @app_commands.command(name="eth", description="Get the current Etherium Rates")
     async def eth(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,EUR') as response:
@@ -54,6 +57,7 @@ class Crypto(commands.Cog):
 
     @app_commands.command(name="xmr", description="Get the current Monero Rates")
     async def xmr(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=USD,EUR') as response:
@@ -74,6 +78,7 @@ class Crypto(commands.Cog):
 
     @app_commands.command(name="doge", description="Get the current Doge Coin Rates")
     async def doge(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://min-api.cryptocompare.com/data/price?fsym=DOGE&tsyms=USD,EUR') as response:
@@ -94,6 +99,7 @@ class Crypto(commands.Cog):
 
     @app_commands.command(name="xrp", description="Get the current XRP Rates")
     async def xrp(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://min-api.cryptocompare.com/data/price?fsym=XRP&tsyms=USD,EUR') as response:
@@ -114,6 +120,7 @@ class Crypto(commands.Cog):
 
     @app_commands.command(name="rvn", description="Get the current Raven Coin Rates")
     async def rvn(self, interaction: discord.Interaction):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('https://www.coindesk.com/price/ravencoin/') as response:
