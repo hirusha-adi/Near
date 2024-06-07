@@ -6,11 +6,27 @@ load_dotenv()
 # imports
 # ---
 import os
+import sys
 import asyncio
+from datetime import datetime
 
 import discord
 from discord.ext import commands
 from loguru import logger
+
+# Setup Logging
+# ---
+log_dir = './logs'
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
+
+log_filename = datetime.now().strftime('%Y-%m-%d-%H-%M-%S.log')
+log_path = os.path.join(log_dir, log_filename)
+logger.add(log_path, level="DEBUG", format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {name}:{function}:{line} - {message}", rotation="2 MB")
+
+
+# Project Files Imports
+# ---
 from near.database import get_main
 
 
