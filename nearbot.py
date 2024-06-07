@@ -43,9 +43,11 @@ client = commands.Bot(command_prefix=bot_prefix, intents=discord.Intents.all())
 
 @client.tree.command(name="loadex", description="Load a Cog by its Extension")
 async def loadex(interaction: discord.Interaction, extension: str):
+    logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
     if interaction.user.id == bot_owner_id_or_dev_id:
         try:
             await client.load_extension(f'cogs.{extension}')
+            logger.info(f"Loaded near.cogs.{extension}")
             embed = discord.Embed(
                 title="SUCCESS", description=f"`ADDED cogs.{extension} from NearBot`", color=0xff0000)
             embed.set_author(name=f"{client.user.name}",
@@ -73,9 +75,11 @@ async def loadex(interaction: discord.Interaction, extension: str):
 
 @client.tree.command(name="unloadex", description="Unload a Cog by its Extension")
 async def unloadex(interaction: discord.Interaction, extension: str):
+    logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
     if interaction.user.id == bot_owner_id_or_dev_id:
         try:
             await client.unload_extension(f'cogs.{extension}')
+            logger.info(f"Unloaded near.cogs.{extension}")
             embed = discord.Embed(
                 title="SUCCESS", description=f"`REMOVED cogs.{extension} from NearBot`", color=0xff0000)
             embed.set_author(name=f"{client.user.name}",
@@ -164,6 +168,7 @@ async def on_message(message: discord.message.Message):
             return
 
     await client.process_commands(message)
+
 
 # Load stuff from the .env file
 # ---
