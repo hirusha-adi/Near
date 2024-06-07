@@ -6,7 +6,6 @@ load_dotenv()
 # imports
 # ---
 import os
-import sys
 import asyncio
 from datetime import datetime
 
@@ -27,6 +26,9 @@ logger.add(log_path, level="DEBUG", format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {le
 
 # Project Files Imports
 # ---
+from near.utils import texts
+texts.welcome_message()
+
 from near.database import get_main
 
 
