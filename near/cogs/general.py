@@ -15,6 +15,7 @@ from near.utils import embeds
 class Select(discord.ui.Select):
     def __init__(self):
         options = [
+            discord.SelectOption(label="Administration", emoji="💥", description="Administration commands"),
             discord.SelectOption(label="Crypto", emoji="🪙", description="Cryptocurrencies Related Commands"),
             discord.SelectOption(label="Encoding", emoji="🧾", description="Encoding and Hashing Related Commands"),
             discord.SelectOption(label="Fake Information", emoji="👨‍🦰", description="Fake Information Generating Commands"),
@@ -40,6 +41,7 @@ class Select(discord.ui.Select):
         embed.set_footer(text=f"Requested by {interaction.user.name}")
 
         thumbnails = {
+            "Administration": "https://cdn.discordapp.com/attachments/1278527700482527273/1278527720132968458/admin-3d-illustration-icon-png.png",
             "Crypto": "https://cdn.discordapp.com/attachments/940889393974104084/1073538553335783454/7047060.png",
             "Encoding": "https://cdn.discordapp.com/attachments/940889393974104084/1073538746806444103/2362335.png",
             "Fake Information": "https://cdn.discordapp.com/attachments/940889393974104084/1073538885986033704/4410174.png",
@@ -51,6 +53,9 @@ class Select(discord.ui.Select):
         }
         
         commands = {
+            "Administration": [
+                ("/move", "Move users from one voice channel to another"),
+            ],
             "Crypto": [
                 ("/btc", "Get the current Bitcoin Rates"),
                 ("/eth", "Get the current Etherium Rates"),
