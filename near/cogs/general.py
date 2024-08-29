@@ -151,7 +151,7 @@ class General(commands.Cog):
         _tmp_filecheck = ".DO_NOT_DELETE.txt"
         if not os.path.isfile(_tmp_filecheck):
             synced = await self.client.tree.sync()
-            logger.debug(f"Synced: {[(str(item.name)+"-"+str(item.id)) for item in synced]}")
+            logger.debug(f"Synced: {[(str(item.name)+'-'+str(item.id)) for item in synced]}")
             logger.success(f'Synced {len(synced)} Slash Commands')
             with open(_tmp_filecheck, 'w') as _file:
                 _file.write("Deleting this file and restarting the bot \nwill make the bot register its command tree\nonce again")
@@ -160,12 +160,13 @@ class General(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            await ctx.send(embed=embeds.Error(interaction=ctx, client=self.client, error_message=f"You don't have the permissions required to use this command!"), ephemeral=False)
+        if isinstance(error, commands.MissingPermissions) or isinstance(error, commands.CheckFailure):
+            await ctx.send(embed=embeds.Error(interaction=ctx, client=self.client, error_message=f"You don't have the necessary permissions required to use this command!"), ephemeral=False)
 
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(embed=embeds.Error(interaction=ctx, client=self.client, error_message=f"You haven't passed the needed arguments for this command to run properly.\n\nPlease use `/help` to list out all the command and check the proper usage of the command you used."), ephemeral=False)
 
+            
     @app_commands.command(name="ping", description="Check the response time of the Discord Bot")
     async def ping(self, interaction: discord.Interaction):
         logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")

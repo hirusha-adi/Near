@@ -177,10 +177,11 @@ if not host:
     host = "lavalink" # or 127.0.0.1. Default to 'lavalink'
 client.lavalink_host = host
 
-token = os.getenv("BOT_TOKEN") or "token.txt"
-if token == "token.txt":
-    with open("token.txt", "r", encoding="utf-8") as tokenfile:
-        token = tokenfile.read()
+token = os.getenv("BOT_TOKEN")
+# token = os.getenv("BOT_TOKEN") or "token.txt"
+# if token == "token.txt":
+    # with open("token.txt", "r", encoding="utf-8") as tokenfile:
+        # token = tokenfile.read()
 
 
 # Start the bot
