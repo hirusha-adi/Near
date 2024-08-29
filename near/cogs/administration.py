@@ -12,17 +12,18 @@ class Administration(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-    @app_commands.command(
-        name="move", description="Move everyone from one voice channel to another"
-    )
+    # ---
+    # for issue: https://github.com/hirusha-adi/Near/issues/21
+    # based on: https://github.com/ThatRex/SDS-Autocrat/blob/main/src/commands/move.ts
+    # ---
+    @app_commands.command(name="move", description="Move everyone from one voice channel to another")
     @commands.guild_only()
     @has_permissions(move_members=True)
     @app_commands.describe(channel_to="Voice channel to move the members to")
-    @app_commands.describe(channel_from="Voice channel to move the members from")
+    @app_commands.describe(channel_from="Voice channel to move the members from (defaults to voice channel the user has joined in, if not passed in manually)")
     async def move(self,interaction: discord.Interaction,channel_to: discord.VoiceChannel,channel_from: discord.VoiceChannel = None):
         logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
-            
             if channel_from is None: # vc not given
                 if not interaction.user.voice: # user not in vc
                     raise errors.CommandError("No value set to `channel_from`. Please pass it in manually or join a voice channel.")
@@ -33,9 +34,7 @@ class Administration(commands.Cog):
                 # vc is given
 
             if channel_to == channel_from:
-                raise errors.CommandError(
-                    "You can't move to the channel you are already in."
-                )
+                raise errors.CommandError("You can't move to the channel you are already in.")
                 return
 
             if not isinstance(channel_from, discord.VoiceChannel) or not isinstance(channel_to, discord.VoiceChannel):
@@ -47,6 +46,9 @@ class Administration(commands.Cog):
 
             members_to_move = channel_from.members
             for member in members_to_move:
+                # related documentation:
+                #   https://stackoverflow.com/questions/63200706/trying-to-move-users-between-voice-channels-using-discord-py-bot
+                #   https://discordpy.readthedocs.io/en/stable/api.html#discord.Member.move_to
                 await member.move_to(channel_to)
 
             embed = embeds.Common(
