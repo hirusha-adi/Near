@@ -16,4 +16,4 @@ class CommandError(Exception):
         self.message = message
 
     def __str__(self):
-        return f"Error running the command{': ' + str(self.message) if not(self.message is None) else '.'}"
+        return self.message or "Unable to run the command"
