@@ -1,3 +1,12 @@
+# NearBot v0.7.2
+
+1. Added the `move` command in the new Administration cog (as in [Issue 5](https://github.com/hirusha-adi/Near/issues/21))
+    - moves users from one voice channel to another
+    - from [SDS Autocrat](https://github.com/ThatRex/SDS-Autocrat/blob/main/src/commands/move.ts)
+    - requested by Rex
+2. Depend on the environment var `BOT_TOKEN` only and not on `token.txt`
+    - `token.txt` will be useless from now on
+
 # NearBot v0.7.1
 
 1. Added logging using [`loguru`](https://github.com/Delgan/loguru) module
