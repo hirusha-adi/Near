@@ -17,21 +17,20 @@ class Administration(commands.Cog):
     )
     @commands.guild_only()
     @has_permissions(move_members=True)
-    async def move(
-        self,
-        interaction: discord.Interaction,
-        channel_to: discord.VoiceChannel,
-        channel_from: discord.VoiceChannel = None,
-    ):
-        logger.info(
-            f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})"
-        )
+    @app_commands.describe(channel_to="Voice channel to move the members to")
+    @app_commands.describe(channel_from="Voice channel to move the members from")
+    async def move(self,interaction: discord.Interaction,channel_to: discord.VoiceChannel,channel_from: discord.VoiceChannel = None):
+        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
-            if not interaction.user.voice:
-                raise errors.CommandError("You are not in a voice channel.")
-                return
-
-            channel_from = channel_from or interaction.user.voice.channel
+            
+            if channel_from is None: # vc not given
+                if not interaction.user.voice: # user not in vc
+                    raise errors.CommandError("No value set to `channel_from`. Please pass it in manually or join a voice channel.")
+                    return
+                else: # user in vc
+                    channel_from = interaction.user.voice.channel
+            # else: 
+                # vc is given
 
             if channel_to == channel_from:
                 raise errors.CommandError(
