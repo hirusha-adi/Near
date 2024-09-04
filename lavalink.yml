@@ -1,10 +1,13 @@
 # config for lavalink, put this file in the folder with Lavalink.jar
+# this will then be renamed to application.yml inside the docker container running lavalink
 server:
   port: 2333
   address: 0.0.0.0
+
 spring:
   main:
     banner-mode: log
+
 lavalink:
   server:
     password: "youshallnotpass"
@@ -34,21 +37,22 @@ lavalink:
     - dependency: "dev.lavalink.youtube:youtube-plugin:1.7.2"
       snapshot: false
     # For more info: https://github.com/lavalink-devs/youtube-source?tab=readme-ov-file#plugin
-    # youtube:
-    #   enabled: true
-    #   allowSearch: true 
-    #   allowDirectVideoIds: true
-    #   allowDirectPlaylistIds: true
-    #   clients:
-    #     - MUSIC
-    #     - ANDROID
-    #     - WEB
-    #   WEB: 
-    #     playback: true
-    #   TVHTML5EMBEDDED:
-    #     playlistLoading: true
-    #     videoLoading: true
-    #     searching: true
+
+plugins:
+  youtube:
+    enabled: true                 # Whether this source can be used.
+    allowSearch: true             # Whether "ytsearch:" and "ytmsearch:" can be used.
+    allowDirectVideoIds: true     # Whether just video IDs can match. If false, only complete URLs will be loaded.
+    allowDirectPlaylistIds: true  # Whether just playlist IDs can match. If false, only complete URLs will be loaded.
+    # run `docker run quay.io/invidious/youtube-trusted-session-generator` to get the po_token
+    pot:
+      token: ""
+      visitorData: ""
+    clients:
+      - MUSIC
+      - ANDROID_TESTSUITE
+      - WEB
+      - TVHTML5EMBEDDED
 
 metrics:
   prometheus:
@@ -57,9 +61,6 @@ metrics:
 
 sentry:
   dsn: ""
-#  tags:
-#    some_key: some_value
-#    another_key: another_value
 
 logging:
   file:
