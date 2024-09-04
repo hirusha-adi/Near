@@ -29,7 +29,7 @@ multidict==6.0.5
 orjson==3.10.0
 password-strength==0.0.3.post2
 PBinCLI==0.3.5
-pomice==2.9.0
+pomice==2.9.1
 PrivateBinAPI==1.0.0
 prsaw==0.4.0
 pycparser==2.22

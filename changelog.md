@@ -3,6 +3,7 @@
 1. Update dependencies:
     - lavalink: `v4.0.7` 
     - lavalink youtube-plugin: `v1.7.2` 
+    - pomice: `v2.9.1`
 
 # NearBot v0.7.2
 
