@@ -31,8 +31,9 @@ lavalink:
     proxyUser: ""        # proxy, username. if no authentication, leave empty
     proxyPassword: ""    # proxy, password. if no authentication, leave empty
   plugins:
-    - dependency: "dev.lavalink.youtube:youtube-plugin:1.3.0"
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.7.2"
       snapshot: false
+    # For more info: https://github.com/lavalink-devs/youtube-source?tab=readme-ov-file#plugin
     # youtube:
     #   enabled: true
     #   allowSearch: true 

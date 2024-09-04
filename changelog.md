@@ -1,3 +1,9 @@
+# NearBot v0.7.3
+
+1. Update dependencies:
+    - lavalink: `v4.0.7` 
+    - lavalink youtube-plugin: `v1.7.2` 
+
 # NearBot v0.7.2
 
 1. Added the `move` command in the new Administration cog (as in [Issue 5](https://github.com/hirusha-adi/Near/issues/21))
