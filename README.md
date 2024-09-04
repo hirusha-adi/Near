@@ -36,7 +36,7 @@ mkdir ~/nearbot/lavalink
 # Setup Lavalink
 # ---
 cd ~/nearbot/lavalink
-wget "https://github.com/lavalink-devs/Lavalink/releases/download/4.0.5/Lavalink.jar"
+wget "https://github.com/lavalink-devs/Lavalink/releases/download/4.0.7/Lavalink.jar"
 curl 'https://raw.githubusercontent.com/hirusha-adi/Near/main/lavalink.yml' >> 'application.yml'
 java -jar ./Lavalink.jar    # run normally
 java -jar ./Lavalink.jar &  # run in background
