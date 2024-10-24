@@ -1,3 +1,4 @@
+import ipaddress
 import re
 
 privilege_escalation_keywords = [
@@ -45,24 +46,24 @@ def is_base64(input_str: str) -> bool:
 
 def is_ipaddr(input_str: str) -> bool:
     """
-    Check if input string is a valid IP address (both IPv4 and IPv6).
-    Based on:
-        IPv4: https://stackoverflow.com/questions/5284147/validating-ipv4-addresses-with-regexp
-        IPv6: https://stackoverflow.com/questions/53497/regular-expression-that-matches-valid-ipv6-addresses
+    Checks if input string is a valid IP address (both IPv4 and IPv6).
+    Based on: 
+        https://gist.github.com/hirusha-adi/5ed5000246e16dfa035ea604362c763f
+        https://docs.python.org/3/library/ipaddress.html#ipaddress.ip_address
 
     Args:
         input_str (str): The string to check.
 
     Returns:
         bool: 
-            True if the string is a valid IP address,
-            False if it is not.
+            True if the string is a valid IP address, 
+            False otherwise.
     """
-
-    ipv4 = r'^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$'
-    ipv6 = r'(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))'
-    return (re.match(ipv4, input_str) or re.match(ipv6, input_str)) is not None
-
+    try:
+        ipaddress.ip_address(input_str)
+        return True
+    except ValueError:
+        return False
 
 def is_text_only(input_str: str) -> bool:
     """
