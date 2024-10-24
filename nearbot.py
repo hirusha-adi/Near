@@ -43,78 +43,110 @@ client = commands.Bot(command_prefix=bot_prefix, intents=discord.Intents.all())
 
 @client.tree.command(name="loadex", description="Load a Cog by its Extension")
 async def loadex(interaction: discord.Interaction, extension: str):
+    """
+    Load a Cog by its Extension.
+
+    Args:
+        interaction (discord.Interaction): Passed in automatically when the command is run.
+        extension (str): Extension of the Cog to be loaded.
+
+    Returns:
+        None
+
+    Raises:
+        None
+    """
+    
     logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
     if interaction.user.id == bot_owner_id_or_dev_id:
         try:
             await client.load_extension(f'cogs.{extension}')
             logger.info(f"Loaded near.cogs.{extension}")
-            embed = discord.Embed(
-                title="SUCCESS", description=f"`ADDED cogs.{extension} from NearBot`", color=0xff0000)
-            embed.set_author(name=f"{client.user.name}",
-                             icon_url=f"{client.user.avatar.url}")
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+            embed = discord.Embed(title="SUCCESS", description=f"`ADDED cogs.{extension} from NearBot`", color=0xff0000)
+            embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await interaction.response.send_message(embed=embed)
         except Exception as e:
-            embed = discord.Embed(
-                title="ERROR", description=f"```{e}```", color=0xff0000)
-            embed.set_author(name=f"{client.user.name}",
-                             icon_url=f"{client.user.avatar.url}")
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+            embed = discord.Embed(title="ERROR", description=f"```{e}```", color=0xff0000)
+            embed.set_author(name=f"{client.user.name}",icon_url=f"{client.user.avatar.url}")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await interaction.response.send_message(embed=embed, ephemeral=True)
     else:
-        embed = discord.Embed(
-            title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
-        embed.set_author(name=f"{client.user.name}",
-                         icon_url=f"{client.user.avatar.url}")
-        embed.set_thumbnail(
-            url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+        embed = discord.Embed(title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
+        embed.set_author(name=f"{client.user.name}",icon_url=f"{client.user.avatar.url}")
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
 @client.tree.command(name="unloadex", description="Unload a Cog by its Extension")
 async def unloadex(interaction: discord.Interaction, extension: str):
+    """
+    Unload a Cog by its Extension.
+
+    Args:
+        interaction (discord.Interaction): Passed in automatically when the command is run.
+        extension (str): Extension of the Cog to be unloaded.
+
+    Returns:
+        None
+
+    Raises:
+        None
+    """
+    
     logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
     if interaction.user.id == bot_owner_id_or_dev_id:
         try:
             await client.unload_extension(f'cogs.{extension}')
             logger.info(f"Unloaded near.cogs.{extension}")
-            embed = discord.Embed(
-                title="SUCCESS", description=f"`REMOVED cogs.{extension} from NearBot`", color=0xff0000)
-            embed.set_author(name=f"{client.user.name}",
-                             icon_url=f"{client.user.avatar.url}")
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+            embed = discord.Embed(title="SUCCESS", description=f"`REMOVED cogs.{extension} from NearBot`", color=0xff0000)
+            embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await interaction.response.send_message(embed=embed)
         except Exception as e:
-            embed = discord.Embed(
-                title="ERROR", description=f"```{e}```", color=0xff0000)
-            embed.set_author(name=f"{client.user.name}",
-                             icon_url=f"{client.user.avatar.url}")
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+            embed = discord.Embed(title="ERROR", description=f"```{e}```", color=0xff0000)
+            embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
             await interaction.response.send_message(embed=embed, ephemeral=True)
     else:
-        embed = discord.Embed(
-            title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
-        embed.set_author(name=f"{client.user.name}",
-                         icon_url=f"{client.user.avatar.url}")
-        embed.set_thumbnail(
-            url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+        embed = discord.Embed(title="ERROR", description="`You don't have the permissions required to use this command!`", color=0xff0000)
+        embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
         await interaction.response.send_message(embed=embed, ephemeral=True)
 
 
 @client.tree.command(name="sync", description="Sync Commands Globally")
 async def sync(interaction: discord.Interaction):
+    """
+    This command will sync all commands globally. It might take a while to sync all commands.
+
+    Args:
+        interaction (discord.Interaction): Passed in automatically when the command is run.
+
+    Returns:
+        None
+
+    Raises:
+        By client.tree.sync() ->
+            HTTPException, CommandSyncFailure, Forbidden, MissingApplicationID, TranslationError
+    """
+    
     synced = await client.tree.sync()
     logger.debug(f"Synced: {synced}")
     logger.success(f'Synced {len(synced)} Slash Commands')
     logger.debug('Command tree synced.')
 
 
-# Loading all the cogs at startup
 async def load_extensions():
+    """
+    Loads all cogs at startup.
+
+    This function iterates through all the `.py` files in the `./near/cogs` directory and loads them as cogs.
+    It prints a log message of the format "Loaded: near.cogs.<filename>" for each cog that is loaded.
+
+    This function is called during the `on_ready` event of the bot.
+    """
+    
     for filename in os.listdir('./near/cogs'):
         if filename.endswith('.py'):
             await client.load_extension(f'near.cogs.{filename[:-3]}')
@@ -137,16 +169,26 @@ blacklisted_letters_n_words = (
 
 @client.event
 async def on_message(message: discord.message.Message):
+    """
+    Called when a message is received by the bot.
+    """
+    # checks if the message was sent by the bot itself
+    # if so, it does not process it
     if client.user == message.author:
         return
 
     msg = message.content
 
+    # if the message mentions the bot
+    # it replies the message and asks to use the `/help` command for more info.
     if message.mentions:
         for mentn in message.mentions:
             if mentn == client.user:
                 await message.reply("Hey there! Use `/help` to get see a list of available commands.")
 
+    # if the message starts with the bot prefix
+    # checks if the command contains any blacklisted characters
+    # sends an error message to the channel suggesting a possible fix
     if msg.startswith(f'{bot_prefix}'):
 
         msgaftercmnd = msg.split(" ")[1:-1]
@@ -167,6 +209,7 @@ async def on_message(message: discord.message.Message):
             await message.reply(embed=embed)
             return
 
+    # finally, processes the command as normal
     await client.process_commands(message)
 
 
@@ -177,6 +220,8 @@ if not host:
     host = "lavalink" # or 127.0.0.1. Default to 'lavalink'
 client.lavalink_host = host
 
+
+# TODO: Fix this later
 token = os.getenv("BOT_TOKEN")
 # token = os.getenv("BOT_TOKEN") or "token.txt"
 # if token == "token.txt":
@@ -187,6 +232,9 @@ token = os.getenv("BOT_TOKEN")
 # Start the bot
 # ---
 async def main():
+    """
+    Main entry point of the bot. Loads all extensions, then starts the bot with the given token.
+    """
     async with client:
         await load_extensions()
         await client.start(token=token, reconnect=True)
