@@ -1,6 +1,10 @@
 import re
 
-privilege_escalation_keywords = ['sudo', 'root', 'admin']
+privilege_escalation_keywords = [
+    'sudo', 'root', 'admin', 'polkit', 'pkexec', 'gksudo', 'kdesudo',
+    'doas', 'pfexec', 'chroot', 'systemd-run', 'systemd-nspawn', 'docker', 
+    # 'su',
+]
 
 def check_input(input_str: str) -> bool:
     """
