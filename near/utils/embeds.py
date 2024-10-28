@@ -6,7 +6,8 @@ from discord.ext import commands
 from loguru import logger
 
 from near.database import get_embeds
-
+from near.database import dbfetch
+from near.utils import input_sanitization
 
 async def Error(client: commands.Bot, interaction: discord.Interaction, error_message: str) -> discord.Embed:
     """
@@ -28,9 +29,10 @@ async def Error(client: commands.Bot, interaction: discord.Interaction, error_me
     """
     
     logger.error(error_message)
-    embed = discord.Embed(title=f"🔴 ERROR 🔴", description=f"```\n{error_message}```", color=get_embeds.ErrorEmbeds.COLOR, timestamp=datetime.utcnow())
+    embed_info = await dbfetch.DataEmbedsFetcher.allError()
+    embed = discord.Embed(title=embed_info['ERROR_TITLE'], description=f"```\n{error_message}```", color=input_sanitization.color(embed_info['ERROR_COLOR']), timestamp=datetime.utcnow())
     embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
-    embed.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
+    embed.set_thumbnail(url=embed_info['ERROR_THUMBNAIL'])
     embed.set_footer(text=f"Requested by {interaction.user.name}")
     return embed
 
