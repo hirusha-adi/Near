@@ -8,7 +8,7 @@ async def set_defaults():
 async def __set_defaultsDataEmbeds():
     if await DataEmbeds.all().count() == 0:
         try:
-            with open(os.path.join("near", "database", "default.dataembeds.json"), "r") as f:
+            with open(os.path.join("near", "database", "default-data", "default.dataembeds.json"), "r") as f:
                 default_data = json.load(f)
             # -------------------------------------
             async with in_transaction():
