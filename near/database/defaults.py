@@ -3,9 +3,9 @@ from tortoise.transactions import in_transaction
 import json, os
 
 async def set_defaults():
-    await set_defaultsDataEmbeds()
+    await __set_defaultsDataEmbeds()
 
-async def set_defaultsDataEmbeds():
+async def __set_defaultsDataEmbeds():
     if await DataEmbeds.all().count() == 0:
         try:
             with open(os.path.join("near", "database", "default.dataembeds.json"), "r") as f:
