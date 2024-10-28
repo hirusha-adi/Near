@@ -22,9 +22,7 @@ async def __set_defaultsDataEmbeds():
                 await DataEmbeds.create(key="PleaseWaitEmbed_FOOTER", value=default_data["PleaseWaitEmbed"]["FOOTER"])
                 # ERROR
                 await DataEmbeds.create(key="ERROR_TITLE", value=default_data["ERROR"]["TITLE"])
-                await DataEmbeds.create(key="ERROR_DESCRIPTION", value=default_data["ERROR"]["DESCRIPTION"])
                 await DataEmbeds.create(key="ERROR_THUMBNAIL", value=default_data["ERROR"]["THUMBNAIL"])
-                await DataEmbeds.create(key="ERROR_FIELD_NAME", value=default_data["ERROR"]["FIELD_NAME"])
                 await DataEmbeds.create(key="ERROR_COLOR", value=default_data["ERROR"]["COLOR"])
                 # COMMON
                 await DataEmbeds.create(key="COMMON_COLOR", value=default_data["COMMON"]["COLOR"])

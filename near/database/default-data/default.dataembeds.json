@@ -10,10 +10,8 @@
     },
     
     "ERROR":{
-        "TITLE":":red_square: Error!",
-        "DESCRIPTION":"The command was unable to run successfully! ",
+        "TITLE":":red_circle: Error :red_circle:",
         "THUMBNAIL":"https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png",
-        "FIELD_NAME":"Error:",
         "COLOR":"red"
     },
 
