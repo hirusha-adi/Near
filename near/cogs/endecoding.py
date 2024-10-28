@@ -25,7 +25,7 @@ class EncodeDecode(commands.Cog):
                 result = str(msg)
                 result = result[2:len(result)-1]
 
-                embed = embeds.Common(
+                embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="Encode to Base64",
@@ -38,7 +38,7 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
     @app_commands.command(name="b64decode", description="Decode from Base64")
@@ -51,7 +51,7 @@ class EncodeDecode(commands.Cog):
                 result = str(msg)
                 result = result[2:len(result)-1]
                 
-                embed = embeds.Common(
+                embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="Decode from Base64",
@@ -64,7 +64,7 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
     @app_commands.command(name="md5", description="Get MD5 Hash")
@@ -76,7 +76,7 @@ class EncodeDecode(commands.Cog):
                 msg = hashlib.md5(text.encode())
                 result = msg.hexdigest()
 
-                embed = embeds.Common(
+                embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="MDS Hash",
@@ -89,7 +89,7 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
            
            
     @app_commands.command(name="sha1", description="Get SHA1 Hash")
@@ -101,7 +101,7 @@ class EncodeDecode(commands.Cog):
                 msg = hashlib.sha1(text.encode())
                 slpake = msg.hexdigest()
 
-                embed = embeds.Common(
+                embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="SHA1 Hash",
@@ -114,7 +114,7 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
            
            
     @app_commands.command(name="sha224", description="Get SHA224 Hash")
@@ -126,7 +126,7 @@ class EncodeDecode(commands.Cog):
                 msg = hashlib.sha224(text.encode())
                 slpake = msg.hexdigest()
 
-                embed = embeds.Common(
+                embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="SHA224 Hash",
@@ -139,7 +139,7 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
            
            
     @app_commands.command(name="sha512", description="Get SHA512 Hash")
@@ -151,7 +151,7 @@ class EncodeDecode(commands.Cog):
                 msg = hashlib.sha512(text.encode())
                 slpake = msg.hexdigest()
 
-                embed = embeds.Common(
+                embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="SHA512 Hash",
@@ -164,7 +164,7 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
             
             
     @app_commands.command(name="leet", description="Convert text to L33T format")
@@ -196,7 +196,7 @@ class EncodeDecode(commands.Cog):
                     .replace("cK", "x")
                 )
 
-                embed = embeds.Common(
+                embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="L33T",
@@ -209,7 +209,7 @@ class EncodeDecode(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
             
 
 async def setup(client: commands.Bot):

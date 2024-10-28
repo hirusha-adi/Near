@@ -24,7 +24,7 @@ class Fun(commands.Cog):
                     json_data = await response.json()
                     quote = json_data[0]['q'] + " - " + json_data[0]['a']
 
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Inspirational isn't it?",
@@ -34,7 +34,7 @@ class Fun(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
     @app_commands.command(name="meme", description="Get a random meme")
@@ -53,7 +53,7 @@ class Fun(commands.Cog):
                             imgs.append(img)
                     meme = random.choice(imgs)
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="a Meme",
@@ -62,7 +62,7 @@ class Fun(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="dadjoke", description="Get a random dad joke")
     async def dadjoke(self, interaction: discord.Interaction):
@@ -72,7 +72,7 @@ class Fun(commands.Cog):
                 async with session.get("https://icanhazdadjoke.com", headers={"Accept": "application/json"}) as req:
                     r = await req.json()
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="a Dad Joke",
@@ -83,7 +83,7 @@ class Fun(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="wyr", description="Would You Rather...?")
     async def wyr(self, interaction: discord.Interaction):
@@ -97,7 +97,7 @@ class Fun(commands.Cog):
                     qor = soup.find(id='qor').text
                     qb = soup.find(id='qb').text
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Would You Rather",
@@ -107,7 +107,7 @@ class Fun(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="advice", description="Get advice for your life")
     async def advice(self, interaction: discord.Interaction):
@@ -119,7 +119,7 @@ class Fun(commands.Cog):
                     data_json = json.loads(data_str)
                     c = data_json['slip']['advice']
 
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="an Advice",
@@ -129,7 +129,7 @@ class Fun(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="joke", description="Get a Joke, but from Another API")
     async def joke(self, interaction: discord.Interaction):
@@ -141,7 +141,7 @@ class Fun(commands.Cog):
                     json_txt = await response.text()
                     json_data = json.loads(json_txt)
 
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="a Joke",
@@ -151,7 +151,7 @@ class Fun(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
 async def setup(client: commands.Bot):

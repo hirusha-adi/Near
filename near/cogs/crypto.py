@@ -21,7 +21,7 @@ class Crypto(commands.Cog):
                 async with session.get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,EUR') as response:
                     r = await response.json()
 
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Bitcoin",
@@ -32,7 +32,7 @@ class Crypto(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
             
     @app_commands.command(name="eth", description="Get the current Etherium Rates")
     async def eth(self, interaction: discord.Interaction):
@@ -42,7 +42,7 @@ class Crypto(commands.Cog):
                 async with session.get('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,EUR') as response:
                     r = await response.json()
 
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Ethereum",
@@ -53,7 +53,7 @@ class Crypto(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="xmr", description="Get the current Monero Rates")
     async def xmr(self, interaction: discord.Interaction):
@@ -63,7 +63,7 @@ class Crypto(commands.Cog):
                 async with session.get('https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=USD,EUR') as response:
                     r = await response.json()
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Monero",
@@ -74,7 +74,7 @@ class Crypto(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="doge", description="Get the current Doge Coin Rates")
     async def doge(self, interaction: discord.Interaction):
@@ -84,7 +84,7 @@ class Crypto(commands.Cog):
                 async with session.get('https://min-api.cryptocompare.com/data/price?fsym=DOGE&tsyms=USD,EUR') as response:
                     r = await response.json()
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Doge Coin",
@@ -95,7 +95,7 @@ class Crypto(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="xrp", description="Get the current XRP Rates")
     async def xrp(self, interaction: discord.Interaction):
@@ -105,7 +105,7 @@ class Crypto(commands.Cog):
                 async with session.get('https://min-api.cryptocompare.com/data/price?fsym=XRP&tsyms=USD,EUR') as response:
                     r = await response.json()
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Ripple",
@@ -116,7 +116,7 @@ class Crypto(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="rvn", description="Get the current Raven Coin Rates")
     async def rvn(self, interaction: discord.Interaction):
@@ -128,7 +128,7 @@ class Crypto(commands.Cog):
                     raven_coin_value = soup.find_all("span", {"class": "currency-pricestyles__Price-sc-1rux8hj-0 jxzQXk"})[0].text
                     change_percentage = soup.find_all("h6", {"class": "typography__StyledTypography-owin6q-0 hZxwDe"})[0].text
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Ravencoin",
@@ -139,7 +139,7 @@ class Crypto(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
 async def setup(client: commands.Bot):

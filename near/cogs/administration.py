@@ -51,7 +51,7 @@ class Administration(commands.Cog):
                 #   https://discordpy.readthedocs.io/en/stable/api.html#discord.Member.move_to
                 await member.move_to(channel_to)
 
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Moved members!",
@@ -60,7 +60,7 @@ class Administration(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"),ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"),ephemeral=False)
 
 
 async def setup(client: commands.Bot):

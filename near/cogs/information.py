@@ -27,7 +27,7 @@ class Information(commands.Cog):
                     async with session.get(f"https://api.worldbank.org/v2/country/{r['country_code']}?format=json") as response:
                         rc = await response.json()
 
-                embed = embeds.Common(
+                embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="IP Information",
@@ -40,7 +40,7 @@ class Information(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
     @app_commands.command(name='avatar', description="Get the User Avatar")
@@ -55,7 +55,7 @@ class Information(commands.Cog):
 
             avatar = user.display_avatar.with_format(format if format != "gif" else None).url
 
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title=f"Profile Picture of {user.name}",
@@ -64,7 +64,7 @@ class Information(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name='serverinfo', description="Get Information about the Server")
     async def serverinfo(self, interaction: discord.Interaction):
@@ -76,7 +76,7 @@ class Information(commands.Cog):
             # this will take a huge amount of time if there are 1000s of bans in large servers
             bans = [entry async for entry in interaction.guild.bans(limit=None)]
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title=f"Server Information of {interaction.guild.name}:",
@@ -95,7 +95,7 @@ class Information(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name='userinfo', description="Get Information about a User")
     @app_commands.describe(user="User to get the Information of. Defaults to the Author")
@@ -104,7 +104,7 @@ class Information(commands.Cog):
         try:
             target = user or interaction.user
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title=f"User Information",
@@ -128,7 +128,7 @@ class Information(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
 async def setup(client: commands.Bot):

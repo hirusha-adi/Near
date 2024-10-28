@@ -37,7 +37,7 @@ class Tools(commands.Cog):
             if int(length) < 101:
                 c = ''.join((secrets.choice(string.ascii_letters + string.digits + string.punctuation) for i in range(int(length))))
 
-                embed = embeds.Common(
+                embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="Password Generator",
@@ -48,10 +48,10 @@ class Tools(commands.Cog):
                 await interaction.response.send_message(embed=embed)
 
             else:
-                await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"The value of the number is high.\nPlease Enter a value below 40,"), ephemeral=False)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"The value of the number is high.\nPlease Enter a value below 40,"), ephemeral=False)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="insta", description="Grab the Instagram Profile Picture of a Profile")
     @app_commands.describe(username="Instagram Profile's Username")
@@ -76,7 +76,7 @@ class Tools(commands.Cog):
             # Use this if you want to send the image as an embed
             # ---
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Instagram Profile Picture",
@@ -92,7 +92,7 @@ class Tools(commands.Cog):
             # await interaction.response.send_message(file=file)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
             
         finally:
             try:
@@ -110,7 +110,7 @@ class Tools(commands.Cog):
             if input_sanitization.check_input(text):
                 privbin = privatebinapi.send("https://bin.teamsds.net/", text=text)
                 
-                embed = embeds.Common(
+                embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="TeamSDS's PrivateBin",
@@ -125,7 +125,7 @@ class Tools(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="passwordcheck", description="Password Strength Check and Profiler")
     @app_commands.describe(password="Password to analyze")
@@ -135,7 +135,7 @@ class Tools(commands.Cog):
             if input_sanitization.password_check(password):
                 results = zxcvbn(f"{password}")
                 
-                embed = embeds.Common(
+                embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="Password Check",
@@ -176,7 +176,7 @@ class Tools(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="lyrics", description="Search the Lyrics of any Song")
     @app_commands.describe(query="Name of the Song")
@@ -203,7 +203,7 @@ class Tools(commands.Cog):
                 songThumbnail = lyricsData['thumbnail']['genius']
 
                 for chunk in textwrap.wrap(songLyrics, 4096, replace_whitespace=False):
-                    embed = embeds.Common(
+                    embed = await embeds.Common(
                         client=self.client,
                         interaction=interaction,
                         title=f'{songTitle} - {songArtist}',
@@ -216,7 +216,7 @@ class Tools(commands.Cog):
                 raise errors.IllegalInput
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 async def setup(client: commands.Bot):
     await client.add_cog(Tools(client))
