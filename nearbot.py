@@ -198,14 +198,10 @@ async def on_message(message: discord.message.Message):
             messagesubcont += messagesubcontlp
 
         if messagesubcont in blacklisted_letters_n_words:
-            embed = discord.Embed(
-                title="Something is wrong!", description="Please enter the command with valid characters", color=0xff0000)
-            embed.set_author(
-                name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
-            embed.set_thumbnail(
-                url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
-            embed.add_field(
-                name="Possible Fix", value=f"Dont have {blacklisted_letters_n_words} in your command!", inline=True)
+            embed = discord.Embed(title="Something is wrong!", description="Please enter the command with valid characters", color=0xff0000)
+            embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/877796755234783273/879298565380386846/sign-red-error-icon-1.png")
+            embed.add_field(name="Possible Fix", value=f"Dont have {blacklisted_letters_n_words} in your command!", inline=True)
             await message.reply(embed=embed)
             return
 
