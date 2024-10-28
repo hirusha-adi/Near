@@ -4,14 +4,6 @@ from tortoise.exceptions import DoesNotExist
 from .models import DataEmbeds, DataAdBroadcast, DataGeneral
 
 
-class FetchAll:
-    @staticmethod
-    async def fetch_embeds() -> list[DataEmbeds]:
-        try:
-            return await DataEmbeds.all()
-        except DoesNotExist:
-            logger.error("Key: ")
-            
 class DataEmbedsFetcher:
     @staticmethod
     async def one(key: str) -> t.Optional[DataEmbeds]:
@@ -23,3 +15,12 @@ class DataEmbedsFetcher:
     @staticmethod
     async def all() -> t.Optional[t.List[DataEmbeds]]:
         return await DataEmbeds.all()
+
+    @staticmethod
+    async def allError() -> t.Optional[dict]:
+        all_ = await DataEmbedsFetcher.all()
+        data = {}
+        for i in all_:
+            if i.key.startswith("ERROR_"):
+                data[i.key] = i.value
+        return data
