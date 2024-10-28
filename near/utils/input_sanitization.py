@@ -1,5 +1,6 @@
 import ipaddress
 import re
+import typing as t
 
 privilege_escalation_keywords = [
     'sudo', 'root', 'admin', 'polkit', 'pkexec', 'gksudo', 'kdesudo',
@@ -119,24 +120,37 @@ def password_check(input_str):
     return check_input(input_str)
 
 
-def color(hex: str) -> int:
+def color(col: t.Union[str, t.Literal["red", "green", "blue", "yellow", "purple", "cyan", "orange"]]) -> int:
     """
-    Converts a given hex color code to an integer.
+    Convert a color string into an integer.
 
     Parameters
     ----------
-    hex : str
-        The hex color code to convert.
+    col : str
+        The color string. Can be a color name or a hex color string.
+        Supported color names: red, green, blue, yellow, purple, cyan, orange
 
     Returns
     -------
     int
-        The integer representation of the given hex color code.
+        The color as an integer.
     """
     
     try:
-        # Attempt to convert the hex color code to an integer.
-        return int(hex, 16)
+        col = col.lower()
+        colors = {
+            "red": 0xFF0000,
+            "green": 0x00FF00,
+            "blue": 0x0000FF,
+            "yellow": 0xFFFF00,
+            "purple": 0xFF00FF,
+            "cyan": 0x00FFFF,
+            "orange": 0xFFA500
+        }
+        return colors.get(
+            col, 
+            int(col, 16)    # default to converting 
+                            # eg: 0xff0000 or ff0000
+        )
     except ValueError:
-        # If the conversion fails, return the default color red.
         return 0xFF0000
