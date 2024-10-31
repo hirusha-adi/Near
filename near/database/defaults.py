@@ -1,15 +1,16 @@
-from .models import DataAdBroadcast, DataEmbeds, DataGeneral
+from .models import DataAdBroadcast, DataEmbeds, DataGeneral, DataEmbedThumbnails
 from tortoise.transactions import in_transaction
 import json, os
 
 async def set_defaults():
     await __set_defaultsDataEmbeds()
+    await __setDetaulsDataEmbedThumbnails()
 
 async def __set_defaultsDataEmbeds():
     if await DataEmbeds.all().count() == 0:
         try:
             with open(os.path.join("near", "database", "default-data", "default.dataembeds.json"), "r") as f:
-                default_data = json.load(f)
+                default_data: dict = json.load(f)
             # -------------------------------------
             async with in_transaction():
                 # PleaseWaitEmbed
@@ -34,4 +35,18 @@ async def __set_defaultsDataEmbeds():
             print("Default data loaded into DataEmbeds table.")
         except Exception as e:
             print(f"Failed to load default data into DataEmbeds: {e}")
-    
+
+
+async def __setDetaulsDataEmbedThumbnails():
+    if await DataEmbedThumbnails.all().count() == 0:
+        try:
+            with open(os.path.join("near", "database", "default-data", "default.thumbnails.json"), "r") as f:
+                default_data: dict = json.load(f)
+            # -------------------------------------
+            async with in_transaction():
+                for key, value in default_data.items():
+                    await DataEmbedThumbnails.create(key=key, value=value)
+            # -------------------------------------
+            print("Default data loaded into DataEmbedThumbnails table.")
+        except Exception as e:
+            print(f"Failed to load default data into DataEmbedThumbnails: {e}")

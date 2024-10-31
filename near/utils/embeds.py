@@ -29,14 +29,14 @@ async def Error(client: commands.Bot, interaction: discord.Interaction, error_me
     """
     
     logger.error(error_message)
-    embed_info = await dbfetch.DataEmbedsFetcher.allError()
+    embed_info = await dbfetch.DataEmbedsFetcher.allErrorVals()
     embed = discord.Embed(title=embed_info['ERROR_TITLE'], description=f"```\n{error_message}```", color=input_sanitization.color(embed_info['ERROR_COLOR']), timestamp=datetime.utcnow())
     embed.set_author(name=f"{client.user.name}", icon_url=f"{client.user.avatar.url}")
     embed.set_thumbnail(url=embed_info['ERROR_THUMBNAIL'])
     embed.set_footer(text=f"Requested by {interaction.user.name}")
     return embed
 
-async def Common(client: commands.Bot, interaction: discord.Interaction, title: str, description: t.Optional[str | list | bool] = False, thumbnail: t.Optional[str] = "",) -> discord.Embed:
+async def Common(client: commands.Bot, interaction: discord.Interaction, title: str, description: t.Optional[str | list | bool] = False, thumbnail: t.Optional[str] = "", thumbnail_direct: t.Optional[bool] = False) -> discord.Embed:
     """
     Create a common embed with a title and optional description and thumbnail.
     
@@ -75,8 +75,13 @@ async def Common(client: commands.Bot, interaction: discord.Interaction, title: 
             color=get_embeds.Common.COLOR,
             timestamp=datetime.utcnow()
         )
+
     if thumbnail:
-        embed.set_thumbnail(url=thumbnail)
+        if thumbnail_direct:
+            embed.set_thumbnail(url=thumbnail)
+        else:
+            embed.set_thumbnail(url=await dbfetch.DataEmbedThumbnailsFetcher.oneVal(key=thumbnail))
+
     embed.set_author(name=client.user.name, icon_url=client.user.avatar.url)
     embed.set_footer(text=f"Requested by {interaction.user.name}")
     return embed
