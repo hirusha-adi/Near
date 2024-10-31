@@ -179,7 +179,7 @@ class General(commands.Cog):
         logger.info("Tortoise-ORM connection closed.")
 
     @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
+    async def on_command_error(self, ctx: commands.Context, error) -> None:
         if isinstance(error, commands.MissingPermissions) or isinstance(error, commands.CheckFailure):
             await ctx.send(embed=await embeds.Error(interaction=ctx, client=self.client, error_message=f"You don't have the necessary permissions required to use this command!"), ephemeral=False)
 
@@ -195,7 +195,7 @@ class General(commands.Cog):
                 client=self.client,
                 interaction=interaction,
                 title=f":timer:  Response Time: {round(self.client.latency * 1000)} ms",
-                thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png"
+                thumbnail="general_ping"
             )
             await interaction.response.send_message(embed=embed)
 
@@ -214,7 +214,7 @@ class General(commands.Cog):
                 client=self.client,
                 interaction=interaction,
                 title=f":clock: Uptime: {text}",
-                thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png"
+                thumbnail="general_uptime"
             )
             await interaction.response.send_message(embed=embed)
 
@@ -239,7 +239,7 @@ class General(commands.Cog):
                     client=self.client,
                     interaction=interaction,
                     title=f"Success!",
-                    thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png"
+                    thumbnail="general_clean"
                 )
                 embed.add_field(name="Action", value=f"Deleted {amount} {msgtxt} sent by {self.client.user.name}!", inline=False)
                 await interaction.response.send_message(embed=embed, ephemeral=True)

@@ -13,5 +13,9 @@
     "fun_dadjoke": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/fun/dadjoke.png",
     "fun_inspire": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/fun/inspire.png",
     "fun_joke": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/fun/joke.png",
-    "fun_wyr": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/fun/wyr.webp"
+    "fun_wyr": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/fun/wyr.webp",
+    "general_ping": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/general/ping.webp",
+    "general_uptime": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/general/uptime.png",
+    "general_clean": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/general/clean.png",
+    "general_help": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/general/help.png"
 }
