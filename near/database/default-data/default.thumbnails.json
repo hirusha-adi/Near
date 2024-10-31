@@ -8,5 +8,10 @@
     "endecoding_b64": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/endecoding/b64.png",
     "endecoding_hash": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/endecoding/hash.png",
     "endecoding_leet": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/endecoding/leet.png",
-    "endecoding_md5": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/endecoding/md5.png"
+    "endecoding_md5": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/endecoding/md5.png",
+    "fun_advice": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/fun/advice.png",
+    "fun_dadjoke": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/fun/dadjoke.png",
+    "fun_inspire": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/fun/inspire.png",
+    "fun_joke": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/fun/joke.png",
+    "fun_wyr": "https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/cogs/fun/wyr.webp"
 }
