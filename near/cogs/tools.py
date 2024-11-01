@@ -41,7 +41,7 @@ class Tools(commands.Cog):
                     client=self.client,
                     interaction=interaction,
                     title="Password Generator",
-                    thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/880031728369016832/704187.png"
+                    thumbnail="tools_passwordgen",
                 )
                 embed.add_field(name="Password Length", value=f"{length}", inline=False)
                 embed.add_field(name="Password", value=f"```{c}```", inline=False)
@@ -60,7 +60,7 @@ class Tools(commands.Cog):
         try:
             igpfp = instaloader.Instaloader()
             igpfp.download_profile(username, profile_pic_only=True)
-                
+
             os.chdir(f'{username}')
             jpg_files = glob.glob("*.jpg")
             for jpg_file in jpg_files:
@@ -70,37 +70,36 @@ class Tools(commands.Cog):
             for jpg_file in jpg_files:
                 shutil.move(jpg_file, "igtemp.jpg")
                 break
-                
+
             file = discord.File(f'igtemp.jpg', filename="image.jpg")
-            
+
             # Use this if you want to send the image as an embed
             # ---
-            
+
             embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Instagram Profile Picture",
                 description=f"of {username}",
-                thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/880031728369016832/704187.png"
+                thumbnail="tools_insta",
             )
             embed.add_field(name="Link", value=f"https://instagram.com/{username}", inline=False)
             embed.set_image(url="attachment://image.jpg")
             await interaction.response.send_message(file=file, embed=embed)
-            
+
             # Use this if you only want to send the file without an embed
             # ---
             # await interaction.response.send_message(file=file)
 
         except Exception as e:
             await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-            
+
         finally:
             try:
                 shutil.rmtree(username)
                 os.remove(f'igtemp.jpg')
             except Exception as e:
                 print(f"Error removing directory {username}: {e}")
-            
 
     @app_commands.command(name="bin", description="Create a PrivateBin from a Text")
     @app_commands.describe(text="Text to be included in the PrivateBin")
@@ -109,12 +108,12 @@ class Tools(commands.Cog):
         try:
             if input_sanitization.check_input(text):
                 privbin = privatebinapi.send("https://bin.teamsds.net/", text=text)
-                
+
                 embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="TeamSDS's PrivateBin",
-                    thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879586340520480768/large.png"
+                    thumbnail="tools_bin",
                 )
                 embed.add_field(name="ID", value=f"{privbin['id']}", inline=False)
                 embed.add_field(name="URL", value=f"{privbin['full_url']}", inline=False)
@@ -134,19 +133,19 @@ class Tools(commands.Cog):
         try:
             if input_sanitization.password_check(password):
                 results = zxcvbn(f"{password}")
-                
+
                 embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="Password Check",
                     description="using Low Budget Password Strength Estimation (zxcvbn)",
-                    thumbnail="https://iconape.com/wp-content/png_logo_vector/password.png"
+                    thumbnail="tools_passwordchk",
                 )
 
                 embed.add_field(name="Password", value=f"{results.get('password', '')}", inline=False)
                 embed.add_field(name="Score", value=f"{results['score']}", inline=False)
                 embed.add_field(name="Guesses", value=f"Decimal - {results['guesses']}\nLog10 - {results['guesses_log10']}", inline=False)
-                
+
                 sequence_info = "\n".join(f"{k} - {v}" for dic in results["sequence"] for k, v in dic.items())
                 embed.add_field(name="Sequence Info", value=sequence_info, inline=False)
 
@@ -163,11 +162,11 @@ class Tools(commands.Cog):
                 warning = feedback.get('warning', '')
                 if warning:
                     embed.add_field(name="Warning", value=warning, inline=False)
-                
+
                 suggestions = "\n".join(feedback.get('suggestions', []))
                 if suggestions:
                     embed.add_field(name="Suggestions", value=suggestions, inline=False)
-                
+
                 if f'{password}\n' in self.lines:
                     embed.add_field(name="Common Password", value="This password is among the worlds top 1 million most common passwords", inline=False)
 
@@ -206,9 +205,9 @@ class Tools(commands.Cog):
                     embed = await embeds.Common(
                         client=self.client,
                         interaction=interaction,
-                        title=f'{songTitle} - {songArtist}',
+                        title=f"{songTitle} - {songArtist}",
                         description=chunk,
-                        thumbnail="https://iconape.com/wp-content/png_logo_vector/password.png"
+                        thumbnail="tools_lyrics",
                     )
                     embed.set_thumbnail(url=songThumbnail)
                     await interaction.response.send_message(embed=embed)
