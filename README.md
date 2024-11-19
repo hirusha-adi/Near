@@ -1,4 +1,4 @@
-# Near - Discord bot of TeamSDS
+# Near - A discord bot for Team SDS
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/hirusha-adi/Near-Data/refs/heads/main/images/github/github-banner.png" alt="Lisence">
