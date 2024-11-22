@@ -82,7 +82,7 @@ async def Common(
         An embed with the specified title, optional description, and thumbnail.
     """
 
-    em_color = input_sanitization.color(dbfetch.SettingsEmbeds.oneRec())
+    em_color = input_sanitization.color(await dbfetch.SettingsEmbeds.oneRec("COMMON_COLOR"))
     if description == False:  # dont add description
         embed = discord.Embed(
             title=title, 
