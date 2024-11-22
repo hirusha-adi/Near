@@ -30,6 +30,7 @@ async def __set_defaultsSettingsEmbeds():
                     }
                 )
                 logger.debug(f"Added key: {key_default}, value: {val_default}")
+            logger.info("Default data loaded into settings_embeds collection.")
             
         elif len(default_data_keys) > len(settings_embeds_all_keys):
             # means there has been an update in the default config
@@ -46,8 +47,7 @@ async def __set_defaultsSettingsEmbeds():
                         }
                     )
                     logger.debug(f"Added key: {missing_key}, value: {val_default}")
-        
-        logger.info("Default data loaded into settings_embeds collection.")
+            logger.info("New default data updated into settings_embeds collection.")
                     
     except Exception as e:
         logger.error(f"Failed to load default data into settings_embeds: {e}")
