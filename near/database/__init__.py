@@ -1,3 +1,2 @@
-from . import get_main, db, dbfetch
+from . import db, dbfetch
 from .defaults import set_defaults
-
