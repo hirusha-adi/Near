@@ -5,7 +5,6 @@ import discord
 from discord.ext import commands
 from loguru import logger
 
-from near.database import get_embeds
 from near.database import dbfetch
 from near.utils import input_sanitization
 
@@ -83,17 +82,18 @@ async def Common(
         An embed with the specified title, optional description, and thumbnail.
     """
 
+    em_color = input_sanitization.color(dbfetch.SettingsEmbeds.oneRec())
     if description == False:  # dont add description
         embed = discord.Embed(
             title=title, 
-            color=get_embeds.Common.COLOR, 
+            color=em_color, 
             timestamp=datetime.utcnow()
         )
     else:  # add description
         embed = discord.Embed(
             title=title,
             description=("".join(description) if isinstance(description, list) else description),
-            color=get_embeds.Common.COLOR,
+            color=em_color,
             timestamp=datetime.utcnow(),
         )
 

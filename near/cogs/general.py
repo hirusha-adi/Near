@@ -8,8 +8,6 @@ from discord import app_commands
 from discord.ext import commands
 from loguru import logger
 
-
-from near.database import get_embeds
 from near.database.defaults import set_defaults
 from near.utils import embeds
 
@@ -38,9 +36,11 @@ class Select(discord.ui.Select):
 
         option = self.values[0]
 
-        embed = discord.Embed(title=":gear: A Guide to All Available Commands :gear:", description="To access the complete list of commands and their respective descriptions, kindly select a category from the drop-down menu. For additional information and a comprehensive list of commands, please visit our website at https://teamsds.net/nearbot", color=get_embeds.Common.COLOR)
-        embed.set_author(name="NearBot", icon_url="https://cdn.discordapp.com/attachments/953475157605892099/1073516633798225980/Avatar.png")
-        embed.set_footer(text=f"Requested by {interaction.user.name}")
+        embed = embeds.Common(
+            interaction=interaction,
+            title=":gear: A Guide to All Available Commands :gear:",
+            description="To access the complete list of commands and their respective descriptions, kindly select a category from the drop-down menu. For additional information and a comprehensive list of commands, please visit our website at https://teamsds.net/nearbot"
+        )
 
         thumbnails = {
             "Administration": "https://cdn.discordapp.com/attachments/1278527700482527273/1278527720132968458/admin-3d-illustration-icon-png.png",
@@ -250,16 +250,14 @@ class General(commands.Cog):
     async def help(self, interaction: discord.Interaction):
         logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
-            embed3 = discord.Embed(
+            embed = embeds.Common(
+                client=self.client,
+                interaction=interaction,
                 title=":gear: A Guide to All Available Commands :gear:",
                 description="To access the complete list of commands and their respective descriptions, kindly select a category from the drop-down menu. For additional information and a comprehensive list of commands, please visit our website at https://teamsds.net/nearbot",
-                color=get_embeds.Common.COLOR
+                thumbnail="general_help"
             )
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073537396982952016/868681.png")
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-            await interaction.response.send_message(embed=embed3, view=SelectView(), ephemeral=False)
+            await interaction.response.send_message(embed=embed, view=SelectView(), ephemeral=False)
 
         except Exception as e:
             await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
