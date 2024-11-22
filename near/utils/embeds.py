@@ -10,6 +10,7 @@ from near.database import dbfetch
 from near.utils import input_sanitization
 
 
+
 async def Error(
     client: commands.Bot, interaction: discord.Interaction, error_message: str
 ) -> discord.Embed:
@@ -46,9 +47,9 @@ async def Error(
 
 
 async def Common(
-    client: commands.Bot,
     interaction: discord.Interaction,
     title: str,
+    client: t.Optional[commands.Bot] = None,
     description: t.Optional[str | list | bool] = False,
     thumbnail: t.Optional[str] = "",
     thumbnail_direct: t.Optional[bool] = False,
@@ -84,7 +85,9 @@ async def Common(
 
     if description == False:  # dont add description
         embed = discord.Embed(
-            title=title, color=get_embeds.Common.COLOR, timestamp=datetime.utcnow()
+            title=title, 
+            color=get_embeds.Common.COLOR, 
+            timestamp=datetime.utcnow()
         )
     else:  # add description
         embed = discord.Embed(
@@ -100,7 +103,9 @@ async def Common(
             print(thumbnail_direct, thumbnail)
         else:
             embed.set_thumbnail(url=await dbfetch.SettingsEmbeds.oneThumbnail(key=thumbnail))
-
-    embed.set_author(name=client.user.name, icon_url=client.user.avatar.url)
+    
+    if client:
+        embed.set_author(name=client.user.name, icon_url=client.user.avatar.url)
+    
     embed.set_footer(text=f"Requested by {interaction.user.name}")
     return embed

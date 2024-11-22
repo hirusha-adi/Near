@@ -1,3 +1,7 @@
+# NearBot v0.9
+
+1. Remove broken `/face` command in `cogs.fakeinfo`
+
 # NearBot v0.8
 
 1. Use a database with an asyncio supported ORM (`tortoise-orm`)

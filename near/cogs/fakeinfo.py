@@ -4,28 +4,11 @@ import discord
 import requests
 from discord import app_commands
 from discord.ext import commands
+from faker import Faker
+from faker_vehicle import VehicleProvider
 
-from near.database import get_embeds
-
-try:
-    from faker import Faker
-except:
-    if os.name == 'nt':
-        os.system(f"pip install Faker")
-    else:
-        os.system(f"pip3 install Faker")
-finally:
-    from faker import Faker
-
-try:
-    from faker_vehicle import VehicleProvider
-except:
-    if os.name == 'nt':
-        os.system(f"pip install faker-vehicle")
-    else:
-        os.system(f"pip3 install faker-vehicle")
-finally:
-    from faker_vehicle import VehicleProvider
+from near.utils import embeds
+from near.database import dbfetch
 
 
 class SelectFakeHelp(discord.ui.Select):
@@ -63,14 +46,12 @@ class SelectFakeHelp(discord.ui.Select):
 
         option = self.values[0]
 
-        embed = discord.Embed(
+        embed = embeds.Common(
+            interaction=interaction,
             title=":gear: A Guide to All Available Commands :gear:",
             description="To access the complete list of commands and their respective descriptions, kindly select a category from the drop-down menu. For additional information and a comprehensive list of commands, please visit our website at https://teamsds.net/nearbot",
-            color=get_embeds.Common.COLOR
+            thumbnail="fakeinfo_fake",
         )
-        embed.set_author(name=f"NearBot", icon_url=f"https://cdn.discordapp.com/attachments/953475157605892099/1073516633798225980/Avatar.png")
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/940889393974104084/1073538553335783454/7047060.png")
-        embed.set_footer(text=f"Requested by {interaction.user.name}")
 
         if option == "Main":
             embed.add_field(name="/fake high", value="Generate a high amount of information", inline=False)
@@ -116,7 +97,7 @@ class SelectFakeHelp(discord.ui.Select):
         elif option == "Others":
             embed.add_field(name="Other Fake Commands", value=f"`/fake ean`, \n`/fake company suffix`, \n`/fake iana`, \n`/fake lang`, \n`/fake color`, \n`/fake cp`", inline=False)
 
-        # works as intended, but gives this error: "This interaction failed"
+        # works as intended, but gives this error: "This interaction failed" after some time
         await interaction.message.edit(embed=embed)
 
         # Sends message everytime an option is selected. Bad idea, but no bugged Error
@@ -132,60 +113,6 @@ class SelectViewFakeHelp(discord.ui.View):
 class FakeInformation(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
-
-    @app_commands.command(name="face", description="a Fake Face")
-    @app_commands.describe(gender="Gender of the Face to be generated male/m or female/f")
-    async def face(self, interaction: discord.Interaction, gender: str = "any"):
-        try:
-            male_wl = ("male", "man", "boy", "m")
-            female_wl = ("female", "girl", "egirl",  "g", "f", "lady", "woman", "wife")
-
-            fake = Faker()
-
-            if gender.lower() in male_wl:
-                r = requests.get("https://fakeface.rest/face/json?gender=male").json()
-                embed = discord.Embed(title="Here is your generated face", color=get_embeds.FakeEmbeds.COLOR)
-                embed.add_field(name="Name", value=f"{fake.first_name_male()} {fake.last_name_male()}", inline=False)
-                embed.add_field(name="Gender", value="Male", inline=False)
-                embed.add_field(name="Age", value=f"{r['age']}", inline=True)
-                embed.set_image(url=f'{r["image_url"]}')
-                embed.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed)
-            elif gender.lower() in female_wl:
-                r = requests.get("https://fakeface.rest/face/json?gender=female").json()
-                embed2 = discord.Embed(title="Here is your generated face", color=get_embeds.FakeEmbeds.COLOR)
-                embed2.add_field(name="Name", value=f"{fake.first_name_female()} {fake.last_name_female()}", inline=False)
-                embed2.add_field(name="Gender", value="Female", inline=False)
-                embed2.add_field(name="Age", value=f"{r['age']}", inline=True)
-                embed2.set_image(url=f'{r["image_url"]}')
-                embed2.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed2)
-            else:  # any
-                r = requests.get("https://fakeface.rest/face/json").json()
-                embed3 = discord.Embed(title="Here is your generated face", color=get_embeds.FakeEmbeds.COLOR)
-                if r['gender'] == "male":
-                    embed3.add_field(name="Name", value=f"{fake.first_name_male()} {fake.last_name_male()}", inline=False)
-                elif r['gender'] == "female":
-                    embed3.add_field(name="Name", value=f"{fake.first_name_female()} {fake.last_name_female()}", inline=False)
-                else:
-                    pass
-                embed3.add_field(name="Gender", value=f"{r['gender']}", inline=False)
-                embed3.add_field(name="Age", value=f"{r['age']}", inline=True)
-                embed3.set_image(url=f'{r["image_url"]}')
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
-
-        except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-            await interaction.response.send_message(embed=embed3)
 
     @app_commands.command(name="fake", description="Generate fake information")
     @app_commands.describe(category="What exactly to generate. Refer to help for additional information")
@@ -213,13 +140,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf)
             except Exception as e:
-                embed2 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed2.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed2.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed2.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed2)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "name":
             faker = Faker()
@@ -234,13 +155,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "dob":
             faker = Faker()
@@ -254,13 +169,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "addr":
             faker = Faker()
@@ -274,13 +183,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "job":
             faker = Faker()
@@ -294,13 +197,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "color":
             faker = Faker()
@@ -314,13 +211,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "zipcode":
             faker = Faker()
@@ -334,13 +225,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "city":
             faker = Faker()
@@ -354,13 +239,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "licenseplate":
             faker = Faker()
@@ -375,13 +254,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "bban":
             faker = Faker()
@@ -395,13 +268,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "iban":
             faker = Faker()
@@ -416,13 +283,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "bs":
             faker = Faker()
@@ -436,13 +297,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "cc":
             faker = Faker()
@@ -457,13 +312,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "cemail":
             faker = Faker()
@@ -477,13 +326,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "pno":
             faker = Faker()
@@ -498,13 +341,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "cp":
             faker = Faker()
@@ -519,13 +356,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "ssn":
             faker = Faker()
@@ -539,13 +370,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "low":
             fake_low = Faker()
@@ -568,13 +393,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "country":
             faker = Faker()
@@ -588,13 +407,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "postcode":
             faker = Faker()
@@ -608,13 +421,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "street addr":
             faker = Faker()
@@ -628,13 +435,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "street addr":
             faker = Faker()
@@ -648,13 +449,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "aba":
             faker = Faker()
@@ -668,13 +463,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "bank country":
             faker = Faker()
@@ -688,13 +477,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "ean":
             # The usage is like 'fake ean 10' - 10 is the length
@@ -715,13 +498,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "company suffix":
             faker = Faker()
@@ -735,13 +512,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "cc ex":
             faker = Faker()
@@ -756,13 +527,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "cc no":
             faker = Faker()
@@ -777,13 +542,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "cc pr":
             faker = Faker()
@@ -798,13 +557,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "cc cvv":
             faker = Faker()
@@ -818,13 +571,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "crypto":
             faker = Faker()
@@ -839,13 +586,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "crypto code":
             faker = Faker()
@@ -859,13 +600,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "crypto name":
             faker = Faker()
@@ -879,13 +614,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "curr":
             faker = Faker()
@@ -900,13 +629,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "curr code":
             faker = Faker()
@@ -920,13 +643,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "curr name":
             faker = Faker()
@@ -940,13 +657,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category.lower().startswith("curr symbol"):
             faker = Faker()
@@ -964,13 +675,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "pricetag":
             faker = Faker()
@@ -984,13 +689,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "date":
             faker = Faker()
@@ -1004,13 +703,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "century":
             faker = Faker()
@@ -1024,13 +717,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "file name":
             faker = Faker()
@@ -1044,13 +731,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "file ex":
             faker = Faker()
@@ -1064,13 +745,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "file path":
             faker = Faker()
@@ -1084,13 +759,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category.lower().startswith("mime"):
             faker = Faker()
@@ -1110,13 +779,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "unix device":
             faker = Faker()
@@ -1130,13 +793,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "unix partition":
             faker = Faker()
@@ -1150,13 +807,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "email":
             faker = Faker()
@@ -1170,13 +821,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "email free":
             faker = Faker()
@@ -1190,13 +835,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "domain":
             faker = Faker()
@@ -1210,13 +849,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "hostname":
             faker = Faker()
@@ -1230,13 +863,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "http method":
             faker = Faker()
@@ -1250,13 +877,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "iana":
             faker = Faker()
@@ -1270,13 +891,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "img url":
             faker = Faker()
@@ -1290,13 +905,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "ipv4":
             faker = Faker()
@@ -1310,13 +919,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "ipv4 class":
             faker = Faker()
@@ -1330,13 +933,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "ipv4 private":
             faker = Faker()
@@ -1350,13 +947,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "ipv4 public":
             faker = Faker()
@@ -1370,13 +961,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "ipv6":
             faker = Faker()
@@ -1390,13 +975,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "macaddr":
             faker = Faker()
@@ -1410,13 +989,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "nic handle":
             faker = Faker()
@@ -1430,13 +1003,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "port":
             faker = Faker()
@@ -1450,13 +1017,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "ripeid":
             faker = Faker()
@@ -1470,13 +1031,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "slug":
             faker = Faker()
@@ -1490,13 +1045,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "tld":
             faker = Faker()
@@ -1510,13 +1059,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "uri":
             faker = Faker()
@@ -1530,13 +1073,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "uri ex":
             faker = Faker()
@@ -1550,13 +1087,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "url":
             faker = Faker()
@@ -1570,13 +1101,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "username":
             faker = Faker()
@@ -1590,13 +1115,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "isbn10":
             faker = Faker()
@@ -1610,13 +1129,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "isbn13":
             faker = Faker()
@@ -1630,13 +1143,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "paragraph":
             faker = Faker()
@@ -1650,13 +1157,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "sentence":
             faker = Faker()
@@ -1670,13 +1171,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "text":
             faker = Faker()
@@ -1690,13 +1185,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "word":
             faker = Faker()
@@ -1710,13 +1199,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "fname":
             faker = Faker()
@@ -1730,13 +1213,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "fname male":
             faker = Faker()
@@ -1750,13 +1227,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "fname female":
             faker = Faker()
@@ -1770,13 +1241,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "fname nb":
             faker = Faker()
@@ -1791,13 +1256,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "lang":
             faker = Faker()
@@ -1811,13 +1270,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "lname":
             faker = Faker()
@@ -1831,13 +1284,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "lname male":
             faker = Faker()
@@ -1851,13 +1298,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "lname female":
             faker = Faker()
@@ -1871,13 +1312,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "lname nb":
             faker = Faker()
@@ -1891,13 +1326,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "name female":
             faker = Faker()
@@ -1911,13 +1340,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "name male":
             faker = Faker()
@@ -1931,13 +1354,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "name nb":
             faker = Faker()
@@ -1951,13 +1368,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "prefix":
             faker = Faker()
@@ -1971,13 +1382,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "suffix":
             faker = Faker()
@@ -1991,13 +1396,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "callingcode":
             faker = Faker()
@@ -2011,13 +1410,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "msisdn":
             faker = Faker()
@@ -2031,13 +1424,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "apt":
             faker = Faker()
@@ -2051,13 +1438,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "chrome":
             faker = Faker()
@@ -2071,13 +1452,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "firefox":
             faker = Faker()
@@ -2091,13 +1466,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "ie":
             faker = Faker()
@@ -2112,13 +1481,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "iospt":
             faker = Faker()
@@ -2132,13 +1495,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "linuxpt":
             faker = Faker()
@@ -2152,13 +1509,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "linuxproc":
             faker = Faker()
@@ -2172,13 +1523,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "macpt":
             faker = Faker()
@@ -2192,13 +1537,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "macprocessor":
             faker = Faker()
@@ -2212,13 +1551,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "opera":
             faker = Faker()
@@ -2232,13 +1565,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "safari":
             faker = Faker()
@@ -2252,13 +1579,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "winpt":
             faker = Faker()
@@ -2273,13 +1594,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category == "ua":
             faker = Faker()
@@ -2293,13 +1608,7 @@ class FakeInformation(commands.Cog):
 
                 await interaction.response.send_message(embed=emf2)
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category.lower().startswith('vcl'):
             fake = Faker()
@@ -2363,13 +1672,7 @@ class FakeInformation(commands.Cog):
                 await interaction.response.send_message(embed=emf2)
 
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         elif category.lower().startswith('mcn'):
             fake = Faker()
@@ -2432,13 +1735,7 @@ class FakeInformation(commands.Cog):
                 await interaction.response.send_message(embed=emf2)
 
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
         else:
             try:
@@ -2454,13 +1751,7 @@ class FakeInformation(commands.Cog):
                 await interaction.response.send_message(embed=emf2, view=SelectViewFakeHelp(), ephemeral=False)
 
             except Exception as e:
-                embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed3)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="fakeprofiles", description="Generate a given number of fake profiles")
     @app_commands.describe(amount="Amount of fake profiles to generate")
@@ -2511,13 +1802,7 @@ class FakeInformation(commands.Cog):
                 await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-            await interaction.response.send_message(embed=embed3)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="discordtoken", description="Generate a fake discord token")
     async def discordtoken(self, interaction: discord.Interaction):
@@ -2533,13 +1818,7 @@ class FakeInformation(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-            embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed3.set_thumbnail(url="https://media.discordapp.net/attachments/877796755234783273/880745781966037032/new-scrabble-words-2018-beatdown-5657-57124c9f228c0258d65053fe7d3891491x.jpg")
-            embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-            embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-            await interaction.response.send_message(embed=embed3)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
 async def setup(client: commands.Bot):
