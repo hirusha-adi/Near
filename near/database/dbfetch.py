@@ -3,7 +3,7 @@ from loguru import logger
 from . import db
 from pocketbase.models.record import Record
 
-class DataEmbedsFetcher:
+class SettingsEmbeds:
     @staticmethod
     async def oneRec(key: str) -> t.Optional[str]:
         try:
@@ -29,11 +29,9 @@ class DataEmbedsFetcher:
             return data
         except Exception as e:
             logger.error(f"Error: {e}")
-
-
-class DataEmbedThumbnailsFetcher:
+    
     @staticmethod
-    async def oneVal(key: str) -> t.Optional[str]:
+    async def oneThumbnail(key: str) -> t.Optional[str]:
         try:
             __fetched = db.Collections.settings_embeds().get_first_list_item(filter=f'key="thumbnail_{key}"')
             return str(__fetched.value)

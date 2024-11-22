@@ -32,7 +32,7 @@ async def Error(
     """
 
     logger.error(error_message)
-    embed_info = await dbfetch.DataEmbedsFetcher.allErrorVals()
+    embed_info = await dbfetch.SettingsEmbeds.allErrorVals()
     embed = discord.Embed(
         title=embed_info["ERROR_TITLE"],
         description=f"```\n{error_message}```",
@@ -89,9 +89,7 @@ async def Common(
     else:  # add description
         embed = discord.Embed(
             title=title,
-            description=(
-                "".join(description) if isinstance(description, list) else description
-            ),
+            description=("".join(description) if isinstance(description, list) else description),
             color=get_embeds.Common.COLOR,
             timestamp=datetime.utcnow(),
         )
@@ -101,9 +99,7 @@ async def Common(
             embed.set_thumbnail(url=thumbnail)
             print(thumbnail_direct, thumbnail)
         else:
-            embed.set_thumbnail(
-                url=await dbfetch.DataEmbedThumbnailsFetcher.oneVal(key=thumbnail)
-            )
+            embed.set_thumbnail(url=await dbfetch.SettingsEmbeds.oneThumbnail(key=thumbnail))
 
     embed.set_author(name=client.user.name, icon_url=client.user.avatar.url)
     embed.set_footer(text=f"Requested by {interaction.user.name}")
