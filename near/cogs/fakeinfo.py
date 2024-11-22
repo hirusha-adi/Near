@@ -42,6 +42,81 @@ class SelectFakeHelp(discord.ui.Select):
     async def callback(self, interaction: discord.Interaction):
 
         option = self.values[0]
+        
+        commands = {
+            "Main": [
+                ("/fake high", "Generate a high amount of information"),
+                ("/fake low", "Generate a low amount of information"),
+                ("/fake help", "Show this / List all commands"),
+                ("/fakeprofiles [number=3]", "Create several fake profiles with high information"),
+            ],
+            "Personal": [
+                "Fake Personal Information Related Commands",
+                "`/fake job`, `/fake licenseplate`, `/fake bs`, `/fake ssn`",
+            ],
+            "Location": [
+                "Fake Location Related Commands",
+                "`/fake country`, `/fake postcode`, `/fake street addr`, `/fake addr`, `/fake zipcode`, `/fake city`",
+            ],
+            "Bank Cards": [
+                "Fake Bank Cards Related Commands",
+                "`/fake cc`, `/fake cc ex`, `/fake cc no`, `/fake cc pr`, `/fake cc cvv`",
+            ],
+            "Crypto": [
+                "Fake Crypto Related Commands",
+                "`/fake crypto`, `/fake crypto code`, `/fake crypto name`",
+            ],
+            "Money": [
+                "Fake Money Related Commands",
+                "`/fake curr`, `/fake curr code`, `/fake curr name`, `/fake curr symbol`, `/fake pricetag`",
+            ],
+            "Date": [
+                "Fake Date Related Commands",
+                "`/fake date`, `/fake century`, `/fake dob`",
+            ],
+            "File": [
+                "Fake File Related Commands",
+                "`/fake file name`, `/fake file ex`, `/fake file path`",
+            ],
+            "Unix": [
+                "Fake Unix Related Commands",
+                "`/fake unix device`, `/fake unix partition`",
+            ],
+            "Banking": [
+                "Fake Banking Related Commands",
+                "`/fake aba`, `/fake bank country`, `/fake bban`, `/fake iban`",
+            ],
+            "Technical": [
+                "Fake Technical Information Related Commands",
+                "`/fake email`, `/fake cemail`, `/fake email free`, `/fake domain`, `/fake hostname`, `/fake http method`, "
+                "`/fake img url`, `/fake ipv4`, `/fake ipv4 class`, `/fake ipv4 private`, `/fake ipv4 public`, `/fake ipv6`, "
+                "`/fake macaddr`, `/fake nic handle`, `/fake port`, `/fake ripeid`, `/fake slug`, `/fake tld`, `/fake uri`, "
+                "`/fake uri ex`, `/fake url`, `/fake username`",
+            ],
+            "ISBN": ["Fake ISBN Related Commands", "`/fake isbn10`, `/fake isbn13`"],
+            "Name": [
+                "Fake Name Related Commands",
+                "`/fake name`, `/fake fname`, `/fake lname`, `/fake prefix`, `/fake suffix`",
+            ],
+            "Texts": [
+                "Fake Texts Related Commands",
+                "`/fake paragraph`, `/fake sentence`, `/fake text`",
+            ],
+            "Phone Number": [
+                "Fake Phone Number Related Commands",
+                "`/fake callingcode`, `/fake msisdn`, `/fake pno`",
+            ],
+            "User Agents": [
+                "Fake User Agents Related Commands",
+                "`/fake chrome`, `/fake firefox`, `/fake ie`, `/fake opera`, `/fake safari`, `/fake ua`",
+            ],
+            "Platform Tokens": [
+                "Fake Platform Tokens Related Commands",
+                "`/fake apt`,`/fake iosptn`",
+            ],
+            "Machine": ["Technically Generated Factory"],
+        }
+
 
         embed = await embeds.Common(
             interaction=interaction,
@@ -49,51 +124,16 @@ class SelectFakeHelp(discord.ui.Select):
             description="To access the complete list of commands and their respective descriptions, kindly select a category from the drop-down menu. For additional information and a comprehensive list of commands, please visit our website at https://teamsds.net/nearbot",
             thumbnail="fakeinfo_fake",
         )
-
-        if option == "Main":
-            embed.add_field(name="/fake high", value="Generate a high amount of information", inline=False)
-            embed.add_field(name="/fake low", value="Generate a low amount of information", inline=False)
-            embed.add_field(name="/fake help", value="Show this / List all commands", inline=False)
-            embed.add_field(name="/fakeprofiles [number=3]", value="Create several fake profiles with high information", inline=False)
-        elif option == "Personal":
-            embed.add_field(name="Fake Personal Information Related Commands", value=f"`/fake job`, \n`/fake licenseplate`, \n`/fake bs`, \n`/fake ssn`", inline=False)
-        elif option == "Location":
-            embed.add_field(name="Fake Location Related Commands", value=f"`/fake country`, \n`/fake postcode`, \n`/fake street addr`, \n`/fake street addr`, \n`/fake addr`, \n`/fake zipcode`, \n`/fake city`", inline=False)
-        elif option == "Bank Cards":
-            embed.add_field(name="Fake Bank Cards Related Commands", value=f"`/fake cc`, \n`/fake cc ex`, \n`/fake cc no`, \n`/fake cc pr`, \n`/fake cc cvv`", inline=False)
-        elif option == "Crypto":
-            embed.add_field(name="Fake Crypto Related Commands", value=f"`/fake crypto`, \n`/fake crypto code`, \n`/fake crypto name`", inline=False)
-        elif option == "Money":
-            embed.add_field(name="Fake Money Related Commands", value=f"`/fake curr`, \n`/fake curr code`, \n`/fake curr name`, \n`/fake curr symbol`, \n`/fake pricetag`", inline=False)
-        elif option == "Date":
-            embed.add_field(name="Fake Date Related Commands", value=f"`/fake date`, \n`/fake century`, \n`/fake dob`", inline=False)
-        elif option == "File":
-            embed.add_field(name="Fake File Related Commands", value=f"`/fake file name`, \n`/fake file ex`, \n`/fake file path`", inline=False)
-        elif option == "Unix":
-            embed.add_field(name="Fake Unix Related Commands", value=f"`/fake unix device`, \n`/fake unix partition`", inline=False)
-        elif option == "Banking":
-            embed.add_field(name="Fake Banking Related Commands", value=f"`/fake aba`, \n`/fake bank country`, \n`/fake bban`, \n`/fake iban`", inline=False)
-        elif option == "Technical":
-            embed.add_field(name="Fake Technical Information Related Commands", value=f"`/fake email`, \n`/fake cemail`, \n`/fake email free`, \n`/fake domain`, \n`/fake hostname`, \n`/fake http method`n \n`/fake img url`, \n`/fake ipv4`, \n`/fake ipv4 class`, \n`/fake ipv4 private`, \n`/fake ipv4 public`, \n`/fake ipv6`, \n`/fake macaddr`, \n`/fake nic handle`, \n`/fake port`, \n`/fake ripeid`, \n`/fake slug`, \n`/fake tld`, \n`/fake uri`, \n`/fake uri ex`, \n`/fake url`, \n`/fake username`", inline=False)
-        elif option == "ISBN":
-            embed.add_field(name="Fake ISBN Related Commands", value=f"`/fake isbn10`, \n`/fake isbn13`", inline=False)
-        elif option == "Name":
-            embed.add_field(name="Fake Name Related Commands", value=f"`/fake name`, \n`/fake fname`, \n`/fake fname male`, \n`/fake fname female`, \n`/fake fname nb`, \n`/fake lname`n \n`/fake lname male`, \n`/fake lname female`, \n`/fake lname nb`, \n`/fake name female`, \n`/fake name male`, \n`/fake name nb`, \n`/fake prefix`, \n`/fake suffix`", inline=False)
-        elif option == "Texts":
-            embed.add_field(name="Fake Texts Related Commands", value=f"`/fake paragraph`, \n`/fake sentence`, \n`/fake text`", inline=False)
-        elif option == "Phone Number":
-            embed.add_field(name="Fake Phone Number Related Commands", value=f"`/fake callingcode`, \n`/fake msisdn`, \n`/fake pno`", inline=False)
-        elif option == "User Agents":
-            embed.add_field(name="Fake User Agents Related Commands", value=f"`/fake chrome`, \n`/fake firefox`, \n`/fake ie`, \n`/fake opera`, \n`/fake safari`, \n`/fake ua`", inline=False)
-        elif option == "Platform Tokens":
-            embed.add_field(name="Fake Platform Tokens Related Commands", value=f"`/fake apt`, \n`/fake iospt`n \n`/fake linuxpt`, \n`/fake linuxproc`, \n`/fake macpt`, \n`/fake macprocessor`, \n`/fake winpt`, \n`/fake ua`", inline=False)
-        elif option == "Vehicle":
-            embed.add_field(name="Fake Vehicle Related Commands", value=f"`/fake vcl ymm`, \n`/fake vcl ymmc`, \n`/fake vcl mm`, \n`/fake vcl make`, \n`/fake vcl model`, \n`/fake vcl year`, \n`/fake vcl category`, \n`/fake vcl all`", inline=False)
-        elif option == "Machine":
-            embed.add_field(name="Fake Machine Related Commands", value=f"`/fake mcn ymm`, \n`/fake mcn ymmc`, \n`/fake mcn mm`, \n`/fake mcn make`, \n`/fake mcn model`, \n`/fake mcn year`, \n`/fake mcn category`, \n`/fake mcn all`, \n`/bottoken`", inline=False)
-        elif option == "Others":
-            embed.add_field(name="Other Fake Commands", value=f"`/fake ean`, \n`/fake company suffix`, \n`/fake iana`, \n`/fake lang`, \n`/fake color`, \n`/fake cp`", inline=False)
-
+        
+        if option in commands:
+            if isinstance(commands[option][0], tuple):  
+                # Check if it's a list of command-value pairs
+                for name, value in commands[option]:
+                    embed.add_field(name=name, value=value, inline=False)
+            else:  
+                # It's a single description and commands
+                embed.add_field(name=commands[option][0], value=commands[option][1], inline=False)
+        
         # works as intended, but gives this error: "This interaction failed" after some time
         await interaction.message.edit(embed=embed)
 
