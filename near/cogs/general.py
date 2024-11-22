@@ -7,11 +7,9 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from loguru import logger
-from tortoise import Tortoise
 
 
 from near.database import get_embeds
-from near.database.db import connect_db
 from near.database.defaults import set_defaults
 from near.utils import embeds
 
@@ -168,15 +166,15 @@ class General(commands.Cog):
                 _file.write("Deleting this file and restarting the bot \nwill make the bot register its command tree\nonce again")
 
         # init orm
-        await connect_db()
+        # await connect_db()
         await set_defaults()
         
         logger.success('Bot is ready!')
     
-    @commands.Cog.listener()
-    async def on_disconnect():
-        await Tortoise.close_connections()
-        logger.info("Tortoise-ORM connection closed.")
+    # @commands.Cog.listener()
+    # async def on_disconnect():
+    #     await Tortoise.close_connections()
+    #     logger.info("Tortoise-ORM connection closed.")
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx: commands.Context, error) -> None:

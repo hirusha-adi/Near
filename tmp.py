@@ -17,6 +17,7 @@ if not(user_data.is_valid):
     sys.exit("Unable to authenticate with Pocketbase!")
 logger.success(f"Database authentication successful! Logged in as {user_data.record.id} ({user_data.record.name} - {user_data.record.email})")
 
-class Collections:
-    def settings_embeds() -> RecordService:
-        return conn.collection("settings_embeds")
+
+record = conn.collection('settings_embeds').get_full_list(query_params={"filter": f'key~"thumbnail_"'})
+print(record)
+print(type(record))
