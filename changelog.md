@@ -1,6 +1,7 @@
 # NearBot v0.9
 
 1. Remove broken `/face` command in `cogs.fakeinfo`
+2. Remove broken `/discordtoken` command in `cogs.fakeinfo`. This might be added again, if I can find the structure of a discord token.
 
 # NearBot v0.8
 
