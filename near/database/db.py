@@ -3,12 +3,12 @@ from loguru import logger
 from pocketbase import PocketBase
 from pocketbase.services.record_service import RecordService
 
-DB_URL: str = "http://127.0.0.1:8090"
+POCKETBASE_URL: str = "http://127.0.0.1:8090"
 POCKETBASE_AUTH_EMAIL: str = "hirushaadi@gmail.com"
 POCKETBASE_AUTH_PASSWORD: str = "11111111"
 
 try:
-    conn = PocketBase(DB_URL)
+    conn = PocketBase(POCKETBASE_URL)
 
     # Authentication
     user_data = conn.collection("users").auth_with_password(
