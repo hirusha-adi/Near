@@ -1,14 +1,17 @@
+import os
 import sys
 from loguru import logger
 from pocketbase import PocketBase
 from pocketbase.services.record_service import RecordService
 
-POCKETBASE_URL: str = "http://127.0.0.1:8090"
-POCKETBASE_AUTH_EMAIL: str = "hirushaadi@gmail.com"
-POCKETBASE_AUTH_PASSWORD: str = "11111111"
+POCKETBASE_URL: str = os.getenv("POCKETBASE_URL")
+POCKETBASE_AUTH_EMAIL: str = os.getenv("POCKETBASE_AUTH_EMAIL")
+POCKETBASE_AUTH_PASSWORD: str = os.getenv("POCKETBASE_AUTH_PASSWORD")
+logger.debug(f"Using environment variables -> POCKETBASE_URL: {POCKETBASE_URL}, POCKETBASE_AUTH_EMAIL: {POCKETBASE_AUTH_EMAIL}, POCKETBASE_AUTH_PASSWORD: {POCKETBASE_AUTH_PASSWORD}")
 
 try:
     conn = PocketBase(POCKETBASE_URL)
+    logger.success("Connection to Pocketbase successful!")
 
     # Authentication
     user_data = conn.collection("users").auth_with_password(
