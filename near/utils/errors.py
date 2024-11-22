@@ -4,6 +4,10 @@ def handle_command_errors(func):
 
 
 class IllegalInput(Exception):
+    """
+    Exception raised for illegal input passed to commands.
+    """
+
     def __init__(self, message: str = None):
         self.message = message
 
@@ -12,8 +16,24 @@ class IllegalInput(Exception):
 
 
 class CommandError(Exception):
+    """
+    Exception raised for errors while running a command.
+    """
+
     def __init__(self, message: str = None):
         self.message = message
 
     def __str__(self):
         return self.message or "Unable to run the command"
+
+
+class PermissionError(Exception):
+    """
+    Exception raised for lack of permissions to run the command.
+    """
+
+    def __init__(self, message: str = None):
+        self.message = message
+
+    def __str__(self):
+        return self.message or "You do not have enough permissions to run this command!"  

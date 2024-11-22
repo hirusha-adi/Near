@@ -7,8 +7,12 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from loguru import logger
+from tortoise import Tortoise
+
 
 from near.database import get_embeds
+from near.database.db import connect_db
+from near.database.defaults import set_defaults
 from near.utils import embeds
 
 
@@ -150,9 +154,11 @@ class General(commands.Cog):
         logger.info(f'Logged in as {self.client.user.name}')
         logger.info(f'Discord.py API version: {discord.__version__}')
         logger.info(f'Python version: {cur_python_version()}')
+        
         self.start_time = nowtime()
         await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"teamsds.net/discord"))
 
+        # commands tree
         _tmp_filecheck = ".DO_NOT_DELETE.txt"
         if not os.path.isfile(_tmp_filecheck):
             synced = await self.client.tree.sync()
@@ -161,31 +167,40 @@ class General(commands.Cog):
             with open(_tmp_filecheck, 'w') as _file:
                 _file.write("Deleting this file and restarting the bot \nwill make the bot register its command tree\nonce again")
 
+        # init orm
+        await connect_db()
+        await set_defaults()
+        
         logger.success('Bot is ready!')
+    
+    @commands.Cog.listener()
+    async def on_disconnect():
+        await Tortoise.close_connections()
+        logger.info("Tortoise-ORM connection closed.")
 
     @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
+    async def on_command_error(self, ctx: commands.Context, error) -> None:
         if isinstance(error, commands.MissingPermissions) or isinstance(error, commands.CheckFailure):
-            await ctx.send(embed=embeds.Error(interaction=ctx, client=self.client, error_message=f"You don't have the necessary permissions required to use this command!"), ephemeral=False)
+            await ctx.send(embed=await embeds.Error(interaction=ctx, client=self.client, error_message=f"You don't have the necessary permissions required to use this command!"), ephemeral=False)
 
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send(embed=embeds.Error(interaction=ctx, client=self.client, error_message=f"You haven't passed the needed arguments for this command to run properly.\n\nPlease use `/help` to list out all the command and check the proper usage of the command you used."), ephemeral=False)
+            await ctx.send(embed=await embeds.Error(interaction=ctx, client=self.client, error_message=f"You haven't passed the needed arguments for this command to run properly.\n\nPlease use `/help` to list out all the command and check the proper usage of the command you used."), ephemeral=False)
 
             
     @app_commands.command(name="ping", description="Check the response time of the Discord Bot")
     async def ping(self, interaction: discord.Interaction):
         logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
         try:
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title=f":timer:  Response Time: {round(self.client.latency * 1000)} ms",
-                thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png"
+                thumbnail="general_ping"
             )
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="uptime", description="How long has the bot been up for?")
     async def uptime(self, interaction: discord.Interaction):
@@ -195,16 +210,16 @@ class General(commands.Cog):
             difference = int(round(current_time - self.start_time))
             text = str(dttimedelta(seconds=difference))
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title=f":clock: Uptime: {text}",
-                thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png"
+                thumbnail="general_uptime"
             )
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="clean", description="Delete messages sent by the Bot")
     @app_commands.describe(amount="Amount of messages to Delete")
@@ -220,20 +235,20 @@ class General(commands.Cog):
 
                 msgtxt = "message" if amount == "1" else "messages"
 
-                embed = embeds.Common(
+                embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title=f"Success!",
-                    thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879311068097290320/PngItem_1526969.png"
+                    thumbnail="general_clean"
                 )
                 embed.add_field(name="Action", value=f"Deleted {amount} {msgtxt} sent by {self.client.user.name}!", inline=False)
                 await interaction.response.send_message(embed=embed, ephemeral=True)
 
             else:
-                await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"Please enter a value below 100!"), ephemeral=False)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"Please enter a value below 100!"), ephemeral=False)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="help", description="Command Support")
     async def help(self, interaction: discord.Interaction):
@@ -251,7 +266,7 @@ class General(commands.Cog):
             await interaction.response.send_message(embed=embed3, view=SelectView(), ephemeral=False)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
 async def setup(client: commands.Bot):

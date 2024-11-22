@@ -24,17 +24,17 @@ class Fun(commands.Cog):
                     json_data = await response.json()
                     quote = json_data[0]['q'] + " - " + json_data[0]['a']
 
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Inspirational isn't it?",
                 description=str(quote),
-                thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879382016041291828/NicePng_light-streak-png_395357.png"
+                thumbnail="fun_inspire"
             )
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
     @app_commands.command(name="meme", description="Get a random meme")
@@ -53,7 +53,7 @@ class Fun(commands.Cog):
                             imgs.append(img)
                     meme = random.choice(imgs)
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="a Meme",
@@ -62,7 +62,7 @@ class Fun(commands.Cog):
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="dadjoke", description="Get a random dad joke")
     async def dadjoke(self, interaction: discord.Interaction):
@@ -72,18 +72,18 @@ class Fun(commands.Cog):
                 async with session.get("https://icanhazdadjoke.com", headers={"Accept": "application/json"}) as req:
                     r = await req.json()
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="a Dad Joke",
                 description=f"{r['joke']}",
-                thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879303282139463680/480px-Happy_smiley_face.png"
+                thumbnail="fun_dadjoke"
             )
 
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="wyr", description="Would You Rather...?")
     async def wyr(self, interaction: discord.Interaction):
@@ -97,17 +97,17 @@ class Fun(commands.Cog):
                     qor = soup.find(id='qor').text
                     qb = soup.find(id='qb').text
             
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Would You Rather",
                 description=f"{qa}\n{qor}\n{qb}",
-                thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/879583873527332904/Would-You-Rather_Questions-680x430.jpg"
+                thumbnail="fun_wyr"
             )
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="advice", description="Get advice for your life")
     async def advice(self, interaction: discord.Interaction):
@@ -119,17 +119,17 @@ class Fun(commands.Cog):
                     data_json = json.loads(data_str)
                     c = data_json['slip']['advice']
 
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="an Advice",
                 description=c,
-                thumbnail="https://cdn.discordapp.com/attachments/877796755234783273/880034306720956456/download_1.jfif"
+                thumbnail="fun_advice"
             )
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="joke", description="Get a Joke, but from Another API")
     async def joke(self, interaction: discord.Interaction):
@@ -141,17 +141,17 @@ class Fun(commands.Cog):
                     json_txt = await response.text()
                     json_data = json.loads(json_txt)
 
-            embed = embeds.Common(
+            embed = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="a Joke",
                 description=f"{json_data['joke']}",
-                thumbnail="https://media.discordapp.net/attachments/877796755234783273/880742956552822794/mr-bean-avatar-character-cartoon-rowan-atkinson-png-image-33.png?width=454&height=584"
+                thumbnail="fun_joke"
             )
             await interaction.response.send_message(embed=embed)
 
         except Exception as e:
-            await interaction.response.send_message(embed=embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
 
 async def setup(client: commands.Bot):

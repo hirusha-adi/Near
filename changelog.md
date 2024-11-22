@@ -1,3 +1,11 @@
+# NearBot v0.8
+
+1. Use a database with an asyncio supported ORM (`tortoise-orm`)
+2. Optmized code in `nearbot.py`
+3. Document the code (with the help of Codeium)
+4. Fixed broken `loadex` and `unloadex` commands
+5. Fixed the issue with embed thumbnails, by storing images in [this](https://github.com/hirusha-adi/Near-Data) repository
+
 # NearBot v0.7.3
 
 1. Update dependencies:

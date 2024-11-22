@@ -5,6 +5,15 @@ import discord
 
 
 def welcome_message():
+    """
+    Display a welcome message with ASCII art and system information.
+
+    The function prints an ASCII art logo followed by system details
+    such as date/time, platform, node, machine, Python version, and 
+    Discord.py API version.
+    """
+    
+    # ASCII art logo
     print(r"""
 888b    |                            888~~\             d8   
 |Y88b   |  e88~~8e    /~~~8e  888-~\ 888   |  e88~-_  _d88__ 
@@ -13,6 +22,8 @@ def welcome_message():
 |   Y88b| Y888    , C888  888 888    888   | Y888   '  888   
 |    Y888  "88___/   "88_-888 888    888__/   "88_-~   "88_/ 
                                                              """)
+
+    # System and environment details
     print(f"""
 ------------------------------------------------------------
         Date/Time: {datetime.now()}
