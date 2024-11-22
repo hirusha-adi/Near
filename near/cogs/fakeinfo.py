@@ -46,7 +46,7 @@ class SelectFakeHelp(discord.ui.Select):
 
         option = self.values[0]
 
-        embed = embeds.Common(
+        embed = await embeds.Common(
             interaction=interaction,
             title=":gear: A Guide to All Available Commands :gear:",
             description="To access the complete list of commands and their respective descriptions, kindly select a category from the drop-down menu. For additional information and a comprehensive list of commands, please visit our website at https://teamsds.net/nearbot",
@@ -122,106 +122,106 @@ class FakeInformation(commands.Cog):
             fake = Faker()
             
             fake_methods = {
-                "name": ("Name", fake.name()),
-                "dob": ("Date Of Birth", fake.date_of_birth()),
-                "addr": ("Address", fake.address()),
-                "job": ("Job", fake.job()),
-                "color": ("Color", fake.color_name()),
-                "zipcode": ("Zip Code", fake.zipcode()),
-                "city": ("City", fake.city()),
-                "licenseplate": ("License Plate", fake.license_plate()),
-                "bban": ("Basic Bank Account", fake.bban()),
-                "iban": ("International Bank Account", fake.iban()),
-                "bs": ("BS", fake.bs()),
-                "cc": ("Credit Card", fake.credit_card_full()),
-                "cemail": ("Email", fake.company_email()),
-                "pno": ("Phone Number", fake.phone_number()),
-                "cp": ("Catch Phrase", fake.catch_phrase()),
-                "ssn": ("SSN", fake.ssn()),
-                "country": ("Country", fake.country()),
-                "postcode": ("Postcode", fake.postcode()),
-                "street addr": ("Street Address", fake.street_address()),
-                "street name": ("Street Name", fake.street_name()),
-                "aba": ("ABA", fake.aba()),
-                "bank country": ("Bank Country", fake.bank_country()),
-                "company suffix": ("Company Suffix", fake.company_suffix()),
-                "cc ex": ("Credit Card Expire Date", fake.credit_card_expire()),
-                "cc no": ("Credit Card Number", fake.credit_card_number()),
-                "cc pr": ("Credit Card Provider", fake.credit_card_provider()),
-                "cc cvv": ("Credit Card CVV", fake.credit_card_security_code()),
-                "crypto": ("Cryptocurrency", fake.cryptocurrency()),
-                "crypto code": ("Cryptocurrency Code", fake.cryptocurrency_code()),
-                "crypto name": ("Cryptocurrency Name", fake.cryptocurrency_name()),
-                "curr": ("Currency", fake.currency()),
-                "curr code": ("Currency Code", fake.currency_code()),
-                "curr name": ("Currency Name", fake.currency_name()),
-                "pricetag": ("Pricetag", fake.pricetag()),
-                "date": ("Date", fake.date()),
-                "century": ("Century", fake.century()),
-                "file name": ("File Name", fake.file_name()),
-                "file ex": ("File Extension", fake.file_extension()),
-                "file path": ("File Path", fake.file_path()),
-                "unix device": ("Unix Device", fake.unix_device()),
-                "unix partition": ("Unix Partition", fake.unix_partition()),
-                "email": ("Email Address", fake.ascii_email()),
-                "email free": ("Free Email Address", fake.ascii_free_email()),
-                "domain": ("Domain Name", fake.domain_name()),
-                "hostname": ("Hostname", fake.hostname()),
-                "http method": ("HTTP Method", fake.http_method()),
-                "iana": ("IANA Registrar ID", fake.iana_id()),
-                "img url": ("Image URL", fake.image_url()),
-                "slug": ("Slug", fake.slug()),
-                "tld": ("TLD", fake.tld()),
-                "uri": ("URI", fake.uri()),
-                "uri ex": ("URI Extension", fake.uri_extension()),
-                "url": ("URL", fake.url()),
-                "username": ("Username", fake.user_name()),
-                "isbn10": ("ISBN 10", fake.isbn10()),
-                "isbn13": ("ISBN 13", fake.isbn13()),
-                "paragraph": ("Paragraph", "".join(fake.paragraphs())),
-                "sentence": ("Sentence", fake.sentence()),
-                "text": ("Text", fake.texts()),
-                "word": ("Word", fake.word()),
-                "fname": ("First Name", fake.first_name()),
-                "fname male": ("First Name - Male", fake.first_name_male()),
-                "fname female": ("First Name - Female", fake.first_name_female()),
-                "fname nb": ("First Name - Non Binary", fake.first_name_nonbinary()),
-                "lang": ("Language Name", fake.language_name()),
-                "lname": ("Last Name", fake.last_name()),
-                "lname male": ("Last Name - Male", fake.last_name_male()),
-                "lname female": ("Last Name - Female", fake.last_name_female()),
-                "lname nb": ("Last Name - Non Binary", fake.last_name_nonbinary()),
-                "name female": ("Name - Female", fake.name_female()),
-                "name male": ("Name - Male", fake.name_male()),
-                "name nb": ("Name - Non Binary", fake.name_nonbinary()),
-                "prefix": ("Prefix", fake.prefix()),
-                "suffix": ("Suffix", fake.suffix()),
-                "callingcode": ("Calling Code", fake.country_calling_code()),
-                "msisdn": ("MSISDN", fake.msisdn()),
-                "apt": ("Android Platform Token", fake.android_platform_token()),
-                "chrome": ("User Agent - Chrome", fake.chrome()),
-                "firefox": ("User Agent - FireFox", fake.firefox()),
-                "ie": ("User Agent - Internet Explorer", fake.internet_explorer()),
-                "iospt": ("IOS Platform Token", fake.ios_platform_token()),
-                "linuxpt": ("Linux Platform Token", fake.linux_platform_token()),
-                "linuxproc": ("Linux Processor", fake.linux_processor()),
-                "macpt": ("MAC - Platform Token", fake.mac_platform_token()),
-                "macprocessor": ("MAC Processor", fake.mac_processor()),
-                "opera": ("User Agent - Opera", fake.opera()),
-                "safari": ("User Agent - Safari", fake.safari()),
-                "winpt": ("Windows - Platform Token", fake.windows_platform_token()),
-                "ua": ("User Agent", fake.user_agent()),
-                "ipv4": ("IPv4", fake.ipv4()),
-                "ipv4 class": ("IPv4 Network Class", fake.ipv4_network_class()),
-                "ipv4 private": ("Private IPv4 Address", fake.ipv4_private()),
-                "ipv4 public": ("Public IPv4 Address", fake.ipv4_public()),
-                "macaddr": ("MAC Address", fake.mac_address()),
-                "nic handle": ("NIC Handle", fake.mac_address()),
-                "port": ("Port Number", fake.port_number()),
-                "ripeid": ("RIPE ID", fake.ripe_id()),
+                "name": ("Name", lambda: fake.name()),
+                "dob": ("Date Of Birth", lambda: fake.date_of_birth()),
+                "addr": ("Address", lambda: fake.address()),
+                "job": ("Job", lambda: fake.job()),
+                "color": ("Color", lambda: fake.color_name()),
+                "zipcode": ("Zip Code", lambda: fake.zipcode()),
+                "city": ("City", lambda: fake.city()),
+                "licenseplate": ("License Plate", lambda: fake.license_plate()),
+                "bban": ("Basic Bank Account", lambda: fake.bban()),
+                "iban": ("International Bank Account", lambda: fake.iban()),
+                "bs": ("BS", lambda: fake.bs()),
+                "cc": ("Credit Card", lambda: fake.credit_card_full()),
+                "cemail": ("Email", lambda: fake.company_email()),
+                "pno": ("Phone Number", lambda: fake.phone_number()),
+                "cp": ("Catch Phrase", lambda: fake.catch_phrase()),
+                "ssn": ("SSN", lambda: fake.ssn()),
+                "country": ("Country", lambda: fake.country()),
+                "postcode": ("Postcode", lambda: fake.postcode()),
+                "street addr": ("Street Address", lambda: fake.street_address()),
+                "street name": ("Street Name", lambda: fake.street_name()),
+                "aba": ("ABA", lambda: fake.aba()),
+                "bank country": ("Bank Country", lambda: fake.bank_country()),
+                "company suffix": ("Company Suffix", lambda: fake.company_suffix()),
+                "cc ex": ("Credit Card Expire Date", lambda: fake.credit_card_expire()),
+                "cc no": ("Credit Card Number", lambda: fake.credit_card_number()),
+                "cc pr": ("Credit Card Provider", lambda: fake.credit_card_provider()),
+                "cc cvv": ("Credit Card CVV", lambda: fake.credit_card_security_code()),
+                "crypto": ("Cryptocurrency", lambda: fake.cryptocurrency()),
+                "crypto code": ("Cryptocurrency Code", lambda: fake.cryptocurrency_code()),
+                "crypto name": ("Cryptocurrency Name", lambda: fake.cryptocurrency_name()),
+                "curr": ("Currency", lambda: fake.currency()),
+                "curr code": ("Currency Code", lambda: fake.currency_code()),
+                "curr name": ("Currency Name", lambda: fake.currency_name()),
+                "pricetag": ("Pricetag", lambda: fake.pricetag()),
+                "date": ("Date", lambda: fake.date()),
+                "century": ("Century", lambda: fake.century()),
+                "file name": ("File Name", lambda: fake.file_name()),
+                "file ex": ("File Extension", lambda: fake.file_extension()),
+                "file path": ("File Path", lambda: fake.file_path()),
+                "unix device": ("Unix Device", lambda: fake.unix_device()),
+                "unix partition": ("Unix Partition", lambda: fake.unix_partition()),
+                "email": ("Email Address", lambda: fake.ascii_email()),
+                "email free": ("Free Email Address", lambda: fake.ascii_free_email()),
+                "domain": ("Domain Name", lambda: fake.domain_name()),
+                "hostname": ("Hostname", lambda: fake.hostname()),
+                "http method": ("HTTP Method", lambda: fake.http_method()),
+                "iana": ("IANA Registrar ID", lambda: fake.iana_id()),
+                "img url": ("Image URL", lambda: fake.image_url()),
+                "slug": ("Slug", lambda: fake.slug()),
+                "tld": ("TLD", lambda: fake.tld()),
+                "uri": ("URI", lambda: fake.uri()),
+                "uri ex": ("URI Extension", lambda: fake.uri_extension()),
+                "url": ("URL", lambda: fake.url()),
+                "username": ("Username", lambda: fake.user_name()),
+                "isbn10": ("ISBN 10", lambda: fake.isbn10()),
+                "isbn13": ("ISBN 13", lambda: fake.isbn13()),
+                "paragraph": ("Paragraph", lambda: "".join(fake.paragraphs())),
+                "sentence": ("Sentence", lambda: fake.sentence()),
+                "text": ("Text", lambda: fake.texts()),
+                "word": ("Word", lambda: fake.word()),
+                "fname": ("First Name", lambda: fake.first_name()),
+                "fname male": ("First Name - Male", lambda: fake.first_name_male()),
+                "fname female": ("First Name - Female", lambda: fake.first_name_female()),
+                "fname nb": ("First Name - Non Binary", lambda: fake.first_name_nonbinary()),
+                "lang": ("Language Name", lambda: fake.language_name()),
+                "lname": ("Last Name", lambda: fake.last_name()),
+                "lname male": ("Last Name - Male", lambda: fake.last_name_male()),
+                "lname female": ("Last Name - Female", lambda: fake.last_name_female()),
+                "lname nb": ("Last Name - Non Binary", lambda: fake.last_name_nonbinary()),
+                "name female": ("Name - Female", lambda: fake.name_female()),
+                "name male": ("Name - Male", lambda: fake.name_male()),
+                "name nb": ("Name - Non Binary", lambda: fake.name_nonbinary()),
+                "prefix": ("Prefix", lambda: fake.prefix()),
+                "suffix": ("Suffix", lambda: fake.suffix()),
+                "callingcode": ("Calling Code", lambda: fake.country_calling_code()),
+                "msisdn": ("MSISDN", lambda: fake.msisdn()),
+                "apt": ("Android Platform Token", lambda: fake.android_platform_token()),
+                "chrome": ("User Agent - Chrome", lambda: fake.chrome()),
+                "firefox": ("User Agent - FireFox", lambda: fake.firefox()),
+                "ie": ("User Agent - Internet Explorer", lambda: fake.internet_explorer()),
+                "iospt": ("IOS Platform Token", lambda: fake.ios_platform_token()),
+                "linuxpt": ("Linux Platform Token", lambda: fake.linux_platform_token()),
+                "linuxproc": ("Linux Processor", lambda: fake.linux_processor()),
+                "macpt": ("MAC - Platform Token", lambda: fake.mac_platform_token()),
+                "macprocessor": ("MAC Processor", lambda: fake.mac_processor()),
+                "opera": ("User Agent - Opera", lambda: fake.opera()),
+                "safari": ("User Agent - Safari", lambda: fake.safari()),
+                "winpt": ("Windows - Platform Token", lambda: fake.windows_platform_token()),
+                "ua": ("User Agent", lambda: fake.user_agent()),
+                "ipv4": ("IPv4", lambda: fake.ipv4()),
+                "ipv4 class": ("IPv4 Network Class", lambda: fake.ipv4_network_class()),
+                "ipv4 private": ("Private IPv4 Address", lambda: fake.ipv4_private()),
+                "ipv4 public": ("Public IPv4 Address", lambda: fake.ipv4_public()),
+                "macaddr": ("MAC Address", lambda: fake.mac_address()),
+                "nic handle": ("NIC Handle", lambda: fake.mac_address()),
+                "port": ("Port Number", lambda: fake.port_number()),
+                "ripeid": ("RIPE ID", lambda: fake.ripe_id()),
             }
             
-            em = embeds.Common(
+            em = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Fake Information",
@@ -229,46 +229,27 @@ class FakeInformation(commands.Cog):
             )
             
             if category in fake_methods:
-                label, value = fake_methods[category]
+                label, value_func = fake_methods[category]
+                value = value_func() # generate the value on-demand
                 if category in ["crypto", "curr"]:
-                    # TODO: is this actually necessary?
                     em.add_field(name=label, value=f"Short Name: {value[0]} \nFull Name: {value[1]}")
                 else:
-                    em.add_field(name=label, value=str(value))
+                    if isinstance(value, list) or isinstance(value, tuple) or isinstance(value, set):
+                        em.add_field(name=label, value=" ".join(value).replace("\\n", "\n"))
+                    else:
+                        em.add_field(name=label, value=str(value).replace("\\n", "\n"))
                     
             else:
             
                 if category == "high":
                     simple_dict = fake.profile()
-                    # TODO: minified version, test it out
-                    # ---
-                    # for key, value in simple_dict.items():
-                    #     em.add_field(name=key.replace("_", " ").title(), value=str(value))
-                    # ---
-                    em.add_field(name="Name", value=f"{str(simple_dict['name'])}")
-                    em.add_field(name="Job", value=f"{str(simple_dict['job'])}")
-                    em.add_field(name="Birthdate", value=f"{str(simple_dict['birthdate'])}")
-                    em.add_field(name="Company", value=f"{str(simple_dict['company'])}")
-                    em.add_field(name="SSN", value=f"{str(simple_dict['ssn'])}")
-                    em.add_field(name="Recidence", value=f"{str(simple_dict['residence'])}")
-                    em.add_field(name="Current Location", value=f"{str(simple_dict['current_location'])}")
-                    em.add_field(name="Blood Group", value=f"{str(simple_dict['blood_group'])}")
-                    em.add_field(name="Username", value=f"{str(simple_dict['username'])}")
-                    em.add_field(name="Address", value=f"{str(simple_dict['address'])}")
-                    em.add_field(name="Mail", value=f"{str(simple_dict['mail'])}")
+                    for key, value in simple_dict.items():
+                        em.add_field(name=key.replace("_", " ").title(), value=str(value))
                 
                 elif category == "low":
                     shitthing_simple = fake.simple_profile()
-                    # TODO: minified version, test it out
-                    # ---
-                    # for key, value in shitthing_simple.items():
-                    #     em.add_field(name=key.replace("_", " ").title(), value=str(value))
-                    # ---
-                    em.add_field(name="Name", value=f"{str(shitthing_simple['name'])}")
-                    em.add_field(name="Sex", value=f"{str(shitthing_simple['sex'])}")
-                    em.add_field(name="Address", value=f"{str(shitthing_simple['address'])}")
-                    em.add_field(name="Mail", value=f"{str(shitthing_simple['mail'])}")
-                    em.add_field(name="Birthday", value=f"{str(shitthing_simple['birthdate'])}")
+                    for key, value in shitthing_simple.items():
+                        em.add_field(name=key.replace("_", " ").title(), value=str(value))
 
                 elif category == "ean":
                     # The usage is like 'fake ean 10' - 10 is the length
@@ -380,7 +361,7 @@ class FakeInformation(commands.Cog):
                     # ---
 
                 else:
-                    em = embeds.Common(
+                    em = await embeds.Common(
                         client=self.client,
                         interaction=interaction,
                         title="Fake Information",
@@ -401,7 +382,7 @@ class FakeInformation(commands.Cog):
             fake_how_many = int(amount)
 
             if fake_how_many <= 3: # to prevent spam
-                em1 = embeds.Common(
+                em1 = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="Mass Fake Profiles", 
@@ -414,7 +395,7 @@ class FakeInformation(commands.Cog):
                 for _ in range(fake_how_many):
                     fake = Faker()
                     simple_dict = fake.profile()
-                    em2 = embeds.Common(
+                    em2 = await embeds.Common(
                         client=self.client,
                         interaction=interaction,
                         title="Fake Information", 
