@@ -1,17 +1,31 @@
-from tortoise import Tortoise, ConfigurationError
+import os
+import sys
 from loguru import logger
+from pocketbase import PocketBase
+from pocketbase.services.record_service import RecordService
 
+POCKETBASE_URL: str = os.getenv("POCKETBASE_URL")
+POCKETBASE_AUTH_EMAIL: str = os.getenv("POCKETBASE_AUTH_EMAIL")
+POCKETBASE_AUTH_PASSWORD: str = os.getenv("POCKETBASE_AUTH_PASSWORD")
+logger.debug(f"Using environment variables -> POCKETBASE_URL: {POCKETBASE_URL}, POCKETBASE_AUTH_EMAIL: {POCKETBASE_AUTH_EMAIL}, POCKETBASE_AUTH_PASSWORD: {POCKETBASE_AUTH_PASSWORD}")
 
-async def connect_db():
-    """Connect to the SQLite database."""
-    try:
-        await Tortoise.init(
-            db_url='sqlite://near/database/dev.db',
-            modules={'models': ['near.database.models']}
-        )
-    except ConfigurationError:
-        logger.trace()
-        logger.error("Configuration error!")
-    logger.info(f"Connected to Tortoise ORM")
-    await Tortoise.generate_schemas()
-    logger.debug(f"Generated schema.")
+try:
+    conn = PocketBase(POCKETBASE_URL)
+    logger.success("Connection to Pocketbase successful!")
+
+    # Authentication
+    user_data = conn.collection("users").auth_with_password(
+        POCKETBASE_AUTH_EMAIL, POCKETBASE_AUTH_PASSWORD
+    )
+    if not(user_data.is_valid):
+        logger.error("Unable to authenticate with Pocketbase!")
+        sys.exit()
+    logger.success(f"Database authentication successful! Logged in as {user_data.record.id} ({user_data.record.name} - {user_data.record.email})")
+
+except Exception as e:
+    logger.error(f"Unable to connect to Pocketbase! {e}")
+    sys.exit()
+
+class Collections:
+    def settings_embeds() -> RecordService:
+        return conn.collection("settings_embeds")

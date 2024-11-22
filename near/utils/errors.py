@@ -37,3 +37,14 @@ class PermissionError(Exception):
 
     def __str__(self):
         return self.message or "You do not have enough permissions to run this command!"  
+
+class PocketBaseError(Exception):
+    """
+    Exception raised for an issue related to PocketBase.
+    """
+
+    def __init__(self, message: str = None):
+        self.message = message
+
+    def __str__(self):
+        return self.message or "An error occured with pocketbase/database."  

@@ -15,6 +15,7 @@ from loguru import logger
 
 from near.utils import embeds
 from near.utils import errors
+from near.database import dbfetch
 
 # Setup Logging
 # ---
@@ -32,15 +33,12 @@ logger.add(log_path, level="DEBUG", format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {le
 from near.utils import texts
 texts.welcome_message()
 
-from near.database import get_main
-
-
 # main config
 # ---
-bot_prefix = get_main.BotMainDB.MESSAGE_PREFIX
-bot_creator_name = get_main.BotMainDB.BOT_CREATOR_NAME
-bot_current_version = get_main.BotMainDB.BOT_VERSION
-bot_owner_id_or_dev_id = get_main.BotMainDB.DEV_ID
+bot_prefix = dbfetch.SettingsMain.MESSAGE_PREFIX
+bot_creator_name = dbfetch.SettingsMain.BOT_CREATOR_NAME
+bot_current_version = dbfetch.SettingsMain.BOT_VERSION
+bot_owner_id_or_dev_id = dbfetch.SettingsMain.DEV_ID
 
 client = commands.Bot(command_prefix=bot_prefix, intents=discord.Intents.all())
 

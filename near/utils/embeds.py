@@ -5,9 +5,9 @@ import discord
 from discord.ext import commands
 from loguru import logger
 
-from near.database import get_embeds
 from near.database import dbfetch
 from near.utils import input_sanitization
+
 
 
 async def Error(
@@ -32,7 +32,7 @@ async def Error(
     """
 
     logger.error(error_message)
-    embed_info = await dbfetch.DataEmbedsFetcher.allErrorVals()
+    embed_info = await dbfetch.SettingsEmbeds.allErrorVals()
     embed = discord.Embed(
         title=embed_info["ERROR_TITLE"],
         description=f"```\n{error_message}```",
@@ -46,9 +46,9 @@ async def Error(
 
 
 async def Common(
-    client: commands.Bot,
     interaction: discord.Interaction,
     title: str,
+    client: t.Optional[commands.Bot] = None,
     description: t.Optional[str | list | bool] = False,
     thumbnail: t.Optional[str] = "",
     thumbnail_direct: t.Optional[bool] = False,
@@ -82,17 +82,18 @@ async def Common(
         An embed with the specified title, optional description, and thumbnail.
     """
 
+    em_color = input_sanitization.color(dbfetch.SettingsEmbeds.oneRec())
     if description == False:  # dont add description
         embed = discord.Embed(
-            title=title, color=get_embeds.Common.COLOR, timestamp=datetime.utcnow()
+            title=title, 
+            color=em_color, 
+            timestamp=datetime.utcnow()
         )
     else:  # add description
         embed = discord.Embed(
             title=title,
-            description=(
-                "".join(description) if isinstance(description, list) else description
-            ),
-            color=get_embeds.Common.COLOR,
+            description=("".join(description) if isinstance(description, list) else description),
+            color=em_color,
             timestamp=datetime.utcnow(),
         )
 
@@ -101,10 +102,10 @@ async def Common(
             embed.set_thumbnail(url=thumbnail)
             print(thumbnail_direct, thumbnail)
         else:
-            embed.set_thumbnail(
-                url=await dbfetch.DataEmbedThumbnailsFetcher.oneVal(key=thumbnail)
-            )
-
-    embed.set_author(name=client.user.name, icon_url=client.user.avatar.url)
+            embed.set_thumbnail(url=await dbfetch.SettingsEmbeds.oneThumbnail(key=thumbnail))
+    
+    if client:
+        embed.set_author(name=client.user.name, icon_url=client.user.avatar.url)
+    
     embed.set_footer(text=f"Requested by {interaction.user.name}")
     return embed

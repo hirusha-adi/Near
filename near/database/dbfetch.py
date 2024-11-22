@@ -1,37 +1,51 @@
+import json
 import typing as t
 from loguru import logger
-from tortoise.exceptions import DoesNotExist
-from .models import DataEmbeds, DataAdBroadcast, DataGeneral, DataEmbedThumbnails
+from . import db
+from pocketbase.models.record import Record
+
+class SettingsMain:
+    with open("near/database/main.json", "r", encoding="utf-8") as file:
+        embed = json.load(file)
+    MESSAGE_PREFIX = embed["MESSAGE_PREFIX"]
+    BOT_CREATOR_NAME = embed["BOT_CREATOR_NAME"]
+    BOT_VERSION = embed["BOT_VERSION"]
+    DEV_ID = embed["DEV_ID"]
+    DEV_AND_OWNERS = embed["DEV_AND_OWNERS"]
+    logger.debug("Loaded all primary settings from near/database/main.json")
 
 
-class DataEmbedsFetcher:
+class SettingsEmbeds:
     @staticmethod
     async def oneRec(key: str) -> t.Optional[str]:
         try:
-            __fetched = await DataEmbeds.get(key=key)
-            return __fetched.value
-        except DoesNotExist:
-            logger.error(f"Key: {key} does not exist!")
+            __fetched = db.Collections.settings_embeds().get_first_list_item(filter=f'key="{key}"')
+            return str(__fetched.value)
+        except Exception as e:
+            logger.error(f"Error: {e}")
 
     @staticmethod
-    async def allVals() -> t.Optional[t.List[DataEmbeds]]:
-        return await DataEmbeds.all()
-
-    @staticmethod
-    async def allErrorVals() -> t.Optional[dict]:
-        all_ = await DataEmbedsFetcher.allVals()
-        data = {}
-        for i in all_:
-            if i.key.startswith("ERROR_"):
-                data[i.key] = i.value
-        return data
-
-
-class DataEmbedThumbnailsFetcher:
-    @staticmethod
-    async def oneVal(key: str) -> t.Optional[str]:
+    async def allVals() -> t.Optional[t.List[Record]]:
         try:
-            __fetched = await DataEmbedThumbnails.get(key=key)
-            return __fetched.value
-        except DoesNotExist:
-            logger.error(f"Key: {key} does not exist!")
+            return db.Collections.settings_embeds().get_full_list()
+        except Exception as e:
+            logger.error(f"Error: {e}")
+
+    @staticmethod
+    async def allErrorVals() -> t.Optional[dict[str, str]]:
+        try:
+            __fetched = db.Collections.settings_embeds().get_full_list(query_params={"filter": f'key~"ERROR_"'})
+            data = {}
+            for i in __fetched:
+                data[str(i.key)] = str(i.value)
+            return data
+        except Exception as e:
+            logger.error(f"Error: {e}")
+    
+    @staticmethod
+    async def oneThumbnail(key: str) -> t.Optional[str]:
+        try:
+            __fetched = db.Collections.settings_embeds().get_first_list_item(filter=f'key="thumbnail_{key}"')
+            return str(__fetched.value)
+        except Exception as e:
+            logger.error(f"Error: {e}")

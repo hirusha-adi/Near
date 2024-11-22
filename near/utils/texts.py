@@ -1,4 +1,5 @@
 import platform
+import pocketbase
 from datetime import datetime
 
 import discord
@@ -7,10 +8,6 @@ import discord
 def welcome_message():
     """
     Display a welcome message with ASCII art and system information.
-
-    The function prints an ASCII art logo followed by system details
-    such as date/time, platform, node, machine, Python version, and 
-    Discord.py API version.
     """
     
     # ASCII art logo
@@ -32,6 +29,7 @@ def welcome_message():
         Machine: {platform.uname().machine}
         Python Version: {platform.python_version()}
         Discord.py API Version: {discord.__version__}
+        Pocketbase SDK Version: {pocketbase.__version__}
 ------------------------------------------------------------
                    Made by @hirushaadi
 """)

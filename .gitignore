@@ -2,6 +2,7 @@
 token.txt
 ./token.txt
 .env*
+!.env.dev
 env/
 env*/
 !.env.example
