@@ -120,6 +120,107 @@ class FakeInformation(commands.Cog):
         try:
         
             fake = Faker()
+            
+            fake_methods = {
+                "name": ("Name", fake.name()),
+                "dob": ("Date Of Birth", fake.date_of_birth()),
+                "addr": ("Address", fake.address()),
+                "job": ("Job", fake.job()),
+                "color": ("Color", fake.color_name()),
+                "zipcode": ("Zip Code", fake.zipcode()),
+                "city": ("City", fake.city()),
+                "licenseplate": ("License Plate", fake.license_plate()),
+                "bban": ("Basic Bank Account", fake.bban()),
+                "iban": ("International Bank Account", fake.iban()),
+                "bs": ("BS", fake.bs()),
+                "cc": ("Credit Card", fake.credit_card_full()),
+                "cemail": ("Email", fake.company_email()),
+                "pno": ("Phone Number", fake.phone_number()),
+                "cp": ("Catch Phrase", fake.catch_phrase()),
+                "ssn": ("SSN", fake.ssn()),
+                "country": ("Country", fake.country()),
+                "postcode": ("Postcode", fake.postcode()),
+                "street addr": ("Street Address", fake.street_address()),
+                "street name": ("Street Name", fake.street_name()),
+                "aba": ("ABA", fake.aba()),
+                "bank country": ("Bank Country", fake.bank_country()),
+                "company suffix": ("Company Suffix", fake.company_suffix()),
+                "cc ex": ("Credit Card Expire Date", fake.credit_card_expire()),
+                "cc no": ("Credit Card Number", fake.credit_card_number()),
+                "cc pr": ("Credit Card Provider", fake.credit_card_provider()),
+                "cc cvv": ("Credit Card CVV", fake.credit_card_security_code()),
+                "crypto": ("Cryptocurrency", fake.cryptocurrency()),
+                "crypto code": ("Cryptocurrency Code", fake.cryptocurrency_code()),
+                "crypto name": ("Cryptocurrency Name", fake.cryptocurrency_name()),
+                "curr": ("Currency", fake.currency()),
+                "curr code": ("Currency Code", fake.currency_code()),
+                "curr name": ("Currency Name", fake.currency_name()),
+                "pricetag": ("Pricetag", fake.pricetag()),
+                "date": ("Date", fake.date()),
+                "century": ("Century", fake.century()),
+                "file name": ("File Name", fake.file_name()),
+                "file ex": ("File Extension", fake.file_extension()),
+                "file path": ("File Path", fake.file_path()),
+                "unix device": ("Unix Device", fake.unix_device()),
+                "unix partition": ("Unix Partition", fake.unix_partition()),
+                "email": ("Email Address", fake.ascii_email()),
+                "email free": ("Free Email Address", fake.ascii_free_email()),
+                "domain": ("Domain Name", fake.domain_name()),
+                "hostname": ("Hostname", fake.hostname()),
+                "http method": ("HTTP Method", fake.http_method()),
+                "iana": ("IANA Registrar ID", fake.iana_id()),
+                "img url": ("Image URL", fake.image_url()),
+                "slug": ("Slug", fake.slug()),
+                "tld": ("TLD", fake.tld()),
+                "uri": ("URI", fake.uri()),
+                "uri ex": ("URI Extension", fake.uri_extension()),
+                "url": ("URL", fake.url()),
+                "username": ("Username", fake.user_name()),
+                "isbn10": ("ISBN 10", fake.isbn10()),
+                "isbn13": ("ISBN 13", fake.isbn13()),
+                "paragraph": ("Paragraph", "".join(fake.paragraphs())),
+                "sentence": ("Sentence", fake.sentence()),
+                "text": ("Text", fake.texts()),
+                "word": ("Word", fake.word()),
+                "fname": ("First Name", fake.first_name()),
+                "fname male": ("First Name - Male", fake.first_name_male()),
+                "fname female": ("First Name - Female", fake.first_name_female()),
+                "fname nb": ("First Name - Non Binary", fake.first_name_nonbinary()),
+                "lang": ("Language Name", fake.language_name()),
+                "lname": ("Last Name", fake.last_name()),
+                "lname male": ("Last Name - Male", fake.last_name_male()),
+                "lname female": ("Last Name - Female", fake.last_name_female()),
+                "lname nb": ("Last Name - Non Binary", fake.last_name_nonbinary()),
+                "name female": ("Name - Female", fake.name_female()),
+                "name male": ("Name - Male", fake.name_male()),
+                "name nb": ("Name - Non Binary", fake.name_nonbinary()),
+                "prefix": ("Prefix", fake.prefix()),
+                "suffix": ("Suffix", fake.suffix()),
+                "callingcode": ("Calling Code", fake.country_calling_code()),
+                "msisdn": ("MSISDN", fake.msisdn()),
+                "apt": ("Android Platform Token", fake.android_platform_token()),
+                "chrome": ("User Agent - Chrome", fake.chrome()),
+                "firefox": ("User Agent - FireFox", fake.firefox()),
+                "ie": ("User Agent - Internet Explorer", fake.internet_explorer()),
+                "iospt": ("IOS Platform Token", fake.ios_platform_token()),
+                "linuxpt": ("Linux Platform Token", fake.linux_platform_token()),
+                "linuxproc": ("Linux Processor", fake.linux_processor()),
+                "macpt": ("MAC - Platform Token", fake.mac_platform_token()),
+                "macprocessor": ("MAC Processor", fake.mac_processor()),
+                "opera": ("User Agent - Opera", fake.opera()),
+                "safari": ("User Agent - Safari", fake.safari()),
+                "winpt": ("Windows - Platform Token", fake.windows_platform_token()),
+                "ua": ("User Agent", fake.user_agent()),
+                "ipv4": ("IPv4", fake.ipv4()),
+                "ipv4 class": ("IPv4 Network Class", fake.ipv4_network_class()),
+                "ipv4 private": ("Private IPv4 Address", fake.ipv4_private()),
+                "ipv4 public": ("Public IPv4 Address", fake.ipv4_public()),
+                "macaddr": ("MAC Address", fake.mac_address()),
+                "nic handle": ("NIC Handle", fake.mac_address()),
+                "port": ("Port Number", fake.port_number()),
+                "ripeid": ("RIPE ID", fake.ripe_id()),
+            }
+            
             em = embeds.Common(
                 client=self.client,
                 interaction=interaction,
@@ -127,8 +228,23 @@ class FakeInformation(commands.Cog):
                 thumbnail="fakeinfo_fake",
             )
             
-            if category == "high":
+            if category in fake_methods:
+                label, value = fake_methods[category]
+                if category in ["crypto", "curr"]:
+                    # TODO: is this actually necessary?
+                    em.add_field(name=label, value=f"Short Name: {value[0]} \nFull Name: {value[1]}")
+                else:
+                    em.add_field(name=label, value=str(value))
+                    
+            else:
+            
+                if category == "high":
                     simple_dict = fake.profile()
+                    # TODO: minified version, test it out
+                    # ---
+                    # for key, value in simple_dict.items():
+                    #     em.add_field(name=key.replace("_", " ").title(), value=str(value))
+                    # ---
                     em.add_field(name="Name", value=f"{str(simple_dict['name'])}")
                     em.add_field(name="Job", value=f"{str(simple_dict['job'])}")
                     em.add_field(name="Birthdate", value=f"{str(simple_dict['birthdate'])}")
@@ -140,528 +256,138 @@ class FakeInformation(commands.Cog):
                     em.add_field(name="Username", value=f"{str(simple_dict['username'])}")
                     em.add_field(name="Address", value=f"{str(simple_dict['address'])}")
                     em.add_field(name="Mail", value=f"{str(simple_dict['mail'])}")
+                
+                elif category == "low":
+                    shitthing_simple = fake.simple_profile()
+                    # TODO: minified version, test it out
+                    # ---
+                    # for key, value in shitthing_simple.items():
+                    #     em.add_field(name=key.replace("_", " ").title(), value=str(value))
+                    # ---
+                    em.add_field(name="Name", value=f"{str(shitthing_simple['name'])}")
+                    em.add_field(name="Sex", value=f"{str(shitthing_simple['sex'])}")
+                    em.add_field(name="Address", value=f"{str(shitthing_simple['address'])}")
+                    em.add_field(name="Mail", value=f"{str(shitthing_simple['mail'])}")
+                    em.add_field(name="Birthday", value=f"{str(shitthing_simple['birthdate'])}")
 
-            elif category == "name":
-                USname = fake.name()
-                em.add_field(name="Name", value=f"{USname}")
-
-            elif category == "dob":
-                USdob = fake.date_of_birth()
-                em.add_field(name="Date Of Birth", value=f"{str(USdob)}")
-
-            elif category == "addr":
-                USaddress = fake.address()
-                em.add_field(name="Address", value=f"{str(USaddress)}")
-
-            elif category == "job":
-                USjob = fake.job()
-                em.add_field(name="Job", value=f"{str(USjob)}")
-
-            elif category == "color":
-                USfavColor = fake.color_name()
-                em.add_field(name="Color", value=f"{str(USfavColor)}")
-
-            elif category == "zipcode":
-                USzip = fake.zipcode()
-                em.add_field(name="Zip Code", value=f"{str(USzip)}")
-                
-            elif category == "city":
-                UScity = fake.city()
-                em.add_field(name="City", value=f"{str(UScity)}")
-
-            elif category == "licenseplate":
-                USnumberPlate = fake.license_plate()
-                em.add_field(name="License Plate", value=f"{str(USnumberPlate)}")
-
-            elif category == "bban":
-                USbasicBankAccountNumber = fake.bban()
-                em.add_field(name="Basic Bank Account", value=f"{str(USbasicBankAccountNumber)}")
-
-            elif category == "iban":
-                USinternationalBankAccountNumber = fake.iban()
-                em.add_field(name="International Bank Account", value=f"{str(USinternationalBankAccountNumber)}")
-
-            elif category == "bs":
-                USbs = fake.bs()
-                em.add_field(name="BS", value=f"{str(USbs)}")
-
-            elif category == "cc":
-                UScreditcard = fake.credit_card_full()
-                em.add_field(name="Credit Card", value=f"{str(UScreditcard)}")
-
-            elif category == "cemail":
-                UScompanyemail = fake.company_email()
-                em.add_field(name="Email", value=f"{str(UScompanyemail)}")
-
-            elif category == "pno":
-                USphoneNumber = fake.phone_number()
-                em.add_field(name="Phone Number", value=f"{str(USphoneNumber)}")
-
-            elif category == "cp":
-                UScatchPhrase = fake.catch_phrase()
-                em.add_field(name="Catch Phrase", value=f"{str(UScatchPhrase)}")
-                
-            elif category == "ssn":
-                USssa = fake.ssn()
-                em.add_field(name="SSN", value=f"{str(USssa)}")
-
-            elif category == "low":
-                shitthing_simple = fake.simple_profile()
-                em.add_field(name="Name", value=f"{str(shitthing_simple['name'])}")
-                em.add_field(name="Sex", value=f"{str(shitthing_simple['sex'])}")
-                em.add_field(name="Address", value=f"{str(shitthing_simple['address'])}")
-                em.add_field(name="Mail", value=f"{str(shitthing_simple['mail'])}")
-                em.add_field(name="Birthday", value=f"{str(shitthing_simple['birthdate'])}")
-
-            elif category == "country":
-                USssa = fake.country()
-                em.add_field(name="Country", value=f"{str(USssa)}")
-
-            elif category == "postcode":
-                USssa = fake.postcode()
-                em.add_field(name="Postcode", value=f"{str(USssa)}")
-
-            elif category == "street addr":
-                USssa = fake.street_address()
-                em.add_field(name="Street Address", value=f"{str(USssa)}")
-                
-            elif category == "street addr":
-                USssa = fake.street_name()
-                em.add_field(name="Street Name", value=f"{str(USssa)}")
-                
-            elif category == "aba":
-                USssa = fake.aba()
-                em.add_field(name="ABA", value=f"{str(USssa)}")
-                
-            elif category == "bank country":
-                USssa = fake.bank_country()
-                em.add_field(name="Bank Cuntry", value=f"{str(USssa)}")
-                
-            elif category == "ean":
-                # The usage is like 'fake ean 10' - 10 is the length
-                try:
-                    nu_of_time = int(category.split(" ")[-1])
-                except:
-                    nu_of_time = 10
-                USssa = fake.ean(length=int(nu_of_time))
-                em.add_field(name="EAN Barcode", value=f"{str(USssa)}")
-
-            elif category == "company suffix":
-                USssa = fake.company_suffix()
-                em.add_field(name="Company Suffix", value=f"{str(USssa)}")
-                
-            elif category == "cc ex":
-                USssa = fake.credit_card_expire()
-                em.add_field(name="Credit Card Expire Date", value=f"{str(USssa)}")
-                
-            elif category == "cc no":
-                USssa = fake.credit_card_number()
-                em.add_field(name="Credit Card Number", value=f"{str(USssa)}")
-                
-            elif category == "cc pr":
-                USssa = fake.credit_card_provider()
-                em.add_field(name="Credit Card Provider", value=f"{str(USssa)}")
-                
-            elif category == "cc cvv":
-                USssa = fake.credit_card_security_code()
-                em.add_field(name="Credit Card CVV", value=f"{str(USssa)}")
-                
-            elif category == "crypto":
-                USssa = fake.cryptocurrency()
-                em.add_field(name="Cryptocurrency", value=f"Short Name: {USssa[0]} \nFull Name: {USssa[1]}")
-                
-            elif category == "crypto code":
-                USssa = fake.cryptocurrency_code()
-                em.add_field(name="Cryptocurrency Code", value=f"{USssa}")
-                
-            elif category == "crypto name":
-                USssa = fake.cryptocurrency_name()
-                em.add_field(name="Cryptocurrency Name", value=f"{USssa}")
-
-            elif category == "curr":
-                USssa = fake.currency()
-                em.add_field(name="Currency", value=f"Short Name: {USssa[0]} \nFull Name: {USssa[1]}")
-
-            elif category == "curr code":
-                USssa = fake.currency_code()
-                em.add_field(name="Currency Code", value=f"{USssa}")
-                
-
-            elif category == "curr name":
-                USssa = fake.currency_name()
-                em.add_field(name="Currency Code", value=f"{USssa}")
-                
-
-            elif category.lower().startswith("curr symbol"):
-                try:
-                    currcode = category.split(' ')[-1]
-                    USssa = fake.currency_symbol(code=str(currcode))
-                except:
-                    USssa = fake.currency_symbol()
-                em.add_field(name="Currency Code", value=f"{USssa}")
-                
-            elif category == "pricetag":
-                USssa = fake.pricetag()
-                em.add_field(name="Pricetag", value=f"{USssa}")
-                
-            elif category == "date":
-                USssa = fake.date()
-                em.add_field(name="Date", value=f"{USssa}")
-
-            elif category == "century":
-                USssa = fake.century()
-                em.add_field(name="Century", value=f"{USssa}")
-                
-            elif category == "file name":
-                USssa = fake.file_name()
-                em.add_field(name="File Name", value=f"{USssa}")
-                
-
-            elif category == "file ex":
-                USssa = fake.file_extension()
-                em.add_field(name="File Extension", value=f"{USssa}")
-                
-
-            elif category == "file path":
-                USssa = fake.file_path()
-                em.add_field(name="File Extension", value=f"{USssa}")
-                
-            elif category.lower().startswith("mime"):
-                subcall = category.split(" ")
-                try:
-                    subc = fake.mime_type(subcall[-1])
-                    USssa = fake.mime_type(category=subc)
-                except:
-                    USssa = fake.mime_type(category=subc)
-                em.add_field(name="File Extension", value=f"{USssa}")
-                
-
-            elif category == "unix device":
-                USssa = fake.unix_device()
-                em.add_field(name="Unix Device", value=f"{USssa}")
-                
-
-            elif category == "unix partition":
-                USssa = fake.unix_partition()
-                em.add_field(name="Unix Partition", value=f"{USssa}")
-                
-
-            elif category == "email":
-                USssa = fake.ascii_email()
-                em.add_field(name="Email Address", value=f"{USssa}")
-                
-
-            elif category == "email free":
-                USssa = fake.ascii_free_email()
-                em.add_field(name="Email Address", value=f"{USssa}")
-                
-
-            elif category == "domain":
-                USssa = fake.domain_name()
-                em.add_field(name="Email Address", value=f"{USssa}")
-                
-
-            elif category == "hostname":
-                USssa = fake.hostname()
-                em.add_field(name="Hostname", value=f"{USssa}")
-                
-
-            elif category == "http method":
-                USssa = fake.http_method()
-                em.add_field(name="HTTP METHOD", value=f"{USssa}")
-                
-
-            elif category == "iana":
-                USssa = fake.iana_id()
-                em.add_field(name="IANA Registrar ID", value=f"{USssa}")
-                
-
-            elif category == "img url":
-                USssa = fake.image_url()
-                em.add_field(name="Image URL", value=f"{USssa}")
-                
-
-            elif category == "ipv4":
-                USssa = fake.ipv4()
-                em.add_field(name="IPv4", value=f"{USssa}")
-                
-            elif category == "ipv4 class":
-                USssa = fake.ipv4_network_class()
-                em.add_field(name="IPv4 Netwrok Class", value=f"{USssa}")
-                
-            elif category == "ipv4 private":
-                USssa = fake.ipv4_private()
-                em.add_field(name="a Private IPv4 Address", value=f"{USssa}")
-            
-
-            elif category == "ipv4 public":
-                USssa = fake.ipv4_public()
-                em.add_field(name="a Public IPv4 Address", value=f"{USssa}")
-                
-
-            elif category == "ipv6":
-                USssa = fake.ipv6()
-                em.add_field(name="IPv6", value=f"{USssa}")
-                
-
-            elif category == "macaddr":
-                USssa = fake.mac_address()
-                em.add_field(name="Mac Address", value=f"{USssa}")
-                
-
-            elif category == "nic handle":
-                USssa = fake.nic_handle()
-                em.add_field(name="NIC Handle", value=f"{USssa}")
-                
-
-            elif category == "port":
-                USssa = fake.port_number()
-                em.add_field(name="Port Number", value=f"{USssa}")
-                
-            elif category == "ripeid":
-                USssa = fake.ripe_id()
-                em.add_field(name="RIPE ID", value=f"{USssa}")
-                
-            elif category == "slug":
-                USssa = fake.slug()
-                em.add_field(name="Slug", value=f"{USssa}")
-                
-            elif category == "tld":
-                USssa = fake.tld()
-                em.add_field(name="TLD", value=f"{USssa}")
-                
-            elif category == "uri":
-                USssa = fake.uri()
-                em.add_field(name="URI", value=f"{USssa}")
-                
-            elif category == "uri ex":
-                USssa = fake.uri_extension()
-                em.add_field(name="URI Extension", value=f"{USssa}")
-                
-            elif category == "url":
-                USssa = fake.url()
-                em.add_field(name="URL", value=f"{USssa}")
-                
-            elif category == "username":
-                USssa = fake.user_name()
-                em.add_field(name="Username", value=f"{USssa}")
-                
-            elif category == "isbn10":
-                USssa = fake.isbn10()
-                em.add_field(name="ISBN 10", value=f"{USssa}")
-                
-            elif category == "isbn13":
-                USssa = fake.isbn13()
-                em.add_field(name="ISBN 13", value=f"{USssa}")
-
-            elif category == "paragraph":
-                USssa = fake.paragraphs()
-                em.add_field(name="Paragraph", value=f"{''.join(USssa)}")
-                
-            elif category == "sentence":
-                USssa = fake.sentence()
-                em.add_field(name="Sentence", value=f"{USssa}")
-                
-            elif category == "text":
-                USssa = fake.texts()
-                em.add_field(name="Text", value=f"{USssa}")
-                
-            elif category == "word":
-                USssa = fake.word()
-                em.add_field(name="Word", value=f"{USssa}")
-                
-            elif category == "fname":
-                USssa = fake.first_name()
-                em.add_field(name="First Name", value=f"{USssa}")
-                
-            elif category == "fname male":
-                USssa = fake.first_name_male()
-                em.add_field(name="First Name - Male", value=f"{USssa}")
-                
-            elif category == "fname female":
-                USssa = fake.first_name_male()
-                em.add_field(name="First Name - Female", value=f"{USssa}")
-
-            elif category == "fname nb":
-                USssa = fake.first_name_nonbinary()
-                em.add_field(name="First Name - Non Binary", value=f"{USssa}")
-                
-
-            elif category == "lang":
-                USssa = fake.language_name()
-                em.add_field(name="Language Name", value=f"{USssa}")
-                
-            elif category == "lname":
-                USssa = fake.last_name()
-                em.add_field(name="Last Name", value=f"{USssa}")
-                
-            elif category == "lname male":
-                USssa = fake.last_name_male()
-                em.add_field(name="Last Name - Male", value=f"{USssa}")
-                
-            elif category == "lname female":
-                USssa = fake.last_name_female()
-                em.add_field(name="Last Name - Female", value=f"{USssa}")
-                
-            elif category == "lname nb":
-                USssa = fake.last_name_nonbinary()
-                em.add_field(name="Last Name - Non Binary", value=f"{USssa}")
-                
-            elif category == "name female":
-                USssa = fake.name_female()
-                em.add_field(name="Name - Female", value=f"{USssa}")
-                
-            elif category == "name male":
-                USssa = fake.name_male()
-                em.add_field(name="Name - Male", value=f"{USssa}")
-                
-            elif category == "name nb":
-                USssa = fake.name_nonbinary()
-                em.add_field(name="Name - Non Binary", value=f"{USssa}")
-                
-            elif category == "prefix":
-                USssa = fake.prefix()
-                em.add_field(name="Prefix", value=f"{USssa}")
-                
-            elif category == "suffix":
-                USssa = fake.prefix()
-                em.add_field(name="Prefix", value=f"{USssa}")
-                
-            elif category == "callingcode":
-                USssa = fake.country_calling_code()
-                em.add_field(name="Calling Code", value=f"{USssa}")
-
-            elif category == "msisdn":
-                USssa = fake.msisdn()
-                em.add_field(name="MSISDN", value=f"{USssa}")
-
-            elif category == "apt":
-                USssa = fake.android_platform_token()
-                em.add_field(name="Android Platform Token", value=f"{USssa}")
-
-            elif category == "chrome":
-                USssa = fake.chrome()
-                em.add_field(name="User Agent - Chrome", value=f"{USssa}")
-
-            elif category == "firefox":
-                USssa = fake.firefox()
-                em.add_field(name="User Agent - FireFox", value=f"{USssa}")
-                
-            elif category == "ie":
-                USssa = fake.internet_explorer()
-                em.add_field(name="User Agent - Internet Explorer", value=f"{USssa}")
-                
-            elif category == "iospt":
-                USssa = fake.ios_platform_token()
-                em.add_field(name="IOS Platform Token", value=f"{USssa}")
-
-            elif category == "linuxpt":
-                USssa = fake.linux_platform_token()
-                em.add_field(name="Linux Platform Token", value=f"{USssa}")
-                
-            elif category == "linuxproc":
-                USssa = fake.linux_processor()
-                em.add_field(name="Linux Processor", value=f"{USssa}")
-        
-            elif category == "macpt":
-                USssa = fake.mac_platform_token()
-                em.add_field(name="MAC - Platform Token", value=f"{USssa}")
-                
-            elif category == "macprocessor":
-                USssa = fake.mac_processor()
-                em.add_field(name="MAC Processor", value=f"{USssa}")
-                
-            elif category == "opera":
-                USssa = fake.opera()
-                em.add_field(name="User Agent - Opera", value=f"{USssa}")
-                
-            elif category == "safari":
-                USssa = fake.opera()
-                em.add_field(name="User Agent - Safari", value=f"{USssa}")
-                
-            elif category == "winpt":
-                USssa = fake.windows_platform_token()
-                em.add_field(name="Windows - Platform Token", value=f"{USssa}")
-                
-            elif category == "ua":
-                USssa = fake.user_agent()
-                em.add_field(name="User Agent", value=f"{USssa}")
-                
-            elif category.lower().startswith('vcl'):
-                fake.add_provider(VehicleProvider)
-                try:
-                    fmall = category.split(" ")
-                    fmlast = fmall[-1]
-                except:
-                    fmlast = "all"
+                elif category == "ean":
+                    # The usage is like 'fake ean 10' - 10 is the length
+                    try:
+                        nu_of_time = int(category.split(" ")[-1])
+                    except:
+                        nu_of_time = 10
+                    em.add_field(name="EAN Barcode", value=f"{str(fake.ean(length=int(nu_of_time)))}")
+                
+                elif category.lower().startswith("curr symbol"):
+                    try:
+                        currcode = category.split(' ')[-1]
+                        USssa = fake.currency_symbol(code=str(currcode))
+                    except:
+                        USssa = fake.currency_symbol()
+                    em.add_field(name="Currency Code", value=f"{USssa}")
                     
-                if fmlast == "ymm":
-                    vinfo = fake.vehicle_year_make_model()
-                    em.add_field(name="Vehicle Infromation", value=f"**Year, Make, Model:** \n{vinfo}")
-                elif fmlast == "ymmc":
-                    vinfo = fake.vehicle_year_make_model_cat()
-                    em.add_field(
-                        name="Vehicle Infromation", value=f"**Year, Make, Model, Cat:** \n{vinfo}")
-                elif fmlast == "mm":
-                    vinfo = fake.vehicle_make_model()
-                    em.add_field(name="Vehicle Infromation", value=f"**Make, Model:** \n{vinfo}")
-                elif fmlast == "make":
-                    vinfo = fake.vehicle_make()
-                    em.add_field(name="Vehicle Infromation", value=f"**Make:** {vinfo}")
-                elif fmlast == "model":
-                    vinfo = fake.vehicle_model()
-                    em.add_field(name="Vehicle Infromation", value=f"**Model:** {vinfo}")
-                elif fmlast == "year":
-                    vinfo = fake.vehicle_model()
-                    em.add_field(name="Vehicle Infromation", value=f"**Year:** {vinfo}")
-                elif fmlast == "category":
-                    vinfo = fake.vehicle_category()
-                    em.add_field(name="Vehicle Infromation", value=f"**Category:** {vinfo}")
-                else:
-                    vinfo = fake.vehicle_object()
-                    em.add_field(name="Vehicle Infromation", value=f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}")
-
-            elif category.lower().startswith('mcn'):
-                fake.add_provider(VehicleProvider)
-                try:
-                    fmlast = category.split(" ")[-1]
-                except:
-                    fmlast = "all"
+                elif category.lower().startswith("mime"):
+                    subcall = category.split(" ")
+                    try:
+                        subc = fake.mime_type(subcall[-1])
+                        USssa = fake.mime_type(category=subc)
+                    except:
+                        USssa = fake.mime_type(category=subc)
+                    em.add_field(name="File Extension", value=f"{USssa}")
                     
-                if fmlast == "ymm":
-                    vinfo = fake.machine_year_make_model()
-                    em.add_field(name="Machine Infromation", value=f"**Year, Make, Model:** \n{vinfo}")
-                elif fmlast == "ymmc":
-                    vinfo = fake.machine_year_make_model_cat()
-                    em.add_field(name="Machine Infromation", value=f"**Year, Make, Model, Cat:** \n{vinfo}")
-                elif fmlast == "mm":
-                    vinfo = fake.machine_make_model()
-                    em.add_field(name="Machine Infromation", value=f"**Make, Model:** \n{vinfo}")
-                elif fmlast == "make":
-                    vinfo = fake.machine_make()
-                    em.add_field(name="Machine Infromation", value=f"**Make:** {vinfo}")
-                elif fmlast == "model":
-                    vinfo = fake.machine_model()
-                    em.add_field(name="Machine Infromation", value=f"**Model:** {vinfo}")
-                elif fmlast == "year":
-                    vinfo = fake.machine_year()
-                    em.add_field(name="Machine Infromation", value=f"**Year:** {vinfo}")
-                elif fmlast == "category":
-                    vinfo = fake.machine_category()
-                    em.add_field(name="Machine Infromation", value=f"**Category:** {vinfo}")
-                else:
-                    vinfo = fake.machine_object()
-                    em.add_field(name="Machine Infromation", value=f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}")
+                elif category.lower().startswith('vcl'):
+                    fake.add_provider(VehicleProvider)
+                    try:
+                        fmlast = category.split(" ")[-1]
+                    except:
+                        fmlast = "all"
+                        
+                    if fmlast == "ymm":
+                        em.add_field(name="Vehicle Infromation", value=f"**Year, Make, Model:** \n{fake.vehicle_year_make_model()}")
+                    elif fmlast == "ymmc":
+                        em.add_field(name="Vehicle Infromation", value=f"**Year, Make, Model, Cat:** \n{fake.vehicle_year_make_model_cat()}")
+                    elif fmlast == "mm":
+                        em.add_field(name="Vehicle Infromation", value=f"**Make, Model:** \n{fake.vehicle_make_model()}")
+                    elif fmlast == "make":
+                        em.add_field(name="Vehicle Infromation", value=f"**Make:** {fake.vehicle_make()}")
+                    elif fmlast == "model":
+                        em.add_field(name="Vehicle Infromation", value=f"**Model:** {fake.vehicle_model()}")
+                    elif fmlast == "year":
+                        em.add_field(name="Vehicle Infromation", value=f"**Year:** {fake.vehicle_model()}")
+                    elif fmlast == "category":
+                        em.add_field(name="Vehicle Infromation", value=f"**Category:** {fake.vehicle_category()}")
+                    else:
+                        vinfo = fake.vehicle_object()
+                        em.add_field(name="Vehicle Infromation", value=f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}")
 
-            else:
-                em = embeds.Common(
-                    client=self.client,
-                    interaction=interaction,
-                    title="Fake Information",
-                    description="Please choose a category from the options below to access a comprehensive list of all the commands available within that category.",
-                    thumbnail="fakeinfo_fake"
-                )
-                return await interaction.response.send_message(embed=em, view=SelectViewFakeHelp(), ephemeral=False)
+                    # TODO: minified version, test it out
+                    # ---
+                    # vehicle_info_map = {
+                    #     "ymm": f"**Year, Make, Model:** \n{fake.vehicle_year_make_model()}",
+                    #     "ymmc": f"**Year, Make, Model, Cat:** \n{fake.vehicle_year_make_model_cat()}",
+                    #     "mm": f"**Make, Model:** \n{fake.vehicle_make_model()}",
+                    #     "make": f"**Make:** {fake.vehicle_make()}",
+                    #     "model": f"**Model:** {fake.vehicle_model()}",
+                    #     "year": f"**Year:** {fake.vehicle_model()}",
+                    #     "category": f"**Category:** {fake.vehicle_category()}",
+                    #     "all": lambda: f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}"
+                    # }
+                    # vinfo = fake.vehicle_object() if fmlast == "all" else None
+                    # value = vehicle_info_map[fmlast]() if callable(vehicle_info_map[fmlast]) else vehicle_info_map[fmlast]
+                    # em.add_field(name="Vehicle Information", value=value)
+                    # ---
+                    
+                elif category.lower().startswith('mcn'):
+                    fake.add_provider(VehicleProvider)
+                    try:
+                        fmlast = category.split(" ")[-1]
+                    except:
+                        fmlast = "all"
+                        
+                    if fmlast == "ymm":
+                        em.add_field(name="Machine Infromation", value=f"**Year, Make, Model:** \n{fake.machine_year_make_model()}")
+                    elif fmlast == "ymmc":
+                        em.add_field(name="Machine Infromation", value=f"**Year, Make, Model, Cat:** \n{fake.machine_year_make_model_cat()}")
+                    elif fmlast == "mm":
+                        em.add_field(name="Machine Infromation", value=f"**Make, Model:** \n{fake.machine_make_model()}")
+                    elif fmlast == "make":
+                        em.add_field(name="Machine Infromation", value=f"**Make:** {fake.machine_make()}")
+                    elif fmlast == "model":
+                        em.add_field(name="Machine Infromation", value=f"**Model:** {fake.machine_model()}")
+                    elif fmlast == "year":
+                        em.add_field(name="Machine Infromation", value=f"**Year:** {fake.machine_year()}")
+                    elif fmlast == "category":
+                        em.add_field(name="Machine Infromation", value=f"**Category:** {fake.machine_category()}")
+                    else:
+                        vinfo = fake.machine_object()
+                        em.add_field(name="Machine Infromation", value=f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}")
+
+                    # TODO: minified version, test it out
+                    # ---
+                    # machine_info_map = {
+                    #     "ymm": f"**Year, Make, Model:** \n{fake.machine_year_make_model()}",
+                    #     "ymmc": f"**Year, Make, Model, Cat:** \n{fake.machine_year_make_model_cat()}",
+                    #     "mm": f"**Make, Model:** \n{fake.machine_make_model()}",
+                    #     "make": f"**Make:** {fake.machine_make()}",
+                    #     "model": f"**Model:** {fake.machine_model()}",
+                    #     "year": f"**Year:** {fake.machine_year()}",
+                    #     "category": f"**Category:** {fake.machine_category()}",
+                    #     "all": lambda: f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}"
+                    # }
+                    # vinfo = fake.machine_object() if fmlast == "all" else None
+                    # value = machine_info_map[fmlast]() if callable(machine_info_map[fmlast]) else machine_info_map[fmlast]
+                    # em.add_field(name="Machine Information", value=value)
+                    # ---
+
+                else:
+                    em = embeds.Common(
+                        client=self.client,
+                        interaction=interaction,
+                        title="Fake Information",
+                        description="Please choose a category from the options below to access a comprehensive list of all the commands available within that category.",
+                        thumbnail="fakeinfo_fake"
+                    )
+                    return await interaction.response.send_message(embed=em, view=SelectViewFakeHelp(), ephemeral=False)
 
             return await interaction.response.send_message(embed=em)
 
