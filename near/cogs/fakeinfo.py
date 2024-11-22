@@ -1,7 +1,4 @@
-import os
-
 import discord
-import requests
 from discord import app_commands
 from discord.ext import commands
 from faker import Faker
@@ -45,58 +42,98 @@ class SelectFakeHelp(discord.ui.Select):
     async def callback(self, interaction: discord.Interaction):
 
         option = self.values[0]
+        
+        commands = {
+            "Main": [
+                ("/fake high", "Generate a high amount of information"),
+                ("/fake low", "Generate a low amount of information"),
+                ("/fake help", "Show this / List all commands"),
+                ("/fakeprofiles [number=3]", "Create several fake profiles with high information"),
+            ],
+            "Personal": [
+                "Fake Personal Information Related Commands",
+                "`/fake job`, `/fake licenseplate`, `/fake bs`, `/fake ssn`",
+            ],
+            "Location": [
+                "Fake Location Related Commands",
+                "`/fake country`, `/fake postcode`, `/fake street addr`, `/fake addr`, `/fake zipcode`, `/fake city`",
+            ],
+            "Bank Cards": [
+                "Fake Bank Cards Related Commands",
+                "`/fake cc`, `/fake cc ex`, `/fake cc no`, `/fake cc pr`, `/fake cc cvv`",
+            ],
+            "Crypto": [
+                "Fake Crypto Related Commands",
+                "`/fake crypto`, `/fake crypto code`, `/fake crypto name`",
+            ],
+            "Money": [
+                "Fake Money Related Commands",
+                "`/fake curr`, `/fake curr code`, `/fake curr name`, `/fake curr symbol`, `/fake pricetag`",
+            ],
+            "Date": [
+                "Fake Date Related Commands",
+                "`/fake date`, `/fake century`, `/fake dob`",
+            ],
+            "File": [
+                "Fake File Related Commands",
+                "`/fake file name`, `/fake file ex`, `/fake file path`",
+            ],
+            "Unix": [
+                "Fake Unix Related Commands",
+                "`/fake unix device`, `/fake unix partition`",
+            ],
+            "Banking": [
+                "Fake Banking Related Commands",
+                "`/fake aba`, `/fake bank country`, `/fake bban`, `/fake iban`",
+            ],
+            "Technical": [
+                "Fake Technical Information Related Commands",
+                "`/fake email`, `/fake cemail`, `/fake email free`, `/fake domain`, `/fake hostname`, `/fake http method`, "
+                "`/fake img url`, `/fake ipv4`, `/fake ipv4 class`, `/fake ipv4 private`, `/fake ipv4 public`, `/fake ipv6`, "
+                "`/fake macaddr`, `/fake nic handle`, `/fake port`, `/fake ripeid`, `/fake slug`, `/fake tld`, `/fake uri`, "
+                "`/fake uri ex`, `/fake url`, `/fake username`",
+            ],
+            "ISBN": ["Fake ISBN Related Commands", "`/fake isbn10`, `/fake isbn13`"],
+            "Name": [
+                "Fake Name Related Commands",
+                "`/fake name`, `/fake fname`, `/fake lname`, `/fake prefix`, `/fake suffix`",
+            ],
+            "Texts": [
+                "Fake Texts Related Commands",
+                "`/fake paragraph`, `/fake sentence`, `/fake text`",
+            ],
+            "Phone Number": [
+                "Fake Phone Number Related Commands",
+                "`/fake callingcode`, `/fake msisdn`, `/fake pno`",
+            ],
+            "User Agents": [
+                "Fake User Agents Related Commands",
+                "`/fake chrome`, `/fake firefox`, `/fake ie`, `/fake opera`, `/fake safari`, `/fake ua`",
+            ],
+            "Platform Tokens": [
+                "Fake Platform Tokens Related Commands",
+                "`/fake apt`,`/fake iosptn`",
+            ],
+            "Machine": ["Technically Generated Factory"],
+        }
 
-        embed = embeds.Common(
+
+        embed = await embeds.Common(
             interaction=interaction,
             title=":gear: A Guide to All Available Commands :gear:",
             description="To access the complete list of commands and their respective descriptions, kindly select a category from the drop-down menu. For additional information and a comprehensive list of commands, please visit our website at https://teamsds.net/nearbot",
             thumbnail="fakeinfo_fake",
         )
-
-        if option == "Main":
-            embed.add_field(name="/fake high", value="Generate a high amount of information", inline=False)
-            embed.add_field(name="/fake low", value="Generate a low amount of information", inline=False)
-            embed.add_field(name="/fake help", value="Show this / List all commands", inline=False)
-            embed.add_field(name="/fakeprofiles [number=3]", value="Create several fake profiles with high information", inline=False)
-        elif option == "Personal":
-            embed.add_field(name="Fake Personal Information Related Commands", value=f"`/fake job`, \n`/fake licenseplate`, \n`/fake bs`, \n`/fake ssn`", inline=False)
-        elif option == "Location":
-            embed.add_field(name="Fake Location Related Commands", value=f"`/fake country`, \n`/fake postcode`, \n`/fake street addr`, \n`/fake street addr`, \n`/fake addr`, \n`/fake zipcode`, \n`/fake city`", inline=False)
-        elif option == "Bank Cards":
-            embed.add_field(name="Fake Bank Cards Related Commands", value=f"`/fake cc`, \n`/fake cc ex`, \n`/fake cc no`, \n`/fake cc pr`, \n`/fake cc cvv`", inline=False)
-        elif option == "Crypto":
-            embed.add_field(name="Fake Crypto Related Commands", value=f"`/fake crypto`, \n`/fake crypto code`, \n`/fake crypto name`", inline=False)
-        elif option == "Money":
-            embed.add_field(name="Fake Money Related Commands", value=f"`/fake curr`, \n`/fake curr code`, \n`/fake curr name`, \n`/fake curr symbol`, \n`/fake pricetag`", inline=False)
-        elif option == "Date":
-            embed.add_field(name="Fake Date Related Commands", value=f"`/fake date`, \n`/fake century`, \n`/fake dob`", inline=False)
-        elif option == "File":
-            embed.add_field(name="Fake File Related Commands", value=f"`/fake file name`, \n`/fake file ex`, \n`/fake file path`", inline=False)
-        elif option == "Unix":
-            embed.add_field(name="Fake Unix Related Commands", value=f"`/fake unix device`, \n`/fake unix partition`", inline=False)
-        elif option == "Banking":
-            embed.add_field(name="Fake Banking Related Commands", value=f"`/fake aba`, \n`/fake bank country`, \n`/fake bban`, \n`/fake iban`", inline=False)
-        elif option == "Technical":
-            embed.add_field(name="Fake Technical Information Related Commands", value=f"`/fake email`, \n`/fake cemail`, \n`/fake email free`, \n`/fake domain`, \n`/fake hostname`, \n`/fake http method`n \n`/fake img url`, \n`/fake ipv4`, \n`/fake ipv4 class`, \n`/fake ipv4 private`, \n`/fake ipv4 public`, \n`/fake ipv6`, \n`/fake macaddr`, \n`/fake nic handle`, \n`/fake port`, \n`/fake ripeid`, \n`/fake slug`, \n`/fake tld`, \n`/fake uri`, \n`/fake uri ex`, \n`/fake url`, \n`/fake username`", inline=False)
-        elif option == "ISBN":
-            embed.add_field(name="Fake ISBN Related Commands", value=f"`/fake isbn10`, \n`/fake isbn13`", inline=False)
-        elif option == "Name":
-            embed.add_field(name="Fake Name Related Commands", value=f"`/fake name`, \n`/fake fname`, \n`/fake fname male`, \n`/fake fname female`, \n`/fake fname nb`, \n`/fake lname`n \n`/fake lname male`, \n`/fake lname female`, \n`/fake lname nb`, \n`/fake name female`, \n`/fake name male`, \n`/fake name nb`, \n`/fake prefix`, \n`/fake suffix`", inline=False)
-        elif option == "Texts":
-            embed.add_field(name="Fake Texts Related Commands", value=f"`/fake paragraph`, \n`/fake sentence`, \n`/fake text`", inline=False)
-        elif option == "Phone Number":
-            embed.add_field(name="Fake Phone Number Related Commands", value=f"`/fake callingcode`, \n`/fake msisdn`, \n`/fake pno`", inline=False)
-        elif option == "User Agents":
-            embed.add_field(name="Fake User Agents Related Commands", value=f"`/fake chrome`, \n`/fake firefox`, \n`/fake ie`, \n`/fake opera`, \n`/fake safari`, \n`/fake ua`", inline=False)
-        elif option == "Platform Tokens":
-            embed.add_field(name="Fake Platform Tokens Related Commands", value=f"`/fake apt`, \n`/fake iospt`n \n`/fake linuxpt`, \n`/fake linuxproc`, \n`/fake macpt`, \n`/fake macprocessor`, \n`/fake winpt`, \n`/fake ua`", inline=False)
-        elif option == "Vehicle":
-            embed.add_field(name="Fake Vehicle Related Commands", value=f"`/fake vcl ymm`, \n`/fake vcl ymmc`, \n`/fake vcl mm`, \n`/fake vcl make`, \n`/fake vcl model`, \n`/fake vcl year`, \n`/fake vcl category`, \n`/fake vcl all`", inline=False)
-        elif option == "Machine":
-            embed.add_field(name="Fake Machine Related Commands", value=f"`/fake mcn ymm`, \n`/fake mcn ymmc`, \n`/fake mcn mm`, \n`/fake mcn make`, \n`/fake mcn model`, \n`/fake mcn year`, \n`/fake mcn category`, \n`/fake mcn all`, \n`/bottoken`", inline=False)
-        elif option == "Others":
-            embed.add_field(name="Other Fake Commands", value=f"`/fake ean`, \n`/fake company suffix`, \n`/fake iana`, \n`/fake lang`, \n`/fake color`, \n`/fake cp`", inline=False)
-
+        
+        if option in commands:
+            if isinstance(commands[option][0], tuple):  
+                # Check if it's a list of command-value pairs
+                for name, value in commands[option]:
+                    embed.add_field(name=name, value=value, inline=False)
+            else:  
+                # It's a single description and commands
+                embed.add_field(name=commands[option][0], value=commands[option][1], inline=False)
+        
         # works as intended, but gives this error: "This interaction failed" after some time
         await interaction.message.edit(embed=embed)
 
@@ -122,106 +159,106 @@ class FakeInformation(commands.Cog):
             fake = Faker()
             
             fake_methods = {
-                "name": ("Name", fake.name()),
-                "dob": ("Date Of Birth", fake.date_of_birth()),
-                "addr": ("Address", fake.address()),
-                "job": ("Job", fake.job()),
-                "color": ("Color", fake.color_name()),
-                "zipcode": ("Zip Code", fake.zipcode()),
-                "city": ("City", fake.city()),
-                "licenseplate": ("License Plate", fake.license_plate()),
-                "bban": ("Basic Bank Account", fake.bban()),
-                "iban": ("International Bank Account", fake.iban()),
-                "bs": ("BS", fake.bs()),
-                "cc": ("Credit Card", fake.credit_card_full()),
-                "cemail": ("Email", fake.company_email()),
-                "pno": ("Phone Number", fake.phone_number()),
-                "cp": ("Catch Phrase", fake.catch_phrase()),
-                "ssn": ("SSN", fake.ssn()),
-                "country": ("Country", fake.country()),
-                "postcode": ("Postcode", fake.postcode()),
-                "street addr": ("Street Address", fake.street_address()),
-                "street name": ("Street Name", fake.street_name()),
-                "aba": ("ABA", fake.aba()),
-                "bank country": ("Bank Country", fake.bank_country()),
-                "company suffix": ("Company Suffix", fake.company_suffix()),
-                "cc ex": ("Credit Card Expire Date", fake.credit_card_expire()),
-                "cc no": ("Credit Card Number", fake.credit_card_number()),
-                "cc pr": ("Credit Card Provider", fake.credit_card_provider()),
-                "cc cvv": ("Credit Card CVV", fake.credit_card_security_code()),
-                "crypto": ("Cryptocurrency", fake.cryptocurrency()),
-                "crypto code": ("Cryptocurrency Code", fake.cryptocurrency_code()),
-                "crypto name": ("Cryptocurrency Name", fake.cryptocurrency_name()),
-                "curr": ("Currency", fake.currency()),
-                "curr code": ("Currency Code", fake.currency_code()),
-                "curr name": ("Currency Name", fake.currency_name()),
-                "pricetag": ("Pricetag", fake.pricetag()),
-                "date": ("Date", fake.date()),
-                "century": ("Century", fake.century()),
-                "file name": ("File Name", fake.file_name()),
-                "file ex": ("File Extension", fake.file_extension()),
-                "file path": ("File Path", fake.file_path()),
-                "unix device": ("Unix Device", fake.unix_device()),
-                "unix partition": ("Unix Partition", fake.unix_partition()),
-                "email": ("Email Address", fake.ascii_email()),
-                "email free": ("Free Email Address", fake.ascii_free_email()),
-                "domain": ("Domain Name", fake.domain_name()),
-                "hostname": ("Hostname", fake.hostname()),
-                "http method": ("HTTP Method", fake.http_method()),
-                "iana": ("IANA Registrar ID", fake.iana_id()),
-                "img url": ("Image URL", fake.image_url()),
-                "slug": ("Slug", fake.slug()),
-                "tld": ("TLD", fake.tld()),
-                "uri": ("URI", fake.uri()),
-                "uri ex": ("URI Extension", fake.uri_extension()),
-                "url": ("URL", fake.url()),
-                "username": ("Username", fake.user_name()),
-                "isbn10": ("ISBN 10", fake.isbn10()),
-                "isbn13": ("ISBN 13", fake.isbn13()),
-                "paragraph": ("Paragraph", "".join(fake.paragraphs())),
-                "sentence": ("Sentence", fake.sentence()),
-                "text": ("Text", fake.texts()),
-                "word": ("Word", fake.word()),
-                "fname": ("First Name", fake.first_name()),
-                "fname male": ("First Name - Male", fake.first_name_male()),
-                "fname female": ("First Name - Female", fake.first_name_female()),
-                "fname nb": ("First Name - Non Binary", fake.first_name_nonbinary()),
-                "lang": ("Language Name", fake.language_name()),
-                "lname": ("Last Name", fake.last_name()),
-                "lname male": ("Last Name - Male", fake.last_name_male()),
-                "lname female": ("Last Name - Female", fake.last_name_female()),
-                "lname nb": ("Last Name - Non Binary", fake.last_name_nonbinary()),
-                "name female": ("Name - Female", fake.name_female()),
-                "name male": ("Name - Male", fake.name_male()),
-                "name nb": ("Name - Non Binary", fake.name_nonbinary()),
-                "prefix": ("Prefix", fake.prefix()),
-                "suffix": ("Suffix", fake.suffix()),
-                "callingcode": ("Calling Code", fake.country_calling_code()),
-                "msisdn": ("MSISDN", fake.msisdn()),
-                "apt": ("Android Platform Token", fake.android_platform_token()),
-                "chrome": ("User Agent - Chrome", fake.chrome()),
-                "firefox": ("User Agent - FireFox", fake.firefox()),
-                "ie": ("User Agent - Internet Explorer", fake.internet_explorer()),
-                "iospt": ("IOS Platform Token", fake.ios_platform_token()),
-                "linuxpt": ("Linux Platform Token", fake.linux_platform_token()),
-                "linuxproc": ("Linux Processor", fake.linux_processor()),
-                "macpt": ("MAC - Platform Token", fake.mac_platform_token()),
-                "macprocessor": ("MAC Processor", fake.mac_processor()),
-                "opera": ("User Agent - Opera", fake.opera()),
-                "safari": ("User Agent - Safari", fake.safari()),
-                "winpt": ("Windows - Platform Token", fake.windows_platform_token()),
-                "ua": ("User Agent", fake.user_agent()),
-                "ipv4": ("IPv4", fake.ipv4()),
-                "ipv4 class": ("IPv4 Network Class", fake.ipv4_network_class()),
-                "ipv4 private": ("Private IPv4 Address", fake.ipv4_private()),
-                "ipv4 public": ("Public IPv4 Address", fake.ipv4_public()),
-                "macaddr": ("MAC Address", fake.mac_address()),
-                "nic handle": ("NIC Handle", fake.mac_address()),
-                "port": ("Port Number", fake.port_number()),
-                "ripeid": ("RIPE ID", fake.ripe_id()),
+                "name": ("Name", lambda: fake.name()),
+                "dob": ("Date Of Birth", lambda: fake.date_of_birth()),
+                "addr": ("Address", lambda: fake.address()),
+                "job": ("Job", lambda: fake.job()),
+                "color": ("Color", lambda: fake.color_name()),
+                "zipcode": ("Zip Code", lambda: fake.zipcode()),
+                "city": ("City", lambda: fake.city()),
+                "licenseplate": ("License Plate", lambda: fake.license_plate()),
+                "bban": ("Basic Bank Account", lambda: fake.bban()),
+                "iban": ("International Bank Account", lambda: fake.iban()),
+                "bs": ("BS", lambda: fake.bs()),
+                "cc": ("Credit Card", lambda: fake.credit_card_full()),
+                "cemail": ("Email", lambda: fake.company_email()),
+                "pno": ("Phone Number", lambda: fake.phone_number()),
+                "cp": ("Catch Phrase", lambda: fake.catch_phrase()),
+                "ssn": ("SSN", lambda: fake.ssn()),
+                "country": ("Country", lambda: fake.country()),
+                "postcode": ("Postcode", lambda: fake.postcode()),
+                "street addr": ("Street Address", lambda: fake.street_address()),
+                "street name": ("Street Name", lambda: fake.street_name()),
+                "aba": ("ABA", lambda: fake.aba()),
+                "bank country": ("Bank Country", lambda: fake.bank_country()),
+                "company suffix": ("Company Suffix", lambda: fake.company_suffix()),
+                "cc ex": ("Credit Card Expire Date", lambda: fake.credit_card_expire()),
+                "cc no": ("Credit Card Number", lambda: fake.credit_card_number()),
+                "cc pr": ("Credit Card Provider", lambda: fake.credit_card_provider()),
+                "cc cvv": ("Credit Card CVV", lambda: fake.credit_card_security_code()),
+                "crypto": ("Cryptocurrency", lambda: fake.cryptocurrency()),
+                "crypto code": ("Cryptocurrency Code", lambda: fake.cryptocurrency_code()),
+                "crypto name": ("Cryptocurrency Name", lambda: fake.cryptocurrency_name()),
+                "curr": ("Currency", lambda: fake.currency()),
+                "curr code": ("Currency Code", lambda: fake.currency_code()),
+                "curr name": ("Currency Name", lambda: fake.currency_name()),
+                "pricetag": ("Pricetag", lambda: fake.pricetag()),
+                "date": ("Date", lambda: fake.date()),
+                "century": ("Century", lambda: fake.century()),
+                "file name": ("File Name", lambda: fake.file_name()),
+                "file ex": ("File Extension", lambda: fake.file_extension()),
+                "file path": ("File Path", lambda: fake.file_path()),
+                "unix device": ("Unix Device", lambda: fake.unix_device()),
+                "unix partition": ("Unix Partition", lambda: fake.unix_partition()),
+                "email": ("Email Address", lambda: fake.ascii_email()),
+                "email free": ("Free Email Address", lambda: fake.ascii_free_email()),
+                "domain": ("Domain Name", lambda: fake.domain_name()),
+                "hostname": ("Hostname", lambda: fake.hostname()),
+                "http method": ("HTTP Method", lambda: fake.http_method()),
+                "iana": ("IANA Registrar ID", lambda: fake.iana_id()),
+                "img url": ("Image URL", lambda: fake.image_url()),
+                "slug": ("Slug", lambda: fake.slug()),
+                "tld": ("TLD", lambda: fake.tld()),
+                "uri": ("URI", lambda: fake.uri()),
+                "uri ex": ("URI Extension", lambda: fake.uri_extension()),
+                "url": ("URL", lambda: fake.url()),
+                "username": ("Username", lambda: fake.user_name()),
+                "isbn10": ("ISBN 10", lambda: fake.isbn10()),
+                "isbn13": ("ISBN 13", lambda: fake.isbn13()),
+                "paragraph": ("Paragraph", lambda: "".join(fake.paragraphs())),
+                "sentence": ("Sentence", lambda: fake.sentence()),
+                "text": ("Text", lambda: fake.texts()),
+                "word": ("Word", lambda: fake.word()),
+                "fname": ("First Name", lambda: fake.first_name()),
+                "fname male": ("First Name - Male", lambda: fake.first_name_male()),
+                "fname female": ("First Name - Female", lambda: fake.first_name_female()),
+                "fname nb": ("First Name - Non Binary", lambda: fake.first_name_nonbinary()),
+                "lang": ("Language Name", lambda: fake.language_name()),
+                "lname": ("Last Name", lambda: fake.last_name()),
+                "lname male": ("Last Name - Male", lambda: fake.last_name_male()),
+                "lname female": ("Last Name - Female", lambda: fake.last_name_female()),
+                "lname nb": ("Last Name - Non Binary", lambda: fake.last_name_nonbinary()),
+                "name female": ("Name - Female", lambda: fake.name_female()),
+                "name male": ("Name - Male", lambda: fake.name_male()),
+                "name nb": ("Name - Non Binary", lambda: fake.name_nonbinary()),
+                "prefix": ("Prefix", lambda: fake.prefix()),
+                "suffix": ("Suffix", lambda: fake.suffix()),
+                "callingcode": ("Calling Code", lambda: fake.country_calling_code()),
+                "msisdn": ("MSISDN", lambda: fake.msisdn()),
+                "apt": ("Android Platform Token", lambda: fake.android_platform_token()),
+                "chrome": ("User Agent - Chrome", lambda: fake.chrome()),
+                "firefox": ("User Agent - FireFox", lambda: fake.firefox()),
+                "ie": ("User Agent - Internet Explorer", lambda: fake.internet_explorer()),
+                "iospt": ("IOS Platform Token", lambda: fake.ios_platform_token()),
+                "linuxpt": ("Linux Platform Token", lambda: fake.linux_platform_token()),
+                "linuxproc": ("Linux Processor", lambda: fake.linux_processor()),
+                "macpt": ("MAC - Platform Token", lambda: fake.mac_platform_token()),
+                "macprocessor": ("MAC Processor", lambda: fake.mac_processor()),
+                "opera": ("User Agent - Opera", lambda: fake.opera()),
+                "safari": ("User Agent - Safari", lambda: fake.safari()),
+                "winpt": ("Windows - Platform Token", lambda: fake.windows_platform_token()),
+                "ua": ("User Agent", lambda: fake.user_agent()),
+                "ipv4": ("IPv4", lambda: fake.ipv4()),
+                "ipv4 class": ("IPv4 Network Class", lambda: fake.ipv4_network_class()),
+                "ipv4 private": ("Private IPv4 Address", lambda: fake.ipv4_private()),
+                "ipv4 public": ("Public IPv4 Address", lambda: fake.ipv4_public()),
+                "macaddr": ("MAC Address", lambda: fake.mac_address()),
+                "nic handle": ("NIC Handle", lambda: fake.mac_address()),
+                "port": ("Port Number", lambda: fake.port_number()),
+                "ripeid": ("RIPE ID", lambda: fake.ripe_id()),
             }
             
-            em = embeds.Common(
+            em = await embeds.Common(
                 client=self.client,
                 interaction=interaction,
                 title="Fake Information",
@@ -229,46 +266,27 @@ class FakeInformation(commands.Cog):
             )
             
             if category in fake_methods:
-                label, value = fake_methods[category]
+                label, value_func = fake_methods[category]
+                value = value_func() # generate the value on-demand
                 if category in ["crypto", "curr"]:
-                    # TODO: is this actually necessary?
                     em.add_field(name=label, value=f"Short Name: {value[0]} \nFull Name: {value[1]}")
                 else:
-                    em.add_field(name=label, value=str(value))
+                    if isinstance(value, list) or isinstance(value, tuple) or isinstance(value, set):
+                        em.add_field(name=label, value=" ".join(value).replace("\\n", "\n"))
+                    else:
+                        em.add_field(name=label, value=str(value).replace("\\n", "\n"))
                     
             else:
             
                 if category == "high":
                     simple_dict = fake.profile()
-                    # TODO: minified version, test it out
-                    # ---
-                    # for key, value in simple_dict.items():
-                    #     em.add_field(name=key.replace("_", " ").title(), value=str(value))
-                    # ---
-                    em.add_field(name="Name", value=f"{str(simple_dict['name'])}")
-                    em.add_field(name="Job", value=f"{str(simple_dict['job'])}")
-                    em.add_field(name="Birthdate", value=f"{str(simple_dict['birthdate'])}")
-                    em.add_field(name="Company", value=f"{str(simple_dict['company'])}")
-                    em.add_field(name="SSN", value=f"{str(simple_dict['ssn'])}")
-                    em.add_field(name="Recidence", value=f"{str(simple_dict['residence'])}")
-                    em.add_field(name="Current Location", value=f"{str(simple_dict['current_location'])}")
-                    em.add_field(name="Blood Group", value=f"{str(simple_dict['blood_group'])}")
-                    em.add_field(name="Username", value=f"{str(simple_dict['username'])}")
-                    em.add_field(name="Address", value=f"{str(simple_dict['address'])}")
-                    em.add_field(name="Mail", value=f"{str(simple_dict['mail'])}")
+                    for key, value in simple_dict.items():
+                        em.add_field(name=key.replace("_", " ").title(), value=str(value))
                 
                 elif category == "low":
                     shitthing_simple = fake.simple_profile()
-                    # TODO: minified version, test it out
-                    # ---
-                    # for key, value in shitthing_simple.items():
-                    #     em.add_field(name=key.replace("_", " ").title(), value=str(value))
-                    # ---
-                    em.add_field(name="Name", value=f"{str(shitthing_simple['name'])}")
-                    em.add_field(name="Sex", value=f"{str(shitthing_simple['sex'])}")
-                    em.add_field(name="Address", value=f"{str(shitthing_simple['address'])}")
-                    em.add_field(name="Mail", value=f"{str(shitthing_simple['mail'])}")
-                    em.add_field(name="Birthday", value=f"{str(shitthing_simple['birthdate'])}")
+                    for key, value in shitthing_simple.items():
+                        em.add_field(name=key.replace("_", " ").title(), value=str(value))
 
                 elif category == "ean":
                     # The usage is like 'fake ean 10' - 10 is the length
@@ -301,41 +319,26 @@ class FakeInformation(commands.Cog):
                         fmlast = category.split(" ")[-1]
                     except:
                         fmlast = "all"
-                        
-                    if fmlast == "ymm":
-                        em.add_field(name="Vehicle Infromation", value=f"**Year, Make, Model:** \n{fake.vehicle_year_make_model()}")
-                    elif fmlast == "ymmc":
-                        em.add_field(name="Vehicle Infromation", value=f"**Year, Make, Model, Cat:** \n{fake.vehicle_year_make_model_cat()}")
-                    elif fmlast == "mm":
-                        em.add_field(name="Vehicle Infromation", value=f"**Make, Model:** \n{fake.vehicle_make_model()}")
-                    elif fmlast == "make":
-                        em.add_field(name="Vehicle Infromation", value=f"**Make:** {fake.vehicle_make()}")
-                    elif fmlast == "model":
-                        em.add_field(name="Vehicle Infromation", value=f"**Model:** {fake.vehicle_model()}")
-                    elif fmlast == "year":
-                        em.add_field(name="Vehicle Infromation", value=f"**Year:** {fake.vehicle_model()}")
-                    elif fmlast == "category":
-                        em.add_field(name="Vehicle Infromation", value=f"**Category:** {fake.vehicle_category()}")
-                    else:
-                        vinfo = fake.vehicle_object()
-                        em.add_field(name="Vehicle Infromation", value=f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}")
 
-                    # TODO: minified version, test it out
-                    # ---
-                    # vehicle_info_map = {
-                    #     "ymm": f"**Year, Make, Model:** \n{fake.vehicle_year_make_model()}",
-                    #     "ymmc": f"**Year, Make, Model, Cat:** \n{fake.vehicle_year_make_model_cat()}",
-                    #     "mm": f"**Make, Model:** \n{fake.vehicle_make_model()}",
-                    #     "make": f"**Make:** {fake.vehicle_make()}",
-                    #     "model": f"**Model:** {fake.vehicle_model()}",
-                    #     "year": f"**Year:** {fake.vehicle_model()}",
-                    #     "category": f"**Category:** {fake.vehicle_category()}",
-                    #     "all": lambda: f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}"
-                    # }
-                    # vinfo = fake.vehicle_object() if fmlast == "all" else None
-                    # value = vehicle_info_map[fmlast]() if callable(vehicle_info_map[fmlast]) else vehicle_info_map[fmlast]
-                    # em.add_field(name="Vehicle Information", value=value)
-                    # ---
+                    options = {
+                        "ymm": lambda: f"**Year, Make, Model:** \n{fake.vehicle_year_make_model()}",
+                        "ymmc": lambda: f"**Year, Make, Model, Cat:** \n{fake.vehicle_year_make_model_cat()}",
+                        "mm": lambda: f"**Make, Model:** \n{fake.vehicle_make_model()}",
+                        "make": lambda: f"**Make:** {fake.vehicle_make()}",
+                        "model": lambda: f"**Model:** {fake.vehicle_model()}",
+                        "year": lambda: f"**Year:** {fake.vehicle_year()}",
+                        "category": lambda: f"**Category:** {fake.vehicle_category()}",
+                    }
+                    
+                    em.add_field(
+                        name="Vehicle Information",
+                        value=options.get(
+                            fmlast, 
+                            lambda: (
+                                lambda vinfo: f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}"
+                            )(fake.vehicle_object())
+                        )()
+                    )
                     
                 elif category.lower().startswith('mcn'):
                     fake.add_provider(VehicleProvider)
@@ -344,43 +347,28 @@ class FakeInformation(commands.Cog):
                     except:
                         fmlast = "all"
                         
-                    if fmlast == "ymm":
-                        em.add_field(name="Machine Infromation", value=f"**Year, Make, Model:** \n{fake.machine_year_make_model()}")
-                    elif fmlast == "ymmc":
-                        em.add_field(name="Machine Infromation", value=f"**Year, Make, Model, Cat:** \n{fake.machine_year_make_model_cat()}")
-                    elif fmlast == "mm":
-                        em.add_field(name="Machine Infromation", value=f"**Make, Model:** \n{fake.machine_make_model()}")
-                    elif fmlast == "make":
-                        em.add_field(name="Machine Infromation", value=f"**Make:** {fake.machine_make()}")
-                    elif fmlast == "model":
-                        em.add_field(name="Machine Infromation", value=f"**Model:** {fake.machine_model()}")
-                    elif fmlast == "year":
-                        em.add_field(name="Machine Infromation", value=f"**Year:** {fake.machine_year()}")
-                    elif fmlast == "category":
-                        em.add_field(name="Machine Infromation", value=f"**Category:** {fake.machine_category()}")
-                    else:
-                        vinfo = fake.machine_object()
-                        em.add_field(name="Machine Infromation", value=f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}")
-
-                    # TODO: minified version, test it out
-                    # ---
-                    # machine_info_map = {
-                    #     "ymm": f"**Year, Make, Model:** \n{fake.machine_year_make_model()}",
-                    #     "ymmc": f"**Year, Make, Model, Cat:** \n{fake.machine_year_make_model_cat()}",
-                    #     "mm": f"**Make, Model:** \n{fake.machine_make_model()}",
-                    #     "make": f"**Make:** {fake.machine_make()}",
-                    #     "model": f"**Model:** {fake.machine_model()}",
-                    #     "year": f"**Year:** {fake.machine_year()}",
-                    #     "category": f"**Category:** {fake.machine_category()}",
-                    #     "all": lambda: f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}"
-                    # }
-                    # vinfo = fake.machine_object() if fmlast == "all" else None
-                    # value = machine_info_map[fmlast]() if callable(machine_info_map[fmlast]) else machine_info_map[fmlast]
-                    # em.add_field(name="Machine Information", value=value)
-                    # ---
+                    options = {
+                        "ymm": lambda: f"**Year, Make, Model:** \n{fake.machine_year_make_model()}",
+                        "ymmc": lambda: f"**Year, Make, Model, Cat:** \n{fake.machine_year_make_model_cat()}",
+                        "mm": lambda: f"**Make, Model:** \n{fake.machine_make_model()}",
+                        "make": lambda: f"**Make:** {fake.machine_make()}",
+                        "model": lambda: f"**Model:** {fake.machine_model()}",
+                        "year": lambda: f"**Year:** {fake.machine_year()}",
+                        "category": lambda: f"**Category:** {fake.machine_category()}",
+                    }
+                    
+                    em.add_field(
+                        name="Machine Information",
+                        value=options.get(
+                            fmlast, 
+                            lambda: (
+                                lambda minfo: f"**Year:** {minfo['Year']} \n**Make:** {minfo['Make']} \n**Model:** {minfo['Model']} \n**Category:** {minfo['Category']}"
+                            )(fake.machine_object())
+                        )()
+                    )
 
                 else:
-                    em = embeds.Common(
+                    em = await embeds.Common(
                         client=self.client,
                         interaction=interaction,
                         title="Fake Information",
@@ -401,7 +389,7 @@ class FakeInformation(commands.Cog):
             fake_how_many = int(amount)
 
             if fake_how_many <= 3: # to prevent spam
-                em1 = embeds.Common(
+                em1 = await embeds.Common(
                     client=self.client,
                     interaction=interaction,
                     title="Mass Fake Profiles", 
@@ -414,7 +402,7 @@ class FakeInformation(commands.Cog):
                 for _ in range(fake_how_many):
                     fake = Faker()
                     simple_dict = fake.profile()
-                    em2 = embeds.Common(
+                    em2 = await embeds.Common(
                         client=self.client,
                         interaction=interaction,
                         title="Fake Information", 
