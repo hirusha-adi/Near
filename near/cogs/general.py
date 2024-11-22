@@ -77,9 +77,7 @@ class Select(discord.ui.Select):
             ],
             "Fake Information": [
                 ("/fake", "List out all the fake information commands - Theres a LOT!"),
-                ("/face", "Generate a fake face with a name"),
                 ("/fakeprofiles", "Generate a given number of fake profiles"),
-                ("/discordtoken", "Generate a fake discord token")
             ],
             "Fun": [
                 ("/inspire", "List out all the fake information commands - Theres a LOT!"),
