@@ -282,41 +282,26 @@ class FakeInformation(commands.Cog):
                         fmlast = category.split(" ")[-1]
                     except:
                         fmlast = "all"
-                        
-                    if fmlast == "ymm":
-                        em.add_field(name="Vehicle Infromation", value=f"**Year, Make, Model:** \n{fake.vehicle_year_make_model()}")
-                    elif fmlast == "ymmc":
-                        em.add_field(name="Vehicle Infromation", value=f"**Year, Make, Model, Cat:** \n{fake.vehicle_year_make_model_cat()}")
-                    elif fmlast == "mm":
-                        em.add_field(name="Vehicle Infromation", value=f"**Make, Model:** \n{fake.vehicle_make_model()}")
-                    elif fmlast == "make":
-                        em.add_field(name="Vehicle Infromation", value=f"**Make:** {fake.vehicle_make()}")
-                    elif fmlast == "model":
-                        em.add_field(name="Vehicle Infromation", value=f"**Model:** {fake.vehicle_model()}")
-                    elif fmlast == "year":
-                        em.add_field(name="Vehicle Infromation", value=f"**Year:** {fake.vehicle_model()}")
-                    elif fmlast == "category":
-                        em.add_field(name="Vehicle Infromation", value=f"**Category:** {fake.vehicle_category()}")
-                    else:
-                        vinfo = fake.vehicle_object()
-                        em.add_field(name="Vehicle Infromation", value=f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}")
 
-                    # TODO: minified version, test it out
-                    # ---
-                    # vehicle_info_map = {
-                    #     "ymm": f"**Year, Make, Model:** \n{fake.vehicle_year_make_model()}",
-                    #     "ymmc": f"**Year, Make, Model, Cat:** \n{fake.vehicle_year_make_model_cat()}",
-                    #     "mm": f"**Make, Model:** \n{fake.vehicle_make_model()}",
-                    #     "make": f"**Make:** {fake.vehicle_make()}",
-                    #     "model": f"**Model:** {fake.vehicle_model()}",
-                    #     "year": f"**Year:** {fake.vehicle_model()}",
-                    #     "category": f"**Category:** {fake.vehicle_category()}",
-                    #     "all": lambda: f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}"
-                    # }
-                    # vinfo = fake.vehicle_object() if fmlast == "all" else None
-                    # value = vehicle_info_map[fmlast]() if callable(vehicle_info_map[fmlast]) else vehicle_info_map[fmlast]
-                    # em.add_field(name="Vehicle Information", value=value)
-                    # ---
+                    options = {
+                        "ymm": lambda: f"**Year, Make, Model:** \n{fake.vehicle_year_make_model()}",
+                        "ymmc": lambda: f"**Year, Make, Model, Cat:** \n{fake.vehicle_year_make_model_cat()}",
+                        "mm": lambda: f"**Make, Model:** \n{fake.vehicle_make_model()}",
+                        "make": lambda: f"**Make:** {fake.vehicle_make()}",
+                        "model": lambda: f"**Model:** {fake.vehicle_model()}",
+                        "year": lambda: f"**Year:** {fake.vehicle_year()}",
+                        "category": lambda: f"**Category:** {fake.vehicle_category()}",
+                    }
+                    
+                    em.add_field(
+                        name="Vehicle Information",
+                        value=options.get(
+                            fmlast, 
+                            lambda: (
+                                lambda vinfo: f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}"
+                            )(fake.vehicle_object())
+                        )()
+                    )
                     
                 elif category.lower().startswith('mcn'):
                     fake.add_provider(VehicleProvider)
@@ -325,40 +310,25 @@ class FakeInformation(commands.Cog):
                     except:
                         fmlast = "all"
                         
-                    if fmlast == "ymm":
-                        em.add_field(name="Machine Infromation", value=f"**Year, Make, Model:** \n{fake.machine_year_make_model()}")
-                    elif fmlast == "ymmc":
-                        em.add_field(name="Machine Infromation", value=f"**Year, Make, Model, Cat:** \n{fake.machine_year_make_model_cat()}")
-                    elif fmlast == "mm":
-                        em.add_field(name="Machine Infromation", value=f"**Make, Model:** \n{fake.machine_make_model()}")
-                    elif fmlast == "make":
-                        em.add_field(name="Machine Infromation", value=f"**Make:** {fake.machine_make()}")
-                    elif fmlast == "model":
-                        em.add_field(name="Machine Infromation", value=f"**Model:** {fake.machine_model()}")
-                    elif fmlast == "year":
-                        em.add_field(name="Machine Infromation", value=f"**Year:** {fake.machine_year()}")
-                    elif fmlast == "category":
-                        em.add_field(name="Machine Infromation", value=f"**Category:** {fake.machine_category()}")
-                    else:
-                        vinfo = fake.machine_object()
-                        em.add_field(name="Machine Infromation", value=f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}")
-
-                    # TODO: minified version, test it out
-                    # ---
-                    # machine_info_map = {
-                    #     "ymm": f"**Year, Make, Model:** \n{fake.machine_year_make_model()}",
-                    #     "ymmc": f"**Year, Make, Model, Cat:** \n{fake.machine_year_make_model_cat()}",
-                    #     "mm": f"**Make, Model:** \n{fake.machine_make_model()}",
-                    #     "make": f"**Make:** {fake.machine_make()}",
-                    #     "model": f"**Model:** {fake.machine_model()}",
-                    #     "year": f"**Year:** {fake.machine_year()}",
-                    #     "category": f"**Category:** {fake.machine_category()}",
-                    #     "all": lambda: f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}"
-                    # }
-                    # vinfo = fake.machine_object() if fmlast == "all" else None
-                    # value = machine_info_map[fmlast]() if callable(machine_info_map[fmlast]) else machine_info_map[fmlast]
-                    # em.add_field(name="Machine Information", value=value)
-                    # ---
+                    options = {
+                        "ymm": lambda: f"**Year, Make, Model:** \n{fake.machine_year_make_model()}",
+                        "ymmc": lambda: f"**Year, Make, Model, Cat:** \n{fake.machine_year_make_model_cat()}",
+                        "mm": lambda: f"**Make, Model:** \n{fake.machine_make_model()}",
+                        "make": lambda: f"**Make:** {fake.machine_make()}",
+                        "model": lambda: f"**Model:** {fake.machine_model()}",
+                        "year": lambda: f"**Year:** {fake.machine_year()}",
+                        "category": lambda: f"**Category:** {fake.machine_category()}",
+                    }
+                    
+                    em.add_field(
+                        name="Machine Information",
+                        value=options.get(
+                            fmlast, 
+                            lambda: (
+                                lambda minfo: f"**Year:** {minfo['Year']} \n**Make:** {minfo['Make']} \n**Model:** {minfo['Model']} \n**Category:** {minfo['Category']}"
+                            )(fake.machine_object())
+                        )()
+                    )
 
                 else:
                     em = await embeds.Common(
