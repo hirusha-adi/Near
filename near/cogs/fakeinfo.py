@@ -8,7 +8,7 @@ from faker import Faker
 from faker_vehicle import VehicleProvider
 
 from near.utils import embeds
-from near.database import dbfetch
+from near.utils import errors
 
 
 class SelectFakeHelp(discord.ui.Select):
@@ -117,1705 +117,600 @@ class FakeInformation(commands.Cog):
     @app_commands.command(name="fake", description="Generate fake information")
     @app_commands.describe(category="What exactly to generate. Refer to help for additional information")
     async def fake(self, interaction: discord.Interaction, category: str = "help"):
+        try:
+        
+            fake = Faker()
+            em = embeds.Common(
+                client=self.client,
+                interaction=interaction,
+                title="Fake Information",
+                thumbnail="fakeinfo_fake",
+            )
+            
+            if category == "high":
+                    simple_dict = fake.profile()
+                    em.add_field(name="Name", value=f"{str(simple_dict['name'])}")
+                    em.add_field(name="Job", value=f"{str(simple_dict['job'])}")
+                    em.add_field(name="Birthdate", value=f"{str(simple_dict['birthdate'])}")
+                    em.add_field(name="Company", value=f"{str(simple_dict['company'])}")
+                    em.add_field(name="SSN", value=f"{str(simple_dict['ssn'])}")
+                    em.add_field(name="Recidence", value=f"{str(simple_dict['residence'])}")
+                    em.add_field(name="Current Location", value=f"{str(simple_dict['current_location'])}")
+                    em.add_field(name="Blood Group", value=f"{str(simple_dict['blood_group'])}")
+                    em.add_field(name="Username", value=f"{str(simple_dict['username'])}")
+                    em.add_field(name="Address", value=f"{str(simple_dict['address'])}")
+                    em.add_field(name="Mail", value=f"{str(simple_dict['mail'])}")
 
-        if category == "high":
-            try:
-                fake = Faker()
-                simple_dict = fake.profile()
-                emf = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf.set_footer(text=f"Requested by {interaction.user.name}")
-                emf.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf.add_field(name="Name", value=f"{str(simple_dict['name'])}")
-                emf.add_field(name="Job", value=f"{str(simple_dict['job'])}")
-                emf.add_field(name="Birthdate", value=f"{str(simple_dict['birthdate'])}")
-                emf.add_field(name="Company", value=f"{str(simple_dict['company'])}")
-                emf.add_field(name="SSN", value=f"{str(simple_dict['ssn'])}")
-                emf.add_field(name="Recidence", value=f"{str(simple_dict['residence'])}")
-                emf.add_field(name="Current Location", value=f"{str(simple_dict['current_location'])}")
-                emf.add_field(name="Blood Group", value=f"{str(simple_dict['blood_group'])}")
-                emf.add_field(name="Username", value=f"{str(simple_dict['username'])}")
-                emf.add_field(name="Address", value=f"{str(simple_dict['address'])}")
-                emf.add_field(name="Mail", value=f"{str(simple_dict['mail'])}")
+            elif category == "name":
+                USname = fake.name()
+                em.add_field(name="Name", value=f"{USname}")
 
-                await interaction.response.send_message(embed=emf)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            elif category == "dob":
+                USdob = fake.date_of_birth()
+                em.add_field(name="Date Of Birth", value=f"{str(USdob)}")
 
-        elif category == "name":
-            faker = Faker()
-            try:
-                USname = faker.name()
-                emf2 = discord.Embed(
-                    title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Name", value=f"{str(USname)}")
+            elif category == "addr":
+                USaddress = fake.address()
+                em.add_field(name="Address", value=f"{str(USaddress)}")
 
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            elif category == "job":
+                USjob = fake.job()
+                em.add_field(name="Job", value=f"{str(USjob)}")
 
-        elif category == "dob":
-            faker = Faker()
-            try:
-                USdob = faker.date_of_birth()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Date Of Birth", value=f"{str(USdob)}")
+            elif category == "color":
+                USfavColor = fake.color_name()
+                em.add_field(name="Color", value=f"{str(USfavColor)}")
 
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            elif category == "zipcode":
+                USzip = fake.zipcode()
+                em.add_field(name="Zip Code", value=f"{str(USzip)}")
+                
+            elif category == "city":
+                UScity = fake.city()
+                em.add_field(name="City", value=f"{str(UScity)}")
 
-        elif category == "addr":
-            faker = Faker()
-            try:
-                USaddress = faker.address()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Address", value=f"{str(USaddress)}")
+            elif category == "licenseplate":
+                USnumberPlate = fake.license_plate()
+                em.add_field(name="License Plate", value=f"{str(USnumberPlate)}")
 
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            elif category == "bban":
+                USbasicBankAccountNumber = fake.bban()
+                em.add_field(name="Basic Bank Account", value=f"{str(USbasicBankAccountNumber)}")
 
-        elif category == "job":
-            faker = Faker()
-            try:
-                USjob = faker.job()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Job", value=f"{str(USjob)}")
+            elif category == "iban":
+                USinternationalBankAccountNumber = fake.iban()
+                em.add_field(name="International Bank Account", value=f"{str(USinternationalBankAccountNumber)}")
 
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            elif category == "bs":
+                USbs = fake.bs()
+                em.add_field(name="BS", value=f"{str(USbs)}")
 
-        elif category == "color":
-            faker = Faker()
-            try:
-                USfavColor = faker.color_name()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Color", value=f"{str(USfavColor)}")
+            elif category == "cc":
+                UScreditcard = fake.credit_card_full()
+                em.add_field(name="Credit Card", value=f"{str(UScreditcard)}")
 
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            elif category == "cemail":
+                UScompanyemail = fake.company_email()
+                em.add_field(name="Email", value=f"{str(UScompanyemail)}")
 
-        elif category == "zipcode":
-            faker = Faker()
-            try:
-                USzip = faker.zipcode()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Zip Code", value=f"{str(USzip)}")
+            elif category == "pno":
+                USphoneNumber = fake.phone_number()
+                em.add_field(name="Phone Number", value=f"{str(USphoneNumber)}")
 
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            elif category == "cp":
+                UScatchPhrase = fake.catch_phrase()
+                em.add_field(name="Catch Phrase", value=f"{str(UScatchPhrase)}")
+                
+            elif category == "ssn":
+                USssa = fake.ssn()
+                em.add_field(name="SSN", value=f"{str(USssa)}")
 
-        elif category == "city":
-            faker = Faker()
-            try:
-                UScity = faker.city()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="City", value=f"{str(UScity)}")
+            elif category == "low":
+                shitthing_simple = fake.simple_profile()
+                em.add_field(name="Name", value=f"{str(shitthing_simple['name'])}")
+                em.add_field(name="Sex", value=f"{str(shitthing_simple['sex'])}")
+                em.add_field(name="Address", value=f"{str(shitthing_simple['address'])}")
+                em.add_field(name="Mail", value=f"{str(shitthing_simple['mail'])}")
+                em.add_field(name="Birthday", value=f"{str(shitthing_simple['birthdate'])}")
 
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            elif category == "country":
+                USssa = fake.country()
+                em.add_field(name="Country", value=f"{str(USssa)}")
 
-        elif category == "licenseplate":
-            faker = Faker()
-            try:
-                USnumberPlate = faker.license_plate()
-                emf2 = discord.Embed(
-                    title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="License Plate", value=f"{str(USnumberPlate)}")
+            elif category == "postcode":
+                USssa = fake.postcode()
+                em.add_field(name="Postcode", value=f"{str(USssa)}")
 
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "bban":
-            faker = Faker()
-            try:
-                USbasicBankAccountNumber = faker.bban()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Basic Bank Account", value=f"{str(USbasicBankAccountNumber)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "iban":
-            faker = Faker()
-            try:
-                USinternationalBankAccountNumber = faker.iban()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="International Bank Account",
-                               value=f"{str(USinternationalBankAccountNumber)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "bs":
-            faker = Faker()
-            try:
-                USbs = faker.bs()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="BS", value=f"{str(USbs)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "cc":
-            faker = Faker()
-            try:
-                UScreditcard = faker.credit_card_full()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Credit Card",
-                               value=f"{str(UScreditcard)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "cemail":
-            faker = Faker()
-            try:
-                UScompanyemail = faker.company_email()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Email", value=f"{str(UScompanyemail)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "pno":
-            faker = Faker()
-            try:
-                USphoneNumber = faker.phone_number()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Phone Number",
-                               value=f"{str(USphoneNumber)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "cp":
-            faker = Faker()
-            try:
-                UScatchPhrase = faker.catch_phrase()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Catch Phrase",
-                               value=f"{str(UScatchPhrase)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "ssn":
-            faker = Faker()
-            try:
-                USssa = faker.ssn()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="SSN", value=f"{str(USssa)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "low":
-            fake_low = Faker()
-            try:
-                shitthing_simple = fake_low.simple_profile()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(
-                    name="Name", value=f"{str(shitthing_simple['name'])}")
-                emf2.add_field(
-                    name="Sex", value=f"{str(shitthing_simple['sex'])}")
-                emf2.add_field(
-                    name="Address", value=f"{str(shitthing_simple['address'])}")
-                emf2.add_field(
-                    name="Mail", value=f"{str(shitthing_simple['mail'])}")
-                emf2.add_field(name="Birthday",
-                               value=f"{str(shitthing_simple['birthdate'])}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "country":
-            faker = Faker()
-            try:
-                USssa = faker.country()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Country", value=f"{str(USssa)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "postcode":
-            faker = Faker()
-            try:
-                USssa = faker.postcode()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Postcode", value=f"{str(USssa)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "street addr":
-            faker = Faker()
-            try:
-                USssa = faker.street_address()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Street Address", value=f"{str(USssa)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "street addr":
-            faker = Faker()
-            try:
-                USssa = faker.street_name()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Street Name", value=f"{str(USssa)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "aba":
-            faker = Faker()
-            try:
-                USssa = faker.aba()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="ABA", value=f"{str(USssa)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "bank country":
-            faker = Faker()
-            try:
-                USssa = faker.bank_country()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Bank Cuntry", value=f"{str(USssa)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "ean":
-            # The usage is like 'fake ean 10' - 10 is the length
-            faker = Faker()
-            try:
+            elif category == "street addr":
+                USssa = fake.street_address()
+                em.add_field(name="Street Address", value=f"{str(USssa)}")
+                
+            elif category == "street addr":
+                USssa = fake.street_name()
+                em.add_field(name="Street Name", value=f"{str(USssa)}")
+                
+            elif category == "aba":
+                USssa = fake.aba()
+                em.add_field(name="ABA", value=f"{str(USssa)}")
+                
+            elif category == "bank country":
+                USssa = fake.bank_country()
+                em.add_field(name="Bank Cuntry", value=f"{str(USssa)}")
+                
+            elif category == "ean":
+                # The usage is like 'fake ean 10' - 10 is the length
                 try:
-                    nu_of_time = category.split(" ")[-1]
-                    tempshit = int(nu_of_time)
+                    nu_of_time = int(category.split(" ")[-1])
                 except:
                     nu_of_time = 10
+                USssa = fake.ean(length=int(nu_of_time))
+                em.add_field(name="EAN Barcode", value=f"{str(USssa)}")
 
-                USssa = faker.ean(length=int(nu_of_time))
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="EAN Barcode", value=f"{str(USssa)}")
+            elif category == "company suffix":
+                USssa = fake.company_suffix()
+                em.add_field(name="Company Suffix", value=f"{str(USssa)}")
+                
+            elif category == "cc ex":
+                USssa = fake.credit_card_expire()
+                em.add_field(name="Credit Card Expire Date", value=f"{str(USssa)}")
+                
+            elif category == "cc no":
+                USssa = fake.credit_card_number()
+                em.add_field(name="Credit Card Number", value=f"{str(USssa)}")
+                
+            elif category == "cc pr":
+                USssa = fake.credit_card_provider()
+                em.add_field(name="Credit Card Provider", value=f"{str(USssa)}")
+                
+            elif category == "cc cvv":
+                USssa = fake.credit_card_security_code()
+                em.add_field(name="Credit Card CVV", value=f"{str(USssa)}")
+                
+            elif category == "crypto":
+                USssa = fake.cryptocurrency()
+                em.add_field(name="Cryptocurrency", value=f"Short Name: {USssa[0]} \nFull Name: {USssa[1]}")
+                
+            elif category == "crypto code":
+                USssa = fake.cryptocurrency_code()
+                em.add_field(name="Cryptocurrency Code", value=f"{USssa}")
+                
+            elif category == "crypto name":
+                USssa = fake.cryptocurrency_name()
+                em.add_field(name="Cryptocurrency Name", value=f"{USssa}")
 
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            elif category == "curr":
+                USssa = fake.currency()
+                em.add_field(name="Currency", value=f"Short Name: {USssa[0]} \nFull Name: {USssa[1]}")
 
-        elif category == "company suffix":
-            faker = Faker()
-            try:
-                USssa = faker.company_suffix()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Company Suffix", value=f"{str(USssa)}")
+            elif category == "curr code":
+                USssa = fake.currency_code()
+                em.add_field(name="Currency Code", value=f"{USssa}")
+                
 
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            elif category == "curr name":
+                USssa = fake.currency_name()
+                em.add_field(name="Currency Code", value=f"{USssa}")
+                
 
-        elif category == "cc ex":
-            faker = Faker()
-            try:
-                USssa = faker.credit_card_expire()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Credit Card Expire Date",
-                               value=f"{str(USssa)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "cc no":
-            faker = Faker()
-            try:
-                USssa = faker.credit_card_number()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Credit Card Number",
-                               value=f"{str(USssa)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "cc pr":
-            faker = Faker()
-            try:
-                USssa = faker.credit_card_provider()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Credit Card Provider",
-                               value=f"{str(USssa)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "cc cvv":
-            faker = Faker()
-            try:
-                USssa = faker.credit_card_security_code()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Credit Card CVV", value=f"{str(USssa)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "crypto":
-            faker = Faker()
-            try:
-                USssa = faker.cryptocurrency()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(
-                    name="Cryptocurrency", value=f"Short Name: {USssa[0]} \nFull Name: {USssa[1]}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "crypto code":
-            faker = Faker()
-            try:
-                USssa = faker.cryptocurrency_code()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Cryptocurrency Code", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "crypto name":
-            faker = Faker()
-            try:
-                USssa = faker.cryptocurrency_name()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Cryptocurrency Name", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "curr":
-            faker = Faker()
-            try:
-                USssa = faker.currency()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(
-                    name="Currency", value=f"Short Name: {USssa[0]} \nFull Name: {USssa[1]}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "curr code":
-            faker = Faker()
-            try:
-                USssa = faker.currency_code()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Currency Code", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "curr name":
-            faker = Faker()
-            try:
-                USssa = faker.currency_name()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Currency Code", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category.lower().startswith("curr symbol"):
-            faker = Faker()
-            try:
+            elif category.lower().startswith("curr symbol"):
                 try:
                     currcode = category.split(' ')[-1]
-                    USssa = faker.currency_symbol(code=str(currcode))
+                    USssa = fake.currency_symbol(code=str(currcode))
                 except:
-                    USssa = faker.currency_symbol()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Currency Code", value=f"{USssa}")
+                    USssa = fake.currency_symbol()
+                em.add_field(name="Currency Code", value=f"{USssa}")
+                
+            elif category == "pricetag":
+                USssa = fake.pricetag()
+                em.add_field(name="Pricetag", value=f"{USssa}")
+                
+            elif category == "date":
+                USssa = fake.date()
+                em.add_field(name="Date", value=f"{USssa}")
 
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+            elif category == "century":
+                USssa = fake.century()
+                em.add_field(name="Century", value=f"{USssa}")
+                
+            elif category == "file name":
+                USssa = fake.file_name()
+                em.add_field(name="File Name", value=f"{USssa}")
+                
 
-        elif category == "pricetag":
-            faker = Faker()
-            try:
-                USssa = faker.pricetag()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Pricetag", value=f"{USssa}")
+            elif category == "file ex":
+                USssa = fake.file_extension()
+                em.add_field(name="File Extension", value=f"{USssa}")
+                
 
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "date":
-            faker = Faker()
-            try:
-                USssa = faker.date()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Date", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "century":
-            faker = Faker()
-            try:
-                USssa = faker.century()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Century", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "file name":
-            faker = Faker()
-            try:
-                USssa = faker.file_name()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="File Name", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "file ex":
-            faker = Faker()
-            try:
-                USssa = faker.file_extension()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="File Extension", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "file path":
-            faker = Faker()
-            try:
-                USssa = faker.file_path()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="File Extension", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category.lower().startswith("mime"):
-            faker = Faker()
-            try:
+            elif category == "file path":
+                USssa = fake.file_path()
+                em.add_field(name="File Extension", value=f"{USssa}")
+                
+            elif category.lower().startswith("mime"):
                 subcall = category.split(" ")
                 try:
-                    subc = faker.mime_type(subcall[-1])
-                    USssa = faker.mime_type(category=subc)
+                    subc = fake.mime_type(subcall[-1])
+                    USssa = fake.mime_type(category=subc)
                 except:
-                    USssa = faker.mime_type(category=subc)
-
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="File Extension", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "unix device":
-            faker = Faker()
-            try:
-                USssa = faker.unix_device()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Unix Device", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "unix partition":
-            faker = Faker()
-            try:
-                USssa = faker.unix_partition()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Unix Partition", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "email":
-            faker = Faker()
-            try:
-                USssa = faker.ascii_email()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Email Address", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "email free":
-            faker = Faker()
-            try:
-                USssa = faker.ascii_free_email()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Email Address", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "domain":
-            faker = Faker()
-            try:
-                USssa = faker.domain_name()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Email Address", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "hostname":
-            faker = Faker()
-            try:
-                USssa = faker.hostname()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Hostname", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "http method":
-            faker = Faker()
-            try:
-                USssa = faker.http_method()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="HTTP METHOD", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "iana":
-            faker = Faker()
-            try:
-                USssa = faker.iana_id()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="IANA Registrar ID", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "img url":
-            faker = Faker()
-            try:
-                USssa = faker.image_url()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Image URL", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "ipv4":
-            faker = Faker()
-            try:
-                USssa = faker.ipv4()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="IPv4", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "ipv4 class":
-            faker = Faker()
-            try:
-                USssa = faker.ipv4_network_class()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="IPv4 Netwrok Class", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "ipv4 private":
-            faker = Faker()
-            try:
-                USssa = faker.ipv4_private()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="a Private IPv4 Address", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "ipv4 public":
-            faker = Faker()
-            try:
-                USssa = faker.ipv4_public()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="a Public IPv4 Address", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "ipv6":
-            faker = Faker()
-            try:
-                USssa = faker.ipv6()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="IPv6", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "macaddr":
-            faker = Faker()
-            try:
-                USssa = faker.mac_address()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Mac Address", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "nic handle":
-            faker = Faker()
-            try:
-                USssa = faker.nic_handle()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="NIC Handle", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "port":
-            faker = Faker()
-            try:
-                USssa = faker.port_number()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Port Number", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "ripeid":
-            faker = Faker()
-            try:
-                USssa = faker.ripe_id()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="RIPE ID", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "slug":
-            faker = Faker()
-            try:
-                USssa = faker.slug()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Slug", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "tld":
-            faker = Faker()
-            try:
-                USssa = faker.tld()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="TLD", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "uri":
-            faker = Faker()
-            try:
-                USssa = faker.uri()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="URI", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "uri ex":
-            faker = Faker()
-            try:
-                USssa = faker.uri_extension()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="URI Extension", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "url":
-            faker = Faker()
-            try:
-                USssa = faker.url()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="URL", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "username":
-            faker = Faker()
-            try:
-                USssa = faker.user_name()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Username", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "isbn10":
-            faker = Faker()
-            try:
-                USssa = faker.isbn10()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="ISBN 10", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "isbn13":
-            faker = Faker()
-            try:
-                USssa = faker.isbn13()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="ISBN 13", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "paragraph":
-            faker = Faker()
-            try:
-                USssa = faker.paragraphs()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Paragraph", value=f"{''.join(USssa)}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "sentence":
-            faker = Faker()
-            try:
-                USssa = faker.sentence()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Sentence", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "text":
-            faker = Faker()
-            try:
-                USssa = faker.texts()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Text", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "word":
-            faker = Faker()
-            try:
-                USssa = faker.word()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Word", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "fname":
-            faker = Faker()
-            try:
-                USssa = faker.first_name()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="First Name", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "fname male":
-            faker = Faker()
-            try:
-                USssa = faker.first_name_male()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="First Name - Male", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "fname female":
-            faker = Faker()
-            try:
-                USssa = faker.first_name_male()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="First Name - Female", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "fname nb":
-            faker = Faker()
-            try:
-                USssa = faker.first_name_nonbinary()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="First Name - Non Binary",
-                               value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "lang":
-            faker = Faker()
-            try:
-                USssa = faker.language_name()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Language Name", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "lname":
-            faker = Faker()
-            try:
-                USssa = faker.last_name()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Last Name", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "lname male":
-            faker = Faker()
-            try:
-                USssa = faker.last_name_male()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Last Name - Male", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "lname female":
-            faker = Faker()
-            try:
-                USssa = faker.last_name_female()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Last Name - Female", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "lname nb":
-            faker = Faker()
-            try:
-                USssa = faker.last_name_nonbinary()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Last Name - Non Binary", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "name female":
-            faker = Faker()
-            try:
-                USssa = faker.name_female()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Name - Female", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "name male":
-            faker = Faker()
-            try:
-                USssa = faker.name_male()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Name - Male", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "name nb":
-            faker = Faker()
-            try:
-                USssa = faker.name_nonbinary()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Name - Non Binary", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "prefix":
-            faker = Faker()
-            try:
-                USssa = faker.prefix()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Prefix", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "suffix":
-            faker = Faker()
-            try:
-                USssa = faker.prefix()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Prefix", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "callingcode":
-            faker = Faker()
-            try:
-                USssa = faker.country_calling_code()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Calling Code", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "msisdn":
-            faker = Faker()
-            try:
-                USssa = faker.msisdn()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="MSISDN", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "apt":
-            faker = Faker()
-            try:
-                USssa = faker.android_platform_token()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Android Platform Token", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "chrome":
-            faker = Faker()
-            try:
-                USssa = faker.chrome()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="User Agent - Chrome", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "firefox":
-            faker = Faker()
-            try:
-                USssa = faker.firefox()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="User Agent - FireFox", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "ie":
-            faker = Faker()
-            try:
-                USssa = faker.internet_explorer()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(
-                    name="User Agent - Internet Explorer", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "iospt":
-            faker = Faker()
-            try:
-                USssa = faker.ios_platform_token()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="IOS Platform Token", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "linuxpt":
-            faker = Faker()
-            try:
-                USssa = faker.linux_platform_token()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Linux Platform Token", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "linuxproc":
-            faker = Faker()
-            try:
-                USssa = faker.linux_processor()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Linux Processor", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "macpt":
-            faker = Faker()
-            try:
-                USssa = faker.mac_platform_token()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="MAC - Platform Token", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "macprocessor":
-            faker = Faker()
-            try:
-                USssa = faker.mac_processor()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="MAC Processor", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "opera":
-            faker = Faker()
-            try:
-                USssa = faker.opera()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="User Agent - Opera", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "safari":
-            faker = Faker()
-            try:
-                USssa = faker.opera()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="User Agent - Safari", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "winpt":
-            faker = Faker()
-            try:
-                USssa = faker.windows_platform_token()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="Windows - Platform Token",
-                               value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category == "ua":
-            faker = Faker()
-            try:
-                USssa = faker.user_agent()
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                emf2.add_field(name="User Agent", value=f"{USssa}")
-
-                await interaction.response.send_message(embed=emf2)
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category.lower().startswith('vcl'):
-            fake = Faker()
-            try:
+                    USssa = fake.mime_type(category=subc)
+                em.add_field(name="File Extension", value=f"{USssa}")
+                
+
+            elif category == "unix device":
+                USssa = fake.unix_device()
+                em.add_field(name="Unix Device", value=f"{USssa}")
+                
+
+            elif category == "unix partition":
+                USssa = fake.unix_partition()
+                em.add_field(name="Unix Partition", value=f"{USssa}")
+                
+
+            elif category == "email":
+                USssa = fake.ascii_email()
+                em.add_field(name="Email Address", value=f"{USssa}")
+                
+
+            elif category == "email free":
+                USssa = fake.ascii_free_email()
+                em.add_field(name="Email Address", value=f"{USssa}")
+                
+
+            elif category == "domain":
+                USssa = fake.domain_name()
+                em.add_field(name="Email Address", value=f"{USssa}")
+                
+
+            elif category == "hostname":
+                USssa = fake.hostname()
+                em.add_field(name="Hostname", value=f"{USssa}")
+                
+
+            elif category == "http method":
+                USssa = fake.http_method()
+                em.add_field(name="HTTP METHOD", value=f"{USssa}")
+                
+
+            elif category == "iana":
+                USssa = fake.iana_id()
+                em.add_field(name="IANA Registrar ID", value=f"{USssa}")
+                
+
+            elif category == "img url":
+                USssa = fake.image_url()
+                em.add_field(name="Image URL", value=f"{USssa}")
+                
+
+            elif category == "ipv4":
+                USssa = fake.ipv4()
+                em.add_field(name="IPv4", value=f"{USssa}")
+                
+            elif category == "ipv4 class":
+                USssa = fake.ipv4_network_class()
+                em.add_field(name="IPv4 Netwrok Class", value=f"{USssa}")
+                
+            elif category == "ipv4 private":
+                USssa = fake.ipv4_private()
+                em.add_field(name="a Private IPv4 Address", value=f"{USssa}")
+            
+
+            elif category == "ipv4 public":
+                USssa = fake.ipv4_public()
+                em.add_field(name="a Public IPv4 Address", value=f"{USssa}")
+                
+
+            elif category == "ipv6":
+                USssa = fake.ipv6()
+                em.add_field(name="IPv6", value=f"{USssa}")
+                
+
+            elif category == "macaddr":
+                USssa = fake.mac_address()
+                em.add_field(name="Mac Address", value=f"{USssa}")
+                
+
+            elif category == "nic handle":
+                USssa = fake.nic_handle()
+                em.add_field(name="NIC Handle", value=f"{USssa}")
+                
+
+            elif category == "port":
+                USssa = fake.port_number()
+                em.add_field(name="Port Number", value=f"{USssa}")
+                
+            elif category == "ripeid":
+                USssa = fake.ripe_id()
+                em.add_field(name="RIPE ID", value=f"{USssa}")
+                
+            elif category == "slug":
+                USssa = fake.slug()
+                em.add_field(name="Slug", value=f"{USssa}")
+                
+            elif category == "tld":
+                USssa = fake.tld()
+                em.add_field(name="TLD", value=f"{USssa}")
+                
+            elif category == "uri":
+                USssa = fake.uri()
+                em.add_field(name="URI", value=f"{USssa}")
+                
+            elif category == "uri ex":
+                USssa = fake.uri_extension()
+                em.add_field(name="URI Extension", value=f"{USssa}")
+                
+            elif category == "url":
+                USssa = fake.url()
+                em.add_field(name="URL", value=f"{USssa}")
+                
+            elif category == "username":
+                USssa = fake.user_name()
+                em.add_field(name="Username", value=f"{USssa}")
+                
+            elif category == "isbn10":
+                USssa = fake.isbn10()
+                em.add_field(name="ISBN 10", value=f"{USssa}")
+                
+            elif category == "isbn13":
+                USssa = fake.isbn13()
+                em.add_field(name="ISBN 13", value=f"{USssa}")
+
+            elif category == "paragraph":
+                USssa = fake.paragraphs()
+                em.add_field(name="Paragraph", value=f"{''.join(USssa)}")
+                
+            elif category == "sentence":
+                USssa = fake.sentence()
+                em.add_field(name="Sentence", value=f"{USssa}")
+                
+            elif category == "text":
+                USssa = fake.texts()
+                em.add_field(name="Text", value=f"{USssa}")
+                
+            elif category == "word":
+                USssa = fake.word()
+                em.add_field(name="Word", value=f"{USssa}")
+                
+            elif category == "fname":
+                USssa = fake.first_name()
+                em.add_field(name="First Name", value=f"{USssa}")
+                
+            elif category == "fname male":
+                USssa = fake.first_name_male()
+                em.add_field(name="First Name - Male", value=f"{USssa}")
+                
+            elif category == "fname female":
+                USssa = fake.first_name_male()
+                em.add_field(name="First Name - Female", value=f"{USssa}")
+
+            elif category == "fname nb":
+                USssa = fake.first_name_nonbinary()
+                em.add_field(name="First Name - Non Binary", value=f"{USssa}")
+                
+
+            elif category == "lang":
+                USssa = fake.language_name()
+                em.add_field(name="Language Name", value=f"{USssa}")
+                
+            elif category == "lname":
+                USssa = fake.last_name()
+                em.add_field(name="Last Name", value=f"{USssa}")
+                
+            elif category == "lname male":
+                USssa = fake.last_name_male()
+                em.add_field(name="Last Name - Male", value=f"{USssa}")
+                
+            elif category == "lname female":
+                USssa = fake.last_name_female()
+                em.add_field(name="Last Name - Female", value=f"{USssa}")
+                
+            elif category == "lname nb":
+                USssa = fake.last_name_nonbinary()
+                em.add_field(name="Last Name - Non Binary", value=f"{USssa}")
+                
+            elif category == "name female":
+                USssa = fake.name_female()
+                em.add_field(name="Name - Female", value=f"{USssa}")
+                
+            elif category == "name male":
+                USssa = fake.name_male()
+                em.add_field(name="Name - Male", value=f"{USssa}")
+                
+            elif category == "name nb":
+                USssa = fake.name_nonbinary()
+                em.add_field(name="Name - Non Binary", value=f"{USssa}")
+                
+            elif category == "prefix":
+                USssa = fake.prefix()
+                em.add_field(name="Prefix", value=f"{USssa}")
+                
+            elif category == "suffix":
+                USssa = fake.prefix()
+                em.add_field(name="Prefix", value=f"{USssa}")
+                
+            elif category == "callingcode":
+                USssa = fake.country_calling_code()
+                em.add_field(name="Calling Code", value=f"{USssa}")
+
+            elif category == "msisdn":
+                USssa = fake.msisdn()
+                em.add_field(name="MSISDN", value=f"{USssa}")
+
+            elif category == "apt":
+                USssa = fake.android_platform_token()
+                em.add_field(name="Android Platform Token", value=f"{USssa}")
+
+            elif category == "chrome":
+                USssa = fake.chrome()
+                em.add_field(name="User Agent - Chrome", value=f"{USssa}")
+
+            elif category == "firefox":
+                USssa = fake.firefox()
+                em.add_field(name="User Agent - FireFox", value=f"{USssa}")
+                
+            elif category == "ie":
+                USssa = fake.internet_explorer()
+                em.add_field(name="User Agent - Internet Explorer", value=f"{USssa}")
+                
+            elif category == "iospt":
+                USssa = fake.ios_platform_token()
+                em.add_field(name="IOS Platform Token", value=f"{USssa}")
+
+            elif category == "linuxpt":
+                USssa = fake.linux_platform_token()
+                em.add_field(name="Linux Platform Token", value=f"{USssa}")
+                
+            elif category == "linuxproc":
+                USssa = fake.linux_processor()
+                em.add_field(name="Linux Processor", value=f"{USssa}")
+        
+            elif category == "macpt":
+                USssa = fake.mac_platform_token()
+                em.add_field(name="MAC - Platform Token", value=f"{USssa}")
+                
+            elif category == "macprocessor":
+                USssa = fake.mac_processor()
+                em.add_field(name="MAC Processor", value=f"{USssa}")
+                
+            elif category == "opera":
+                USssa = fake.opera()
+                em.add_field(name="User Agent - Opera", value=f"{USssa}")
+                
+            elif category == "safari":
+                USssa = fake.opera()
+                em.add_field(name="User Agent - Safari", value=f"{USssa}")
+                
+            elif category == "winpt":
+                USssa = fake.windows_platform_token()
+                em.add_field(name="Windows - Platform Token", value=f"{USssa}")
+                
+            elif category == "ua":
+                USssa = fake.user_agent()
+                em.add_field(name="User Agent", value=f"{USssa}")
+                
+            elif category.lower().startswith('vcl'):
                 fake.add_provider(VehicleProvider)
                 try:
                     fmall = category.split(" ")
                     fmlast = fmall[-1]
                 except:
                     fmlast = "all"
+                    
+                if fmlast == "ymm":
+                    vinfo = fake.vehicle_year_make_model()
+                    em.add_field(name="Vehicle Infromation", value=f"**Year, Make, Model:** \n{vinfo}")
+                elif fmlast == "ymmc":
+                    vinfo = fake.vehicle_year_make_model_cat()
+                    em.add_field(
+                        name="Vehicle Infromation", value=f"**Year, Make, Model, Cat:** \n{vinfo}")
+                elif fmlast == "mm":
+                    vinfo = fake.vehicle_make_model()
+                    em.add_field(name="Vehicle Infromation", value=f"**Make, Model:** \n{vinfo}")
+                elif fmlast == "make":
+                    vinfo = fake.vehicle_make()
+                    em.add_field(name="Vehicle Infromation", value=f"**Make:** {vinfo}")
+                elif fmlast == "model":
+                    vinfo = fake.vehicle_model()
+                    em.add_field(name="Vehicle Infromation", value=f"**Model:** {vinfo}")
+                elif fmlast == "year":
+                    vinfo = fake.vehicle_model()
+                    em.add_field(name="Vehicle Infromation", value=f"**Year:** {vinfo}")
+                elif fmlast == "category":
+                    vinfo = fake.vehicle_category()
+                    em.add_field(name="Vehicle Infromation", value=f"**Category:** {vinfo}")
+                else:
+                    vinfo = fake.vehicle_object()
+                    em.add_field(name="Vehicle Infromation", value=f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}")
 
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-
-                try:
-                    if fmlast == "ymm":
-                        vinfo = fake.vehicle_year_make_model()
-                        emf2.add_field(name="Vehicle Infromation", value=f"**Year, Make, Model:** \n{vinfo}")
-
-                    elif fmlast == "ymmc":
-                        vinfo = fake.vehicle_year_make_model_cat()
-                        emf2.add_field(
-                            name="Vehicle Infromation", value=f"**Year, Make, Model, Cat:** \n{vinfo}")
-
-                    elif fmlast == "mm":
-                        vinfo = fake.vehicle_make_model()
-                        emf2.add_field(name="Vehicle Infromation", value=f"**Make, Model:** \n{vinfo}")
-
-                    elif fmlast == "make":
-                        vinfo = fake.vehicle_make()
-                        emf2.add_field(name="Vehicle Infromation", value=f"**Make:** {vinfo}")
-
-                    elif fmlast == "model":
-                        vinfo = fake.vehicle_model()
-                        emf2.add_field(name="Vehicle Infromation", value=f"**Model:** {vinfo}")
-
-                    elif fmlast == "year":
-                        vinfo = fake.vehicle_model()
-                        emf2.add_field(name="Vehicle Infromation", value=f"**Year:** {vinfo}")
-
-                    elif fmlast == "category":
-                        vinfo = fake.vehicle_category()
-                        emf2.add_field(name="Vehicle Infromation", value=f"**Category:** {vinfo}")
-
-                    else:
-                        vinfo = fake.vehicle_object()
-                        emf2.add_field(name="Vehicle Infromation", value=f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}")
-
-                except Exception as e:
-                    embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                    embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                    embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                    embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                    embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                    await interaction.response.send_message(embed=embed3)
-                    return
-
-                await interaction.response.send_message(embed=emf2)
-
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        elif category.lower().startswith('mcn'):
-            fake = Faker()
-            try:
+            elif category.lower().startswith('mcn'):
                 fake.add_provider(VehicleProvider)
                 try:
-                    fmall = category.split(" ")
-                    fmlast = fmall[-1]
+                    fmlast = category.split(" ")[-1]
                 except:
                     fmlast = "all"
-
-                emf2 = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-
-                try:
-                    if fmlast == "ymm":
-                        vinfo = fake.machine_year_make_model()
-                        emf2.add_field(name="Machine Infromation", value=f"**Year, Make, Model:** \n{vinfo}")
-
-                    elif fmlast == "ymmc":
-                        vinfo = fake.machine_year_make_model_cat()
-                        emf2.add_field(name="Machine Infromation", value=f"**Year, Make, Model, Cat:** \n{vinfo}")
-
-                    elif fmlast == "mm":
-                        vinfo = fake.machine_make_model()
-                        emf2.add_field(name="Machine Infromation", value=f"**Make, Model:** \n{vinfo}")
-
-                    elif fmlast == "make":
-                        vinfo = fake.machine_make()
-                        emf2.add_field(name="Machine Infromation", value=f"**Make:** {vinfo}")
-
-                    elif fmlast == "model":
-                        vinfo = fake.machine_model()
-                        emf2.add_field(name="Machine Infromation", value=f"**Model:** {vinfo}")
-
-                    elif fmlast == "year":
-                        vinfo = fake.machine_year()
-                        emf2.add_field(name="Machine Infromation", value=f"**Year:** {vinfo}")
-
-                    elif fmlast == "category":
-                        vinfo = fake.machine_category()
-                        emf2.add_field(name="Machine Infromation", value=f"**Category:** {vinfo}")
-
-                    else:
-                        vinfo = fake.machine_object()
-                        emf2.add_field(name="Machine Infromation", value=f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}")
-
-                except Exception as e:
-                    embed3 = discord.Embed(title=get_embeds.ErrorEmbeds.TITLE, description=get_embeds.ErrorEmbeds.DESCRIPTION, color=get_embeds.ErrorEmbeds.COLOR)
-                    embed3.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                    embed3.set_thumbnail(url=get_embeds.ErrorEmbeds.THUMBNAIL)
-                    embed3.add_field(name=get_embeds.ErrorEmbeds.FIELD_NAME, value=f"{e}", inline=False)
-                    embed3.set_footer(text=f"Requested by {interaction.user.name}")
-
-                    await interaction.response.send_message(embed=embed3)
-                    return
-
-                await interaction.response.send_message(embed=emf2)
-
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-        else:
-            try:
-                emf2 = discord.Embed(
-                    title=get_embeds.FakeEmbeds.TITLE,
-                    description="Please choose a category from the options below to access a comprehensive list of all the commands available within that category.",
-                    color=get_embeds.FakeEmbeds.COLOR
-                )
-                emf2.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                emf2.set_footer(text=f"Requested by {interaction.user.name}")
-                emf2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-
-                await interaction.response.send_message(embed=emf2, view=SelectViewFakeHelp(), ephemeral=False)
-
-            except Exception as e:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-    @app_commands.command(name="fakeprofiles", description="Generate a given number of fake profiles")
-    @app_commands.describe(amount="Amount of fake profiles to generate")
-    async def fakeprofiles(self, interaction: discord.Interaction, amount: int = 3):
-
-        try:
-            fake_how_many = int(amount)
-
-            # This is the limit for this command to stop spamming!
-            if fake_how_many <= 3:
-
-                embed = discord.Embed(
-                    title="Mass Fake Profiles", color=get_embeds.FakeEmbeds.COLOR)
-                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                embed.add_field(name=f"{interaction.user.name} requested {amount} fake profiles!", value=f"Starting to send {amount} fake profiles!", inline=True)
-                embed.set_footer(text=f"Requested by {interaction.user.name}")
-
-                await interaction.response.send_message(embed=embed)
-
-                for i in range(fake_how_many):
-                    fake = Faker()
-                    simple_dict = fake.profile()
-                    emf = discord.Embed(title=get_embeds.FakeEmbeds.TITLE, color=get_embeds.FakeEmbeds.COLOR)
-                    emf.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                    emf.set_footer(text=f"Requested by {interaction.user.name}")
-                    emf.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                    emf.add_field(name="Name", value=f"{str(simple_dict['name'])}")
-                    emf.add_field(name="Job", value=f"{str(simple_dict['job'])}")
-                    emf.add_field(name="Birthdate", value=f"{str(simple_dict['birthdate'])}")
-                    emf.add_field(name="Company", value=f"{str(simple_dict['company'])}")
-                    emf.add_field(name="SSN", value=f"{str(simple_dict['ssn'])}")
-                    emf.add_field(name="Recidence", value=f"{str(simple_dict['residence'])}")
-                    emf.add_field(name="Current Location", value=f"{str(simple_dict['current_location'])}")
-                    emf.add_field(name="Blood Group", value=f"{str(simple_dict['blood_group'])}")
-                    emf.add_field(name="Username", value=f"{str(simple_dict['username'])}")
-                    emf.add_field(name="Address", value=f"{str(simple_dict['address'])}")
-                    emf.add_field(name="Mail", value=f"{str(simple_dict['mail'])}")
-                    await interaction.response.send_message(embed=emf)
+                    
+                if fmlast == "ymm":
+                    vinfo = fake.machine_year_make_model()
+                    em.add_field(name="Machine Infromation", value=f"**Year, Make, Model:** \n{vinfo}")
+                elif fmlast == "ymmc":
+                    vinfo = fake.machine_year_make_model_cat()
+                    em.add_field(name="Machine Infromation", value=f"**Year, Make, Model, Cat:** \n{vinfo}")
+                elif fmlast == "mm":
+                    vinfo = fake.machine_make_model()
+                    em.add_field(name="Machine Infromation", value=f"**Make, Model:** \n{vinfo}")
+                elif fmlast == "make":
+                    vinfo = fake.machine_make()
+                    em.add_field(name="Machine Infromation", value=f"**Make:** {vinfo}")
+                elif fmlast == "model":
+                    vinfo = fake.machine_model()
+                    em.add_field(name="Machine Infromation", value=f"**Model:** {vinfo}")
+                elif fmlast == "year":
+                    vinfo = fake.machine_year()
+                    em.add_field(name="Machine Infromation", value=f"**Year:** {vinfo}")
+                elif fmlast == "category":
+                    vinfo = fake.machine_category()
+                    em.add_field(name="Machine Infromation", value=f"**Category:** {vinfo}")
+                else:
+                    vinfo = fake.machine_object()
+                    em.add_field(name="Machine Infromation", value=f"**Year:** {vinfo['Year']} \n**Make:** {vinfo['Make']} \n**Model:** {vinfo['Model']} \n**Category:** {vinfo['Category']}")
 
             else:
-                embed = discord.Embed(title="Mass Fake Profiles", color=get_embeds.FakeEmbeds.COLOR)
-                embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-                embed.set_thumbnail(url=get_embeds.FakeEmbeds.THUMBNAIL)
-                embed.add_field(name="Error", value="Please enter a value below 4; This is done to prevent spam!", inline=True)
-                embed.set_footer(text=f"Requested by {interaction.user.name}")
+                em = embeds.Common(
+                    client=self.client,
+                    interaction=interaction,
+                    title="Fake Information",
+                    description="Please choose a category from the options below to access a comprehensive list of all the commands available within that category.",
+                    thumbnail="fakeinfo_fake"
+                )
+                return await interaction.response.send_message(embed=em, view=SelectViewFakeHelp(), ephemeral=False)
 
-                await interaction.response.send_message(embed=embed)
+            return await interaction.response.send_message(embed=em)
 
         except Exception as e:
             await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
-    @app_commands.command(name="discordtoken", description="Generate a fake discord token")
-    async def discordtoken(self, interaction: discord.Interaction):
-
+    
+    @app_commands.command(name="fakeprofiles", description="Generate a given number of fake profiles")
+    @app_commands.describe(amount="Amount of fake profiles to generate")
+    async def fakeprofiles(self, interaction: discord.Interaction, amount: int = 3):
         try:
-            r = requests.get("https://some-random-api.ml/bottoken").json()
+            fake_how_many = int(amount)
 
-            embed = discord.Embed(title="Fake Discord Token Generator", description=f"`{r['token']}`", color=get_embeds.FakeEmbeds.COLOR)
-            embed.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
-            embed.set_thumbnail(url="https://user-images.githubusercontent.com/36286877/127767330-d3e68d90-67a0-4672-b3e1-6193b323bc21.png")
-            embed.set_footer(text=f"Requested by {interaction.user.name}")
+            if fake_how_many <= 3: # to prevent spam
+                em1 = embeds.Common(
+                    client=self.client,
+                    interaction=interaction,
+                    title="Mass Fake Profiles", 
+                    description="You can only request 3 profiles at a time!",
+                    thumbnail="fakeinfo_fake"
+                )
+                em1.add_field(name=f"{interaction.user.name} requested {amount} fake profiles!", value=f"Starting to send {amount} fake profiles!", inline=True)
+                await interaction.response.send_message(embed=em1)
 
-            await interaction.response.send_message(embed=embed)
+                for _ in range(fake_how_many):
+                    fake = Faker()
+                    simple_dict = fake.profile()
+                    em2 = embeds.Common(
+                        client=self.client,
+                        interaction=interaction,
+                        title="Fake Information", 
+                        thumbnail="fakeinfo_fake"
+                    )
+                    em2.set_footer(text=f"Requested by {interaction.user.name}")
+                    em2.set_author(name=f"{self.client.user.name}", icon_url=f"{self.client.user.avatar.url}")
+                    em2.add_field(name="Name", value=f"{str(simple_dict['name'])}")
+                    em2.add_field(name="Job", value=f"{str(simple_dict['job'])}")
+                    em2.add_field(name="Birthdate", value=f"{str(simple_dict['birthdate'])}")
+                    em2.add_field(name="Company", value=f"{str(simple_dict['company'])}")
+                    em2.add_field(name="SSN", value=f"{str(simple_dict['ssn'])}")
+                    em2.add_field(name="Recidence", value=f"{str(simple_dict['residence'])}")
+                    em2.add_field(name="Current Location", value=f"{str(simple_dict['current_location'])}")
+                    em2.add_field(name="Blood Group", value=f"{str(simple_dict['blood_group'])}")
+                    em2.add_field(name="Username", value=f"{str(simple_dict['username'])}")
+                    em2.add_field(name="Address", value=f"{str(simple_dict['address'])}")
+                    em2.add_field(name="Mail", value=f"{str(simple_dict['mail'])}")
+                    await interaction.response.send_message(embed=em2)
+
+            else:
+                raise errors.IllegalInput("You can only request 3 profiles at a time. This is to prevent spam. Please try again!")
 
         except Exception as e:
             await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
