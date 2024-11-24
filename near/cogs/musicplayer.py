@@ -108,7 +108,7 @@ class Music(commands.Cog):
             logger.success(f"Node is ready!")
           
         except NodeConnectionFailure as e:
-            logger.error(f"Node connection failed: {e}. Host: {self.bot.lavalink_host}. Retrying in 3 seconds.")
+            # logger.error(f"Node connection failed: {e}. Host: {self.bot.lavalink_host}. Retrying in 3 seconds.")
             await asyncio.sleep(3)
             await self.start_nodes()
           
