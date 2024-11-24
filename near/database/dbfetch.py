@@ -104,6 +104,24 @@ class CommandsHistory:
         server_id: t.Optional[str] = "", 
         server_name: t.Optional[str] = ""
     ) -> None:
+        """
+        Logs the execution of a command to PocketBase.
+
+        Parameters
+        ----------
+        command : str
+            The command that was executed.
+        author_id : str
+            The ID of the user who executed the command.
+        author_name : str
+            The name of the user who executed the command.
+        command_args : Optional[str], optional
+            Additional arguments for the command, by default "".
+        server_id : Optional[str], optional
+            The ID of the server where the command was executed, by default "".
+        server_name : Optional[str], optional
+            The name of the server where the command was executed, by default "".
+        """
         try:
             db.Collections.commands_history().create(
                 {
