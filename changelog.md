@@ -1,6 +1,7 @@
 # NearBot v0.8.2
 
 1. Log every command that is run to PocketBase, instead of just stdout to console. Issue [#34](https://github.com/hirusha-adi/Near/issues/34).
+2. Added doctstrings to database related code
 
 # NearBot v0.8.1
 
