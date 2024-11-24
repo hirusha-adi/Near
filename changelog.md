@@ -2,6 +2,10 @@
 
 1. Log every command that is run to PocketBase, instead of just stdout to console. Issue [#34](https://github.com/hirusha-adi/Near/issues/34).
 2. Added doctstrings to database related code
+3. Remove broken `/rvn` command.
+   - Will have to scrape the web manually - unreliable (couldn't find a free, accurate API)
+   - Site changes too often, hard to keep it updated, and the command is barely used. I'll maybe add this later if i find a good API.
+4. Improve `/leet` command. Using [this](https://pypi.org/project/leet/) to leet the text. Issue [#37](https://github.com/hirusha-adi/Near/issues/37).
 
 # NearBot v0.8.1
 

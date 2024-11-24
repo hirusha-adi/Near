@@ -1,10 +1,10 @@
 import base64
 import hashlib
 
+import leet as leeter
 import discord
 from discord import app_commands
 from discord.ext import commands
-from loguru import logger
 
 from near.utils import embeds
 from near.utils import errors
@@ -168,29 +168,7 @@ class EncodeDecode(commands.Cog):
         await log.log_command_history(command="/leet", command_args=f"text: {text}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.check_input(text):
-                encoded = (
-                    text.replace("e", "3")
-                    .replace("a", "4")
-                    .replace("i", "!")
-                    .replace("u", "|_|")
-                    .replace("U", "|_|")
-                    .replace("E", "3")
-                    .replace("I", "!")
-                    .replace("A", "4")
-                    .replace("o", "0")
-                    .replace("O", "0")
-                    .replace("t", "7")
-                    .replace("T", "7")
-                    .replace("l", "1")
-                    .replace("L", "1")
-                    .replace("k", "|<")
-                    .replace("K", "|<")
-                    .replace("CK", "X")
-                    .replace("ck", "x")
-                    .replace("Ck", "X")
-                    .replace("cK", "x")
-                )
-
+                encoded = leeter.leet(text)
                 embed = await embeds.Common(
                     client=self.client,
                     interaction=interaction,

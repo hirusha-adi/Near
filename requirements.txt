@@ -61,3 +61,4 @@ Werkzeug==3.0.2
 win32-setctime==1.1.0
 yarl==1.9.4
 zxcvbn==4.4.28
+leet==0.1.2
