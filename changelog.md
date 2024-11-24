@@ -1,12 +1,9 @@
-# NearBot v0.9.1
-
-1. Improved the performance of the `/fake` command, including all of the subcommands
-    - reduced the lines of code from 2300+ to 400s, while retaining to the same functionality, and possibly faster performance.
-
-# NearBot v0.9
+# NearBot v0.8.1
 
 1. Remove broken `/face` command in `cogs.fakeinfo`
 2. Remove broken `/discordtoken` command in `cogs.fakeinfo`. This might be added again, if I can find the structure of a discord token.
+3. Improved the performance of the `/fake` command, including all of the subcommands
+    - reduced the lines of code from 2300+ to 400s, while retaining to the same functionality, and possibly faster performance.
 
 # NearBot v0.8
 
