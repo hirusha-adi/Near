@@ -35,7 +35,7 @@ async def log_command_history(
     logger.info(f"Command invoked by {author_name} ({author_id}) in {server_name} ({server_id}): {command} {command_args}")
     
     # log to pocketbase
-    dbfetch.CommandsHistory.createOneRec(
+    await dbfetch.CommandsHistory.createOneRec(
         command=command, 
         command_args=command_args, 
         author_id=author_id, 

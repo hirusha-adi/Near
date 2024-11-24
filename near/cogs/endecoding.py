@@ -7,7 +7,9 @@ from discord.ext import commands
 from loguru import logger
 
 from near.utils import embeds
-from near.utils import input_sanitization, errors
+from near.utils import errors
+from near.utils import log
+from near.utils import input_sanitization
 
 
 class EncodeDecode(commands.Cog):
@@ -17,7 +19,7 @@ class EncodeDecode(commands.Cog):
     @app_commands.command(name="b64encode", description="Encode to Base64")
     @app_commands.describe(text="Text to process")
     async def b64encode(self, interaction: discord.Interaction, text: str):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/b64encode", command_args=f"text: {text}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.check_input(text):
                 msg = base64.b64encode('{}'.format(text).encode('ascii'))
@@ -42,7 +44,7 @@ class EncodeDecode(commands.Cog):
     @app_commands.command(name="b64decode", description="Decode from Base64")
     @app_commands.describe(text="Text to process")
     async def b64decode(self, interaction: discord.Interaction, text: str):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/b64decode", command_args=f"text: {text}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.is_base64(text):
                 msg = base64.b64decode('{}'.format(text).encode('ascii'))
@@ -67,7 +69,7 @@ class EncodeDecode(commands.Cog):
     @app_commands.command(name="md5", description="Get MD5 Hash")
     @app_commands.describe(text="Text to process")
     async def md5(self, interaction: discord.Interaction, text: str):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/md5", command_args=f"text: {text}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.check_input(text):
                 msg = hashlib.md5(text.encode())
@@ -91,7 +93,7 @@ class EncodeDecode(commands.Cog):
     @app_commands.command(name="sha1", description="Get SHA1 Hash")
     @app_commands.describe(text="Text to process")
     async def sha1(self, interaction: discord.Interaction, text: str):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/sha1", command_args=f"text: {text}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.check_input(text):
                 msg = hashlib.sha1(text.encode())
@@ -115,7 +117,7 @@ class EncodeDecode(commands.Cog):
     @app_commands.command(name="sha224", description="Get SHA224 Hash")
     @app_commands.describe(text="Text to process")
     async def sha224(self, interaction: discord.Interaction, text: str):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/sha224", command_args=f"text: {text}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.check_input(text):
                 msg = hashlib.sha224(text.encode())
@@ -139,7 +141,7 @@ class EncodeDecode(commands.Cog):
     @app_commands.command(name="sha512", description="Get SHA512 Hash")
     @app_commands.describe(text="Text to process")
     async def sha512(self, interaction: discord.Interaction, text: str):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/sha512", command_args=f"text: {text}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.check_input(text):
                 msg = hashlib.sha512(text.encode())
@@ -163,7 +165,7 @@ class EncodeDecode(commands.Cog):
     @app_commands.command(name="leet", description="Convert text to L33T format")
     @app_commands.describe(text="Text to process")
     async def leet(self, interaction: discord.Interaction, text: str):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/leet", command_args=f"text: {text}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.check_input(text):
                 encoded = (
