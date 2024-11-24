@@ -93,3 +93,28 @@ class SettingsEmbeds:
             return str(__fetched.value)
         except Exception as e:
             logger.error(f"Error: {e}")
+
+class CommandsHistory:
+    @staticmethod
+    async def createOneRec(
+        command: str, 
+        author_id: str, 
+        author_name: str, 
+        command_args: t.Optional[str] = "", 
+        server_id: t.Optional[str] = "", 
+        server_name: t.Optional[str] = ""
+    ) -> None:
+        try:
+            db.Collections.commands_history().create(
+                {
+                    "command": command,
+                    "command_args": command_args,
+                    "author_id": author_id,
+                    "author_name": author_name,
+                    "server_id": server_id,
+                    "server_name": server_name
+                }
+            )
+        except Exception as e:
+            logger.error(f"Failed to log the executed command to PocketBase")
+        
