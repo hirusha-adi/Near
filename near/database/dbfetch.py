@@ -17,7 +17,7 @@ class SettingsMain:
 
 class SettingsEmbeds:
     @staticmethod
-    async def oneRec(key: str) -> t.Optional[str]:
+    async def getOneRec(key: str) -> t.Optional[str]:
         """
         Fetches a single embed record from the 'settings_embeds' collection.
 
@@ -38,7 +38,7 @@ class SettingsEmbeds:
             logger.error(f"Error: {e}")
 
     @staticmethod
-    async def allVals() -> t.Optional[t.List[Record]]:
+    async def getAllVals() -> t.Optional[t.List[Record]]:
         """
         Fetches all records from the 'settings_embeds' collection.
 
@@ -54,7 +54,7 @@ class SettingsEmbeds:
             logger.error(f"Error: {e}")
 
     @staticmethod
-    async def allErrorVals() -> t.Optional[dict[str, str]]:
+    async def getAllErrorVals() -> t.Optional[dict[str, str]]:
         """
         Fetches all records from the 'settings_embeds' collection whose key starts with 'ERROR_'
 
@@ -74,7 +74,7 @@ class SettingsEmbeds:
             logger.error(f"Error: {e}")
     
     @staticmethod
-    async def oneThumbnail(key: str) -> t.Optional[str]:
+    async def getOneThumbnail(key: str) -> t.Optional[str]:
         """
         Fetches the value of the thumbnail with the given key from the 'settings_embeds' collection.
 
@@ -134,5 +134,5 @@ class CommandsHistory:
                 }
             )
         except Exception as e:
-            logger.error(f"Failed to log the executed command to PocketBase")
+            logger.error(f"Failed to log the executed command to PocketBase: {e}")
         

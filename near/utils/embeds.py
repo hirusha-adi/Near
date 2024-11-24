@@ -32,7 +32,7 @@ async def Error(
     """
 
     logger.error(error_message)
-    embed_info = await dbfetch.SettingsEmbeds.allErrorVals()
+    embed_info = await dbfetch.SettingsEmbeds.getAllErrorVals()
     embed = discord.Embed(
         title=embed_info["ERROR_TITLE"],
         description=f"```\n{error_message}```",
@@ -82,7 +82,7 @@ async def Common(
         An embed with the specified title, optional description, and thumbnail.
     """
 
-    em_color = input_sanitization.color(await dbfetch.SettingsEmbeds.oneRec("COMMON_COLOR"))
+    em_color = input_sanitization.color(await dbfetch.SettingsEmbeds.getOneRec("COMMON_COLOR"))
     if description == False:  # dont add description
         embed = discord.Embed(
             title=title, 
@@ -102,7 +102,7 @@ async def Common(
             embed.set_thumbnail(url=thumbnail)
             print(thumbnail_direct, thumbnail)
         else:
-            embed.set_thumbnail(url=await dbfetch.SettingsEmbeds.oneThumbnail(key=thumbnail))
+            embed.set_thumbnail(url=await dbfetch.SettingsEmbeds.getOneThumbnail(key=thumbnail))
     
     if client:
         embed.set_author(name=client.user.name, icon_url=client.user.avatar.url)
