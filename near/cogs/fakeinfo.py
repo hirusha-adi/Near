@@ -6,6 +6,7 @@ from faker_vehicle import VehicleProvider
 
 from near.utils import embeds
 from near.utils import errors
+from near.utils import log
 
 
 class SelectFakeHelp(discord.ui.Select):
@@ -154,8 +155,8 @@ class FakeInformation(commands.Cog):
     @app_commands.command(name="fake", description="Generate fake information")
     @app_commands.describe(category="What exactly to generate. Refer to help for additional information")
     async def fake(self, interaction: discord.Interaction, category: str = "help"):
+        await log.log_command_history(command="/fake", command_args=f"category: {category}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
-        
             fake = Faker()
             
             fake_methods = {
@@ -385,6 +386,7 @@ class FakeInformation(commands.Cog):
     @app_commands.command(name="fakeprofiles", description="Generate a given number of fake profiles")
     @app_commands.describe(amount="Amount of fake profiles to generate")
     async def fakeprofiles(self, interaction: discord.Interaction, amount: int = 3):
+        await log.log_command_history(command="/fakeprofiles", command_args=f"amount: {amount}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             fake_how_many = int(amount)
 

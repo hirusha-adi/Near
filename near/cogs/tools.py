@@ -18,6 +18,7 @@ from zxcvbn import zxcvbn
 from near.utils import embeds
 from near.utils import errors
 from near.utils import input_sanitization
+from near.utils import log
 
 
 class Tools(commands.Cog):
@@ -31,9 +32,8 @@ class Tools(commands.Cog):
     @app_commands.command(name='passwordgen', description="Generate a very secure and unique password")
     @app_commands.describe(length="Length of the Password to generate.")
     async def passwordgen(self, interaction: discord.Interaction, length: int):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/passwordgen", command_args=f"length: {length}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
-
             if int(length) < 101:
                 c = ''.join((secrets.choice(string.ascii_letters + string.digits + string.punctuation) for i in range(int(length))))
 
@@ -56,7 +56,7 @@ class Tools(commands.Cog):
     @app_commands.command(name="insta", description="Grab the Instagram Profile Picture of a Profile")
     @app_commands.describe(username="Instagram Profile's Username")
     async def insta(self, interaction: discord.Interaction, username: str):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/insta", command_args=f"username: {username}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             igpfp = instaloader.Instaloader()
             igpfp.download_profile(username, profile_pic_only=True)
@@ -104,7 +104,7 @@ class Tools(commands.Cog):
     @app_commands.command(name="bin", description="Create a PrivateBin from a Text")
     @app_commands.describe(text="Text to be included in the PrivateBin")
     async def bin(self, interaction: discord.Interaction, text: str):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/bin", command_args=f"text: {text}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.check_input(text):
                 privbin = privatebinapi.send("https://bin.teamsds.net/", text=text)
@@ -129,7 +129,8 @@ class Tools(commands.Cog):
     @app_commands.command(name="passwordcheck", description="Password Strength Check and Profiler")
     @app_commands.describe(password="Password to analyze")
     async def passwordchk(self, interaction: discord.Interaction, password: str):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        # given password is not logged, for better user privacy 
+        await log.log_command_history(command="/passwordchk", command_args=f"###", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.password_check(password):
                 results = zxcvbn(f"{password}")
@@ -180,7 +181,7 @@ class Tools(commands.Cog):
     @app_commands.command(name="lyrics", description="Search the Lyrics of any Song")
     @app_commands.describe(query="Name of the Song")
     async def lyrics(self, interaction: discord.Interaction, query: str):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/lyrics", command_args=f"query: {query}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.check_input(query):
 
