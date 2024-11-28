@@ -1,4 +1,4 @@
-#### Special thanks to TeamSDS and NoPE for making this possible!
+### Special thanks to TeamSDS and NoPE for making this possible!
 
 ### Developers
 
