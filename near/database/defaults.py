@@ -5,11 +5,27 @@ from loguru import logger
 from . import db
 
 
-async def set_defaults():
+async def set_defaults() -> None:
+    """
+    Set the default settings for the application by loading data into the
+    settings_embeds collection from a predefined JSON configuration file.
+    
+    This function initializes the database with default values if there are
+    no existing records, or updates the database with any new keys found in
+    the default configuration that are not already present in the database.
+    """
     await __set_defaultsSettingsEmbeds()
 
 
-async def __set_defaultsSettingsEmbeds():
+async def __set_defaultsSettingsEmbeds() -> None:
+    """
+    Load the default settings into the settings_embeds collection of the database,
+    from file: `near/database/default-data/default.settings_embeds.json`.
+    
+    - If there is no existing data in the database, all the default settings are loaded.
+    - If there is existing data, the function checks if there has been an update in the default config.
+      If there is an update, the new added keys are loaded into the database.
+    """
     try:
         # from the default config file
         with open(os.path.join("near", "database", "default-data", "default.settings_embeds.json"), "r") as f:

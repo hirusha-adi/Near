@@ -8,6 +8,7 @@ from loguru import logger
 from near.utils import errors
 from near.utils import embeds
 from near.utils import input_sanitization
+from near.utils import log
 
 
 class Information(commands.Cog):
@@ -17,7 +18,7 @@ class Information(commands.Cog):
     @app_commands.command(name="ipinfo", description="IP Address Lookup")
     @app_commands.describe(ip="IP Address to look for")
     async def ipinfo(self, interaction: discord.Interaction, ip: str):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/ipinfo", command_args=f"ip: {ip}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.is_ipaddr(ip):
                 async with aiohttp.ClientSession() as session:
@@ -45,12 +46,17 @@ class Information(commands.Cog):
     @app_commands.command(name='avatar', description="Get the User Avatar")
     @app_commands.describe(user="User to get the Profile Picture of. Defaults to the Author")
     async def avatar(self, interaction: discord.Interaction, user: discord.User = None):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        # logging done at the middle of the function, to get the user name
+        # since `discord.User` is not json transcriptable
         try:
             format = "gif"
             user = user or interaction.user
             if user.display_avatar.is_animated() != True:
                 format = "png"
+            
+            # logging
+            # TODO: test this! {user.name} might not work.
+            await log.log_command_history(command="/ipinfo", command_args=f"user: {user.name} ({user.id})", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
 
             avatar = user.display_avatar.with_format(format if format != "gif" else None).url
 
@@ -67,7 +73,7 @@ class Information(commands.Cog):
 
     @app_commands.command(name='serverinfo', description="Get Information about the Server")
     async def serverinfo(self, interaction: discord.Interaction):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        await log.log_command_history(command="/serverinfo", command_args="", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             date_format = "%a, %d %b %Y %I:%M %p"
 
@@ -99,9 +105,13 @@ class Information(commands.Cog):
     @app_commands.command(name='userinfo', description="Get Information about a User")
     @app_commands.describe(user="User to get the Information of. Defaults to the Author")
     async def userinfo(self, interaction: discord.Interaction, user: discord.Member = None):
-        logger.info(f"Command invoked by {interaction.user.name} ({interaction.user.id}) in {interaction.guild} ({interaction.guild_id})")
+        # logging done at the middle of the function, to get the user name
+        # since `discord.User` is not json transcriptable
         try:
             target = user or interaction.user
+
+            # logging
+            await log.log_command_history(command="/userinfo", command_args=f"user: {user.name} ({user.id})", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
 
             embed = await embeds.Common(
                 client=self.client,
