@@ -8,6 +8,10 @@
     <img src="https://img.shields.io/github/contributors/hirusha-adi/Near?style=for-the-badge" alt="Contributors">
 </p>
 
+# Architechture
+
+![Untitled Diagram](https://github.com/user-attachments/assets/571eaac5-9003-40f1-b3b5-0a7a8fb704e5)
+
 # Docker
 
 ```bash
