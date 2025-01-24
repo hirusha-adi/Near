@@ -48,7 +48,7 @@ class Tools(commands.Cog):
                 await interaction.response.send_message(embed=embed)
 
             else:
-                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"The value of the number is high.\nPlease Enter a value below 40,"), ephemeral=False)
+                await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"The value of the number is high.\nPlease Enter a value below 101,"), ephemeral=False)
 
         except Exception as e:
             await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
