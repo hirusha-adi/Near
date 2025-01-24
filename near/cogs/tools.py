@@ -8,8 +8,8 @@ import urllib
 import aiohttp
 
 import discord
-import instaloader
-import privatebinapi
+# import instaloader
+# import privatebinapi
 from discord import app_commands
 from discord.ext import commands
 from loguru import logger
@@ -53,78 +53,78 @@ class Tools(commands.Cog):
         except Exception as e:
             await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
-    @app_commands.command(name="insta", description="Grab the Instagram Profile Picture of a Profile")
-    @app_commands.describe(username="Instagram Profile's Username")
-    async def insta(self, interaction: discord.Interaction, username: str):
-        await log.log_command_history(command="/insta", command_args=f"username: {username}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
-        try:
-            igpfp = instaloader.Instaloader()
-            igpfp.download_profile(username, profile_pic_only=True)
+    # @app_commands.command(name="insta", description="Grab the Instagram Profile Picture of a Profile")
+    # @app_commands.describe(username="Instagram Profile's Username")
+    # async def insta(self, interaction: discord.Interaction, username: str):
+    #     await log.log_command_history(command="/insta", command_args=f"username: {username}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
+    #     try:
+    #         igpfp = instaloader.Instaloader()
+    #         igpfp.download_profile(username, profile_pic_only=True)
 
-            os.chdir(f'{username}')
-            jpg_files = glob.glob("*.jpg")
-            for jpg_file in jpg_files:
-                shutil.move(jpg_file, os.path.join("..", jpg_file))
-            os.chdir("..")
-            jpg_files = glob.glob("*.jpg")
-            for jpg_file in jpg_files:
-                shutil.move(jpg_file, "igtemp.jpg")
-                break
+    #         os.chdir(f'{username}')
+    #         jpg_files = glob.glob("*.jpg")
+    #         for jpg_file in jpg_files:
+    #             shutil.move(jpg_file, os.path.join("..", jpg_file))
+    #         os.chdir("..")
+    #         jpg_files = glob.glob("*.jpg")
+    #         for jpg_file in jpg_files:
+    #             shutil.move(jpg_file, "igtemp.jpg")
+    #             break
 
-            file = discord.File(f'igtemp.jpg', filename="image.jpg")
+    #         file = discord.File(f'igtemp.jpg', filename="image.jpg")
 
-            # Use this if you want to send the image as an embed
-            # ---
+    #         # Use this if you want to send the image as an embed
+    #         # ---
 
-            embed = await embeds.Common(
-                client=self.client,
-                interaction=interaction,
-                title="Instagram Profile Picture",
-                description=f"of {username}",
-                thumbnail="tools_insta",
-            )
-            embed.add_field(name="Link", value=f"https://instagram.com/{username}", inline=False)
-            embed.set_image(url="attachment://image.jpg")
-            await interaction.response.send_message(file=file, embed=embed)
+    #         embed = await embeds.Common(
+    #             client=self.client,
+    #             interaction=interaction,
+    #             title="Instagram Profile Picture",
+    #             description=f"of {username}",
+    #             thumbnail="tools_insta",
+    #         )
+    #         embed.add_field(name="Link", value=f"https://instagram.com/{username}", inline=False)
+    #         embed.set_image(url="attachment://image.jpg")
+    #         await interaction.response.send_message(file=file, embed=embed)
 
-            # Use this if you only want to send the file without an embed
-            # ---
-            # await interaction.response.send_message(file=file)
+    #         # Use this if you only want to send the file without an embed
+    #         # ---
+    #         # await interaction.response.send_message(file=file)
 
-        except Exception as e:
-            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+    #     except Exception as e:
+    #         await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
-        finally:
-            try:
-                shutil.rmtree(username)
-                os.remove(f'igtemp.jpg')
-            except Exception as e:
-                print(f"Error removing directory {username}: {e}")
+    #     finally:
+    #         try:
+    #             shutil.rmtree(username)
+    #             os.remove(f'igtemp.jpg')
+    #         except Exception as e:
+    #             print(f"Error removing directory {username}: {e}")
 
-    @app_commands.command(name="bin", description="Create a PrivateBin from a Text")
-    @app_commands.describe(text="Text to be included in the PrivateBin")
-    async def bin(self, interaction: discord.Interaction, text: str):
-        await log.log_command_history(command="/bin", command_args=f"text: {text}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
-        try:
-            if input_sanitization.check_input(text):
-                privbin = privatebinapi.send("https://bin.teamsds.net/", text=text)
+    # @app_commands.command(name="bin", description="Create a PrivateBin from a Text")
+    # @app_commands.describe(text="Text to be included in the PrivateBin")
+    # async def bin(self, interaction: discord.Interaction, text: str):
+    #     await log.log_command_history(command="/bin", command_args=f"text: {text}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
+    #     try:
+    #         if input_sanitization.check_input(text):
+    #             privbin = privatebinapi.send("https://bin.teamsds.net/", text=text)
 
-                embed = await embeds.Common(
-                    client=self.client,
-                    interaction=interaction,
-                    title="TeamSDS's PrivateBin",
-                    thumbnail="tools_bin",
-                )
-                embed.add_field(name="ID", value=f"{privbin['id']}", inline=False)
-                embed.add_field(name="URL", value=f"{privbin['full_url']}", inline=False)
-                embed.add_field(name="Passcode", value=f"{privbin['passcode']}", inline=False)
-                embed.add_field(name=f"Text by {interaction.user.name}", value=f"{text}", inline=False)
-                await interaction.response.send_message(embed=embed)
-            else:
-                raise errors.IllegalInput
+    #             embed = await embeds.Common(
+    #                 client=self.client,
+    #                 interaction=interaction,
+    #                 title="TeamSDS's PrivateBin",
+    #                 thumbnail="tools_bin",
+    #             )
+    #             embed.add_field(name="ID", value=f"{privbin['id']}", inline=False)
+    #             embed.add_field(name="URL", value=f"{privbin['full_url']}", inline=False)
+    #             embed.add_field(name="Passcode", value=f"{privbin['passcode']}", inline=False)
+    #             embed.add_field(name=f"Text by {interaction.user.name}", value=f"{text}", inline=False)
+    #             await interaction.response.send_message(embed=embed)
+    #         else:
+    #             raise errors.IllegalInput
 
-        except Exception as e:
-            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
+    #     except Exception as e:
+    #         await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
     @app_commands.command(name="passwordcheck", description="Password Strength Check and Profiler")
     @app_commands.describe(password="Password to analyze")
