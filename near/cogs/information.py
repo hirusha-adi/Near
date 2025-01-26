@@ -56,7 +56,7 @@ class Information(commands.Cog):
             
             # logging
             # TODO: test this! {user.name} might not work.
-            await log.log_command_history(command="/ipinfo", command_args=f"user: {user.name} ({user.id})", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
+            await log.log_command_history(command="/avatar", command_args=f"user: {user.name} ({user.id})", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
 
             avatar = user.display_avatar.with_format(format if format != "gif" else None).url
 
