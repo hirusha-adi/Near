@@ -6,6 +6,7 @@
    - Will have to scrape the web manually - unreliable (couldn't find a free, accurate API)
    - Site changes too often, hard to keep it updated, and the command is barely used. I'll maybe add this later if i find a good API.
 4. Improve `/leet` command. Using [this](https://pypi.org/project/leet/) to leet the text. Issue [#37](https://github.com/hirusha-adi/Near/issues/37).
+5. Remove `/meme`. It's unreliable to scrape memes from a website.
 
 ### NearBot v0.8.1
 

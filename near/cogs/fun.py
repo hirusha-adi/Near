@@ -37,34 +37,6 @@ class Fun(commands.Cog):
         except Exception as e:
             await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
 
-
-    @app_commands.command(name="meme", description="Get a random meme")
-    async def meme(self, interaction: discord.Interaction):
-        await log.log_command_history(command="/meme", command_args="", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get('https://www.memedroid.com/memes/tag/programming') as response:
-                    html_content = await response.text()
-                    soup = BeautifulSoup(html_content, 'html.parser')
-                    divs = soup.find_all('div', class_='item-aux-container')
-                    imgs = []
-                    for div in divs:
-                        img = div.find('img')['src']
-                        if img.startswith('http') and img.endswith('jpeg'):
-                            imgs.append(img)
-                    meme = random.choice(imgs)
-            
-            embed = await embeds.Common(
-                client=self.client,
-                interaction=interaction,
-                title="a Meme",
-            )
-            embed.set_image(url=str(meme))
-            await interaction.response.send_message(embed=embed)
-
-        except Exception as e:
-            await interaction.response.send_message(embed=await embeds.Error(interaction=interaction, client=self.client, error_message=f"{e}"), ephemeral=False)
-
     @app_commands.command(name="dadjoke", description="Get a random dad joke")
     async def dadjoke(self, interaction: discord.Interaction):
         await log.log_command_history(command="/dadjoke", command_args="", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
