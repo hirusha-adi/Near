@@ -17,6 +17,36 @@ class Music(commands.Cog):
         self.bot = bot
         self.music_queues = defaultdict(Queue)
 
+    @app_commands.command(name="join", description="Joins a voice channel")
+    @app_commands.describe(channel="Mention a voice channel (optional)")
+    async def join(self, interaction: discord.Interaction, channel: discord.VoiceChannel = None):
+        # If no channel is provided, use the user's current voice channel
+        if not channel:
+            if interaction.user.voice and interaction.user.voice.channel:
+                channel = interaction.user.voice.channel
+            else:
+                await interaction.response.send_message("You need to be in a voice channel or mention one!", ephemeral=True)
+                return
+
+        # Check if bot is already connected
+        if interaction.guild.voice_client:
+            await interaction.response.send_message("I'm already in a voice channel!", ephemeral=True)
+            return
+
+        # Check bot permissions
+        permissions = channel.permissions_for(interaction.guild.me)
+        if not permissions.connect:
+            await interaction.response.send_message("I don't have permission to connect to that voice channel!", ephemeral=True)
+            return
+        if not permissions.speak:
+            await interaction.response.send_message("I don't have permission to speak in that voice channel!", ephemeral=True)
+            return
+
+        # Connect to the channel
+        await channel.connect()
+        await interaction.response.send_message(f"Joined {channel.name}!")
+
+
     @app_commands.command(name="play", description="Plays a song from YouTube by URL or search query")
     async def play(self, interaction: discord.Interaction, url: str):
         await interaction.response.defer()
