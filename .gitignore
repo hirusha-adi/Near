@@ -9,6 +9,9 @@ env*/
 .DO_NOT_DELETE.txt
 logs/
 *.log
+bin/*
+!bin/*.sh
+!bin/*.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
