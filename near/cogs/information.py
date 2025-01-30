@@ -1,4 +1,5 @@
 import aiohttp
+import ipaddress
 
 import discord
 from discord import app_commands
@@ -21,6 +22,9 @@ class Information(commands.Cog):
         await log.log_command_history(command="/ipinfo", command_args=f"ip: {ip}", author_id=interaction.user.id, author_name=interaction.user.name, server_id=interaction.guild.id, server_name=interaction.guild.name)
         try:
             if input_sanitization.is_ipaddr(ip):
+                if ipaddress.ip_address(ip).is_private:
+                    raise errors.IllegalInput("You have entered a private IP address.")
+                
                 async with aiohttp.ClientSession() as session:
                     async with session.get(f"https://ipapi.co/{ip}/json") as response:
                         r = await response.json()
