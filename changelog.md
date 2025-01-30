@@ -1,4 +1,4 @@
-### NearBot v0.8.2
+### NearBot v0.9
 
 1. Log every command that is run to PocketBase, instead of just stdout to console. Issue [#34](https://github.com/hirusha-adi/Near/issues/34).
 2. Added doctstrings to database related code
@@ -7,6 +7,8 @@
    - Site changes too often, hard to keep it updated, and the command is barely used. I'll maybe add this later if i find a good API.
 4. Improve `/leet` command. Using [this](https://pypi.org/project/leet/) to leet the text. Issue [#37](https://github.com/hirusha-adi/Near/issues/37).
 5. Remove `/meme`. It's unreliable to scrape memes from a website.
+6. Re-write the music commands.
+   - got rid of LavaLink
 
 ### NearBot v0.8.1
 
