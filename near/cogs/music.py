@@ -19,27 +19,30 @@ class Music(commands.Cog):
 
     @app_commands.command(name="join", description="Joins a voice channel")
     @app_commands.describe(channel="Mention a voice channel (optional)")
-    async def join(self, interaction: discord.Interaction, channel: discord.VoiceChannel = None):
+    @app_commands.describe(force="Force join even if already in a voice channel")
+    async def join(self, interaction: discord.Interaction, channel: discord.VoiceChannel = None, force: bool = False):
         # If no channel is provided, use the user's current voice channel
         if not channel:
             if interaction.user.voice and interaction.user.voice.channel:
                 channel = interaction.user.voice.channel
             else:
-                await interaction.response.send_message("You need to be in a voice channel or mention one!", ephemeral=True)
+                await interaction.response.send_message("You need to be in a voice channel or mention one!")
                 return
 
         # Check if bot is already connected
-        if interaction.guild.voice_client:
-            await interaction.response.send_message("I'm already in a voice channel!", ephemeral=True)
-            return
+        # Skip if force is True
+        if not force:
+            if interaction.guild.voice_client:
+                await interaction.response.send_message("I'm already in a voice channel!")
+                return
 
         # Check bot permissions
         permissions = channel.permissions_for(interaction.guild.me)
         if not permissions.connect:
-            await interaction.response.send_message("I don't have permission to connect to that voice channel!", ephemeral=True)
+            await interaction.response.send_message("I don't have permission to connect to that voice channel!")
             return
         if not permissions.speak:
-            await interaction.response.send_message("I don't have permission to speak in that voice channel!", ephemeral=True)
+            await interaction.response.send_message("I don't have permission to speak in that voice channel!")
             return
 
         # Connect to the channel
