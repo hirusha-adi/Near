@@ -13,8 +13,8 @@ from bot import config
 from bot.music import Queue, Song, SongRequestError
 
 class Music(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
+    def __init__(self, client: commands.Bot):
+        self.client = client
         self.music_queues = defaultdict(Queue)
 
     @app_commands.command(name="join", description="Joins a voice channel")
@@ -49,13 +49,29 @@ class Music(commands.Cog):
         await channel.connect()
         await interaction.response.send_message(f"Joined {channel.name}!")
 
+    @app_commands.command(name="leave", description="Leaves the voice channel")
+    async def leave(self, interaction: discord.Interaction):
+        _guild = interaction.guild
+        voice: discord.VoiceClient = get(self.client.voice_clients, guild=_guild)
+        queue = self.music_queues.get(_guild)
+
+        if voice:
+            if voice.is_connected():
+                voice.stop()
+                if queue:
+                    queue.clear()
+                await voice.disconnect()
+                await interaction.response.send_message("Leaving voice channel.")
+        else:
+            print("6")
+            await interaction.response.send_message("I'm not connected to a voice channel.")
 
     @app_commands.command(name="play", description="Plays a song from YouTube by URL or search query")
     async def play(self, interaction: discord.Interaction, url: str):
         await interaction.response.defer()
         guild = interaction.guild
         music_queue = self.music_queues[guild]
-        voice = get(self.bot.voice_clients, guild=guild)
+        voice = get(self.client.voice_clients, guild=guild)
 
         try:
             channel = interaction.user.voice.channel
@@ -88,7 +104,7 @@ class Music(commands.Cog):
     @app_commands.checks.has_permissions(ban_members=True)
     async def stop(self, interaction: discord.Interaction):
         guild = interaction.guild
-        voice = get(self.bot.voice_clients, guild=guild)
+        voice = get(self.client.voice_clients, guild=guild)
         queue = self.music_queues.get(guild)
 
         if voice and voice.is_connected():
@@ -102,7 +118,7 @@ class Music(commands.Cog):
     @app_commands.command(name="skip", description="Vote to skip the current song")
     async def skip(self, interaction: discord.Interaction):
         guild = interaction.guild
-        voice = get(self.bot.voice_clients, guild=guild)
+        voice = get(self.client.voice_clients, guild=guild)
         queue = self.music_queues.get(guild)
 
         if not voice or not voice.is_playing():
@@ -142,7 +158,7 @@ class Music(commands.Cog):
 
     async def play_song(self, guild: discord.Guild, song: Song):
         audio_path = os.path.join(".", "audio", f"{guild.id}.mp3")
-        voice = get(self.bot.voice_clients, guild=guild)
+        voice = get(self.client.voice_clients, guild=guild)
 
         ydl_opts = {
             "format": "bestaudio/best",
@@ -166,17 +182,17 @@ class Music(commands.Cog):
         voice.play(discord.FFmpegPCMAudio(audio_path))
 
     async def inactivity_disconnect(self, guild: discord.Guild):
-        voice = get(self.bot.voice_clients, guild=guild)
+        voice = get(self.client.voice_clients, guild=guild)
         await asyncio.sleep(300)
         if voice and not voice.is_playing():
             await voice.disconnect()
 
     @commands.Cog.listener()
     async def on_ready(self):
-        self.bot.tree.add_command(self.play)
-        self.bot.tree.add_command(self.stop)
-        self.bot.tree.add_command(self.skip)
-        self.bot.tree.add_command(self.queue)
+        self.client.tree.add_command(self.play)
+        self.client.tree.add_command(self.stop)
+        self.client.tree.add_command(self.skip)
+        self.client.tree.add_command(self.queue)
         print("Music cog loaded")
 
 async def setup(bot):
