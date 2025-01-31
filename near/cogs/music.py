@@ -2,6 +2,7 @@ import asyncio
 import os
 from collections import defaultdict
 from pathlib import Path
+import typing as t
 
 import discord
 import yt_dlp
@@ -17,6 +18,28 @@ class Music(commands.Cog):
         self.client = client
         self.music_queues = defaultdict(Queue)
 
+    async def ensure_connected_to_vc(self, interaction: discord.Interaction) -> t.Optional[discord.VoiceClient]:
+        guild = interaction.guild
+        user_voice = interaction.user.voice
+
+        # Check if the user is in a voice channel
+        if not user_voice or not user_voice.channel:
+            await interaction.response.send_message("You must be in a voice channel to use this command!")
+            return None
+        
+        user_channel = user_voice.channel
+        bot_voice: t.Optional[discord.VoiceClient] = guild.voice_client
+
+        # If bot is not in a voice channel, join the user's channel
+        if not bot_voice:
+            await user_channel.connect()
+            return guild.voice_client
+        elif bot_voice.channel != user_channel:
+            await interaction.response.send_message(f"I'm already connected to `{bot_voice.channel.name}`. Please join my channel or disconnect me first!", )
+            return None
+        
+        return bot_voice
+    
     @app_commands.command(name="join", description="Joins a voice channel")
     @app_commands.describe(channel="Mention a voice channel (optional)")
     @app_commands.describe(force="Force join even if already in a voice channel")
@@ -63,11 +86,19 @@ class Music(commands.Cog):
                 await voice.disconnect()
                 await interaction.response.send_message("Leaving voice channel.")
         else:
-            print("6")
             await interaction.response.send_message("I'm not connected to a voice channel.")
+    
 
     @app_commands.command(name="play", description="Plays a song from YouTube by URL or search query")
     async def play(self, interaction: discord.Interaction, url: str):
+        voice_client = await self.ensure_connected_to_vc(interaction)
+        if not voice_client:
+            return
+        
+        await interaction.response.send_message(f"Playing `{url}` in {voice_client.channel.name}!")
+        return
+    
+
         await interaction.response.defer()
         guild = interaction.guild
         music_queue = self.music_queues[guild]
