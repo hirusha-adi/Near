@@ -97,7 +97,7 @@ class Music(commands.Cog):
         if not voice_client:
             return
         
-        await interaction.response.send_message(f"Playing `{url}` in {voice_client.channel.name}!")
+        await interaction.response.send_message(f"Processing `{url}`...")
 
         # await interaction.response.defer()
 
@@ -110,31 +110,32 @@ class Music(commands.Cog):
         channel: discord.VoiceChannel = interaction.user.voice.channel
 
         video_id, video_filename = youtube.download_video(url)
+
         if not video_filename or not Path(video_filename).exists():
             await interaction.followup.send("Failed to download the audio.")
             return
 
-        if voice.is_playing() or voice.is_paused():
-            voice.stop()
+        music_queue.append(video_filename)
+
+        if not voice.is_playing():
+            await self.play_next_song(voice, guild)
+        else:
+            await interaction.followup.send("Added to queue.")
         
         voice.play(discord.FFmpegPCMAudio(video_filename))
 
-        return
-    
 
-        try:
-            song = Song(url, author=interaction.user)
-        except SongRequestError as e:
-            await interaction.followup.send(e.args[0])
-            return
+    async def play_next_song(self, voice: discord.VoiceClient, guild: discord.Guild):
+        """Plays the next song in the queue."""
+        if self.music_queues[guild]:
+            next_song = self.music_queues[guild].pop(0)  # Get next song from queue
+            
+            def after_playing(error):
+                if error:
+                    print(f"Error playing audio: {error}")
+                asyncio.run_coroutine_threadsafe(self.play_next_song(voice, guild), self.client.loop)
 
-        music_queue.append(song)
-        await interaction.followup.send(f'Queued song: {song.title}')
-
-        if voice is None or not voice.is_connected():
-            await channel.connect()
-
-        await self.play_all_songs(guild)
+            voice.play(discord.FFmpegPCMAudio(next_song), after=after_playing)
 
     @app_commands.command(name="stop", description="Stops music and clears the queue")
     @app_commands.checks.has_permissions(ban_members=True)
@@ -176,60 +177,14 @@ class Music(commands.Cog):
 
     @app_commands.command(name="queue", description="Shows the current song queue")
     async def queue(self, interaction: discord.Interaction):
-        queue = self.music_queues.get(interaction.guild)
-        if not queue:
-            await interaction.response.send_message("The queue is empty.")
+        guild: discord.Guild = interaction.guild
+        music_queue = self.music_queues[guild]
+        if not music_queue:
+            await interaction.response.send_message("The queue is currently empty.")
             return
 
-        queue_text = "\n".join([f"{i+1}. {song.title}" for i, song in enumerate(queue)])
-        embed = discord.Embed(title="Music Queue", description=queue_text, color=discord.Color.blue())
-        await interaction.response.send_message(embed=embed)
+        queue_list = "\n".join([f"{index + 1}. {Path(song).stem}" for index, song in enumerate(music_queue)])
+        await interaction.response.send_message(f"**Music Queue:**\n```\n{queue_list}\n```")
 
-    async def play_all_songs(self, guild: discord.Guild):
-        queue = self.music_queues.get(guild)
-        while queue:
-            song = queue.next_song()
-            await self.play_song(guild, song)
-        await self.inactivity_disconnect(guild)
-
-    async def play_song(self, guild: discord.Guild, song: Song):
-        audio_path = os.path.join(".", "audio", f"{guild.id}.mp3")
-        voice = get(self.client.voice_clients, guild=guild)
-
-        ydl_opts = {
-            "format": "bestaudio/best",
-            "postprocessors": [{
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "mp3",
-                "preferredquality": "192",
-            }],
-            "outtmpl": audio_path,
-        }
-
-        Path("./audio").mkdir(parents=True, exist_ok=True)
-        try:
-            os.remove(audio_path)
-        except OSError:
-            pass
-
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([song.url])
-
-        voice.play(discord.FFmpegPCMAudio(audio_path))
-
-    async def inactivity_disconnect(self, guild: discord.Guild):
-        voice = get(self.client.voice_clients, guild=guild)
-        await asyncio.sleep(300)
-        if voice and not voice.is_playing():
-            await voice.disconnect()
-
-    @commands.Cog.listener()
-    async def on_ready(self):
-        self.client.tree.add_command(self.play)
-        self.client.tree.add_command(self.stop)
-        self.client.tree.add_command(self.skip)
-        self.client.tree.add_command(self.queue)
-        print("Music cog loaded")
-
-async def setup(bot):
+async def setup(bot: commands.Bot):
     await bot.add_cog(Music(bot))
