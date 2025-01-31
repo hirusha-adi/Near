@@ -151,17 +151,21 @@ class Music(commands.Cog):
     @app_commands.command(name="stop", description="Stops music and clears the queue")
     @app_commands.checks.has_permissions(ban_members=True)
     async def stop(self, interaction: discord.Interaction):
-        guild = interaction.guild
-        voice = get(self.client.voice_clients, guild=guild)
-        queue = self.music_queues.get(guild)
+        guild: discord.Guild = interaction.guild
+        music_queue = self.music_queues[guild]
+        voice: discord.VoiceClient = get(self.client.voice_clients, guild=guild)
 
-        if voice and voice.is_connected():
+        if not voice:
+            await interaction.response.send_message("I'm not connected to a voice channel.")
+            return
+
+        if voice.is_playing() or voice.is_paused():
             voice.stop()
-            queue.clear()
-            await voice.disconnect()
-            await interaction.response.send_message("Stopping playback and disconnecting.")
-        else:
-            await interaction.response.send_message("I'm not playing anything right now.")
+
+        music_queue.clear()
+        await voice.disconnect()
+
+        await interaction.response.send_message("Music has been stopped, and the queue has been cleared.")
 
     @app_commands.command(name="skip", description="Vote to skip the current song")
     async def skip(self, interaction: discord.Interaction):
