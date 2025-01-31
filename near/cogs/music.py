@@ -167,28 +167,28 @@ class Music(commands.Cog):
 
         await interaction.response.send_message("Music has been stopped, and the queue has been cleared.")
 
-    @app_commands.command(name="skip", description="Vote to skip the current song")
+    @app_commands.command(name="skip", description="Skip the current song")
     async def skip(self, interaction: discord.Interaction):
-        guild = interaction.guild
-        voice = get(self.client.voice_clients, guild=guild)
-        queue = self.music_queues.get(guild)
+        guild: discord.Guild = interaction.guild
+        music_queue = self.music_queues[guild]
+        voice: discord.VoiceClient = get(self.client.voice_clients, guild=guild)
 
-        if not voice or not voice.is_playing():
-            await interaction.response.send_message("I'm not playing a song right now.")
+        if not voice:
+            await interaction.response.send_message("I'm not connected to a voice channel.")
             return
 
-        if interaction.user in queue.skip_voters:
-            await interaction.response.send_message("You've already voted to skip this song.")
+        if not music_queue:
+            await interaction.response.send_message("The queue is empty, no song to skip.")
             return
 
-        required_votes = round(len(interaction.user.voice.channel.members) / 2)
-        queue.add_skip_vote(interaction.user)
-
-        if len(queue.skip_voters) >= required_votes:
-            await interaction.response.send_message("Skipping song after successful vote.")
+        # Stop the current song
+        if voice.is_playing() or voice.is_paused():
             voice.stop()
-        else:
-            await interaction.response.send_message(f"You voted to skip this song. {required_votes - len(queue.skip_voters)} more votes required.")
+
+        # Play the next song
+        await self.play_next_song(voice, guild)
+
+        await interaction.response.send_message("Skipped to the next song!")
 
     @app_commands.command(name="queue", description="Shows the current song queue")
     async def queue(self, interaction: discord.Interaction):
