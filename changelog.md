@@ -9,6 +9,8 @@
 5. Remove `/meme`. It's unreliable to scrape memes from a website.
 6. Re-write the music commands.
    - got rid of LavaLink
+   - Only supports youtube videos
+   - No support for playlists
 
 ### NearBot v0.8.1
 

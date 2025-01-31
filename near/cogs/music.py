@@ -10,6 +10,8 @@ from discord.ext import commands
 from discord import app_commands
 from discord.utils import get
 
+from near.utils import youtube
+
 from bot import config
 from bot.music import Queue, Song, SongRequestError
 
@@ -96,26 +98,29 @@ class Music(commands.Cog):
             return
         
         await interaction.response.send_message(f"Playing `{url}` in {voice_client.channel.name}!")
+
+        # await interaction.response.defer()
+
+        guild: discord.Guild = interaction.guild
+        music_queue = self.music_queues[guild]
+
+        # this will always return a voice client
+        # since the bot is connected to a voice channel at this point
+        voice: discord.VoiceClient = get(self.client.voice_clients, guild=guild)
+        channel: discord.VoiceChannel = interaction.user.voice.channel
+
+        video_id, video_filename = youtube.download_video(url)
+        if not video_filename or not Path(video_filename).exists():
+            await interaction.followup.send("Failed to download the audio.")
+            return
+
+        if voice.is_playing() or voice.is_paused():
+            voice.stop()
+        
+        voice.play(discord.FFmpegPCMAudio(video_filename))
+
         return
     
-
-        await interaction.response.defer()
-        guild = interaction.guild
-        music_queue = self.music_queues[guild]
-        voice = get(self.client.voice_clients, guild=guild)
-
-        try:
-            channel = interaction.user.voice.channel
-        except AttributeError:
-            await interaction.followup.send("You're not connected to a voice channel.")
-            return
-
-        if voice and voice.channel != channel:
-            await interaction.followup.send("You're not in my voice channel.")
-            return
-
-        if not url.startswith("https://"):
-            url = f"ytsearch1:{url}"
 
         try:
             song = Song(url, author=interaction.user)

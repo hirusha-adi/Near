@@ -1,24 +1,26 @@
+import typing as t
 import yt_dlp, os, re
+from loguru import logger
 
-# https://youtu.be/DpKc0KVwMcc?si=mfNpDcAVM6j8hgbu
-URL = "https://youtu.be/DpKc0KVwMcc?si=mfNpDcAVM6j8hgbu"
-
-def extract_video_id(url):
+def extract_video_id(url) -> t.Optional[str]:
     """Extracts the YouTube video ID from various YouTube URL formats."""
     match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11})", url)
     return match.group(1) if match else None
 
-def download_video(url):
+def download_video(url: str) -> t.Optional[t.Tuple[str, str]]:
+    logger.debug(f"Downloading: {url}")
     video_id = extract_video_id(url)
+    logger.debug(f"Video ID: {video_id}")
+
     if not video_id:
-        print("Invalid YouTube URL")
+        logger.error("Invalid YouTube URL")
         return None
 
     file_name = f"cache/{video_id}.mp3"
 
     if os.path.exists(file_name):
-        print(f"File already exists: {file_name}")
-        return file_name  # Return cached file
+        logger.debug(f"File already exists: {file_name}")
+        return (video_id, file_name)  # Return cached file
 
     ydl_opts = {
         "format": "bestaudio/best",
@@ -34,12 +36,6 @@ def download_video(url):
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])  # Download if not cached
 
-    print(f"Downloaded: {file_name}")
-    return file_name
+    logger.debug(f"Downloaded: {file_name}")
+    return (video_id, file_name)
 
-# downloaded_file = download_video(URL)
-# print(f"Final file: {downloaded_file}")
-
-print(extract_video_id(URL))
-downloaded_file = download_video(URL)
-print(f"Final file: {downloaded_file}")
