@@ -19,6 +19,13 @@ class Music(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
         self.music_queues = defaultdict(Queue)
+        self.equalizer_presets = {
+            "female": "equalizer=f=100:t=q:w=1:g=-10,f=500:t=q:w=1:g=5,f=2000:t=q:w=1:g=-10,f=5000:t=q:w=1:g=10",
+            "male": "equalizer=f=100:t=q:w=1:g=10,f=500:t=q:w=1:g=-5,f=2000:t=q:w=1:g=5,f=5000:t=q:w=1:g=-5",
+            "bass_boost": "equalizer=f=60:t=q:w=1:g=15,f=170:t=q:w=1:g=10,f=300:t=q:w=1:g=5",
+            "robotic": "equalizer=f=100:t=q:w=1:g=-5,f=400:t=q:w=1:g=-10,f=1200:t=q:w=1:g=5,f=3000:t=q:w=1:g=-10",
+            "treble_boost": "equalizer=f=1000:t=q:w=1:g=15,f=5000:t=q:w=1:g=10,f=12000:t=q:w=1:g=10",
+        }
 
     async def ensure_connected_to_vc(self, interaction: discord.Interaction) -> t.Optional[discord.VoiceClient]:
         guild = interaction.guild
@@ -146,6 +153,16 @@ class Music(commands.Cog):
         else:
             # Start the inactivity timer when the queue is empty
             asyncio.create_task(self.inactivity_disconnect(guild))
+
+    # Volume control (FFmpeg volume filter)
+    async def set_volume(self, voice: discord.VoiceClient, volume: float):
+        """Adjusts the volume of the currently playing song."""
+        if volume < 0.1 or volume > 2:
+            return "Volume must be between 0.1 and 2!"
+        voice.source = discord.PCMVolumeTransformer(voice.source)
+        voice.source.volume = volume
+        return f"Volume set to {volume * 100}%"
+
 
 
     @app_commands.command(name="stop", description="Stops music and clears the queue")
