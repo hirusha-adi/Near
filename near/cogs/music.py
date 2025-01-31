@@ -125,8 +125,15 @@ class Music(commands.Cog):
         voice.play(discord.FFmpegPCMAudio(video_filename))
 
 
+    async def inactivity_disconnect(self, guild: discord.Guild):
+        """Disconnects the bot after 5 minutes of inactivity."""
+        await asyncio.sleep(300)  # Wait for 5 minutes
+        voice = get(self.client.voice_clients, guild=guild)
+        if voice and not voice.is_playing():
+            await voice.disconnect()
+
     async def play_next_song(self, voice: discord.VoiceClient, guild: discord.Guild):
-        """Plays the next song in the queue."""
+        """Plays the next song in the queue and handles disconnection if inactive."""
         if self.music_queues[guild]:
             next_song = self.music_queues[guild].pop(0)  # Get next song from queue
             
@@ -136,6 +143,10 @@ class Music(commands.Cog):
                 asyncio.run_coroutine_threadsafe(self.play_next_song(voice, guild), self.client.loop)
 
             voice.play(discord.FFmpegPCMAudio(next_song), after=after_playing)
+        else:
+            # Start the inactivity timer when the queue is empty
+            asyncio.create_task(self.inactivity_disconnect(guild))
+
 
     @app_commands.command(name="stop", description="Stops music and clears the queue")
     @app_commands.checks.has_permissions(ban_members=True)
