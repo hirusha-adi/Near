@@ -105,9 +105,8 @@ class Music(commands.Cog):
         if not voice_client:
             return
         
-        await interaction.response.send_message(f"Processing `{url}`...")
-
-        # await interaction.response.defer()
+        await interaction.response.defer()
+        status_msg: discord.WebhookMessage = await interaction.followup.send(f"🎵 Downloading `{url}`... Please wait.")
 
         guild: discord.Guild = interaction.guild
         music_queue = self.music_queues[guild]
@@ -120,15 +119,16 @@ class Music(commands.Cog):
         video_id, video_filename = youtube.download_video(url)
 
         if not video_filename or not Path(video_filename).exists():
-            await interaction.followup.send("Failed to download the audio.")
+            await status_msg.edit(content="❌ Failed to download the audio.")
             return
 
         music_queue.append(video_filename)
 
-        if not voice.is_playing():
-            await self.play_next_song(voice, guild)
+        if voice.is_playing():
+            await status_msg.edit(content=f"✅ Added to queue: `{video_filename}`")
         else:
-            await interaction.followup.send("Added to queue.")
+            await status_msg.edit(content=f"🎶 Now playing: `{video_filename}`")
+            await self.play_next_song(voice, guild)
         
         voice.play(discord.FFmpegPCMAudio(video_filename))
 
