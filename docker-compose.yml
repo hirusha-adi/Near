@@ -1,25 +1,12 @@
-version: '3'
+version: '3.8'
+
 services:
-    lavalink:
-        build:
-            context: .
-            dockerfile: Dockerfile-lavalink
-        restart: always
-        ports:
-            - 2333:2333
-        command: java -jar Lavalink.jar
-    app:
-        build:
-            context: .
-            dockerfile: Dockerfile-bot
-        restart: always
-        ports:
-            - 8090:8090
-        command: bash -c "sleep 10; python3 nearbot.py"
-        env_file:
-            - .env
-        environment:
-            - BOT_TOKEN=${BOT_TOKEN}
-            - LAVA_HOST=${LAVA_HOST}
-        depends_on:
-            - lavalink
+  discord-bot:
+    container_name: discord-bot
+    build: .
+    restart: unless-stopped
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+    volumes:
+      - .:/app
+    command: ["python3", "manage.py", "start"]
