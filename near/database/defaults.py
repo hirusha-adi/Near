@@ -52,6 +52,8 @@ async def __set_defaultsSettingsEmbeds() -> None:
             # means there has been an update in the default config
             # in that case, add the new added record only
             # without changing any other thing
+            # TODO: BUG: FIX: BROKEN
+            #   discord-bot  | 2025-02-11 17:46:16.531 | ERROR    | near.database.defaults:__set_defaultsSettingsEmbeds:69 - Failed to load default data into settings_embeds: cannot access local variable 'val_default' where it is not associated with a value
             missing_keys = set(default_data_keys) - set(settings_embeds_all_keys)
             if missing_keys:
                 logger.debug(f"File `default.settings_embeds.json` has been updated! Adding new records.")
