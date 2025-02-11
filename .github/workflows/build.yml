@@ -1,38 +1,21 @@
-name: Build and Push Docker Image
+name: Deploy
 
 on:
   push:
-    branches:
-      - main  # Adjust if needed
+    branches: [main]
 
 jobs:
-  build-and-push:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Logging into registry
-        id: docker-login
-        uses: docker/login-action@v3
+      - name: Deploy using SSH
+        uses: appleboy/ssh-action@master
         with:
-          registry: ${{ secrets.REGISTRY_URL }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
-
-      - name: Setting correct metadata for latest tag
-        id: docker-meta
-        uses: docker/metadata-action@v5
-        with:
-          images: git.teamsds.net/TeamSDS/NearBot-Bot
-          tags: type=raw,value=latest
-
-      - name: Building and pushing image (latest)
-        id: docker-build-latest
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.docker-meta.outputs.tags }}
-          labels: ${{ steps.docker-meta.outputs.labels }}
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /home/ubuntu/apps/teamsds/bot
+            chmod +x ./restart.sh
+            bash ./restart.sh
