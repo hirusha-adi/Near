@@ -6,7 +6,10 @@ services:
     build: .
     restart: unless-stopped
     environment:
-      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - BOT_TOKEN=${BOT_TOKEN}
+      - POCKETBASE_URL=${POCKETBASE_URL}
+      - POCKETBASE_AUTH_EMAIL=${POCKETBASE_AUTH_EMAIL}
+      - POCKETBASE_AUTH_PASSWORD=${POCKETBASE_AUTH_PASSWORD}
     volumes:
       - .:/app
     command: ["python3", "manage.py", "start"]
