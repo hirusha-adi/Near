@@ -21,24 +21,8 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Setting correct metadata for versioned tag
-        id: docker-meta-1
-        uses: docker/metadata-action@v5
-        with:
-          images: git.teamsds.net/TeamSDS/NearBot-Bot
-          tags: type=semver,pattern=latest
-
-      - name: Building and pushing image (versioned)
-        id: docker-build-version
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.docker-meta-1.outputs.tags }}
-          labels: ${{ steps.docker-meta-1.outputs.labels }}
-
       - name: Setting correct metadata for latest tag
-        id: docker-meta-2
+        id: docker-meta
         uses: docker/metadata-action@v5
         with:
           images: git.teamsds.net/TeamSDS/NearBot-Bot
@@ -50,5 +34,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.docker-meta-2.outputs.tags }}
-          labels: ${{ steps.docker-meta-2.outputs.labels }}
+          tags: ${{ steps.docker-meta.outputs.tags }}
+          labels: ${{ steps.docker-meta.outputs.labels }}
