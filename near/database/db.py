@@ -14,7 +14,7 @@ try:
     logger.success("Connection to Pocketbase successful!")
 
     # Authentication
-    user_data = conn.collection("users").auth_with_password(
+    user_data = conn.collection("tmp_users").auth_with_password(
         POCKETBASE_AUTH_EMAIL, POCKETBASE_AUTH_PASSWORD
     )
     if not(user_data.is_valid):

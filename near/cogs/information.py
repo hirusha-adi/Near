@@ -23,7 +23,7 @@ class Information(commands.Cog):
         try:
             if input_sanitization.is_ipaddr(ip):
                 if ipaddress.ip_address(ip).is_private:
-                    raise errors.IllegalInput("You have entered a private IP address.")
+                    raise errors.IllegalInput("You have entered a private IP address")
                 
                 async with aiohttp.ClientSession() as session:
                     async with session.get(f"https://ipapi.co/{ip}/json") as response:

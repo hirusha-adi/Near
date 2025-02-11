@@ -215,7 +215,7 @@ token = os.getenv("BOT_TOKEN")
 
 # Start the bot
 # ---
-async def main():
+async def start_bot():
     """
     Main entry point of the bot. Loads all extensions, then starts the bot with the given token.
     """
@@ -224,4 +224,5 @@ async def main():
         await client.start(token=token, reconnect=True)
 
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(start_bot())

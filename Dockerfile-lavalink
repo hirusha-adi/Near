@@ -1,9 +1,0 @@
-FROM openjdk:23-slim
-
-RUN apt update && apt install -y wget
-
-WORKDIR /lavalink
-
-RUN wget 'https://github.com/lavalink-devs/Lavalink/releases/download/4.0.7/Lavalink.jar'
-
-COPY lavalink.yml application.yml
