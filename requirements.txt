@@ -10,3 +10,4 @@ leet==0.1.2
 click==8.1.8
 requests==2.32.3
 python-dotenv==1.0.1
+zxcvbn==4.4.28
