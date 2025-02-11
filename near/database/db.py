@@ -5,8 +5,8 @@ from pocketbase import PocketBase
 from pocketbase.services.record_service import RecordService
 
 POCKETBASE_AUTH_COLLECTION = "nearbot_users"
-POCKETBASE_URL: str = "https://pocketbase.teamsds.net"
-# POCKETBASE_URL: str = os.getenv("POCKETBASE_URL") # no idea why this doesn't work
+# POCKETBASE_URL: str = "https://pocketbase.teamsds.net"
+POCKETBASE_URL: str = os.getenv("POCKETBASE_URL") # no idea why this doesn't work
 POCKETBASE_AUTH_EMAIL: str = os.getenv("POCKETBASE_AUTH_EMAIL")
 POCKETBASE_AUTH_PASSWORD: str = os.getenv("POCKETBASE_AUTH_PASSWORD")
 logger.debug(f"Using environment variables -> POCKETBASE_URL: {POCKETBASE_URL}, POCKETBASE_AUTH_EMAIL: {POCKETBASE_AUTH_EMAIL}, POCKETBASE_AUTH_PASSWORD: {POCKETBASE_AUTH_PASSWORD}")
