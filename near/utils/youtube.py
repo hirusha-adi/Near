@@ -2,6 +2,8 @@ import typing as t
 import yt_dlp, os, re
 from loguru import logger
 
+YTDLP_PROXY_URL: str = os.getenv("YTDLP_PROXY_URL")
+
 def extract_video_id(url) -> t.Optional[str]:
     """Extracts the YouTube video ID from various YouTube URL formats."""
     match = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11})", url)
@@ -31,7 +33,8 @@ def download_video(url: str) -> t.Optional[t.Tuple[str, str]]:
         }],
         "outtmpl": "cache/%(id)s.%(ext)s",
         "noplaylist": True,
-        "cookiefile": "cookies.txt"
+        "cookiefile": "cookies.txt",
+        "proxy": YTDLP_PROXY_URL,
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
