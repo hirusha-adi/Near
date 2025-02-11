@@ -31,6 +31,7 @@ def download_video(url: str) -> t.Optional[t.Tuple[str, str]]:
         }],
         "outtmpl": "cache/%(id)s.%(ext)s",
         "noplaylist": True,
+        "cookiefile": "cookies.txt"
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
