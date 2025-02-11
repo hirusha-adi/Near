@@ -4,7 +4,9 @@ from loguru import logger
 from pocketbase import PocketBase
 from pocketbase.services.record_service import RecordService
 
-POCKETBASE_URL: str = os.getenv("POCKETBASE_URL")
+POCKETBASE_AUTH_COLLECTION = "nearbot_users"
+POCKETBASE_URL: str = "https://pocketbase.teamsds.net"
+# POCKETBASE_URL: str = os.getenv("POCKETBASE_URL") # no idea why this doesn't work
 POCKETBASE_AUTH_EMAIL: str = os.getenv("POCKETBASE_AUTH_EMAIL")
 POCKETBASE_AUTH_PASSWORD: str = os.getenv("POCKETBASE_AUTH_PASSWORD")
 logger.debug(f"Using environment variables -> POCKETBASE_URL: {POCKETBASE_URL}, POCKETBASE_AUTH_EMAIL: {POCKETBASE_AUTH_EMAIL}, POCKETBASE_AUTH_PASSWORD: {POCKETBASE_AUTH_PASSWORD}")
@@ -14,7 +16,8 @@ try:
     logger.success("Connection to Pocketbase successful!")
 
     # Authentication
-    user_data = conn.collection("nearbot_users").auth_with_password(
+    logger.debug(f"Authenticating to {POCKETBASE_AUTH_COLLECTION} collection!")
+    user_data = conn.collection(POCKETBASE_AUTH_COLLECTION).auth_with_password(
         POCKETBASE_AUTH_EMAIL, POCKETBASE_AUTH_PASSWORD
     )
     if not(user_data.is_valid):

@@ -23,6 +23,7 @@ __pycache__/
 instance/
 .webassets-cache
 test.py
+tmp.py
 
 # Database stuff
 *dev*.db*
