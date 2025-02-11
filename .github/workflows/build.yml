@@ -27,6 +27,7 @@ jobs:
         with:
           images: git.teamsds.net/TeamSDS/NearBot-Bot
           tags: type=raw,value=latest
+          file: Dockerfile
 
       - name: Building and pushing image (latest)
         id: docker-build-latest
