@@ -63,5 +63,3 @@ python3 nearbot.py &    # run in background
 bg
 disown -h
 ```
-
-
