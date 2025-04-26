@@ -116,13 +116,23 @@ class Music(commands.Cog):
         voice: discord.VoiceClient = get(self.client.voice_clients, guild=guild)
         channel: discord.VoiceChannel = interaction.user.voice.channel
 
-        video_id, video_filename = youtube.download_video(url)
-
-        if not video_filename or not Path(video_filename).exists():
+        result = youtube.download_video(url)
+        if result:
+            video_id = result["video_id"]
+            title = result["title"]
+            uploader = result["uploader"]
+            file_path = result["file_path"]
+            thumbnail = result["thumbnail"]
+            video_filename = f"{video_id}.mp3"
+        else:
             await status_msg.edit(content="❌ Failed to download the audio.")
             return
 
-        music_queue.append(video_filename)
+        if not file_path or not Path(file_path).exists():
+            await status_msg.edit(content="❌ Failed to download the audio.")
+            return
+
+        music_queue.append(file_path)
 
         if voice.is_playing():
             await status_msg.edit(content=f"✅ Added to queue: `{video_filename}`")
@@ -130,7 +140,7 @@ class Music(commands.Cog):
             await status_msg.edit(content=f"🎶 Now playing: `{video_filename}`")
             await self.play_next_song(voice, guild)
         
-        voice.play(discord.FFmpegPCMAudio(video_filename))
+        voice.play(discord.FFmpegPCMAudio(file_path))
 
     async def inactivity_disconnect(self, guild: discord.Guild):
         """Disconnects the bot after 5 minutes of inactivity."""
